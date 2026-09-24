@@ -313,7 +313,7 @@
 }
 .learning-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 17px;
 }
 .learning-card {
@@ -694,3 +694,5 @@ button:focus-visible {
   .language-tabs a { padding: 2px 5px; }
   .VPNavBarHamburger { width: 36px !important; }
 }
+
+@media (max-width: 767px) { .learning-grid { grid-template-columns: minmax(0, 1fr); } }

@@ -1,4 +1,6 @@
-# 01 · Foundations
+# Supplement · An introductory finite-field exercise
+
+A short supplementary exercise related to [Session 3 of the syllabus](./#session-3).
 
 ## Start here
 
@@ -27,6 +29,6 @@ The second equation shows that the multiplicative inverse of 3 is 5. Zero has no
 
 ## Think ahead
 
-How could someone check a computation without receiving its secret input? The next step explores statements and witnesses, and the roles of prover and verifier.
+How could someone check a computation without receiving its secret input? Revisit statements and witnesses, and the roles of prover and verifier, from Sessions 1–2 of the syllabus.
 
 [Back to the syllabus](./)

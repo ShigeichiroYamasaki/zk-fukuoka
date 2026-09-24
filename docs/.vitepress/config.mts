@@ -9,7 +9,7 @@ const sidebar = (en: boolean) => {
       items: [
         { text: en ? "Syllabus" : "シラバス", link: p + "learn/" },
         {
-          text: en ? "01 · Foundations" : "01 · 基礎をつかむ",
+          text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",
         },
       ],
@@ -36,6 +36,7 @@ export default defineConfig({
     "福岡から、ゼロ知識証明を学び、つくる。A community for the next generation of ZK builders.",
   base,
   cleanUrls: false,
+  markdown: { math: true },
   lastUpdated: false,
   head: [
     [

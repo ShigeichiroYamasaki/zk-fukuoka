@@ -1,7 +1,7 @@
 # ADR-0002 · Learn through a syllabus and experiments
 
 - Date: 2026-09-24
-- Status: proposed
+- Status: superseded by [ADR-0003](./0003-three-act-syllabus)
 
 ## Context
 

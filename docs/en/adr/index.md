@@ -5,7 +5,8 @@ Keep the context and reasoning behind important decisions, including alternative
 | Record | Title | Status |
 | --- | --- | --- |
 | [0001](./0001-documentation) | VitePress, GitHub Pages, and bilingual documentation | Implemented for the site; community ratification pending |
-| [0002](./0002-learning) | Syllabus-first, hands-on learning | Proposed |
+| [0002](./0002-learning) | Syllabus-first, hands-on learning | Superseded by ADR-0003 |
+| [0003](./0003-three-act-syllabus) | Motivation-first, three-act syllabus | Proposed |
 
 ## Adding a record
 

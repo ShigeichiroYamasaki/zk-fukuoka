@@ -112,8 +112,8 @@ const t = (ja, english) => (en.value ? english : ja);
       <p class="section-intro">
         {{
           t(
-            "基礎から小さな実装へ。理解・実験・共有をくり返す、4つの学習ステップ。",
-            "Four steps from first principles to a working prototype. Learn, experiment, and share.",
+            "目的と動機からはじめ、必要な道具を揃え、プロトコルへ。三幕・全15回の学習構成。",
+            "Start with goals and motivations, assemble the tools, then integrate them into protocols. Three acts, 15 sessions.",
           )
         }}
         <span class="draft-label">{{
@@ -124,62 +124,21 @@ const t = (ja, english) => (en.value ? english : ja);
         <a
           v-for="(item, i) in en
             ? [
-                [
-                  'Foundations',
-                  'Make sense of the math.',
-                  'Finite fields · Polynomials · Commitments',
-                ],
-                [
-                  'Understand proofs',
-                  'Explore what zero-knowledge means.',
-                  'Completeness · Soundness · Zero-knowledge',
-                ],
-                [
-                  'Build a circuit',
-                  'Turn a claim into constraints.',
-                  'Witnesses · Circuits · Verification',
-                ],
-                [
-                  'Make & share',
-                  'Build a small project with peers.',
-                  'Prototype · Review · Demo',
-                ],
+                ['Goals & motivations', 'Sessions 1–2 · Why do we need ZK?', 'Interactive proofs · Zero-knowledge'],
+                ['Tools', 'Sessions 3–10 · The language of proofs.', 'Mathematics · Information theory · Cryptography'],
+                ['Integration', 'Sessions 11–15 · Origins and future directions.', 'Groth16 · PLONK · STARK'],
               ]
             : [
-                [
-                  '基礎をつかむ',
-                  '数学と暗号のことばを知る。',
-                  '有限体 · 多項式 · コミットメント',
-                ],
-                [
-                  '証明を理解する',
-                  'ゼロ知識の仕組みにふれる。',
-                  '完全性 · 健全性 · ゼロ知識性',
-                ],
-                [
-                  '回路をつくる',
-                  '主張を制約で表現してみる。',
-                  'Witness · 回路 · 検証',
-                ],
-                [
-                  'つくって、共有する',
-                  '仲間と小さな作品をかたちに。',
-                  '試作 · レビュー · デモ',
-                ],
+                ['目的と動機', '第1〜2回 · なぜこの技術が必要か。', '対話型証明 · ゼロ知識性'],
+                ['道具立て', '第3〜10回 · 目的を実現するための言語。', '数学 · 情報理論 · 暗号理論'],
+                ['統合', '第11〜15回 · 成り立ちと発展の方向。', 'Groth16 · PLONK · STARK'],
               ]"
           :key="i"
-          :href="
-            link(
-              i === 0
-                ? 'learn/foundations.html'
-                : 'learn/#' +
-                    ['foundations', 'proofs', 'circuits', 'project'][i],
-            )
-          "
+          :href="link('learn/#act-' + (i + 1))"
           class="learning-card"
         >
           <div class="card-top">
-            <span>0{{ i + 1 }}</span
+            <span>{{ t("幕", "ACT ") }}{{ ["I", "II", "III"][i] }}</span
             ><span>{{ ["↗", "◎", "⌘", "✳"][i] }}</span>
           </div>
           <h3>{{ item[0] }}</h3>
