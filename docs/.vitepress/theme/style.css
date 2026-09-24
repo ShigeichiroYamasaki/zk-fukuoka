@@ -686,3 +686,11 @@ button:focus-visible {
     overflow-wrap: anywhere;
   }
 }
+@media (max-width: 479px) {
+  .VPNavBarTitle .title { font-size: 17px !important; letter-spacing: -0.6px; }
+  .VPNavBarTitle .logo { height: 25px !important; margin-right: 6px; }
+  .VPNavBarSearch { padding-left: 4px !important; }
+  .language-tabs { margin: 0 3px; padding: 3px; font-size: 10px; }
+  .language-tabs a { padding: 2px 5px; }
+  .VPNavBarHamburger { width: 36px !important; }
+}
