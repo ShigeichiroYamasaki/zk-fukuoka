@@ -11,6 +11,8 @@ outline: [2, 3]
 A proposed three-act, 15-session curriculum. Dates, instructors, and venues are to be determined. This is an English translation of the Japanese proposal.
 :::
 
+[Session index](./sessions) · [Topic index](./topics)
+
 ---
 
 ## Design principles

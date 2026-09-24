@@ -120,6 +120,18 @@ const t = (ja, english) => (en.value ? english : ja);
           t("カリキュラム案", "DRAFT CURRICULUM")
         }}</span>
       </p>
+      <nav class="index-links" :aria-label="t('授業内容を探す', 'Find learning content')">
+        <a :href="link('learn/sessions.html')">
+          <span class="section-kicker">BY SESSION</span>
+          <strong>{{ t('各回の授業から探す', 'Browse by session') }} <span>↗</span></strong>
+          <p>{{ t('第1回から第15回まで、学習順に内容を確認。', 'Explore all 15 sessions in curriculum order.') }}</p>
+        </a>
+        <a :href="link('learn/topics.html')">
+          <span class="section-kicker">BY TOPIC</span>
+          <strong>{{ t('トピックから探す', 'Browse by topic') }} <span>↗</span></strong>
+          <p>{{ t('有限体、FRI、ペアリング、プロトコルなど、関心から横断。', 'Explore finite fields, FRI, pairings, protocols, and more.') }}</p>
+        </a>
+      </nav>
       <div class="learning-grid">
         <a
           v-for="(item, i) in en

@@ -8,6 +8,8 @@ const sidebar = (en: boolean) => {
       text: en ? "LEARN" : "学ぶ",
       items: [
         { text: en ? "Syllabus" : "シラバス", link: p + "learn/" },
+        { text: en ? "Session index" : "各回の授業", link: p + "learn/sessions" },
+        { text: en ? "Topic index" : "トピック別", link: p + "learn/topics" },
         {
           text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",
@@ -51,7 +53,11 @@ export default defineConfig({
       lang: "ja",
       themeConfig: {
         nav: [
-          { text: "シラバス", link: "/learn/" },
+          { text: "学ぶ", items: [
+            { text: "シラバス", link: "/learn/" },
+            { text: "各回の授業インデックス", link: "/learn/sessions" },
+            { text: "トピック別インデックス", link: "/learn/topics" },
+          ] },
           { text: "ホワイトペーパー", link: "/whitepaper" },
           { text: "ADR", link: "/adr/" },
         ],
@@ -67,7 +73,11 @@ export default defineConfig({
         "Learn, build, and explore zero-knowledge proofs together in Fukuoka.",
       themeConfig: {
         nav: [
-          { text: "Syllabus", link: "/en/learn/" },
+          { text: "Learn", items: [
+            { text: "Syllabus", link: "/en/learn/" },
+            { text: "Session index", link: "/en/learn/sessions" },
+            { text: "Topic index", link: "/en/learn/topics" },
+          ] },
           { text: "Whitepaper", link: "/en/whitepaper" },
           { text: "ADR", link: "/en/adr/" },
         ],

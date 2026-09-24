@@ -696,3 +696,10 @@ button:focus-visible {
 }
 
 @media (max-width: 767px) { .learning-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.index-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; margin: 0 0 28px; }
+.index-links > a { padding: 22px; border: 1px solid #cbd7bd; border-radius: 10px; background: #edf3e3; }
+.index-links > a:hover { border-color: #789444; background: #e5eed6; }
+.index-links strong { display: flex; justify-content: space-between; gap: 15px; font-size: 18px; margin: 8px 0; }
+.index-links p { font-size: 12px; line-height: 1.8; color: #53634a; }
+@media(max-width: 767px) { .index-links { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
