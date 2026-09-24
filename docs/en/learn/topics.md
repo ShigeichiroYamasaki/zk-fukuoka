@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Links refer to the current draft syllabus; full lesson materials are still in preparation.
+Find relevant sessions by topic across the three acts. Session 1 links to its lecture manuscript. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -18,8 +18,8 @@ Find relevant sessions by topic across the three acts. Links refer to the curren
 
 | Topic | Related sessions |
 | --- | --- |
-| Interactive proofs, Arthur–Merlin, IP = PSPACE | [Session 1](./#session-1) |
-| Completeness, soundness, proofs vs arguments | [Session 1](./#session-1) / [Session 14](./#session-14) |
+| Interactive proofs, Arthur–Merlin, IP = PSPACE | [Session 1](./session-01) |
+| Completeness, soundness, proofs vs arguments | [Session 1](./session-01) / [Session 14](./#session-14) |
 | Zero-knowledge, simulators, indistinguishability | [Session 2](./#session-2) / [Session 14](./#session-14) |
 | Knowledge soundness and extractors | [Session 2](./#session-2) |
 | Witnesses, NP relations, Schnorr, Chaum–Pedersen | [Session 2](./#session-2) |

@@ -1,6 +1,6 @@
 # トピック別インデックス
 
-三幕を横断して、関心のあるトピックから関連する授業を探せます。リンク先は現在のシラバス案です。各回の本編教材は準備中です。
+三幕を横断して、関心のあるトピックから関連する授業を探せます。第1回のリンク先は講義本文、それ以外は現在のシラバス案です。第2〜15回の本編教材は準備中です。
 
 [各回の授業から探す](./sessions) · [シラバス全体を読む](./)
 
@@ -18,8 +18,8 @@
 
 | トピック | 関連する授業 |
 | --- | --- |
-| 対話型証明・Arthur–Merlin・IP = PSPACE | [第1回](./#session-1) |
-| 完全性・健全性・Proof と Argument | [第1回](./#session-1) / [第14回](./#session-14) |
+| 対話型証明・Arthur–Merlin・IP = PSPACE | [第1回](./session-01) |
+| 完全性・健全性・Proof と Argument | [第1回](./session-01) / [第14回](./#session-14) |
 | ゼロ知識性・simulator・識別不可能性 | [第2回](./#session-2) / [第14回](./#session-14) |
 | Knowledge soundness・extractor | [第2回](./#session-2) |
 | ウィットネス・NP関係・Schnorr・Chaum–Pedersen | [第2回](./#session-2) |

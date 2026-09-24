@@ -10,6 +10,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Syllabus" : "シラバス", link: p + "learn/" },
         { text: en ? "Session index" : "各回の授業", link: p + "learn/sessions" },
         { text: en ? "Topic index" : "トピック別", link: p + "learn/topics" },
+        { text: en ? "Session 1 · What is a proof?" : "第1回 · 証明とは何か", link: p + "learn/session-01" },
         {
           text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",

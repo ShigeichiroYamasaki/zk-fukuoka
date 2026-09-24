@@ -32,7 +32,7 @@ Open http://localhost:4173/zk-fukuoka/ .
 - `docs/adr/`: Decisions and template
 - `docs/.vitepress/theme/`: Home design and language tabs
 
-Keep both language versions aligned. The syllabus follows Shigeichiro Yamasaki’s 2026/09/07 proposal: three acts and 15 sessions. The finite-field introduction is supplementary material for Session 3; full session materials are planned, not complete. Math notation is rendered at build time with markdown-it-mathjax3.
+Keep both language versions aligned. The syllabus follows Shigeichiro Yamasaki’s 2026/09/07 proposal: three acts and 15 sessions. The finite-field introduction is supplementary material for Session 3; the Session 1 lecture manuscript and its English translation are published, while materials for Sessions 2–15 are planned. Math notation is rendered at build time with markdown-it-mathjax3.
 
 ## GitHub Pages
 

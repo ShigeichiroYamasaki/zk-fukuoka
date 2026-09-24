@@ -30,6 +30,9 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 ## Act I: Goals and motivations (why this technology is needed) — Sessions 1–2 {#act-1}
 
 ### Session 1: What is a proof? — Background and formalization of interactive proofs {#session-1}
+
+[Read the Session 1 lecture manuscript →](./session-01)
+
 - Limits of the NP verifier paradigm: question the implicit assumptions of revealing the entire witness and reading it only once.
 - Complexity-theoretic motivation: present Arthur–Merlin games and the IP = PSPACE theorem as results.
 - Cryptographic motivation: the problem setting of Goldwasser–Micali–Rackoff (1985), with password authentication and graph isomorphism as concrete examples.
@@ -117,4 +120,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. Full session materials will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The Session 1 manuscript is available; materials for Sessions 2–15 will be developed later.
