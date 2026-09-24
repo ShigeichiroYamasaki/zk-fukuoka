@@ -703,3 +703,23 @@ button:focus-visible {
 .index-links strong { display: flex; justify-content: space-between; gap: 15px; font-size: 18px; margin: 8px 0; }
 .index-links p { font-size: 12px; line-height: 1.8; color: #53634a; }
 @media(max-width: 767px) { .index-links { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
+
+#lesson-materials { scroll-margin-top: calc(var(--vp-nav-height) + 20px); }
+.lesson-shortcuts { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; }
+.lesson-shortcuts a { border:1px solid #cbd7bd; background:#edf3e3; border-radius:6px; padding:10px 15px; font-size:12px; font-weight:600; }
+.lesson-shortcuts a:hover { background:#e0edcc; }
+.lesson-scroll-hint { font-size:11px; color:#65705d; margin-bottom:9px; }
+.lesson-directory { max-height:490px; overflow:auto; border:1px solid #d4ddcb; border-radius:12px; background:#fff; scrollbar-gutter:stable; }
+.lesson-directory:focus-visible { outline:3px solid #8a6adb; outline-offset:4px; }
+.lesson-act h3 { display:flex; justify-content:space-between; padding:13px 20px; font-weight:700; font-size:13px; background:#eef2e7; }
+.lesson-act h3 span { color:#66755b; font-size:11px; }
+.lesson-act ul { list-style:none; margin:0; padding:0; }
+.lesson-row { display:grid; grid-template-columns:80px minmax(0,1fr) 140px; align-items:center; gap:14px; padding:17px 20px; border-bottom:1px solid #e7ece1; }
+.lesson-row:hover { background:#f1f6e9; }
+.lesson-row.published { background:#f3fae9; border-left:4px solid #79a837; padding-left:16px; }
+.lesson-number { font-size:12px; color:#5f7050; font-weight:600; }
+.lesson-title { font-size:14px; line-height:1.7; font-weight:600; }
+.lesson-action { display:flex; flex-direction:column; align-items:flex-end; gap:4px; font-size:11px; color:#50633d; }
+.lesson-status { background:#edf0e9; color:#5c6655; border-radius:4px; padding:1px 7px; font-size:10px; }
+.published .lesson-status { background:#d9eebc; color:#334c18; }
+@media(max-width:767px) { .lesson-directory { max-height:470px; } .lesson-row { grid-template-columns:1fr auto; gap:6px 12px; padding:15px; } .lesson-row.published { padding-left:11px; } .lesson-title { grid-column:1 / -1; grid-row:2; font-size:13px; } .lesson-action { flex-direction:row; align-items:center; gap:8px; } .lesson-act h3 { padding:12px 15px; } }

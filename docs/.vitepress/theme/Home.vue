@@ -1,6 +1,12 @@
 <script setup>
 import { computed } from "vue";
 import { useData, withBase } from "vitepress";
+import { lessons } from "./lessons";
+const acts = [
+ { ja: "幕I · 目的と動機", en: "Act I · Goals and motivations", start: 1, end: 2 },
+ { ja: "幕II · 道具立て", en: "Act II · Tools", start: 3, end: 10 },
+ { ja: "幕III · 統合", en: "Act III · Integration", start: 11, end: 15 },
+];
 const { lang } = useData();
 const en = computed(() => lang.value === "en");
 const link = (s) => withBase((en.value ? "/en/" : "/") + s);
@@ -34,11 +40,11 @@ const t = (ja, english) => (en.value ? english : ja);
           }}
         </p>
         <div class="hero-actions">
-          <a class="button primary" :href="link('learn/')"
-            >{{ t("シラバスからはじめる", "Explore the syllabus") }}
+          <a class="button primary" href="#lesson-materials"
+            >{{ t("授業資料を見る", "Browse lecture materials") }}
             <span>↗</span></a
-          ><a class="text-link" :href="link('whitepaper.html')"
-            >{{ t("私たちの構想を読む", "Read our vision") }} <span>→</span></a
+          ><a class="text-link" :href="link('learn/session-01.html')"
+            >{{ t("第1回の資料を読む", "Read Session 1") }} <span>→</span></a
           >
         </div>
         <div class="hero-note">
@@ -95,13 +101,13 @@ const t = (ja, english) => (en.value ? english : ja);
       <span>LEARN THE MATH</span><b>✳</b><span>WRITE THE CODE</span><b>✳</b
       ><span>SHARE THE PROOF</span><b>✳</b><span>BUILD WITH FRIENDS</span>
     </div>
-    <section class="learn-section section-pad">
+    <section id="lesson-materials" class="learn-section section-pad">
       <div class="section-heading">
         <div>
           <span class="section-kicker">01 / LEARNING PATH</span>
           <h2>
             {{
-              t("「気になる」を、「つくれる」に。", "From curious to capable.")
+              t("各回の授業資料", "Lecture materials")
             }}
           </h2>
         </div>
@@ -112,51 +118,33 @@ const t = (ja, english) => (en.value ? english : ja);
       <p class="section-intro">
         {{
           t(
-            "目的と動機からはじめ、必要な道具を揃え、プロトコルへ。三幕・全15回の学習構成。",
-            "Start with goals and motivations, assemble the tools, then integrate them into protocols. Three acts, 15 sessions.",
+            "全15回の資料をここから。公開済みの講義は本文へ、準備中の回はシラバスの概要へ進めます。",
+            "Find all 15 sessions here. Published lectures open directly; upcoming sessions link to their syllabus outlines.",
           )
         }}
         <span class="draft-label">{{
           t("カリキュラム案", "DRAFT CURRICULUM")
         }}</span>
       </p>
-      <nav class="index-links" :aria-label="t('授業内容を探す', 'Find learning content')">
-        <a :href="link('learn/sessions.html')">
-          <span class="section-kicker">BY SESSION</span>
-          <strong>{{ t('各回の授業から探す', 'Browse by session') }} <span>↗</span></strong>
-          <p>{{ t('第1回から第15回まで、学習順に内容を確認。', 'Explore all 15 sessions in curriculum order.') }}</p>
-        </a>
-        <a :href="link('learn/topics.html')">
-          <span class="section-kicker">BY TOPIC</span>
-          <strong>{{ t('トピックから探す', 'Browse by topic') }} <span>↗</span></strong>
-          <p>{{ t('有限体、FRI、ペアリング、プロトコルなど、関心から横断。', 'Explore finite fields, FRI, pairings, protocols, and more.') }}</p>
-        </a>
+      <nav class="lesson-shortcuts" :aria-label="t('学習コンテンツの索引', 'Learning indexes')">
+        <a :href="link('learn/')">{{ t('シラバス', 'Syllabus') }} ↗</a>
+        <a :href="link('learn/sessions.html')">{{ t('各回の授業インデックス', 'Session index') }} ↗</a>
+        <a :href="link('learn/topics.html')">{{ t('トピック別インデックス', 'Topic index') }} ↗</a>
       </nav>
-      <div class="learning-grid">
-        <a
-          v-for="(item, i) in en
-            ? [
-                ['Goals & motivations', 'Sessions 1–2 · Why do we need ZK?', 'Interactive proofs · Zero-knowledge'],
-                ['Tools', 'Sessions 3–10 · The language of proofs.', 'Mathematics · Information theory · Cryptography'],
-                ['Integration', 'Sessions 11–15 · Origins and future directions.', 'Groth16 · PLONK · STARK'],
-              ]
-            : [
-                ['目的と動機', '第1〜2回 · なぜこの技術が必要か。', '対話型証明 · ゼロ知識性'],
-                ['道具立て', '第3〜10回 · 目的を実現するための言語。', '数学 · 情報理論 · 暗号理論'],
-                ['統合', '第11〜15回 · 成り立ちと発展の方向。', 'Groth16 · PLONK · STARK'],
-              ]"
-          :key="i"
-          :href="link('learn/#act-' + (i + 1))"
-          class="learning-card"
-        >
-          <div class="card-top">
-            <span>{{ t("幕", "ACT ") }}{{ ["I", "II", "III"][i] }}</span
-            ><span>{{ ["↗", "◎", "⌘", "✳"][i] }}</span>
-          </div>
-          <h3>{{ item[0] }}</h3>
-          <p>{{ item[1] }}</p>
-          <div class="card-bottom">{{ item[2] }} <span>→</span></div>
-        </a>
+      <p class="lesson-scroll-hint">{{ t('一覧内をスクロールして全15回を確認できます。', 'Scroll within the list to browse all 15 sessions.') }}</p>
+      <div class="lesson-directory" tabindex="0" role="region" :aria-label="t('全15回の授業資料一覧', 'All 15 lecture sessions')">
+        <section v-for="act in acts" :key="act.start" class="lesson-act">
+          <h3>{{ t(act.ja, act.en) }} <span>{{ act.start }}–{{ act.end }}</span></h3>
+          <ul>
+            <li v-for="lesson in lessons.filter(item => item.number >= act.start && item.number <= act.end)" :key="lesson.number">
+              <a :href="link(lesson.material || 'learn/#session-' + lesson.number)" class="lesson-row" :class="{ published: lesson.material }">
+                <span class="lesson-number">{{ t('第' + lesson.number + '回', 'Session ' + lesson.number) }}</span>
+                <span class="lesson-title">{{ t(lesson.ja, lesson.en) }}</span>
+                <span class="lesson-action"><span class="lesson-status">{{ lesson.material ? t('公開済み', 'Published') : t('準備中', 'Coming soon') }}</span><span>{{ lesson.material ? t('資料を読む', 'Read lecture') : t('概要を見る', 'View outline') }} ↗</span></span>
+              </a>
+            </li>
+          </ul>
+        </section>
       </div>
     </section>
     <section class="community-section section-pad">
