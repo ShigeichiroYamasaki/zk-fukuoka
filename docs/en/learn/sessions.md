@@ -1,13 +1,13 @@
 # Session index
 
-Browse all 15 sessions in curriculum order. Session 1 links to its lecture manuscript. Sessions 2–15 link to their syllabus sections; their full lesson materials are in preparation.
+Browse all 15 sessions in curriculum order. Sessions 1–2 link to their lecture manuscripts. Sessions 3–15 link to their syllabus sections; their full lesson materials are in preparation.
 
 [Browse by topic](./topics) · [Read the syllabus](./)
 
 ## Act I · Goals and motivations
 
 - [Session 1: What is a proof? — Background and formalization of interactive proofs](./session-01)
-- [Session 2: Zero-knowledge and the generalization of witnesses](./#session-2)
+- [Session 2: Zero-knowledge and the generalization of witnesses](./session-02)
 
 ## Act II · Tools
 

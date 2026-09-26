@@ -4,8 +4,8 @@ prev:
   text: Session index
   link: /en/learn/sessions
 next:
-  text: Session 2 · Zero-knowledge and the generalization of witnesses (syllabus)
-  link: /en/learn/#session-2
+  text: Session 2 · Zero-knowledge and the generalization of witnesses
+  link: /en/learn/session-02
 ---
 
 # Session 1: What is a proof? — Background and formalization of interactive proofs

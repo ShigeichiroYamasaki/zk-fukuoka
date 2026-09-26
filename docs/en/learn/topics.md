@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Session 1 links to its lecture manuscript. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–2 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -20,10 +20,10 @@ Find relevant sessions by topic across the three acts. Session 1 links to its le
 | --- | --- |
 | Interactive proofs, Arthur–Merlin, IP = PSPACE | [Session 1](./session-01) |
 | Completeness, soundness, proofs vs arguments | [Session 1](./session-01) / [Session 14](./#session-14) |
-| Zero-knowledge, simulators, indistinguishability | [Session 2](./#session-2) / [Session 14](./#session-14) |
-| Knowledge soundness and extractors | [Session 2](./#session-2) |
-| Witnesses, NP relations, Schnorr, Chaum–Pedersen | [Session 2](./#session-2) |
-| Expressiveness, interaction, succinctness | [Session 2](./#session-2) / [Session 15](./#session-15) |
+| Zero-knowledge, simulators, indistinguishability | [Session 2](./session-02) / [Session 14](./#session-14) |
+| Knowledge soundness and extractors | [Session 2](./session-02) |
+| Witnesses, NP relations, Schnorr, Chaum–Pedersen | [Session 2](./session-02) |
+| Expressiveness, interaction, succinctness | [Session 2](./session-02) / [Session 15](./#session-15) |
 
 ## Finite fields, polynomials & arithmetization {#algebra}
 
@@ -31,7 +31,7 @@ Find relevant sessions by topic across the three acts. Session 1 links to its le
 | --- | --- |
 | Finite fields, extension fields, polynomial rings | [Session 3](./#session-3) |
 | Lagrange interpolation, Schwartz–Zippel, polynomial identity testing | [Session 3](./#session-3) |
-| Arithmetization and R1CS | [Session 2](./#session-2) / [Session 4](./#session-4) |
+| Arithmetization and R1CS | [Session 2](./session-02) / [Session 4](./#session-4) |
 | QAP | [Session 4](./#session-4) / [Session 11](./#session-11) |
 | AIR | [Session 4](./#session-4) / [Session 13](./#session-13) |
 
@@ -77,7 +77,7 @@ Find relevant sessions by topic across the three acts. Session 1 links to its le
 | --- | --- |
 | Polynomial commitments and KZG | [Session 8](./#session-8) |
 | Binding and hiding | [Session 8](./#session-8) |
-| The Fiat–Shamir transform | [Session 2](./#session-2) / [Session 9](./#session-9) |
+| The Fiat–Shamir transform | [Session 2](./session-02) / [Session 9](./#session-9) |
 | The Random Oracle Model; security proofs and limitations | [Session 9](./#session-9) |
 
 ## Protocols & design comparisons {#protocols}

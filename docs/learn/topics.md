@@ -1,6 +1,6 @@
 # トピック別インデックス
 
-三幕を横断して、関心のあるトピックから関連する授業を探せます。第1回のリンク先は講義本文、それ以外は現在のシラバス案です。第2〜15回の本編教材は準備中です。
+三幕を横断して、関心のあるトピックから関連する授業を探せます。第1〜2回のリンク先は講義本文、それ以外は現在のシラバス案です。第3〜15回の本編教材は準備中です。
 
 [各回の授業から探す](./sessions) · [シラバス全体を読む](./)
 
@@ -20,10 +20,10 @@
 | --- | --- |
 | 対話型証明・Arthur–Merlin・IP = PSPACE | [第1回](./session-01) |
 | 完全性・健全性・Proof と Argument | [第1回](./session-01) / [第14回](./#session-14) |
-| ゼロ知識性・simulator・識別不可能性 | [第2回](./#session-2) / [第14回](./#session-14) |
-| Knowledge soundness・extractor | [第2回](./#session-2) |
-| ウィットネス・NP関係・Schnorr・Chaum–Pedersen | [第2回](./#session-2) |
-| 表現力・対話性・簡潔性 | [第2回](./#session-2) / [第15回](./#session-15) |
+| ゼロ知識性・simulator・識別不可能性 | [第2回](./session-02) / [第14回](./#session-14) |
+| Knowledge soundness・extractor | [第2回](./session-02) |
+| ウィットネス・NP関係・Schnorr・Chaum–Pedersen | [第2回](./session-02) |
+| 表現力・対話性・簡潔性 | [第2回](./session-02) / [第15回](./#session-15) |
 
 ## 有限体・多項式・算術化 {#algebra}
 
@@ -31,7 +31,7 @@
 | --- | --- |
 | 有限体・拡大体・多項式環 | [第3回](./#session-3) |
 | Lagrange補間・Schwartz–Zippel・多項式恒等式検査 | [第3回](./#session-3) |
-| 算術化・R1CS | [第2回](./#session-2) / [第4回](./#session-4) |
+| 算術化・R1CS | [第2回](./session-02) / [第4回](./#session-4) |
 | QAP | [第4回](./#session-4) / [第11回](./#session-11) |
 | AIR | [第4回](./#session-4) / [第13回](./#session-13) |
 
@@ -77,7 +77,7 @@
 | --- | --- |
 | 多項式コミットメント・KZG | [第8回](./#session-8) |
 | Binding・hiding | [第8回](./#session-8) |
-| Fiat–Shamir変換 | [第2回](./#session-2) / [第9回](./#session-9) |
+| Fiat–Shamir変換 | [第2回](./session-02) / [第9回](./#session-9) |
 | Random Oracle Model・安全性証明と限界 | [第9回](./#session-9) |
 
 ## プロトコルと設計の比較 {#protocols}

@@ -4,8 +4,8 @@ prev:
   text: 各回の授業インデックス
   link: /learn/sessions
 next:
-  text: 第2回 · ゼロ知識性とウィットネスの一般化（シラバス）
-  link: /learn/#session-2
+  text: 第2回 · ゼロ知識性とウィットネスの一般化
+  link: /learn/session-02
 ---
 
 # 第1回:証明とは何か — 対話型証明の背景と形式化

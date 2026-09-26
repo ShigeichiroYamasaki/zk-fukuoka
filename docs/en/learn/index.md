@@ -40,6 +40,9 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 - Formalize completeness and soundness; distinguish proofs from arguments.
 
 ### Session 2: Zero-knowledge and the generalization of witnesses {#session-2}
+
+[Read the Session 2 lecture manuscript →](./session-02)
+
 - Define zero-knowledge formally through the simulator paradigm and introduce the hierarchy of indistinguishability notions.
 - Introduce knowledge soundness and extractors.
 - Examine the qualitative difference between simple witnesses (algebraic relations such as discrete logarithms) and general NP relations (arbitrary computations).
@@ -120,4 +123,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The Session 1 manuscript is available; materials for Sessions 2–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–2 are available; materials for Sessions 3–15 will be developed later.

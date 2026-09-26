@@ -10,7 +10,7 @@ export const lessons = [
     "number": 2,
     "ja": "ゼロ知識性とウィットネスの一般化",
     "en": "Zero-knowledge and the generalization of witnesses",
-    "material": null
+    "material": "learn/session-02.html"
   },
   {
     "number": 3,
