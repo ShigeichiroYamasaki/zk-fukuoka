@@ -4,8 +4,8 @@ prev:
   text: 第5回 · 誤り訂正符号と情報理論的視点
   link: /learn/session-05
 next:
-  text: 第7回 · 楕円曲線とペアリング（シラバス）
-  link: /learn/#session-7
+  text: 第7回 · 楕円曲線とペアリング
+  link: /learn/session-07
 ---
 
 # 第6回:Low-Degree Testingと健全性増幅

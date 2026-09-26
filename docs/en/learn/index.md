@@ -90,6 +90,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - **Cryptographic perspective:** General principles of soundness amplification and proof techniques such as rewinding and the forking lemma. How to bound soundness error quantitatively.
 
 ### Session 7: Elliptic curves and pairings {#session-7}
+
+[Read the Session 7 lecture manuscript →](./session-07)
+
 - Define elliptic curve groups, bilinear pairings $e: G_1 \times G_2 \to G_T$, and pairing-friendly curves (BN254, BLS12-381).
 - **Cryptographic perspective:** The hierarchy of hardness assumptions such as discrete logarithm and q-SDH; the idea of reductions. What the distinction between standard and non-standard assumptions means.
 
@@ -135,4 +138,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–6 are available; materials for Sessions 7–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–7 are available; materials for Sessions 8–15 will be developed later.

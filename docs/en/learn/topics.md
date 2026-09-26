@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–6 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–7 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -66,10 +66,10 @@ Find relevant sessions by topic across the three acts. Sessions 1–6 link to th
 
 | Topic | Related sessions |
 | --- | --- |
-| Elliptic curve groups and bilinear pairings | [Session 7](./#session-7) |
-| BN254 and BLS12-381 | [Session 7](./#session-7) |
-| Discrete logarithm, q-SDH, reductions | [Session 7](./#session-7) |
-| Standard and non-standard assumptions; protocol connections | [Session 7](./#session-7) / [Session 14](./#session-14) |
+| Elliptic curve groups and bilinear pairings | [Session 7](./session-07) |
+| BN254 and BLS12-381 | [Session 7](./session-07) |
+| Discrete logarithm, q-SDH, reductions | [Session 7](./session-07) |
+| Standard and non-standard assumptions; protocol connections | [Session 7](./session-07) / [Session 14](./#session-14) |
 
 ## Commitments & non-interactive proofs {#commitments}
 

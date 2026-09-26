@@ -4,8 +4,8 @@ prev:
   text: Session 5 · Error-correcting codes and the information-theoretic perspective
   link: /en/learn/session-05
 next:
-  text: Session 7 · Elliptic curves and pairings (syllabus)
-  link: /en/learn/#session-7
+  text: Session 7 · Elliptic curves and pairings
+  link: /en/learn/session-07
 ---
 
 # Session 6: Low-degree testing and soundness amplification

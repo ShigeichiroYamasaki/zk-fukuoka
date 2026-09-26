@@ -40,7 +40,7 @@ export const lessons = [
     "number": 7,
     "ja": "楕円曲線とペアリング",
     "en": "Elliptic curves and pairings",
-    "material": null
+    "material": "learn/session-07.html"
   },
   {
     "number": 8,
