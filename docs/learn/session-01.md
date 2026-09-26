@@ -163,10 +163,10 @@ $$x \notin L \implies \forall P^*,\ \Pr[\langle P^*, V \rangle(x) = 1] \le \math
 
 ## 参考文献・発展読書
 
-- Goldwasser, Micali, Rackoff, "The Knowledge Complexity of Interactive Proof Systems," 1985(1989年SIAM J. Computing版)
-- Babai, "Trading Group Theory for Randomness," STOC 1985
-- Shamir, "IP = PSPACE," Journal of the ACM, 1992
-- Goldreich, *Foundations of Cryptography, Volume 1: Basic Tools*, Chapter 4(対話型証明の教科書的導入として)
+- Goldwasser, Micali, Rackoff, "[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012)," 1985(1989年SIAM J. Computing版) — SIAM・1989年版
+- Babai, "[Trading Group Theory for Randomness](https://doi.org/10.1145/22145.22192)," STOC 1985 — ACM 文献ページ
+- Shamir, "[IP = PSPACE](https://weizmann.esploro.exlibrisgroup.com/esploro/outputs/journalArticle/IP--PSPACE/993265992703596)," Journal of the ACM, 1992 — 著者所属機関の書誌・概要
+- Goldreich, *[Foundations of Cryptography, Volume 1: Basic Tools](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4(対話型証明の教科書的導入として) — 著者の書籍案内・目次・正誤表
 
 ## 講義中に使える発問例
 

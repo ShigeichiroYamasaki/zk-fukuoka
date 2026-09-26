@@ -139,9 +139,9 @@ In Session 4, we begin concrete arithmetization techniques: R1CS, QAP, and AIR, 
 
 ## References and further reading
 
-- Schwartz, “Fast Probabilistic Algorithms for Verification of Polynomial Identities,” JACM, 1980.
-- Zippel, “Probabilistic Algorithms for Sparse Polynomials,” EUROSAM, 1979.
-- Motwani, Raghavan, *Randomized Algorithms*, Chapter 7 (the algorithmic context of polynomial identity testing).
+- Schwartz, “[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html),” JACM, 1980. — bibliography and publisher link hosted by ACM SIGMOD
+- Zippel, “[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73),” EUROSAM, 1979. — Springer publication page
+- Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7 (the algorithmic context of polynomial identity testing). — publisher’s book information
 
 ## Suggested classroom questions
 

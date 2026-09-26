@@ -157,10 +157,10 @@ This completes Act I, purpose and motivation. In Session 3, we begin Act II by d
 
 ## References and further reading
 
-- Goldwasser, Micali, Rackoff, “The Knowledge Complexity of Interactive Proof Systems,” 1989.
-- Schnorr, “Efficient Signature Generation by Smart Cards,” *Journal of Cryptology*, 1991.
-- Goldreich, *Foundations of Cryptography, Volume 1*, Chapter 4 (a textbook treatment of the definition of zero-knowledge).
-- Cook, “The Complexity of Theorem-Proving Procedures,” STOC 1971 (the Cook–Levin theorem, providing background for arithmetization in subsequent sessions).
+- Goldwasser, Micali, Rackoff, “[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012),” 1989. — SIAM, 1989 version
+- Schnorr, “[Efficient Signature Generation by Smart Cards](https://link.springer.com/article/10.1007/BF00196725),” *Journal of Cryptology*, 1991. — Springer publication page / [Public manuscript PDF (German National Library)](https://d-nb.info/1156214580/34)
+- Goldreich, *[Foundations of Cryptography, Volume 1](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4 (a textbook treatment of the definition of zero-knowledge). — author’s book information, contents, and errata
+- Cook, “[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf),” STOC 1971 (the Cook–Levin theorem, providing background for arithmetization in subsequent sessions). — author-hosted PDF
 
 ## Suggested classroom questions
 

@@ -157,10 +157,10 @@ $$w = \frac{s_1 - s_2}{c_1 - c_2}$$
 
 ## 参考文献・発展読書
 
-- Goldwasser, Micali, Rackoff, "The Knowledge Complexity of Interactive Proof Systems," 1989
-- Schnorr, "Efficient Signature Generation by Smart Cards," Journal of Cryptology, 1991
-- Goldreich, *Foundations of Cryptography, Volume 1*, Chapter 4(ゼロ知識性の定義の教科書的整理)
-- Cook, "The Complexity of Theorem-Proving Procedures," STOC 1971(Cook-Levin定理、次回以降の算術化の背景として)
+- Goldwasser, Micali, Rackoff, "[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012)," 1989 — SIAM・1989年版
+- Schnorr, "[Efficient Signature Generation by Smart Cards](https://link.springer.com/article/10.1007/BF00196725)," Journal of Cryptology, 1991 — Springer 文献ページ / [公開原稿PDF（ドイツ国立図書館）](https://d-nb.info/1156214580/34)
+- Goldreich, *[Foundations of Cryptography, Volume 1](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4(ゼロ知識性の定義の教科書的整理) — 著者の書籍案内・目次・正誤表
+- Cook, "[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf)," STOC 1971(Cook-Levin定理、次回以降の算術化の背景として) — 著者公開PDF
 
 ## 講義中に使える発問例
 

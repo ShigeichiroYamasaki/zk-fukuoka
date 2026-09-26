@@ -137,9 +137,9 @@ $$f(X) = \sum_{i=0}^{d} y_i \prod_{j \ne i} \frac{X - x_j}{x_i - x_j}$$
 
 ## 参考文献・発展読書
 
-- Schwartz, "Fast Probabilistic Algorithms for Verification of Polynomial Identities," JACM, 1980
-- Zippel, "Probabilistic Algorithms for Sparse Polynomials," EUROSAM, 1979
-- Motwani, Raghavan, *Randomized Algorithms*, Chapter 7(多項式恒等性検査のアルゴリズム論的位置づけ)
+- Schwartz, "[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html)," JACM, 1980 — ACM SIGMOD の書誌・出版社リンク
+- Zippel, "[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73)," EUROSAM, 1979 — Springer 文献ページ
+- Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7(多項式恒等性検査のアルゴリズム論的位置づけ) — 出版社の書籍案内
 
 ## 講義中に使える発問例
 
