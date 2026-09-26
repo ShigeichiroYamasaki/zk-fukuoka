@@ -31,6 +31,9 @@ cd zk-fukuoka
 | シラバス | `docs/learn/index.md` | `docs/en/learn/index.md` |
 | 各回の授業インデックス | `docs/learn/sessions.md` | `docs/en/learn/sessions.md` |
 | トピック別インデックス | `docs/learn/topics.md` | `docs/en/learn/topics.md` |
+| 演習トップ | `docs/exercises/index.md` | `docs/en/exercises/index.md` |
+| ツール一覧 | `docs/exercises/tools.md` | `docs/en/exercises/tools.md` |
+| 基本操作マニュアル集 | `docs/exercises/manuals.md` | `docs/en/exercises/manuals.md` |
 | ホワイトペーパー | `docs/whitepaper.md` | `docs/en/whitepaper.md` |
 | ADR 一覧 | `docs/adr/index.md` | `docs/en/adr/index.md` |
 | ADR 本文・テンプレート | `docs/adr/*.md` | `docs/en/adr/*.md` |
@@ -157,3 +160,7 @@ PAGES_BASE_PATH=/zk-fukuoka/ npm run docs:preview
 | trusted setup / 信頼設定 | トラステッドセットアップ |
 
 見出しを変更する場合は、文書内・文書間のアンカーリンクも確認してください。
+
+## 9. 演習リンク集を更新する
+
+演習教材は `docs/exercises/index.md`、ツールは `tools.md`、基本操作マニュアルは `manuals.md` の表に追記します。対応する英語版も更新してください。各項目には名称、リンク、用途を記載し、ツールには利用方法、教材には関連する授業を添えます。外部リンクは公式サイトや公式マニュアルを優先し、リンク先を確認してから公開してください。独自教材と外部教材、公開済みと準備中を区別します。

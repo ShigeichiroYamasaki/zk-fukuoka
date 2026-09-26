@@ -20,6 +20,14 @@ const sidebar = (en: boolean) => {
       ],
     },
     {
+      text: en ? "PRACTICE" : "演習",
+      items: [
+        { text: en ? "Exercises" : "演習トップ", link: p + "exercises/" },
+        { text: en ? "Available tools" : "利用可能なツール", link: p + "exercises/tools" },
+        { text: en ? "Basic operation manuals" : "基本操作マニュアル集", link: p + "exercises/manuals" },
+      ],
+    },
+    {
       text: en ? "COMMUNITY" : "コミュニティ",
       items: [
         {
@@ -61,6 +69,7 @@ export default defineConfig({
             { text: "各回の授業インデックス", link: "/learn/sessions" },
             { text: "トピック別インデックス", link: "/learn/topics" },
           ] },
+          { text: "演習", link: "/exercises/" },
           { text: "ホワイトペーパー", link: "/whitepaper" },
           { text: "ADR", link: "/adr/" },
         ],
@@ -81,6 +90,7 @@ export default defineConfig({
             { text: "Session index", link: "/en/learn/sessions" },
             { text: "Topic index", link: "/en/learn/topics" },
           ] },
+          { text: "Exercises", link: "/en/exercises/" },
           { text: "Whitepaper", link: "/en/whitepaper" },
           { text: "ADR", link: "/en/adr/" },
         ],

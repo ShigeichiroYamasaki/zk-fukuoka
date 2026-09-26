@@ -16,6 +16,7 @@
 | シラバス | [docs/learn/index.md](./docs/learn/index.md) |
 | 授業別インデックス | [docs/learn/sessions.md](./docs/learn/sessions.md) |
 | トピック別インデックス | [docs/learn/topics.md](./docs/learn/topics.md) |
+| 演習・ツール・マニュアル | [docs/exercises/](./docs/exercises/) |
 | ホワイトペーパー | [docs/whitepaper.md](./docs/whitepaper.md) |
 | ADR | [docs/adr/](./docs/adr/) |
 | 英語版 | [docs/en/](./docs/en/) |

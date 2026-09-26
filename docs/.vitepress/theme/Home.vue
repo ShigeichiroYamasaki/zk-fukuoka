@@ -130,6 +130,7 @@ const t = (ja, english) => (en.value ? english : ja);
         <a :href="link('learn/')">{{ t('シラバス', 'Syllabus') }} ↗</a>
         <a :href="link('learn/sessions.html')">{{ t('各回の授業インデックス', 'Session index') }} ↗</a>
         <a :href="link('learn/topics.html')">{{ t('トピック別インデックス', 'Topic index') }} ↗</a>
+        <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
       </nav>
       <p class="lesson-scroll-hint">{{ t('一覧内をスクロールして全15回を確認できます。', 'Scroll within the list to browse all 15 sessions.') }}</p>
       <div class="lesson-directory" tabindex="0" role="region" :aria-label="t('全15回の授業資料一覧', 'All 15 lecture sessions')">

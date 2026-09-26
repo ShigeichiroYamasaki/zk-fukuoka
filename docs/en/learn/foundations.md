@@ -32,3 +32,5 @@ The second equation shows that the multiplicative inverse of 3 is 5. Zero has no
 How could someone check a computation without receiving its secret input? Revisit statements and witnesses, and the roles of prover and verifier, from Sessions 1–2 of the syllabus.
 
 [Back to the syllabus](./)
+
+[Exercises](../exercises/) · [Available tools](../exercises/tools) · [Basic operation manuals](../exercises/manuals)
