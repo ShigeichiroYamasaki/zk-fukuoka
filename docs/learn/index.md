@@ -68,6 +68,9 @@ outline: [2, 3]
 - **計算量的視点**:Schwartz-Zippel補題 — 多項式表現がなぜ確率的に効率よく検証可能な構造を与えるか。多項式恒等式検査というPCP/IOPの核心技法への接続
 
 ### 第4回:算術化の技法と計算量理論 {#session-4}
+
+[第4回の講義本文を読む →](./session-04)
+
 - R1CS(Rank-1 Constraint System)、QAP(Quadratic Arithmetic Program)、AIR(Algebraic Intermediate Representation)
 - **計算量的視点**:Cook-Levin定理によるCircuit-SATへの帰着、回路計算量クラス(NC, P)との関係。「一般計算を多項式制約に翻訳する」ことの理論的裏付け
 
@@ -126,4 +129,4 @@ outline: [2, 3]
 
 ## 補助教材
 
-[有限体の導入演習](./foundations) — 第3回に関連する短い補助教材です。第1〜3回の講義原稿を公開しています。第4〜15回の本編教材は今後整備します。
+[有限体の導入演習](./foundations) — 第3回に関連する短い補助教材です。第1〜4回の講義原稿を公開しています。第5〜15回の本編教材は今後整備します。

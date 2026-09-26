@@ -68,6 +68,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - **Complexity-theoretic perspective:** The Schwartz–Zippel lemma — why polynomial representations provide structure that can be checked efficiently with randomness. Connect polynomial identity testing to core techniques in PCPs and IOPs.
 
 ### Session 4: Arithmetization techniques and complexity theory {#session-4}
+
+[Read the Session 4 lecture manuscript →](./session-04)
+
 - R1CS (Rank-1 Constraint System), QAP (Quadratic Arithmetic Program), and AIR (Algebraic Intermediate Representation).
 - **Complexity-theoretic perspective:** Reduction to Circuit-SAT via the Cook–Levin theorem and relationships with circuit complexity classes (NC, P). The theoretical basis for translating general computations into polynomial constraints.
 
@@ -126,4 +129,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–3 are available; materials for Sessions 4–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–4 are available; materials for Sessions 5–15 will be developed later.

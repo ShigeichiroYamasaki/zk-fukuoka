@@ -4,8 +4,8 @@ prev:
   text: 第2回 · ゼロ知識性とウィットネスの一般化
   link: /learn/session-02
 next:
-  text: 第4回 · 算術化の技法と計算量理論（シラバス）
-  link: /learn/#session-4
+  text: 第4回 · 算術化の技法と計算量理論
+  link: /learn/session-04
 ---
 
 # 第3回:有限体・多項式の代数と確率的検査

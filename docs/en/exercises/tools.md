@@ -20,4 +20,4 @@ Begin with the calculations in the [introductory finite-field exercise](../learn
 | [Circom](https://github.com/iden3/circom) | Write arithmetic circuits and generate constraints and witness-calculation code | Local installation | [Installation and circuit creation](./manuals#circuits) |
 | [snarkjs](https://github.com/iden3/snarkjs) | Generate and verify zero-knowledge proofs | Node.js command line or integration into a browser application | [Proof generation and verification](./manuals#proofs) |
 
-Related syllabus topics include [Session 4: Arithmetization](../learn/#session-4) and [Session 11: Groth16](../learn/#session-11). ZK Fukuoka circuit exercises will be added later; the linked official tutorials are available now.
+Related syllabus topics include [Session 4: Arithmetization](../learn/session-04) and [Session 11: Groth16](../learn/#session-11). ZK Fukuoka circuit exercises will be added later; the linked official tutorials are available now.

@@ -4,8 +4,8 @@ prev:
   text: Session 2 · Zero-knowledge and the generalization of witnesses
   link: /en/learn/session-02
 next:
-  text: Session 4 · Arithmetization techniques and complexity theory (syllabus)
-  link: /en/learn/#session-4
+  text: Session 4 · Arithmetization techniques and complexity theory
+  link: /en/learn/session-04
 ---
 
 # Session 3: Algebra of finite fields and polynomials; probabilistic checking

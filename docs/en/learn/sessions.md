@@ -1,6 +1,6 @@
 # Session index
 
-Browse all 15 sessions in curriculum order. Sessions 1–3 link to their lecture manuscripts. Sessions 4–15 link to their syllabus sections; their full lesson materials are in preparation.
+Browse all 15 sessions in curriculum order. Sessions 1–4 link to their lecture manuscripts. Sessions 5–15 link to their syllabus sections; their full lesson materials are in preparation.
 
 [Browse by topic](./topics) · [Read the syllabus](./)
 
@@ -12,7 +12,7 @@ Browse all 15 sessions in curriculum order. Sessions 1–3 link to their lecture
 ## Act II · Tools
 
 - [Session 3: Algebra of finite fields and polynomials; probabilistic checking](./session-03)
-- [Session 4: Arithmetization techniques and complexity theory](./#session-4)
+- [Session 4: Arithmetization techniques and complexity theory](./session-04)
 - [Session 5: Error-correcting codes and the information-theoretic perspective](./#session-5)
 - [Session 6: Low-degree testing and soundness amplification](./#session-6)
 - [Session 7: Elliptic curves and pairings](./#session-7)

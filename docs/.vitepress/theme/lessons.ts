@@ -22,7 +22,7 @@ export const lessons = [
     "number": 4,
     "ja": "算術化の技法と計算量理論",
     "en": "Arithmetization techniques and complexity theory",
-    "material": null
+    "material": "learn/session-04.html"
   },
   {
     "number": 5,

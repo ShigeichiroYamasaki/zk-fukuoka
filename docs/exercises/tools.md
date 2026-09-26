@@ -20,4 +20,4 @@
 | [Circom](https://github.com/iden3/circom) | 算術回路を記述し、制約やウィットネス計算用のコードを生成する | ローカル導入 | [導入・回路作成の手順](./manuals#circuits) |
 | [snarkjs](https://github.com/iden3/snarkjs) | ゼロ知識証明の生成・検証を試す | Node.jsのコマンドライン、またはブラウザーへの組み込み | [証明の生成・検証の手順](./manuals#proofs) |
 
-関連する学習項目は、[第4回・算術化](../learn/#session-4)と[第11回・Groth16](../learn/#session-11)です。ZK Fukuoka独自の回路演習は今後追加します。現在はリンク先の公式教材を利用できます。
+関連する学習項目は、[第4回・算術化](../learn/session-04)と[第11回・Groth16](../learn/#session-11)です。ZK Fukuoka独自の回路演習は今後追加します。現在はリンク先の公式教材を利用できます。

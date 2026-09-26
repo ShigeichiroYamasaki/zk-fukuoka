@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–3 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–4 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -31,9 +31,9 @@ Find relevant sessions by topic across the three acts. Sessions 1–3 link to th
 | --- | --- |
 | Finite fields, extension fields, polynomial rings | [Session 3](./session-03) |
 | Lagrange interpolation, Schwartz–Zippel, polynomial identity testing | [Session 3](./session-03) |
-| Arithmetization and R1CS | [Session 2](./session-02) / [Session 4](./#session-4) |
-| QAP | [Session 4](./#session-4) / [Session 11](./#session-11) |
-| AIR | [Session 4](./#session-4) / [Session 13](./#session-13) |
+| Arithmetization and R1CS | [Session 2](./session-02) / [Session 4](./session-04) |
+| QAP | [Session 4](./session-04) / [Session 11](./#session-11) |
+| AIR | [Session 4](./session-04) / [Session 13](./#session-13) |
 
 [Supplement · An introductory finite-field exercise](./foundations)
 
@@ -41,7 +41,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–3 link to th
 
 | Topic | Related sessions |
 | --- | --- |
-| Cook–Levin, Circuit-SAT, NC, P | [Session 4](./#session-4) |
+| Cook–Levin, Circuit-SAT, NC, P | [Session 4](./session-04) |
 | The PCP theorem and hardness of approximation | [Session 10](./#session-10) |
 | IOPs and probabilistic checking | [Session 3](./session-03) / [Session 10](./#session-10) |
 | Mapping complexity-theoretic results to protocols | [Session 14](./#session-14) |
