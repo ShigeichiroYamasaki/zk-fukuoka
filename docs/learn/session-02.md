@@ -4,8 +4,8 @@ prev:
   text: 第1回 · 証明とは何か
   link: /learn/session-01
 next:
-  text: 第3回 · 有限体・多項式の代数と確率的検査（シラバス）
-  link: /learn/#session-3
+  text: 第3回 · 有限体・多項式の代数と確率的検査
+  link: /learn/session-03
 ---
 
 # 第2回:ゼロ知識性とウィットネスの一般化

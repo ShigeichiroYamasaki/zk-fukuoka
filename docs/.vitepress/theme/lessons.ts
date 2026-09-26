@@ -16,7 +16,7 @@ export const lessons = [
     "number": 3,
     "ja": "有限体・多項式の代数と確率的検査",
     "en": "Algebra of finite fields and polynomials; probabilistic checking",
-    "material": null
+    "material": "learn/session-03.html"
   },
   {
     "number": 4,

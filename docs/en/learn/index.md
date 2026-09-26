@@ -61,6 +61,9 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 Each session makes explicit both the cryptographic perspective (connections to security definitions and hardness assumptions) and the complexity-theoretic perspective (connections to complexity classes and the power of proofs), alongside the mathematical tools.
 
 ### Session 3: Algebra of finite fields and polynomials; probabilistic checking {#session-3}
+
+[Read the Session 3 lecture manuscript →](./session-03)
+
 - Finite fields $\mathbb{F}_p$, extension fields, polynomial rings $\mathbb{F}_p[X]$, and Lagrange interpolation.
 - **Complexity-theoretic perspective:** The Schwartz–Zippel lemma — why polynomial representations provide structure that can be checked efficiently with randomness. Connect polynomial identity testing to core techniques in PCPs and IOPs.
 
@@ -123,4 +126,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–2 are available; materials for Sessions 3–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–3 are available; materials for Sessions 4–15 will be developed later.

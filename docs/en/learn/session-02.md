@@ -4,8 +4,8 @@ prev:
   text: Session 1 · What is a proof?
   link: /en/learn/session-01
 next:
-  text: Session 3 · Finite fields, polynomials, and probabilistic checking (syllabus)
-  link: /en/learn/#session-3
+  text: Session 3 · Finite fields, polynomials, and probabilistic checking
+  link: /en/learn/session-03
 ---
 
 # Session 2: Zero-knowledge and the generalization of witnesses

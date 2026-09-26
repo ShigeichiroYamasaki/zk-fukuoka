@@ -1,6 +1,6 @@
 # Supplement · An introductory finite-field exercise
 
-A short supplementary exercise related to [Session 3 of the syllabus](./#session-3).
+A short supplementary exercise related to [Session 3](./session-03).
 
 ## Start here
 
