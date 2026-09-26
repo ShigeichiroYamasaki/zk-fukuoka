@@ -138,3 +138,22 @@ PAGES_BASE_PATH=/zk-fukuoka/ npm run docs:preview
 通常は `http://localhost:4173/zk-fukuoka/` で確認できます。ポートが使用中の場合はターミナルに表示された URL を使用してください。
 
 `node_modules/` と `docs/.vitepress/dist/`、`docs/.vitepress/cache/` は生成物で、Git 管理から除外しています。編集・コミットするのは原本です。
+
+## 8. 日本語の訳語
+
+日本語の本文・見出し・トピック名・リンク表示・ナビゲーションには、次の訳語を使用します。英語版と参考文献の原題は原語で記載します。
+
+| 原語・旧表記 | 統一する訳語 |
+| --- | --- |
+| knowledge extraction | 知識の抽出 |
+| knowledge soundness | 知識の健全性 |
+| witness / 証人 | ウィットネス |
+| completeness | 完全性 |
+| soundness error | 健全性誤差 |
+| soundness amplification | 健全性増幅 |
+| soundness | 健全性 |
+| extractor / 抽出器 | 抽出者 |
+| simulator paradigm | シミュレータパラダイム |
+| trusted setup / 信頼設定 | トラステッドセットアップ |
+
+見出しを変更する場合は、文書内・文書間のアンカーリンクも確認してください。

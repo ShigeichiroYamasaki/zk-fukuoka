@@ -20,8 +20,8 @@
 | --- | --- |
 | 対話型証明・Arthur–Merlin・IP = PSPACE | [第1回](./session-01) |
 | 完全性・健全性・Proof と Argument | [第1回](./session-01) / [第14回](./#session-14) |
-| ゼロ知識性・simulator・識別不可能性 | [第2回](./session-02) / [第14回](./#session-14) |
-| Knowledge soundness・extractor | [第2回](./session-02) |
+| ゼロ知識性・シミュレータパラダイム・識別不可能性 | [第2回](./session-02) / [第14回](./#session-14) |
+| 知識の健全性・抽出者 | [第2回](./session-02) |
 | ウィットネス・NP関係・Schnorr・Chaum–Pedersen | [第2回](./session-02) |
 | 表現力・対話性・簡潔性 | [第2回](./session-02) / [第15回](./#session-15) |
 
@@ -87,7 +87,7 @@
 | Groth16・ペアリングとQAP | [第11回](./#session-11) |
 | PLONK・permutation argument・カスタムゲート | [第12回](./#session-12) |
 | STARK・FRIとAIR | [第13回](./#session-13) |
-| Trusted setup・universal setup・透明性 | [第11回](./#session-11) / [第12回](./#session-12) / [第13回](./#session-13) |
+| トラステッドセットアップ・universal setup・透明性 | [第11回](./#session-11) / [第12回](./#session-12) / [第13回](./#session-13) |
 | Groth16 / PLONK / STARK の統合的比較 | [第14回](./#session-14) |
 
 ## 再帰・Folding・発展の方向 {#research}

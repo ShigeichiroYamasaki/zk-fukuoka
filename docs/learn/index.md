@@ -37,14 +37,14 @@ outline: [2, 3]
 - 計算量理論的動機:Arthur-Merlinゲーム、IP = PSPACE定理を結果として提示
 - 暗号学的動機:Goldwasser-Micali-Rackoff(1985)の問題設定、パスワード認証やグラフ同型性を具体例に
 - 二つの動機が対話型証明系という同じ枠組みに合流することを強調
-- completeness / soundness の形式化、Proof vs Argument の区別
+- 完全性 / 健全性 の形式化、Proof vs Argument の区別
 
 ### 第2回:ゼロ知識性とウィットネスの一般化 {#session-2}
 
 [第2回の講義本文を読む →](./session-02)
 
-- simulator paradigmによるゼロ知識性の形式的定義、識別不可能性の階層
-- knowledge soundnessとextractorの概念
+- シミュレータパラダイムによるゼロ知識性の形式的定義、識別不可能性の階層
+- 知識の健全性と抽出者の概念
 - 単純なウィットネス(離散対数などの代数的関係)と一般のNP関係(任意の計算)の質的な差
 - Schnorr型プロトコルが群の準同型性という構造に直接乗ることで成立している点の確認 → 一般計算には利用できる代数的構造がない → 算術化(arithmetization)の必然性
 - 表現力(ウィットネスの一般性)× 効率性(対話性・簡潔性)の2軸マトリクス、簡潔性が必須要件になる理由
@@ -74,11 +74,11 @@ outline: [2, 3]
 ### 第5回:誤り訂正符号と情報理論的視点 {#session-5}
 - Reed-Solomon符号、最小距離、誤り訂正能力
 - **情報理論的視点**:Shannon限界とHamming限界の対比、list decodingの考え方
-- 符号のパラメータが後の健全性(soundness)の定量的評価にどう効いてくるかを予告
+- 符号のパラメータが後の健全性の定量的評価にどう効いてくるかを予告
 
 ### 第6回:Low-Degree Testingと健全性増幅 {#session-6}
 - FRI(Fast Reed-Solomon IOP of Proximity)の再帰的折り畳み構造
-- **暗号学的視点**:soundness amplificationの一般論、rewindingやforking lemmaといった証明技法。健全性誤差をどう定量的に抑えるか
+- **暗号学的視点**:健全性増幅の一般論、rewindingやforking lemmaといった証明技法。健全性誤差をどう定量的に抑えるか
 
 ### 第7回:楕円曲線とペアリング {#session-7}
 - 楕円曲線群の定義、双線形ペアリング $e: G_1 \times G_2 \to G_T$、ペアリングフレンドリーな曲線(BN254, BLS12-381)
@@ -103,18 +103,18 @@ outline: [2, 3]
 
 ### 第11回:Groth16 {#session-11}
 - ペアリングとQAPを組み合わせて簡潔性をどう達成したか
-- なぜ信頼設定(trusted setup)が必要になったか
+- なぜトラステッドセットアップが必要になったか
 
 ### 第12回:PLONK {#session-12}
 - universal setupへの動機
 - permutation argumentの導入経緯、カスタムゲートの意義
 
 ### 第13回:STARK {#session-13}
-- trusted setup排除という設計目標からFRI/AIRがどう要請されたか
+- トラステッドセットアップ排除という設計目標からFRI/AIRがどう要請されたか
 - 透明性(transparency)とのトレードオフ
 
 ### 第14回:統合的視点 — 幕I〜IIIの往還 {#session-14}
-- 幕Iで定義したcompleteness/soundness/zero-knowledgeを、Groth16/PLONK/STARKそれぞれがどう満たしているかを照合
+- 幕Iで定義した完全性/健全性/zero-knowledgeを、Groth16/PLONK/STARKそれぞれがどう満たしているかを照合
 - 幕IIで導入した暗号学的仮定・計算量理論的結果が、各プロトコルのどこで効いているかを一覧化して振り返る
 
 ### 第15回:発展の方向性 {#session-15}
