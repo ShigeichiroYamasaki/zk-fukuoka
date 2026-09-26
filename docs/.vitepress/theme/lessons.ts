@@ -52,7 +52,7 @@ export const lessons = [
     "number": 9,
     "ja": "Fiat-Shamir変換とROMの功罪",
     "en": "The Fiat–Shamir transform and the strengths and weaknesses of the ROM",
-    "material": null
+    "material": "learn/session-09.html"
   },
   {
     "number": 10,

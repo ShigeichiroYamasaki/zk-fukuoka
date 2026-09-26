@@ -4,8 +4,8 @@ prev:
   text: 第7回 · 楕円曲線とペアリング
   link: /learn/session-07
 next:
-  text: 第9回 · Fiat-Shamir変換とROMの功罪（シラバス）
-  link: /learn/#session-9
+  text: 第9回 · Fiat-Shamir変換とROMの功罪
+  link: /learn/session-09
 ---
 
 # 第8回:多項式コミットメントと暗号学的コミットメントの理論

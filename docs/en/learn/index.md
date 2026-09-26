@@ -104,6 +104,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - **Cryptographic perspective:** Formal definitions of binding and hiding, and their relationship to security proofs for KZG and FRI-based constructions.
 
 ### Session 9: The Fiat–Shamir transform and the strengths and weaknesses of the ROM {#session-9}
+
+[Read the Session 9 lecture manuscript →](./session-09)
+
 - Transforming interactive protocols into non-interactive ones.
 - **Cryptographic perspective:** Security proofs in the Random Oracle Model and their limitations, including critiques of the ROM heuristic and the existence of counterexamples.
 
@@ -141,4 +144,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–8 are available; materials for Sessions 9–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–9 are available; materials for Sessions 10–15 will be developed later.

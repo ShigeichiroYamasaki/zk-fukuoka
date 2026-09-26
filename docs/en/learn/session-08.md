@@ -4,8 +4,8 @@ prev:
   text: Session 7 · Elliptic curves and pairings
   link: /en/learn/session-07
 next:
-  text: Session 9 · The Fiat–Shamir transform and the merits and limits of ROM (syllabus)
-  link: /en/learn/#session-9
+  text: Session 9 · The Fiat–Shamir transform and the merits and limits of ROM
+  link: /en/learn/session-09
 ---
 
 # Session 8: Polynomial commitments and cryptographic commitment theory

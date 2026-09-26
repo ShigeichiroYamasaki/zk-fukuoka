@@ -1,6 +1,6 @@
 # Session index
 
-Browse all 15 sessions in curriculum order. Sessions 1–8 link to their lecture manuscripts. Sessions 9–15 link to their syllabus sections; their full lesson materials are in preparation.
+Browse all 15 sessions in curriculum order. Sessions 1–9 link to their lecture manuscripts. Sessions 10–15 link to their syllabus sections; their full lesson materials are in preparation.
 
 [Browse by topic](./topics) · [Read the syllabus](./)
 
@@ -17,7 +17,7 @@ Browse all 15 sessions in curriculum order. Sessions 1–8 link to their lecture
 - [Session 6: Low-degree testing and soundness amplification](./session-06)
 - [Session 7: Elliptic curves and pairings](./session-07)
 - [Session 8: Polynomial commitments and the theory of cryptographic commitments](./session-08)
-- [Session 9: The Fiat–Shamir transform and the strengths and weaknesses of the ROM](./#session-9)
+- [Session 9: The Fiat–Shamir transform and the strengths and weaknesses of the ROM](./session-09)
 - [Session 10: The PCP theorem and the IOP framework — a complexity-theoretic synthesis](./#session-10)
 
 ## Act III · Integration

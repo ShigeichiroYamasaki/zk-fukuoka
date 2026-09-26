@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–8 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–9 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -77,8 +77,8 @@ Find relevant sessions by topic across the three acts. Sessions 1–8 link to th
 | --- | --- |
 | Polynomial commitments and KZG | [Session 8](./session-08) |
 | Binding and hiding | [Session 8](./session-08) |
-| The Fiat–Shamir transform | [Session 2](./session-02) / [Session 9](./#session-9) |
-| The Random Oracle Model; security proofs and limitations | [Session 9](./#session-9) |
+| The Fiat–Shamir transform | [Session 2](./session-02) / [Session 9](./session-09) |
+| The Random Oracle Model; security proofs and limitations | [Session 9](./session-09) |
 
 ## Protocols & design comparisons {#protocols}
 
