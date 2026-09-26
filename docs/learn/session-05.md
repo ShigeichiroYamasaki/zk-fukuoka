@@ -4,8 +4,8 @@ prev:
   text: 第4回 · 算術化の技法と計算量理論
   link: /learn/session-04
 next:
-  text: 第6回 · Low-Degree Testingと健全性増幅（シラバス）
-  link: /learn/#session-6
+  text: 第6回 · Low-Degree Testingと健全性増幅
+  link: /learn/session-06
 ---
 
 # 第5回:誤り訂正符号と情報理論的視点

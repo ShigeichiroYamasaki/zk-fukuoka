@@ -15,6 +15,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Session 3 · Finite fields and polynomials" : "第3回 · 有限体・多項式と確率的検査", link: p + "learn/session-03" },
         { text: en ? "Session 4 · Arithmetization" : "第4回 · 算術化の技法と計算量理論", link: p + "learn/session-04" },
         { text: en ? "Session 5 · Error-correcting codes" : "第5回 · 誤り訂正符号と情報理論的視点", link: p + "learn/session-05" },
+        { text: en ? "Session 6 · Low-degree testing and soundness amplification" : "第6回 · Low-Degree Testingと健全性増幅", link: p + "learn/session-06" },
         {
           text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",

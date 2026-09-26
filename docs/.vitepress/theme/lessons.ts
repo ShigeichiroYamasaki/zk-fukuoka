@@ -34,7 +34,7 @@ export const lessons = [
     "number": 6,
     "ja": "Low-Degree Testingと健全性増幅",
     "en": "Low-degree testing and soundness amplification",
-    "material": null
+    "material": "learn/session-06.html"
   },
   {
     "number": 7,

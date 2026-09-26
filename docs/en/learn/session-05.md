@@ -4,8 +4,8 @@ prev:
   text: Session 4 · Arithmetization techniques and complexity theory
   link: /en/learn/session-04
 next:
-  text: Session 6 · Low-degree testing and soundness amplification (syllabus)
-  link: /en/learn/#session-6
+  text: Session 6 · Low-degree testing and soundness amplification
+  link: /en/learn/session-06
 ---
 
 # Session 5: Error-correcting codes and the information-theoretic perspective

@@ -1,6 +1,6 @@
 # Session index
 
-Browse all 15 sessions in curriculum order. Sessions 1–5 link to their lecture manuscripts. Sessions 6–15 link to their syllabus sections; their full lesson materials are in preparation.
+Browse all 15 sessions in curriculum order. Sessions 1–6 link to their lecture manuscripts. Sessions 7–15 link to their syllabus sections; their full lesson materials are in preparation.
 
 [Browse by topic](./topics) · [Read the syllabus](./)
 
@@ -14,7 +14,7 @@ Browse all 15 sessions in curriculum order. Sessions 1–5 link to their lecture
 - [Session 3: Algebra of finite fields and polynomials; probabilistic checking](./session-03)
 - [Session 4: Arithmetization techniques and complexity theory](./session-04)
 - [Session 5: Error-correcting codes and the information-theoretic perspective](./session-05)
-- [Session 6: Low-degree testing and soundness amplification](./#session-6)
+- [Session 6: Low-degree testing and soundness amplification](./session-06)
 - [Session 7: Elliptic curves and pairings](./#session-7)
 - [Session 8: Polynomial commitments and the theory of cryptographic commitments](./#session-8)
 - [Session 9: The Fiat–Shamir transform and the strengths and weaknesses of the ROM](./#session-9)

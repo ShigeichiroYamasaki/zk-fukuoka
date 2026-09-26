@@ -15,6 +15,7 @@
 | 第3回の講義本文 | [docs/learn/session-03.md](./docs/learn/session-03.md) |
 | 第4回の講義本文 | [docs/learn/session-04.md](./docs/learn/session-04.md) |
 | 第5回の講義本文 | [docs/learn/session-05.md](./docs/learn/session-05.md) |
+| 第6回の講義本文 | [docs/learn/session-06.md](./docs/learn/session-06.md) |
 | シラバス | [docs/learn/index.md](./docs/learn/index.md) |
 | 授業別インデックス | [docs/learn/sessions.md](./docs/learn/sessions.md) |
 | トピック別インデックス | [docs/learn/topics.md](./docs/learn/topics.md) |
@@ -49,7 +50,7 @@ git diff --check
 
 ## 現在の教材
 
-2026/09/07 付の Shigeichiro Yamasaki によるシラバス案をもとにした、三幕・全15回の構成です。第1〜5回の講義本文と英語訳、有限体の補助教材を公開しています。第6〜15回の本編教材は準備中です。日本語と英語は対応するファイルをそれぞれ編集します。
+2026/09/07 付の Shigeichiro Yamasaki によるシラバス案をもとにした、三幕・全15回の構成です。第1〜6回の講義本文と英語訳、有限体の補助教材を公開しています。第7〜15回の本編教材は準備中です。日本語と英語は対応するファイルをそれぞれ編集します。
 
 数式は `markdown-it-mathjax3` でビルド時に描画します。サイトの構想・運営方針には設立準備段階の草案が含まれます。
 

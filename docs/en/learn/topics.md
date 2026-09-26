@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–5 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–6 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -57,9 +57,9 @@ Find relevant sessions by topic across the three acts. Sessions 1–5 link to th
 
 | Topic | Related sessions |
 | --- | --- |
-| Low-degree testing, FRI, recursive folding | [Session 6](./#session-6) |
-| Soundness amplification and soundness error | [Session 5](./session-05) / [Session 6](./#session-6) |
-| Rewinding and the forking lemma | [Session 6](./#session-6) |
+| Low-degree testing, FRI, recursive folding | [Session 6](./session-06) |
+| Soundness amplification and soundness error | [Session 5](./session-05) / [Session 6](./session-06) |
+| Rewinding and the forking lemma | [Session 6](./session-06) |
 | FRI-based commitments and integration into STARKs | [Session 8](./#session-8) / [Session 13](./#session-13) |
 
 ## Elliptic curves, pairings & hardness assumptions {#curves}

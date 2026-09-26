@@ -83,6 +83,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - Preview how code parameters affect later quantitative soundness analysis.
 
 ### Session 6: Low-degree testing and soundness amplification {#session-6}
+
+[Read the Session 6 lecture manuscript →](./session-06)
+
 - The recursive folding structure of FRI (Fast Reed–Solomon IOP of Proximity).
 - **Cryptographic perspective:** General principles of soundness amplification and proof techniques such as rewinding and the forking lemma. How to bound soundness error quantitatively.
 
@@ -132,4 +135,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–5 are available; materials for Sessions 6–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–6 are available; materials for Sessions 7–15 will be developed later.
