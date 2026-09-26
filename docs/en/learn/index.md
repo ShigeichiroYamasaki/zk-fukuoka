@@ -97,6 +97,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - **Cryptographic perspective:** The hierarchy of hardness assumptions such as discrete logarithm and q-SDH; the idea of reductions. What the distinction between standard and non-standard assumptions means.
 
 ### Session 8: Polynomial commitments and the theory of cryptographic commitments {#session-8}
+
+[Read the Session 8 lecture manuscript →](./session-08)
+
 - KZG (Kate) commitments and FRI-based commitments.
 - **Cryptographic perspective:** Formal definitions of binding and hiding, and their relationship to security proofs for KZG and FRI-based constructions.
 
@@ -138,4 +141,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–7 are available; materials for Sessions 8–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–8 are available; materials for Sessions 9–15 will be developed later.

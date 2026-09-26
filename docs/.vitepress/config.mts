@@ -17,6 +17,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Session 5 · Error-correcting codes" : "第5回 · 誤り訂正符号と情報理論的視点", link: p + "learn/session-05" },
         { text: en ? "Session 6 · Low-degree testing and soundness amplification" : "第6回 · Low-Degree Testingと健全性増幅", link: p + "learn/session-06" },
         { text: en ? "Session 7 · Elliptic curves and pairings" : "第7回 · 楕円曲線とペアリング", link: p + "learn/session-07" },
+        { text: en ? "Session 8 · Polynomial commitments" : "第8回 · 多項式コミットメント", link: p + "learn/session-08" },
         {
           text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",

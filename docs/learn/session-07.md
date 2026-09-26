@@ -4,8 +4,8 @@ prev:
   text: 第6回 · Low-Degree Testingと健全性増幅
   link: /learn/session-06
 next:
-  text: 第8回 · 多項式コミットメントと暗号学的コミットメントの理論（シラバス）
-  link: /learn/#session-8
+  text: 第8回 · 多項式コミットメントと暗号学的コミットメントの理論
+  link: /learn/session-08
 ---
 
 # 第7回:楕円曲線とペアリング

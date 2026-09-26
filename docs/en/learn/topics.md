@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–7 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–8 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -60,7 +60,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–7 link to th
 | Low-degree testing, FRI, recursive folding | [Session 6](./session-06) |
 | Soundness amplification and soundness error | [Session 5](./session-05) / [Session 6](./session-06) |
 | Rewinding and the forking lemma | [Session 6](./session-06) |
-| FRI-based commitments and integration into STARKs | [Session 8](./#session-8) / [Session 13](./#session-13) |
+| FRI-based commitments and integration into STARKs | [Session 8](./session-08) / [Session 13](./#session-13) |
 
 ## Elliptic curves, pairings & hardness assumptions {#curves}
 
@@ -75,8 +75,8 @@ Find relevant sessions by topic across the three acts. Sessions 1–7 link to th
 
 | Topic | Related sessions |
 | --- | --- |
-| Polynomial commitments and KZG | [Session 8](./#session-8) |
-| Binding and hiding | [Session 8](./#session-8) |
+| Polynomial commitments and KZG | [Session 8](./session-08) |
+| Binding and hiding | [Session 8](./session-08) |
 | The Fiat–Shamir transform | [Session 2](./session-02) / [Session 9](./#session-9) |
 | The Random Oracle Model; security proofs and limitations | [Session 9](./#session-9) |
 

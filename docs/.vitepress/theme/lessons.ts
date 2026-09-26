@@ -46,7 +46,7 @@ export const lessons = [
     "number": 8,
     "ja": "多項式コミットメントと暗号学的コミットメントの理論",
     "en": "Polynomial commitments and the theory of cryptographic commitments",
-    "material": null
+    "material": "learn/session-08.html"
   },
   {
     "number": 9,

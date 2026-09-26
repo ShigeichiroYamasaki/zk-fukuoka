@@ -4,8 +4,8 @@ prev:
   text: Session 6 · Low-degree testing and soundness amplification
   link: /en/learn/session-06
 next:
-  text: Session 8 · Polynomial commitments and cryptographic commitment theory (syllabus)
-  link: /en/learn/#session-8
+  text: Session 8 · Polynomial commitments and cryptographic commitment theory
+  link: /en/learn/session-08
 ---
 
 # Session 7: Elliptic curves and pairings
