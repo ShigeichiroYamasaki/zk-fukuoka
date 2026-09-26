@@ -1,47 +1,57 @@
 # ZK Fukuoka
 
-福岡を拠点にゼロ知識証明技術者を育てるコミュニティの、日英 VitePress サイトです。設立準備中の構想・教材草案を含みます。
+福岡を拠点にゼロ知識証明技術者を育てるコミュニティの、日英 VitePress サイトです。講義・シラバス・ホワイトペーパー・ADR の原本を Markdown で Git 管理し、ローカルで編集できます。
 
-- 公開先: https://shigeichiroyamasaki.github.io/zk-fukuoka/
-- English: https://shigeichiroyamasaki.github.io/zk-fukuoka/en/
+- [公開サイト](https://shigeichiroyamasaki.github.io/zk-fukuoka/)
+- [English](https://shigeichiroyamasaki.github.io/zk-fukuoka/en/)
+- **[文書の編集・更新ガイド](./CONTRIBUTING.md)** — ローカルで開く方法、教材の追加、公開手順
 
-## Local development
+## 文書の原本
 
-Node.js 24 以上を使用します。
+| 文書 | 編集するファイル |
+| --- | --- |
+| 第1回の講義本文 | [docs/learn/session-01.md](./docs/learn/session-01.md) |
+| シラバス | [docs/learn/index.md](./docs/learn/index.md) |
+| 授業別インデックス | [docs/learn/sessions.md](./docs/learn/sessions.md) |
+| トピック別インデックス | [docs/learn/topics.md](./docs/learn/topics.md) |
+| ホワイトペーパー | [docs/whitepaper.md](./docs/whitepaper.md) |
+| ADR | [docs/adr/](./docs/adr/) |
+| 英語版 | [docs/en/](./docs/en/) |
+
+トップページの授業リンク・公開状態は [lessons.ts](./docs/.vitepress/theme/lessons.ts)、デザインは `docs/.vitepress/theme/` で管理します。
+
+## ローカルで編集する
+
+Node.js 24 以上を使用します。既存のローカルリポジトリをエディターで開くか、任意の場所に clone してください。
 
 ```sh
+git clone https://github.com/ShigeichiroYamasaki/zk-fukuoka.git
+cd zk-fukuoka
 npm ci
 npm run docs:dev
 ```
 
-## Production preview
+表示されたローカル URL を開き、Markdown を保存すると変更を確認できます。既存の作業フォルダーでは clone は不要です。
+
+## GitHub Pages に公開する
 
 ```sh
-PAGES_BASE_PATH=/zk-fukuoka/ GITHUB_REPOSITORY=ShigeichiroYamasaki/zk-fukuoka npm run docs:build
-npm run docs:preview
+npm run docs:build
+git diff --check
 ```
 
-Open http://localhost:4173/zk-fukuoka/ .
+確認後に変更をコミットして `main` に push すると、GitHub Actions が自動公開します。作業用ブランチでは Pull Request を経由できます。詳細と本番パスのプレビュー方法は [編集ガイド](./CONTRIBUTING.md)を参照してください。
 
-## Content
+## 現在の教材
 
-- `docs/index.md`: Japanese home
-- `docs/en/`: English counterparts
-- `docs/learn/index.md`: Syllabus, the learning entry point
-- `docs/whitepaper.md`: Community proposal
-- `docs/adr/`: Decisions and template
-- `docs/.vitepress/theme/`: Home design and language tabs
+2026/09/07 付の Shigeichiro Yamasaki によるシラバス案をもとにした、三幕・全15回の構成です。第1回の講義本文と英語訳、有限体の補助教材を公開しています。第2〜15回の本編教材は準備中です。日本語と英語は対応するファイルをそれぞれ編集します。
 
-Keep both language versions aligned. The syllabus follows Shigeichiro Yamasaki’s 2026/09/07 proposal: three acts and 15 sessions. The finite-field introduction is supplementary material for Session 3; the Session 1 lecture manuscript and its English translation are published, while materials for Sessions 2–15 are planned. Math notation is rendered at build time with markdown-it-mathjax3.
+数式は `markdown-it-mathjax3` でビルド時に描画します。サイトの構想・運営方針には設立準備段階の草案が含まれます。
 
-## GitHub Pages
+## デザインと保守
 
-Set repository Settings → Pages → Source to **GitHub Actions**. Push to `main` to build and deploy. Pull requests run the build without publishing. The workflow sets the `/zk-fukuoka/` base path. Update it if the repository or domain changes.
+トップページは Vue、文書ページは VitePress のナビゲーション・ローカル検索を使用します。Google Fonts を取得できない場合はシステムフォントに切り替わります。街並みと証明のイラストは SVG/CSS で作成した概念図です。
 
-## Design and maintenance
+設定の参考: [VitePress deployment](https://vitepress.dev/guide/deploy)、[internationalization](https://vitepress.dev/guide/i18n)。
 
-Responsive custom Vue home with default VitePress documentation navigation and local search. Google Fonts is optional; system fonts are used if unavailable. The skyline and proof illustration are original SVG/CSS; “proof verified” is a conceptual illustration, not an executed cryptographic proof.
-
-Implementation references: [VitePress deployment](https://vitepress.dev/guide/deploy), [internationalization](https://vitepress.dev/guide/i18n).
-
-Licensing for community content and contributions remains to be agreed. No open-source license grant is implied by publication alone.
+コンテンツと貢献に関するライセンスは今後決定します。公開のみをもってオープンソースライセンスの付与を意味するものではありません。
