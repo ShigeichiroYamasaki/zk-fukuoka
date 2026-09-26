@@ -4,8 +4,8 @@ prev:
   text: Session 3 · Finite fields, polynomials, and probabilistic checking
   link: /en/learn/session-03
 next:
-  text: Session 5 · Error-correcting codes and information theory (syllabus)
-  link: /en/learn/#session-5
+  text: Session 5 · Error-correcting codes and information theory
+  link: /en/learn/session-05
 ---
 
 # Session 4: Arithmetization techniques and complexity theory

@@ -4,8 +4,8 @@ prev:
   text: 第3回 · 有限体・多項式の代数と確率的検査
   link: /learn/session-03
 next:
-  text: 第5回 · 誤り訂正符号と情報理論的視点（シラバス）
-  link: /learn/#session-5
+  text: 第5回 · 誤り訂正符号と情報理論的視点
+  link: /learn/session-05
 ---
 
 # 第4回:算術化の技法と計算量理論

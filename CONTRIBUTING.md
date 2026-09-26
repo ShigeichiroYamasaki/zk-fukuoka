@@ -29,6 +29,7 @@ cd zk-fukuoka
 | 第2回の講義本文 | `docs/learn/session-02.md` | `docs/en/learn/session-02.md` |
 | 第3回の講義本文 | `docs/learn/session-03.md` | `docs/en/learn/session-03.md` |
 | 第4回の講義本文 | `docs/learn/session-04.md` | `docs/en/learn/session-04.md` |
+| 第5回の講義本文 | `docs/learn/session-05.md` | `docs/en/learn/session-05.md` |
 | シラバス | `docs/learn/index.md` | `docs/en/learn/index.md` |
 | 各回の授業インデックス | `docs/learn/sessions.md` | `docs/en/learn/sessions.md` |
 | トピック別インデックス | `docs/learn/topics.md` | `docs/en/learn/topics.md` |
@@ -84,16 +85,16 @@ npm run docs:dev
 
 ### 講義
 
-たとえば第5回を追加する場合:
+たとえば第6回を追加する場合:
 
-1. `docs/learn/session-05.md` と `docs/en/learn/session-05.md` を作成する。
-2. シラバスの第5回から講義本文へリンクを追加する。
+1. `docs/learn/session-06.md` と `docs/en/learn/session-06.md` を作成する。
+2. シラバスの第6回から講義本文へリンクを追加する。
 3. `sessions.md` と `topics.md` の該当リンクを講義本文へ変更する。
-4. `docs/.vitepress/theme/lessons.ts` の第5回の `material` を `"learn/session-05.html"` に変更する。トップページに「公開済み」と表示される。
+4. `docs/.vitepress/theme/lessons.ts` の第6回の `material` を `"learn/session-06.html"` に変更する。トップページに「公開済み」と表示される。
 5. 必要に応じて `config.mts` のサイドバーと、前後の講義の `prev`・`next` を更新する。
 6. 「準備中」などの案内を、実際の公開状況に合わせて日英とも更新する。
 
-文書間のリンクは既存の書き方に合わせます。Markdown の例は `[第5回](./session-05)`、数式はインラインに `$...$`、独立した数式に `$$...$$` を使用します。
+文書間のリンクは既存の書き方に合わせます。Markdown の例は `[第6回](./session-06)`、数式はインラインに `$...$`、独立した数式に `$$...$$` を使用します。
 
 ### ADR
 

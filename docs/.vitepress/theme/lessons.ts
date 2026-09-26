@@ -28,7 +28,7 @@ export const lessons = [
     "number": 5,
     "ja": "誤り訂正符号と情報理論的視点",
     "en": "Error-correcting codes and the information-theoretic perspective",
-    "material": null
+    "material": "learn/session-05.html"
   },
   {
     "number": 6,

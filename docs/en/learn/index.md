@@ -75,6 +75,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - **Complexity-theoretic perspective:** Reduction to Circuit-SAT via the Cook–Levin theorem and relationships with circuit complexity classes (NC, P). The theoretical basis for translating general computations into polynomial constraints.
 
 ### Session 5: Error-correcting codes and the information-theoretic perspective {#session-5}
+
+[Read the Session 5 lecture manuscript →](./session-05)
+
 - Reed–Solomon codes, minimum distance, and error-correction capability.
 - **Information-theoretic perspective:** Contrast Shannon and Hamming bounds; introduce list decoding.
 - Preview how code parameters affect later quantitative soundness analysis.
@@ -129,4 +132,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–4 are available; materials for Sessions 5–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–5 are available; materials for Sessions 6–15 will be developed later.
