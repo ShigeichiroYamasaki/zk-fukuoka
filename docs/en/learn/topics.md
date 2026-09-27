@@ -33,6 +33,7 @@ Updated: September 27, 2026
 
 | Topic | Lecture sections |
 | --- | --- |
+| Sets, membership, strings, languages and x ∈ L | [Prerequisite explanation](./terms/sets-and-languages) / [Session 1](./session-01) |
 | NP verifiers, witnesses and NP relations | [Session 1 §1.1](./session-01#_1-1-the-np-verifier-paradigm) / [Session 2 §4.2](./session-02#_4-2-general-witnesses-when-that-structure-is-absent) / [Explanation](./terms/np-relations) |
 | Interactive proofs, provers and verifiers | [Session 1 §4](./session-01#_4-the-convergence-of-the-two-motivations) / [Session 1 §5](./session-01#_5-a-formal-definition-of-interactive-proof-systems) |
 | Password authentication and graph isomorphism (motivating examples) | [Session 1 §3.2](./session-01#_3-2-building-intuition-with-examples) |

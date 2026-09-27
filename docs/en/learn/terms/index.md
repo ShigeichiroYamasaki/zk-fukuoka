@@ -24,3 +24,7 @@ The shared arithmetic example uses $x^3+x+5=35$ over $\mathbb F_{101}$. Integer 
 ## Work through one program
 
 [Balanced deposits and withdrawals → R1CS / QAP / AIR](../balance-arithmetization). Apply these terms to one program and reproduce the calculation in Python.
+
+## Before Session 1
+
+[Sets, membership and languages: reading x ∈ L](./sets-and-languages) introduces the notation before moving on to NP relations.

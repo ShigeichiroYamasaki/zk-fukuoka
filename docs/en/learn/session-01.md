@@ -16,7 +16,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1)
 
@@ -37,6 +37,8 @@ We define zero-knowledge in the next session. Before that, we reconsider checkin
 ### 1.1 The NP verifier paradigm
 
 First, consider how to check whether a claim is true. Even when checking the claim directly is difficult, information supporting it may allow us to check it efficiently. We call this information a witness.
+
+Before reading the formula, review **sets, elements, membership and formal languages**. Here $x\in L$ means that input x belongs to the set L of Yes instances. A language is a set of encoded inputs, not a natural language; $L\in\mathrm{NP}$ instead classifies the decision problem. See [Sets, membership and languages: reading x ∈ L](./terms/sets-and-languages) for examples and a step-by-step reading of the symbols.
 
 The verifier definition of NP formalizes this idea. A language $L \in \mathrm{NP}$ is one for which there exists a polynomial-time verification algorithm $V$ satisfying
 
