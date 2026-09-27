@@ -1,6 +1,6 @@
 # トピック別インデックス
 
-三幕を横断して、関心のあるトピックから関連する授業を探せます。第1〜12回のリンク先は講義本文、それ以外は現在のシラバス案です。第13〜15回の本編教材は準備中です。
+三幕を横断して、関心のあるトピックから関連する授業を探せます。第1〜13回のリンク先は講義本文、それ以外は現在のシラバス案です。第14〜15回の本編教材は準備中です。
 
 [各回の授業から探す](./sessions) · [シラバス全体を読む](./)
 
@@ -33,7 +33,7 @@
 | Lagrange補間・Schwartz–Zippel・多項式恒等式検査 | [第3回](./session-03) |
 | 算術化・R1CS | [第2回](./session-02) / [第4回](./session-04) |
 | QAP | [第4回](./session-04) / [第11回](./session-11) |
-| AIR | [第4回](./session-04) / [第13回](./#session-13) |
+| AIR | [第4回](./session-04) / [第13回](./session-13) |
 
 [補助教材 · 有限体の導入演習](./foundations)
 
@@ -60,7 +60,7 @@
 | Low-Degree Testing・FRI・再帰的折り畳み | [第6回](./session-06) |
 | 健全性増幅・健全性誤差 | [第5回](./session-05) / [第6回](./session-06) |
 | Rewinding・forking lemma | [第6回](./session-06) |
-| FRIベースのコミットメント・STARKへの統合 | [第8回](./session-08) / [第13回](./#session-13) |
+| FRIベースのコミットメント・STARKへの統合 | [第8回](./session-08) / [第13回](./session-13) |
 
 ## 楕円曲線・ペアリング・困難性仮定 {#curves}
 
@@ -86,8 +86,8 @@
 | --- | --- |
 | Groth16・ペアリングとQAP | [第11回](./session-11) |
 | PLONK・permutation argument・カスタムゲート | [第12回](./session-12) |
-| STARK・FRIとAIR | [第13回](./#session-13) |
-| トラステッドセットアップ・universal setup・透明性 | [第11回](./session-11) / [第12回](./session-12) / [第13回](./#session-13) |
+| STARK・FRIとAIR | [第13回](./session-13) |
+| トラステッドセットアップ・universal setup・透明性 | [第11回](./session-11) / [第12回](./session-12) / [第13回](./session-13) |
 | Groth16 / PLONK / STARK の統合的比較 | [第14回](./#session-14) |
 
 ## 再帰・Folding・発展の方向 {#research}

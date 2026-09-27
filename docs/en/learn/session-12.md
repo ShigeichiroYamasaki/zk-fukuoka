@@ -4,8 +4,8 @@ prev:
   text: Session 11 · Groth16
   link: /en/learn/session-11
 next:
-  text: Session 13 · STARK (syllabus)
-  link: /en/learn/#session-13
+  text: Session 13 · STARK
+  link: /en/learn/session-13
 ---
 
 # Session 12: PLONK

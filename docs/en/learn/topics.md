@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–12 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–13 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -33,7 +33,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–12 link to t
 | Lagrange interpolation, Schwartz–Zippel, polynomial identity testing | [Session 3](./session-03) |
 | Arithmetization and R1CS | [Session 2](./session-02) / [Session 4](./session-04) |
 | QAP | [Session 4](./session-04) / [Session 11](./session-11) |
-| AIR | [Session 4](./session-04) / [Session 13](./#session-13) |
+| AIR | [Session 4](./session-04) / [Session 13](./session-13) |
 
 [Supplement · An introductory finite-field exercise](./foundations)
 
@@ -60,7 +60,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–12 link to t
 | Low-degree testing, FRI, recursive folding | [Session 6](./session-06) |
 | Soundness amplification and soundness error | [Session 5](./session-05) / [Session 6](./session-06) |
 | Rewinding and the forking lemma | [Session 6](./session-06) |
-| FRI-based commitments and integration into STARKs | [Session 8](./session-08) / [Session 13](./#session-13) |
+| FRI-based commitments and integration into STARKs | [Session 8](./session-08) / [Session 13](./session-13) |
 
 ## Elliptic curves, pairings & hardness assumptions {#curves}
 
@@ -86,8 +86,8 @@ Find relevant sessions by topic across the three acts. Sessions 1–12 link to t
 | --- | --- |
 | Groth16; pairings and QAPs | [Session 11](./session-11) |
 | PLONK, permutation arguments, custom gates | [Session 12](./session-12) |
-| STARK; FRI and AIR | [Session 13](./#session-13) |
-| Trusted setup, universal setup, transparency | [Session 11](./session-11) / [Session 12](./session-12) / [Session 13](./#session-13) |
+| STARK; FRI and AIR | [Session 13](./session-13) |
+| Trusted setup, universal setup, transparency | [Session 11](./session-11) / [Session 12](./session-12) / [Session 13](./session-13) |
 | Integrated comparison of Groth16 / PLONK / STARK | [Session 14](./#session-14) |
 
 ## Recursion, folding & further directions {#research}

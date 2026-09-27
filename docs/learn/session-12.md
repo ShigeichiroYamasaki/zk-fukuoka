@@ -4,8 +4,8 @@ prev:
   text: 第11回 · Groth16
   link: /learn/session-11
 next:
-  text: 第13回 · STARK（シラバス）
-  link: /learn/#session-13
+  text: 第13回 · STARK
+  link: /learn/session-13
 ---
 
 # 第12回:PLONK

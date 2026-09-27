@@ -137,6 +137,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - The origins of the permutation argument and the significance of custom gates.
 
 ### Session 13: STARK {#session-13}
+
+[Read the Session 13 lecture manuscript →](./session-13)
+
 - How the design goal of eliminating trusted setup motivates FRI and AIR.
 - Trade-offs associated with transparency.
 
@@ -153,4 +156,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–12 are available; materials for Sessions 13–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–13 are available; materials for Sessions 14–15 will be developed later.
