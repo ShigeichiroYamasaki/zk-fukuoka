@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-04
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 3: Algebra of finite fields and polynomials; probabilistic checking
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -56,6 +60,8 @@ An irreducible polynomial over $\mathbb{F}_p$ defines an extension field $\mathb
 
 The nonzero elements $\mathbb{F}_p^*$ form a cyclic group of order $p-1$. Powers of a generator give structured evaluation points. A desired power-of-two subgroup requires its order to divide $p-1$. This condition matters when using NTTs to accelerate evaluation and interpolation.
 
+<StudyDiagram id="03-1" :en="true" />
+
 ---
 
 ## 3. Basics of polynomial rings
@@ -82,6 +88,8 @@ $$f(X) = \sum_{i=0}^{d} y_i \prod_{j \ne i} \frac{X - x_j}{x_i - x_j}.$$
 
 In this formula, each product is one at its designated point and zero at the other specified points. Weighting and adding these products gives the required values. **Given a degree bound and sufficiently many distinct points, coefficients and evaluation values specify the same polynomial.** Arithmetization will turn tables into polynomials; commitments will allow their values to be checked. Notice why both representations are useful.
 
+<StudyDiagram id="03-2" :en="true" />
+
 ---
 
 ## 4. The Schwartz–Zippel lemma
@@ -104,6 +112,8 @@ For one variable, $n=1$, this is exactly the fact from Section 3.2 that a polyno
 To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider extension fields or repetition.
 
 What becomes small here is the number of points checked. Computing an evaluation is not automatically cheap. The argument also fails if polynomials can be chosen after seeing the test point. A proof system must fix them first and authenticate the required evaluations.
+
+<StudyDiagram id="03-3" :en="true" />
 
 ### 4.4 The complexity-theoretic significance
 

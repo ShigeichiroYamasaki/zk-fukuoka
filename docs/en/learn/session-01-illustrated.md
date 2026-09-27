@@ -12,7 +12,10 @@ next:
 import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 </script>
 
-# Session 1: What is a proof? — Background and formalization of interactive proofs
+# Session 1: What is a proof? — Background and formalization of interactive proofs — Illustrated edition
+
+[Open the maintained Session 1 page](./session-01). The diagrams are now included in the main lecture.
+
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>

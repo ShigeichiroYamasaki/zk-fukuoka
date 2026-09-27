@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-06
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 5: Error-correcting codes and the information-theoretic perspective
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -66,6 +70,8 @@ This follows from the fact established in Session 3: a nonzero polynomial of deg
 
 For minimum distance $\delta$, changing at most $\lfloor(\delta-1)/2\rfloor$ positions around each codeword gives disjoint neighborhoods. This is why unique correction is possible. Reed–Solomon codes attain the Singleton bound for length $n$ and dimension $d$, making them MDS codes. Notice how distance determines the number of correctable errors.
 
+<StudyDiagram id="05-1" :en="true" />
+
 ---
 
 ## 3. The information-theoretic perspective: Shannon and Hamming bounds
@@ -82,6 +88,8 @@ The **Shannon model** specifies a probabilistic channel; independent symbol erro
 
 A verifier cannot assume that a prover’s errors are independent random noise. The prover may choose positions and values that are likely to pass inspection. We therefore need worst-case properties, such as distance from codewords. Randomizing the verifier’s queries is different from assuming the errors themselves are random.
 
+<StudyDiagram id="05-2" :en="true" />
+
 ---
 
 ## 4. List decoding: An advanced perspective
@@ -95,6 +103,8 @@ Beyond $(\delta-1)/2$ errors, the original codeword may not be uniquely determin
 For Reed–Solomon codes, algorithms such as Guruswami–Sudan support list decoding in a range related to the Johnson bound. FRI analysis also needs to bound how many low-degree polynomials can be nearby. This does not mean the verifier performs list decoding on every execution; properties of candidate counts and distance inform the soundness-error analysis.
 
 *We will not cover specific list-decoding algorithms today. The goal is to recognize the possibility of robust information recovery beyond unique decoding, and to understand that this idea supports later soundness analysis.*
+
+<StudyDiagram id="05-3" :en="true" />
 
 ---
 

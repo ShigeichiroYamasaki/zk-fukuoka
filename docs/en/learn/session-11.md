@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-12
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 11: Groth16
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -62,6 +66,8 @@ $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
 This represents a **product** of exponents in the target group $G_T$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
 
+<StudyDiagram id="11-1" :en="true" />
+
 ---
 
 ## 3. An outline of Groth16
@@ -90,6 +96,8 @@ The elements $[\alpha]_1,[\beta]_2,[\gamma]_2,[\delta]_2$ in this equation are p
 
 The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]_1,[\beta]_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
 
+<StudyDiagram id="11-2" :en="true" />
+
 ---
 
 ## 4. Why trusted setup is necessary
@@ -101,6 +109,8 @@ The construction depends on allowing use of public group elements while keeping 
 ### 4.2 The restriction of circuit-specific setup
 
 What must change when the circuit changes? Groth16’s keys contain information about its QAP, so a new circuit requires corresponding proving and verification keys. Shared preparation stages can exist, but a circuit-specific stage remains. Reducing that operational burden motivates the universal SRS studied with PLONK next time.
+
+<StudyDiagram id="11-3" :en="true" />
 
 ### 4.3 The security basis: the generic bilinear group model
 

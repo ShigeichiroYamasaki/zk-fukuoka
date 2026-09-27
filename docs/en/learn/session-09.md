@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-10
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 9: The Fiat–Shamir transform and the merits and limits of ROM
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -58,6 +62,8 @@ The prover is not the only party computing this hash. The verifier recomputes th
 
 The prover can choose commitments and inspect their hashes, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
 
+<StudyDiagram id="09-1" :en="true" />
+
 ---
 
 ## 3. The Random Oracle Model (ROM)
@@ -69,6 +75,8 @@ To model how responses to inputs are determined, treat the hash as an ideal rand
 - A query on a previously unseen input receives a uniformly random output.
 - Repeated queries on the same input always receive the same output, ensuring consistency.
 - All algorithms, including attackers, access $H$ only through queries and cannot inspect its internal representation.
+
+<StudyDiagram id="09-2" :en="true" />
 
 ### 3.2 The structure of a security proof in ROM
 
@@ -85,6 +93,8 @@ After proving security in ROM, ask exactly what was proved. The theorem concerns
 ### 4.2 Theoretical counterexamples
 
 Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete hash instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
+
+<StudyDiagram id="09-3" :en="true" />
 
 ### 4.3 Why ROM is still widely used
 

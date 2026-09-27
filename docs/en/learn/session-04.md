@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-05
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 4: Arithmetization techniques and complexity theory
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -85,6 +89,8 @@ Also check the **circuit correspondence**. Multiplication gates fit this constra
 
 Use the relation “I know $x$ satisfying $x^3+x+5=35$.” Rather than only substituting $x=3$, name intermediate values such as its square and cube, and write down which relationships must be checked. Include the final output condition of 35 to work through the full translation from computation to constraints.
 
+<StudyDiagram id="04-1" :en="true" />
+
 ---
 
 ## 4. QAP: Quadratic Arithmetic Program
@@ -103,6 +109,8 @@ Here, $Z(X)$ is the polynomial whose roots are the constraint evaluation points.
 
 The computation to be checked has not changed; the form of the check has. Vanishing at every constraint point becomes divisibility by a vanishing polynomial. With degree bounds, including on the quotient, and fixed polynomials, one can test this relation at a random point. Combining conditions into one equation is a step toward a proof system, not the entire security argument.
 
+<StudyDiagram id="04-2" :en="true" />
+
 ---
 
 ## 5. AIR: Algebraic Intermediate Representation
@@ -119,6 +127,8 @@ AIR imposes two types of constraints:
 - **Boundary constraints:** required values at particular rows, such as the initial or final state.
 
 Separate the roles of the two constraints. Correct transitions do not establish the intended computation if the starting or ending state is wrong. Interpolating columns turns both relations between adjacent times and values at specified times into polynomial conditions. Session 3’s interpolation again connects tables to polynomials.
+
+<StudyDiagram id="04-3" :en="true" />
 
 ### 5.3 Understanding AIR through comparison with R1CS/QAP
 

@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-14
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 13: STARK
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -39,6 +43,8 @@ Trusted setup retains public information while requiring secret erasure. MPC dis
 **Transparency** removes the need to generate, retain, or erase a secret setup trapdoor. Parameters follow public procedures, with public generation of any needed randomness. The point is removing dependence on a secret, not making every parameter random.
 
 We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does hash collision resistance alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
+
+<StudyDiagram id="13-1" :en="true" />
 
 ---
 
@@ -74,6 +80,8 @@ Connect the tools into a proving procedure. Pay particular attention to which ta
 
 For zero knowledge, random masking compatible with degree bounds and constraints must also prevent the opened trace evaluations and other messages from leaking witness information. Transparency and FRI do not automatically provide zero knowledge.
 
+<StudyDiagram id="13-2" :en="true" />
+
 ### 3.2 Verification cost and proof size
 
 Does fewer FRI stages mean proportionally smaller proofs? Besides values opened at each stage, the prover sends Merkle paths authenticating their membership in committed tables. Folding depth alone therefore does not determine proof size or verification cost.
@@ -89,6 +97,8 @@ With fixed security and coding parameters, representative constructions target p
 Align the fixed parameters before comparing systems. With groups and security parameters fixed, Groth16 and original KZG-based PLONK use constantly many proof elements even as the circuit grows. Public-input processing remains. Do not equate a constant-size proof with constant-time verification for every input size.
 
 The FRI-based STARKs studied here avoid trusted setup while incurring communication and verification costs for evaluations and authentication paths. **Compare setup, proof size, and verification cost for specified constructions and conditions.** This is not an impossibility theorem saying that transparent proofs must be larger, and Groth16 should not be classified as a KZG-based construction.
+
+<StudyDiagram id="13-3" :en="true" />
 
 ### 4.2 Post-quantum security
 

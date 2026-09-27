@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-03
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 2: Zero-knowledge and the generalization of witnesses
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -62,6 +66,8 @@ Here, $\approx$ denotes indistinguishability. Depending on how strong a requirem
 
 The comparison here is between distributions of the real view and simulator output. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
 
+<StudyDiagram id="02-1" :en="true" />
+
 ### 2.3 Checking the intuition
 
 If a transcript can be generated without the witness, could a dishonest prover do the same? Distinguish an output record from a live interaction with a verifier. For example, a Schnorr-type honest-verifier simulator can first choose a challenge and response, then derive a commitment satisfying the verification equation. A real prover commits before receiving the verifier’s challenge. The order differs. This intuition alone does not establish zero-knowledge against arbitrary malicious verifiers.
@@ -107,6 +113,8 @@ Read division as multiplication by an inverse in $\mathbb{Z}_q$. The challenge d
 
 **The algebraic structure of the relation becomes the structure of the protocol itself.** As the mathematical object changes—discrete logarithms, quadratic residues, and so on—we can design a tailored protocol for each case.
 
+<StudyDiagram id="02-2" :en="true" />
+
 ### 4.2 General witnesses: when that structure is absent
 
 Now extend the relation to a general program. Consider an NP relation, with bounded computation time and witness length, expressing knowledge of an input producing a specified output. A computation containing branches and comparisons need not come with a group relation to which Schnorr’s verification equation directly applies. We therefore need to translate the computation into a form we can check.
@@ -139,6 +147,8 @@ Separate the questions into **what can be expressed** and **how much interaction
 | **General NP relations (arbitrary computation)** | GMR-style general ZK (theoretical constructions) | Groth16 / PLONK / STARK |
 
 The message of this table is that **zk-SNARKs and zk-STARKs result from simultaneously advancing along two independent axes—expressiveness and efficiency—rather than simply making an existing protocol more efficient**. In Act II, we will assemble the tools supporting both axes in parallel.
+
+<StudyDiagram id="02-3" :en="true" />
 
 ---
 

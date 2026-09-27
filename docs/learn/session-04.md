@@ -8,6 +8,10 @@ next:
   link: /learn/session-05
 ---
 
+<script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # 第4回:算術化の技法と計算量理論
 
 **著者名：山崎重一郎**<br>
@@ -85,6 +89,8 @@ $$(A \mathbf{z}) \circ (B \mathbf{z}) = (C \mathbf{z})$$
 
 「$x^3+x+5=35$ を満たす $x$ を知っている」という例を使おう。$x=3$ を代入して答えを確かめるだけでなく，二乗や三乗の途中の値に名前を付け，どの値同士の関係を検査すればよいかを書き出す。最後の出力が35であるという条件まで含めて，計算から制約への翻訳を手で確認する。
 
+<StudyDiagram id="04-1" />
+
 ---
 
 ## 4. QAP(Quadratic Arithmetic Program)
@@ -103,6 +109,8 @@ $$\left(\sum_i z_i A_i(X)\right) \left(\sum_i z_i B_i(X)\right) - \left(\sum_i z
 
 変換の前後で，確認したい計算は変わっていない。変わったのは検査の形である。各制約点で差が0になることを，消失多項式で割り切れることにまとめた。商も含めた次数の制限と多項式の固定があれば，この関係をランダムな点で検査する方針を使える。式を一本にまとめることと，安全な証明系を完成させることは区別しておこう。
 
+<StudyDiagram id="04-2" />
+
 ---
 
 ## 5. AIR(Algebraic Intermediate Representation)
@@ -119,6 +127,8 @@ AIRでは次の2種類の制約を課す:
 - **境界制約(boundary constraint)**:特定の行(初期状態や最終状態)が満たすべき値
 
 二つの制約の役割を分けて読もう。遷移が正しくても，出発点や到達点が指定と違えば，求める計算を示したことにはならない。列を補間して多項式にすると，隣接する時刻の関係も，指定した時刻の値も，多項式の条件として扱える。第3回の補間が，ここでも表と多項式を結び付けている。
+
+<StudyDiagram id="04-3" />
 
 ### 5.3 R1CS/QAPとの比較で捉える
 

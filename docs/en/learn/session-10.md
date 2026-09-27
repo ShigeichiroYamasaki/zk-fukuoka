@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-11
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 10: The PCP theorem and the IOP framework — A complexity-theoretic synthesis
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -56,6 +60,8 @@ How can checking a few proof locations relate to optimization? Read the verifier
 
 Intuitively, constructions used in the theorem can be turned into reductions showing that distinguishing optimization instances with different optimum values—for example, instances of MAX-3SAT—is NP-hard. This yields **hardness-of-approximation** results: unless P = NP, polynomial-time algorithms cannot guarantee approximation beyond certain ratios.
 
+<StudyDiagram id="10-2" :en="true" />
+
 ### 2.2 What this connection tells us
 
 The same theorem serves two different questions: efficient proof checking and limits of algorithms. Treating PCPs only as components for SNARKs and STARKs obscures that relationship. The constraint structure helps explain both what can be done efficiently and where hardness begins.
@@ -76,6 +82,8 @@ A useful comparison is:
 - IP: Multiple rounds of interaction, with messages read in full.
 - IOP: Multiple rounds of interaction, with oracle access to prover messages.
 
+<StudyDiagram id="10-1" :en="true" />
+
 ### 3.2 Revisiting earlier techniques in the language of IOPs
 
 For each tool, identify what it represents, what it fixes, and what it checks. Techniques using polynomials can still serve different roles.
@@ -86,6 +94,8 @@ For each tool, identify what it represents, what it fixes, and what it checks. T
 - **Fiat–Shamir (Session 9):** The final transformation that turns suitable multi-round protocols into non-interactive proofs.
 
 One approach designs a polynomial IOP, implements the required access using commitments, and applies Fiat–Shamir. This does not allow arbitrary IOPs and commitments to be combined without checking access types and security conditions. Groth16 in Session 11 is instead constructed directly in the CRS model. Use the map while respecting its scope.
+
+<StudyDiagram id="10-3" :en="true" />
 
 ### 3.3 Restating the SNARK/STARK comparison
 

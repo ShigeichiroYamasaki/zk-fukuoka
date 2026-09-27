@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-15
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 14: An integrated perspective — revisiting Acts I–III
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -64,6 +68,8 @@ In Session 2, two accepting Schnorr transcripts sharing the first commitment but
 
 Groth16's generic-group analysis, PLONK's polynomial-commitment construction, and STARK's coding-theoretic construction cannot all be described as generalizations of rewinding or the forking lemma. Identify what is extracted, which access the extractor has, and which assumptions it uses.
 
+<StudyDiagram id="14-1" :en="true" />
+
 ---
 
 ## 2. Revisiting Act II: a cross-protocol map
@@ -82,6 +88,8 @@ Now shift from properties to tools. Even the same finite fields and polynomials 
 | PCP/IOP (10) | Theoretical background | Explicit IOP design framework | Explicit IOP design framework |
 
 Sharing tools does not make entire constructions equivalent. Groth16 and KZG-based PLONK both use pairings, but Groth16 does not incorporate KZG openings. In a STARK, Merkle trees fix tables while FRI checks low-degree proximity. Read across and down the table to check these different roles.
+
+<StudyDiagram id="14-2" :en="true" />
 
 ---
 
@@ -115,6 +123,8 @@ Imagine choosing a scheme for each situation below. Give more than its name: exp
 - Prover resources are limited, but large computations must be proved efficiently.
 
 If groups reach different conclusions, compare their premises first. One may prioritize verification cost, another setup or long-term security. Asking which changed condition would change the decision is a practical way to understand the tradeoffs.
+
+<StudyDiagram id="14-3" :en="true" />
 
 ---
 

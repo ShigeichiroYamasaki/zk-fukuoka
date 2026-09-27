@@ -6,6 +6,10 @@ prev:
 next: false
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 15 (final): Directions for further development
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -44,6 +48,8 @@ A verifier that is fast on an ordinary machine may still be expensive inside an 
 
 One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve's base field matches the other's scalar field, and vice versa. This helps represent group operations in circuits, including recursion without pairings. A cycle is not defined merely as a pair that makes pairing operations efficient, and not every recursive construction requires one. See the [Nova paper](https://eprint.iacr.org/2021/370).
 
+<StudyDiagram id="15-1" :en="true" />
+
 ---
 
 ## 2. Folding schemes (Nova and related work)
@@ -62,6 +68,8 @@ Folding alone does not produce a complete succinct zero-knowledge proof. Disting
 
 FRI from Session 6 also uses folding, but reduces polynomial degree for proximity testing; Nova aggregates constraint-satisfaction instances. The incremental-processing analogy does not make them the same protocol or give them the same soundness proof.
 
+<StudyDiagram id="15-2" :en="true" />
+
 ### 2.3 Where this approach helps
 
 Do not measure folding’s benefit from a single fold alone. Include step computation, commitments, and final compression in the total work of proving accumulated computation. Compression frequency and implementation affect the improvement.
@@ -77,6 +85,8 @@ Return to sumcheck, previewed in Session 1. For a sum with many terms, consider 
 $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
 interactively, fixing one variable at a time, without the verifier evaluating every summand. Each variable needs a degree bound, and the verifier checks degrees and sum consistency round by round. The final random-point evaluation of $g$ must also be verified, either directly or through another appropriate mechanism; without that check, the claimed sum is not established. Sumcheck is also central to IP = PSPACE from Session 1.
+
+<StudyDiagram id="15-3" :en="true" />
 
 ### 3.2 The GKR protocol
 
@@ -125,6 +135,8 @@ Use the table as a set of questions for evaluating new schemes. Lower prover cos
 [EIP-8025](https://eips.ethereum.org/EIPS/eip-8025) is **Draft** at the review date. It proposes opt-in execution-proof distribution and verification over the consensus-layer P2P network. **Current specifications retain payload re-execution: proofs are supplementary checks.** Mandatory proofs and removing re-execution belong to a later EIP. This proposal adds no proving rewards. See its [Consensus Layer section](https://eips.ethereum.org/EIPS/eip-8025#consensus-layer).
 
 EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not establish mainnet activation. [Hegotá proposal article](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
+
+<StudyDiagram id="15-4" :en="true" />
 
 ### 4.4 Connecting the application to the course's research map
 

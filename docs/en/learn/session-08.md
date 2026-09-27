@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-09
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 8: Polynomial commitments and cryptographic commitment theory
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -57,6 +61,8 @@ $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
 This equation describes checking the claim $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
 
+<StudyDiagram id="08-1" :en="true" />
+
 ---
 
 ## 2. KZG (Kate) commitments
@@ -87,6 +93,8 @@ $$e(C \cdot g^{-y}, g) = e(\pi, g^{\tau} \cdot g^{-x})$$
 
 Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point. The equation abbreviates the generators as $g$; asymmetric pairings distinguish the two input groups and also require the second group’s generator and its $\tau$ multiple in the verifier’s parameters.
 
+<StudyDiagram id="08-2" :en="true" />
+
 ### 2.4 Security foundations
 
 The binding property to check here concerns evaluation: opening one commitment at the same point to different values. KZG analyzes it under an SDH-type assumption corresponding to the degree bound. Knowledge extraction and hiding require separate treatment. The basic commitment shown so far is deterministic and is not inherently hiding; zero-knowledge requires appropriate randomization.
@@ -104,6 +112,8 @@ Can we achieve the goal without generating a setup secret? FRI-based constructio
 The prover commits to the evaluation representation of a polynomial $f$ using a Merkle tree: evaluation values are organized into a hash tree, and its root is sent as the commitment. To open a value, the prover supplies the Merkle path for the requested evaluation point, proving that the value belongs to the committed table.
 
 A Merkle path establishes membership of a value in the fixed table. FRI separately tests proximity to a low-degree polynomial. Opening a polynomial at an arbitrary point also needs a mechanism, such as a quotient-polynomial check, connecting that claim to the table. Distinguish table membership, low-degree proximity, and correctness of the claimed evaluation.
+
+<StudyDiagram id="08-3" :en="true" />
 
 ### 3.3 Security foundations
 

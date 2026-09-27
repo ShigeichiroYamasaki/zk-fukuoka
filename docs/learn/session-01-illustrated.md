@@ -12,7 +12,10 @@ next:
 import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 </script>
 
-# 第1回:証明とは何か — 対話型証明の背景と形式化
+# 第1回:証明とは何か — 対話型証明の背景と形式化（図解版）
+
+[第1回の本編を開く](./session-01)。図解は本編にも組み込みました。
+
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月24日<br>

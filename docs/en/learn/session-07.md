@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-08
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 7: Elliptic curves and pairings
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -43,6 +47,8 @@ where $(x, y) \in \mathbb{F}_p \times \mathbb{F}_p$, together with a point at in
 ### 1.2 Group structure
 
 A set of points alone is not yet a cryptographic tool. Defining addition of points gives a finite abelian group with the point at infinity $O$ as identity. Lines intersecting the curve provide a geometric interpretation of that addition. Rather than deriving every formula here, establish that we can add points and multiply them by integer scalars.
+
+<StudyDiagram id="07-1" :en="true" />
 
 ### 1.3 Why use elliptic curves?
 
@@ -81,6 +87,8 @@ Read bilinearity as a verification tool. Given $aP$ and $bQ$, the pairing produc
 
 This is a **multiplicative verification capability** unavailable from ordinary discrete-log group operations alone, which provide additive structure in the exponents. Many SNARKs, including Groth16, use this property to verify polynomial multiplication relations in QAPs from Session 4. This connection will be crucial when studying Groth16 in Act III.
 
+<StudyDiagram id="07-2" :en="true" />
+
 ---
 
 ## 3. A hierarchy of cryptographic hardness assumptions
@@ -115,6 +123,8 @@ Suppose an adversary can break the scheme. Can we use it to solve another proble
 > If an efficient adversary $\mathcal{A}$ can break a protocol $\Pi$, then we can use $\mathcal{A}$ to construct an efficient algorithm $\mathcal{B}$ that solves a supposedly hard computational problem $P$, such as discrete logarithms.
 
 If this construction is possible, then assuming $P$ is hard implies that breaking $\Pi$ is also hard. This is the basic form of a **reduction proof**.
+
+<StudyDiagram id="07-3" :en="true" />
 
 ### 4.2 Why this form matters
 

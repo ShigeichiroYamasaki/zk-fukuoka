@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-13
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 12: PLONK
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -69,6 +73,8 @@ $$F(X)=Z_H(X)T_{\mathrm{gate}}(X)$$
 
 for a quotient polynomial $T_{\mathrm{gate}}(X)$. The full protocol combines this with copy constraints and checks polynomial relations using degree bounds and commitments. **Separating fixed circuit preprocessing from each proof's witness** lets a universal SRS support proofs of a specified circuit. See the [PLONK paper](https://eprint.iacr.org/2019/953).
 
+<StudyDiagram id="12-1" :en="true" />
+
 ---
 
 ## 3. The permutation argument: copy constraints
@@ -88,6 +94,8 @@ $$\prod_j\bigl(v_j+\beta\,\mathrm{id}_j+\gamma\bigr)=\prod_j\bigl(v_j+\beta\,\ma
 The left side encodes values with their original positions; the right side pairs the same values with permuted position labels. Correct copies satisfy the relation. For incorrect copies, polynomial-degree bounds control the probability of accidental equality under random challenges, connecting to Session 3's probabilistic polynomial checks.
 
 PLONK uses a grand-product polynomial to handle the many factors, enforcing adjacent-row updates and boundary conditions. Checking only the final product would not suffice: the accumulation updates must also be constrained. See the [original permutation argument](https://eprint.iacr.org/2019/953) for the construction.
+
+<StudyDiagram id="12-2" :en="true" />
 
 ### 3.3 The broader significance of copy constraints
 
@@ -118,6 +126,8 @@ Review where circuit-specific information is fixed, which relations are checked,
 - **Polynomial IOP design:** Gate constraints, public inputs, and copy constraints for fixed selectors and wiring are checked using degree-bounded polynomial relations and random challenges.
 - **Implementation:** KZG commitments (Session 8) enable efficient verification of these relations at evaluation points. The shared tool with Groth16 is pairings; Groth16 does not itself incorporate KZG. PLONKish derivatives can use FRI or other commitments, but changes require revisiting the protocol and security analysis. Distinguish their setup and performance properties from original PLONK.
 - **Non-interactivity:** The Fiat–Shamir transform (Session 9) makes the protocol non-interactive. Unlike Groth16, PLONK is first designed as an interactive IOP and then made non-interactive, following the Session 10 map more directly.
+
+<StudyDiagram id="12-3" :en="true" />
 
 ---
 

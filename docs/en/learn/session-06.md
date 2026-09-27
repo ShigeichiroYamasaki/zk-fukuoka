@@ -8,6 +8,10 @@ next:
   link: /en/learn/session-07
 ---
 
+<script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+</script>
+
 # Session 6: Low-degree testing and soundness amplification
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
@@ -69,6 +73,8 @@ The protocol has two main phases:
 
 One query path checks a constant number of values per stage, giving roughly $O(\log d)$ values as the stages shrink. The number of paths needed depends on the target soundness error. A Merkle-tree implementation also requires authentication-path verification. Count queried values separately from proof size and total verification work.
 
+<StudyDiagram id="06-1" :en="true" />
+
 ### 2.3 Why the claim is approximate
 
 FRI addresses the approximate claim that $f$ is **close** to a low-degree polynomial in the Hamming-distance sense introduced in Session 5. Quantifying this closeness involves list-decoding parameters, including Johnson-type bounds. Soundness error depends on a precise analysis of coding-theoretic parameters, and practical choices such as the number of folding rounds and queries are based on that analysis.
@@ -87,6 +93,8 @@ Even if a test can detect an invalid table, a miss probability of $1/2$ is too l
 
 Repeat a test with independent randomness and accept only if every run passes. With per-run error $\epsilon$, the target bound is $\epsilon^k$ after $k$ repetitions. But the relevant conditional bounds must be established. Parallel and sequential repetition may allow different adversarial strategies. Check soundness amplification separately from preservation of zero-knowledge.
 
+<StudyDiagram id="06-2" :en="true" />
+
 ---
 
 ## 4. Rewinding and the forking lemma
@@ -104,6 +112,8 @@ The **forking lemma** of Pointcheval and Stern (1996) formalizes the rewinding i
 > If an adversary can forge in a suitable non-interactive protocol, running it multiple times while changing a response to a random-oracle query can produce two forked executions from which the desired information, such as a secret key or witness, can be extracted with a probability related to the adversary's success.
 
 This is intuition for schemes meeting the lemma’s conditions, not a theorem extracting information from every non-interactive protocol. In Fiat–Shamir-type signatures studied in Session 9, the probability of a successful fork depends on factors including oracle queries and the adversary’s success probability.
+
+<StudyDiagram id="06-3" :en="true" />
 
 ### 4.3 Why these techniques matter
 
