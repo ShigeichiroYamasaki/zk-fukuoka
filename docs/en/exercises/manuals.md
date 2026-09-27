@@ -35,3 +35,5 @@ To try it in a browser, open [SageMathCell](https://sagecell.sagemath.org/), ent
 | --- | --- |
 | [Pro Git](https://git-scm.com/book/en/v2) | Repositories, recording changes, branches, and other basic operations |
 | [ZK Fukuoka editing guide (Japanese)](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/CONTRIBUTING.md) | Local editing, previews, and publishing through GitHub |
+
+See [Groth16 implementations paired with operation manuals](./#groth16) for Circom + snarkjs, ZoKrates, gnark, and bellman examples.
