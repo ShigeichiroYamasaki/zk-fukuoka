@@ -4,6 +4,8 @@
 
 Updated: September 27, 2026
 
+[New to the subject? Start with prerequisites and supplementary resources.](./foundations)
+
 [Browse by session](./sessions) · [Read the syllabus](./) · [Exercises and tools](../exercises/)
 
 - [Proof foundations & security definitions](#proofs)
@@ -52,7 +54,7 @@ Updated: September 27, 2026
 | Copy constraints, permutation arguments and position labels | [Session 12 §3.1](./session-12#_3-1-why-it-is-needed-consistent-wiring) / [Session 12 §3.2](./session-12#_3-2-the-idea-behind-the-permutation-argument) |
 | Custom gates; trade-offs in constraint degree and column count | [Session 12 §4.1](./session-12#_4-1-motivation-making-common-patterns-more-efficient) / [Session 12 §4.2](./session-12#_4-2-expressiveness-and-efficiency) |
 
-[Supplement · Introductory finite-field exercises](./foundations)
+[Supplement · Finite-field calculations](./foundations#finite-field)
 
 ## Complexity theory, PCPs & IOPs {#complexity}
 

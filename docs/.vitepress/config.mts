@@ -26,7 +26,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Session 14 · An integrated perspective" : "第14回 · 統合的視点", link: p + "learn/session-14" },
         { text: en ? "Session 15 · Future directions" : "第15回 · 発展の方向性", link: p + "learn/session-15" },
         {
-          text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
+          text: en ? "Prerequisites & resources" : "前提知識・補助教材",
           link: p + "learn/foundations",
         },
       ],

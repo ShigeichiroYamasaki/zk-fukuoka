@@ -161,4 +161,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for all 15 sessions are available.
+[Prerequisites and supplementary resources](./foundations) — preparation targets, a self-check, finite-field exercises and a reading guide for beginners. All 15 lecture manuscripts are available.
