@@ -1,0 +1,80 @@
+{
+  "before_claim": {
+    "vault": 100,
+    "unprocessed": 0,
+    "balances": 70,
+    "pending_withdrawals": 30
+  },
+  "after_claim": {
+    "vault": 70,
+    "unprocessed": 0,
+    "balances": 70,
+    "pending_withdrawals": 0
+  },
+  "accounts": [
+    {
+      "id": 0,
+      "owner": "Alice",
+      "balance": 70,
+      "nonce": 1
+    },
+    {
+      "id": 1,
+      "owner": "Bob",
+      "balance": 0,
+      "nonce": 1
+    },
+    {
+      "id": 2,
+      "owner": "Carol",
+      "balance": 0,
+      "nonce": 0
+    },
+    {
+      "id": 3,
+      "owner": "Dave",
+      "balance": 0,
+      "nonce": 0
+    }
+  ],
+  "account_root": "33b75a95b7818867690f748886623e419d0ad2f896d1623ce444609b334db3e4",
+  "receipts": [
+    [
+      "receive",
+      [
+        0,
+        100
+      ]
+    ],
+    [
+      "consume",
+      [
+        0
+      ]
+    ],
+    [
+      "transfer",
+      [
+        0,
+        1,
+        30,
+        0
+      ]
+    ],
+    [
+      "withdraw",
+      [
+        1,
+        "Bob",
+        30,
+        0
+      ]
+    ],
+    [
+      "claim",
+      [
+        0
+      ]
+    ]
+  ]
+}

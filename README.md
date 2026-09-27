@@ -29,6 +29,8 @@
 | 授業別インデックス | [docs/learn/sessions.md](./docs/learn/sessions.md) |
 | トピック別インデックス | [docs/learn/topics.md](./docs/learn/topics.md) |
 | 演習・ツール・マニュアル | [docs/exercises/](./docs/exercises/) |
+| ZK rollup応用編（全6段階） | [docs/rollup/](./docs/rollup/) |
+| 応用編の配布コード | [docs/public/examples/rollup/](./docs/public/examples/rollup/) |
 | ホワイトペーパー | [docs/whitepaper.md](./docs/whitepaper.md) |
 | ADR | [docs/adr/](./docs/adr/) |
 | 英語版 | [docs/en/](./docs/en/) |

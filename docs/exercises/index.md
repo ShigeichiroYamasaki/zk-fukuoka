@@ -8,6 +8,8 @@ outline: [2, 3]
 
 [幕IIIの前に：入出金のプログラムでR1CS/QAPとAIRを確認する](../learn/balance-arithmetization#run) — 第4回に対応するPythonの算術化演習です。
 
+[応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル。
+
 ## まずはここから
 
 1. [有限体の導入演習](../learn/foundations)で、法7の加法・乗法・逆元を手で計算する。

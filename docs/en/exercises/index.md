@@ -8,6 +8,8 @@ Explore lecture concepts through calculations and implementation. Find exercise 
 
 [Before Act III: work through R1CS/QAP and AIR with a small balance program](../learn/balance-arithmetization#run) — Python arithmetic exercise for Session 4.
 
+[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+
 ## Start here
 
 1. Work through the [introductory finite-field exercise](../learn/foundations): addition, multiplication, and inverses modulo 7.

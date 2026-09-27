@@ -10,6 +10,8 @@ Follow the Act III exercises (Sessions 11–15): generate and verify a proof, co
 
 Documentation checked: September 27, 2026. This page provides a reading order and exercise guide to official manuals. Use commands from the documentation matching your chosen version. Not every implementation has been tested locally.
 
+[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+
 ## Act III exercise route {#route}
 
 | Session | Activity | Instructions | Completion target |

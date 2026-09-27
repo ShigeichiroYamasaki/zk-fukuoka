@@ -24,6 +24,8 @@
 - [再帰・Folding・発展の方向](#research)
 - [Ethereum・zkEVM・実行証明](#ethereum)
 
+[応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル。
+
 ## 証明の基礎・安全性定義 {#proofs}
 
 | トピック | 授業の該当箇所 |

@@ -15,6 +15,8 @@ A proposed three-act, 15-session curriculum. Dates, instructors, and venues are 
 
 ---
 
+[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+
 ## Design principles
 
 Rather than building upward from tools (mathematical foundations), this curriculum follows three acts that **establish goals and motivations first, then assemble the tools**.

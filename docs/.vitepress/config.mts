@@ -42,6 +42,19 @@ const sidebar = (en: boolean) => {
       ],
     },
     {
+      text: en ? "APPLIED: ZK ROLLUP" : "応用編：ZK rollup",
+      collapsed: false,
+      items: [
+        { text: en ? "Overview" : "応用編の全体像", link: p + "rollup/" },
+        { text: en ? "1. Ledger" : "1. 残高台帳と保存則", link: p + "rollup/01-ledger" },
+        { text: en ? "2. Merkle state" : "2. Merkle木と状態", link: p + "rollup/02-state" },
+        { text: en ? "3. Transfer circuits" : "3. 署名と送金回路", link: p + "rollup/03-circuit" },
+        { text: en ? "4. Batch proofs" : "4. バッチ証明", link: p + "rollup/04-batches" },
+        { text: en ? "5. ERC-20 and L1" : "5. ERC-20とL1検証", link: p + "rollup/05-bridge" },
+        { text: en ? "6. Availability and exits" : "6. データ公開と退出", link: p + "rollup/06-availability" },
+      ],
+    },
+    {
       text: en ? "COMMUNITY" : "コミュニティ",
       items: [
         {

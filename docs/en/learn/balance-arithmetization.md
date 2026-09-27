@@ -19,6 +19,8 @@ Take one program checking that total deposits equal total withdrawals, and trans
 | Compute and compare two totals | Gates → R1CS rows → QAP polynomials | Row satisfaction / polynomial divisibility |
 | The same program | States over time → AIR trace and constraints | Initial values, updates and final equality |
 
+[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+
 ## 1. Fix the program and claim {#program}
 
 ### Inputs and execution

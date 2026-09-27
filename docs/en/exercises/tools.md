@@ -8,6 +8,8 @@ Choose implementations and computation environments for Act III (Sessions 11–1
 
 [Exercises](./) · [Basic operation manuals](./manuals) · [Prerequisites](../learn/foundations)
 
+[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+
 ## Choose tools for Act III {#choose}
 
 | Session and objective | Starting option | Why choose it? | Instructions |

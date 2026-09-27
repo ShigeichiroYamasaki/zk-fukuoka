@@ -24,6 +24,8 @@ Updated: September 27, 2026
 - [Recursion, folding & further directions](#research)
 - [Ethereum, zkEVMs & execution proofs](#ethereum)
 
+[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+
 ## Proof foundations & security definitions {#proofs}
 
 | Topic | Lecture sections |
