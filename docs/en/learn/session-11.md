@@ -4,8 +4,8 @@ prev:
   text: Session 10 · The PCP theorem and the IOP framework
   link: /en/learn/session-10
 next:
-  text: Session 12 · PLONK (syllabus)
-  link: /en/learn/#session-12
+  text: Session 12 · PLONK
+  link: /en/learn/session-12
 ---
 
 # Session 11: Groth16

@@ -130,6 +130,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - Why trusted setup became necessary.
 
 ### Session 12: PLONK {#session-12}
+
+[Read the Session 12 lecture manuscript →](./session-12)
+
 - The motivation for universal setup.
 - The origins of the permutation argument and the significance of custom gates.
 
@@ -150,4 +153,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–11 are available; materials for Sessions 12–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–12 are available; materials for Sessions 13–15 will be developed later.

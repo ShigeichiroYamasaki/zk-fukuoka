@@ -70,7 +70,7 @@ export const lessons = [
     "number": 12,
     "ja": "PLONK",
     "en": "PLONK",
-    "material": null
+    "material": "learn/session-12.html"
   },
   {
     "number": 13,

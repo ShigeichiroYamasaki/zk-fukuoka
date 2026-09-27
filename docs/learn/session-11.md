@@ -4,8 +4,8 @@ prev:
   text: 第10回 · PCP定理とIOPの枠組み — 計算量理論的総括
   link: /learn/session-10
 next:
-  text: 第12回 · PLONK（シラバス）
-  link: /learn/#session-12
+  text: 第12回 · PLONK
+  link: /learn/session-12
 ---
 
 # 第11回:Groth16

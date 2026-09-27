@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–11 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–12 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -85,9 +85,9 @@ Find relevant sessions by topic across the three acts. Sessions 1–11 link to t
 | Topic | Related sessions |
 | --- | --- |
 | Groth16; pairings and QAPs | [Session 11](./session-11) |
-| PLONK, permutation arguments, custom gates | [Session 12](./#session-12) |
+| PLONK, permutation arguments, custom gates | [Session 12](./session-12) |
 | STARK; FRI and AIR | [Session 13](./#session-13) |
-| Trusted setup, universal setup, transparency | [Session 11](./session-11) / [Session 12](./#session-12) / [Session 13](./#session-13) |
+| Trusted setup, universal setup, transparency | [Session 11](./session-11) / [Session 12](./session-12) / [Session 13](./#session-13) |
 | Integrated comparison of Groth16 / PLONK / STARK | [Session 14](./#session-14) |
 
 ## Recursion, folding & further directions {#research}
