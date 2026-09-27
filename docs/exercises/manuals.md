@@ -37,3 +37,5 @@
 | [ZK Fukuoka 文書の編集・更新ガイド](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/CONTRIBUTING.md) | ローカル編集、プレビュー、GitHubへの反映 |
 
 [Groth16の実装例と操作マニュアルの一覧](./#groth16)では、Circom＋snarkjs、ZoKrates、gnark、bellmanの例を、公式手順と対にして探せます。
+
+[PLONKの実装例と操作マニュアルの一覧](./#plonk)では、Circom＋snarkjs、gnark、Dusk PLONKの公式手順と、汎用SRS・回路ごとの前処理を比較する演習案を紹介しています。

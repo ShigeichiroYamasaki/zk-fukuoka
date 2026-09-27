@@ -37,3 +37,5 @@ To try it in a browser, open [SageMathCell](https://sagecell.sagemath.org/), ent
 | [ZK Fukuoka editing guide (Japanese)](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/CONTRIBUTING.md) | Local editing, previews, and publishing through GitHub |
 
 See [Groth16 implementations paired with operation manuals](./#groth16) for Circom + snarkjs, ZoKrates, gnark, and bellman examples.
+
+See [PLONK implementations paired with operation manuals](./#plonk) for Circom + snarkjs, gnark, and Dusk PLONK examples, with pointers for comparing universal setup and circuit-specific preprocessing.

@@ -23,3 +23,5 @@ Begin with the calculations in the [introductory finite-field exercise](../learn
 Related syllabus topics include [Session 4: Arithmetization](../learn/session-04) and [Session 11: Groth16](../learn/session-11). ZK Fukuoka circuit exercises will be added later; the linked official tutorials are available now.
 
 See [Groth16 implementations paired with operation manuals](./#groth16) for Circom + snarkjs, ZoKrates, gnark, and bellman examples.
+
+See [PLONK implementations paired with operation manuals](./#plonk) for Circom + snarkjs, gnark, and Dusk PLONK examples, with pointers for comparing universal setup and circuit-specific preprocessing.

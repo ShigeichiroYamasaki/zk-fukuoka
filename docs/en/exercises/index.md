@@ -40,6 +40,27 @@ These external examples accompany [Session 11: Groth16](../learn/session-11). Ea
 
 Official documentation checked on **September 27, 2026**. Most external manuals are in English. The Circom documentation site was unreachable during this check, so the table points primarily to the accessible official snarkjs README. We checked the documented examples and Groth16 support; we have not tested every tool locally. The bellman example and API links both target version 0.14.0. Treat locally generated exercise setup parameters as learning materials.
 
+## PLONK implementations and operation manuals {#plonk}
+
+These implementations and official instructions accompany [Session 12: PLONK](../learn/session-12). Start with **Circom + snarkjs** to prove the same circuit used in the Groth16 exercise and compare setup and outputs. Choose gnark for a Go API workflow or Dusk PLONK to study circuit construction in Rust.
+
+| Implementation | Example and learning objective | Environment and level | Operation manuals and examples |
+| --- | --- | --- | --- |
+| [Circom](https://github.com/iden3/circom) + [snarkjs](https://github.com/iden3/snarkjs) | Prove the README’s circuit containing multiplication using PLONK; compare with Groth16 starting from the same R1CS | Local Circom compiler and Node.js; introductory | [Installation and walkthrough](https://github.com/iden3/snarkjs#readme) / [Setup](https://github.com/iden3/snarkjs#15-setup) / [Proving](https://github.com/iden3/snarkjs#23-create-the-proof) / [Verification](https://github.com/iden3/snarkjs#24-verify-the-proof). Select the **PLONK** commands in each section |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | Compile a Go circuit as SCS and trace `plonk.Setup`, `Prove`, and `Verify`; compare compilation with R1CS for Groth16 | Local Go environment; for Go programmers | [Installation](https://docs.gnark.consensys.io/HowTo/get_started) / [Write a circuit](https://docs.gnark.consensys.io/HowTo/write/circuit_api) / [Prove and verify](https://docs.gnark.consensys.io/HowTo/prove) (select the **PlonK** tab) |
+| [Dusk PLONK (dusk-plonk)](https://github.com/dusk-network/plonk) | Read the official Rust circuit example through constraint construction, compilation, proving, and verification; this implementation uses BLS12-381, KZG, and custom gates | Local Rust/Cargo environment; advanced | [Usage guide](https://github.com/dusk-network/plonk#usage) / [Official circuit.rs example](https://github.com/dusk-network/plonk/blob/master/examples/circuit.rs) / [API manual](https://docs.rs/dusk-plonk/latest/dusk_plonk/) |
+
+### Suggested PLONK exercise workflow
+
+1. Choose an implementation and run its official example. Record the release or commit, dependencies, and commands. Match the example and API documentation versions.
+2. Identify public inputs and the witness, then generate and verify a proof. Keep the proof fixed, change the public inputs, and confirm verification fails.
+3. Change the circuit and regenerate its keys. Distinguish reuse of a universal SRS within its capacity and compatibility limits from the circuit-specific preprocessing that still remains.
+4. For a Groth16 comparison, use the same computation and inputs and record proof size and proving time. Include implementation, curve, and version, and limit conclusions to those experimental conditions.
+
+**Reading the setup workflow:** snarkjs PLONK uses Powers of Tau and generates circuit-specific keys with `plonk setup`. It skips the Groth16 phase-two contribution procedure; this does not mean that every setup operation disappears. The `unsafekzg.NewSRS` call in gnark’s official example is for development and testing. Treat it as a local exercise SRS.
+
+Official documentation checked on **September 27, 2026**. Manuals are primarily in English. We confirmed the documented examples and PLONK support; we have not tested every implementation locally.
+
 ## Tools and manuals
 
 | Directory | What you can find |

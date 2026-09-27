@@ -23,3 +23,5 @@
 関連する学習項目は、[第4回・算術化](../learn/session-04)と[第11回・Groth16](../learn/session-11)です。ZK Fukuoka独自の回路演習は今後追加します。現在はリンク先の公式教材を利用できます。
 
 [Groth16の実装例と操作マニュアルの一覧](./#groth16)では、Circom＋snarkjs、ZoKrates、gnark、bellmanの例を、公式手順と対にして探せます。
+
+[PLONKの実装例と操作マニュアルの一覧](./#plonk)では、Circom＋snarkjs、gnark、Dusk PLONKの公式手順と、汎用SRS・回路ごとの前処理を比較する演習案を紹介しています。
