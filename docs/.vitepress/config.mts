@@ -14,6 +14,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Session 2 · Zero-knowledge and witnesses" : "第2回 · ゼロ知識性とウィットネス", link: p + "learn/session-02" },
         { text: en ? "Session 3 · Finite fields and polynomials" : "第3回 · 有限体・多項式と確率的検査", link: p + "learn/session-03" },
         { text: en ? "Session 4 · Arithmetization" : "第4回 · 算術化の技法と計算量理論", link: p + "learn/session-04" },
+        { text: en ? "Session 4 · Term guide" : "第4回 · 用語の詳しい説明", link: p + "learn/terms/" },
         { text: en ? "Session 5 · Error-correcting codes" : "第5回 · 誤り訂正符号と情報理論的視点", link: p + "learn/session-05" },
         { text: en ? "Session 6 · Low-degree testing and soundness amplification" : "第6回 · Low-Degree Testingと健全性増幅", link: p + "learn/session-06" },
         { text: en ? "Session 7 · Elliptic curves and pairings" : "第7回 · 楕円曲線とペアリング", link: p + "learn/session-07" },

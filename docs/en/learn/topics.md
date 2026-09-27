@@ -6,6 +6,8 @@ Updated: September 27, 2026
 
 [New to the subject? Start with prerequisites and supplementary resources.](./foundations)
 
+[Session 4 prerequisite terms: eight worked explanations](./terms/)
+
 [Browse by session](./sessions) · [Read the syllabus](./) · [Exercises and tools](../exercises/)
 
 - [Proof foundations & security definitions](#proofs)
@@ -24,7 +26,7 @@ Updated: September 27, 2026
 
 | Topic | Lecture sections |
 | --- | --- |
-| NP verifiers, witnesses and NP relations | [Session 1 §1.1](./session-01#_1-1-the-np-verifier-paradigm) / [Session 2 §4.2](./session-02#_4-2-general-witnesses-when-that-structure-is-absent) |
+| NP verifiers, witnesses and NP relations | [Session 1 §1.1](./session-01#_1-1-the-np-verifier-paradigm) / [Session 2 §4.2](./session-02#_4-2-general-witnesses-when-that-structure-is-absent) / [Explanation](./terms/np-relations) |
 | Interactive proofs, provers and verifiers | [Session 1 §4](./session-01#_4-the-convergence-of-the-two-motivations) / [Session 1 §5](./session-01#_5-a-formal-definition-of-interactive-proof-systems) |
 | Password authentication and graph isomorphism (motivating examples) | [Session 1 §3.2](./session-01#_3-2-building-intuition-with-examples) |
 | Completeness | [Session 1 §5.1](./session-01#_5-1-completeness-and-soundness) / [Session 14 §1.1](./session-14#_1-1-completeness) |
@@ -46,10 +48,10 @@ Updated: September 27, 2026
 | Polynomial rings, division and root bounds | [Session 3 §3.1](./session-03#_3-1-definitions-and-basic-operations) / [Session 3 §3.2](./session-03#_3-2-the-basic-theorem-on-the-number-of-roots) |
 | Lagrange interpolation; coefficient and evaluation representations | [Session 3 §3.3](./session-03#_3-3-lagrange-interpolation) / [Session 4 §4.1](./session-04#_4-1-from-r1cs-to-qap) |
 | Schwartz–Zippel lemma and polynomial identity testing (PIT) | [Session 3 §4.2](./session-03#_4-2-statement-of-the-lemma-the-multivariate-version) / [Session 3 §4.3](./session-03#_4-3-what-the-lemma-tells-us) / [Session 3 §4.4](./session-03#_4-4-the-complexity-theoretic-significance) |
-| Arithmetization: translating computations into constraints | [Session 4 §1](./session-04#_1-what-is-arithmetization-—-revisiting-the-motivation) / [Session 4 §3.2](./session-04#_3-2-why-rank-1-a-concrete-example) |
-| R1CS, public inputs, intermediate variables and worked constraints | [Session 4 §3.1](./session-04#_3-1-definition) / [Session 4 §3.3](./session-04#_3-3-a-worked-exercise) |
-| QAPs, vanishing polynomials and divisibility | [Session 4 §4.1](./session-04#_4-1-from-r1cs-to-qap) / [Session 11 §1](./session-11#_1-revisiting-the-starting-point-the-qap-equation) |
-| AIR, execution traces, transition and boundary constraints | [Session 4 §5.1](./session-04#_5-1-a-different-starting-point-from-r1cs-qap) / [Session 4 §5.2](./session-04#_5-2-transition-and-boundary-constraints) / [Session 13 §2](./session-13#_2-revisiting-air-arithmetization) |
+| Arithmetization: translating computations into constraints | [Session 4 §1](./session-04#_1-what-is-arithmetization-—-revisiting-the-motivation) / [Session 4 §3.2](./session-04#_3-2-why-rank-1-a-concrete-example) / [Explanation](./terms/constraints) |
+| R1CS, public inputs, intermediate variables and worked constraints | [Session 4 §3.1](./session-04#_3-1-definition) / [Session 4 §3.3](./session-04#_3-3-a-worked-exercise) / [Explanation](./terms/linear-algebra) |
+| QAPs, vanishing polynomials and divisibility | [Session 4 §4.1](./session-04#_4-1-from-r1cs-to-qap) / [Session 11 §1](./session-11#_1-revisiting-the-starting-point-the-qap-equation) / [Explanation](./terms/polynomials) |
+| AIR, execution traces, transition and boundary constraints | [Session 4 §5.1](./session-04#_5-1-a-different-starting-point-from-r1cs-qap) / [Session 4 §5.2](./session-04#_5-2-transition-and-boundary-constraints) / [Session 13 §2](./session-13#_2-revisiting-air-arithmetization) / [Explanation](./terms/execution-traces) |
 | PLONKish arithmetization, selectors and public-input constraints | [Session 12 §2.1](./session-12#_2-1-how-the-approach-differs-from-qaps) / [Session 12 §2.2](./session-12#_2-2-the-basic-constraint) |
 | Copy constraints, permutation arguments and position labels | [Session 12 §3.1](./session-12#_3-1-why-it-is-needed-consistent-wiring) / [Session 12 §3.2](./session-12#_3-2-the-idea-behind-the-permutation-argument) |
 | Custom gates; trade-offs in constraint degree and column count | [Session 12 §4.1](./session-12#_4-1-motivation-making-common-patterns-more-efficient) / [Session 12 §4.2](./session-12#_4-2-expressiveness-and-efficiency) |
@@ -62,8 +64,8 @@ Updated: September 27, 2026
 | --- | --- |
 | Arthur–Merlin, public coins and round counts | [Session 1 §2.1](./session-01#_2-1-arthur–merlin-games) |
 | IP = PSPACE | [Session 1 §2.2](./session-01#_2-2-ip-pspace-presenting-the-result) / [Session 15 §3.1](./session-15#_3-1-revisiting-the-sumcheck-protocol) |
-| Cook–Levin, SAT, CircuitSAT and NP-completeness | [Session 4 §2.1](./session-04#_2-1-why-this-theorem-underpins-arithmetization) |
-| NC, P, P/poly and circuit uniformity | [Session 4 §2.2](./session-04#_2-2-connections-to-circuit-complexity-classes) |
+| Cook–Levin, SAT, CircuitSAT and NP-completeness | [Session 4 §2.1](./session-04#_2-1-why-this-theorem-underpins-arithmetization) / [Explanation](./terms/reductions) / [Circuits](./terms/circuits) |
+| NC, P, P/poly and circuit uniformity | [Session 4 §2.2](./session-04#_2-2-connections-to-circuit-complexity-classes) / [Explanation](./terms/complexity) |
 | Randomized PIT algorithms and one-sided error | [Session 3 §4.4](./session-03#_4-4-the-complexity-theoretic-significance) |
 | The PCP theorem and verification with few queries | [Session 10 §1.1](./session-10#_1-1-what-is-a-pcp) / [Session 10 §1.2](./session-10#_1-2-statement-of-the-pcp-theorem) |
 | Hardness of approximation and connections to MAX-3SAT | [Session 10 §2.1](./session-10#_2-1-why-does-the-pcp-theorem-connect-to-approximation-algorithms) |

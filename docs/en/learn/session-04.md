@@ -20,13 +20,17 @@ Last updated: September 27, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Exercises](../exercises/)
 
+::: tip Prerequisite terms
+New to NP relations, circuits or constraints? Open the [Session 4 term guide](./terms/). Each of its eight explanations includes a worked example and a self-check. Links in the lecture also lead directly to the relevant page.
+:::
+
 ## Context and learning objectives
 
 Last time, we learned to test polynomial identities at random points. What must we prepare to apply that test to a program’s execution? Today we study **arithmetization: translating general computation into polynomial constraints**. Compare R1CS, QAP, and AIR by asking what we will verify after the translation.
 
 Our three objectives are:
 
-1. Learn to view general computation, or NP relations, as constraint satisfaction problems.
+1. Learn to view general computation, or [NP relations](./terms/np-relations), as [constraint satisfaction problems](./terms/constraints).
 2. Understand three representative arithmetization techniques: R1CS, QAP, and AIR.
 3. Understand the complexity-theoretic justification for this translation through the Cook–Levin theorem and its relationship to circuit complexity classes such as NC and P.
 
@@ -50,15 +54,15 @@ The three techniques we study today—R1CS, QAP, and AIR—are different impleme
 
 Can the same approach handle general NP problems, rather than just one program? The background is the Cook–Levin theorem establishing NP-completeness of SAT. Here we reason using the corresponding NP-completeness of CircuitSAT.
 
-> **Cook–Levin theorem:** CircuitSAT, the problem of determining whether a Boolean circuit is satisfiable, is NP-complete.
+> **Cook–Levin theorem:** [CircuitSAT](./terms/reductions), the problem of determining whether a [Boolean circuit](./terms/circuits) is satisfiable, is NP-complete.
 
-This means that **any NP relation can be transformed into a Boolean circuit satisfiability problem by a polynomial-time reduction**. In other words, the claim “I know an input x such that running this program produces y” can, without losing generality, be reduced to “I know an input satisfying this circuit.”
+This means that **any NP relation can be transformed into a Boolean circuit satisfiability problem by a [polynomial-time reduction](./terms/reductions)**. In other words, the claim “I know an input x such that running this program produces y” can, without losing generality, be reduced to “I know an input satisfying this circuit.”
 
 The theorem justifies concentrating the design of arithmetization techniques on one task: translating circuits, or comparable computation models, into polynomial constraints. There is no need to create a separate proof system for each individual program.
 
 ### 2.2 Connections to circuit complexity classes
 
-Circuit size and depth correspond to complexity classes. In particular:
+[Circuit size and depth](./terms/complexity) correspond to complexity classes. In particular:
 
 - **NC (Nick's Class):** computations performed by uniform polynomial-size circuit families of polylogarithmic depth, closely associated with parallel computation.
 - **P:** computations performed in polynomial time; equivalently, polynomial-size circuit families with suitable uniformity and no depth restriction.
@@ -73,11 +77,11 @@ Also check uniformity of circuit families. NC normally permits polylogarithmic d
 
 ### 3.1 Definition
 
-First collect the intermediate values as variables. Let $\mathbf{z}=(1,x_1,\dots,x_n,w_1,\dots,w_m)$ include the constant one, public inputs, and witness. R1CS imposes the following condition using three matrices $(A,B,C)$.
+First collect the intermediate values as variables. Let $\mathbf{z}=(1,x_1,\dots,x_n,w_1,\dots,w_m)$ include the constant one, [public inputs and witness](./terms/np-relations). R1CS imposes the following condition using three matrices $(A,B,C)$.
 
 $$(A \mathbf{z}) \circ (B \mathbf{z}) = (C \mathbf{z}).$$
 
-Read this equation row by row. Since $\circ$ is entrywise multiplication, each row requires that the product of two linear combinations equal a third. Choosing the matrices specifies how the variables are combined for checking.
+Read this equation row by row. Since $\circ$ is entrywise multiplication, each row requires that the product of two [linear combinations](./terms/linear-algebra) equal a third. Choosing the matrices specifies how the variables are combined for checking.
 
 ### 3.2 Why “rank-1”? A concrete example
 
@@ -97,9 +101,9 @@ Use the relation “I know $x$ satisfying $x^3+x+5=35$.” Rather than only subs
 
 ### 4.1 From R1CS to QAP
 
-R1CS represents constraints as matrix rows. Now assign distinct evaluation points to the rows and represent each column by a polynomial. Moving to QAP means reading the same constraints as polynomial evaluations. This is where Session 3’s Lagrange interpolation is needed.
+R1CS represents constraints as matrix rows. Now assign distinct evaluation points to the rows and represent each column by a polynomial. Moving to QAP means reading the same constraints as polynomial evaluations. This is where Session 3’s [Lagrange interpolation](./terms/polynomials) is needed.
 
-Specifically, use Lagrange interpolation from Session 3 to turn each column of the R1CS matrices $A, B, C$ into polynomials $A_i(X), B_i(X), C_i(X)$. Then express simultaneous satisfaction of all R1CS constraints through polynomial divisibility:
+Specifically, use Lagrange interpolation from Session 3 to turn each column of the R1CS matrices $A, B, C$ into polynomials $A_i(X), B_i(X), C_i(X)$. Then express simultaneous satisfaction of all R1CS constraints through [polynomial divisibility](./terms/polynomials):
 
 $$\left(\sum_i z_i A_i(X)\right) \left(\sum_i z_i B_i(X)\right) - \left(\sum_i z_i C_i(X)\right) = H(X) \cdot Z(X).$$
 
@@ -117,7 +121,7 @@ The computation to be checked has not changed; the form of the check has. Vanish
 
 ### 5.1 A different starting point from R1CS/QAP
 
-The same computation can also be recorded as states over time. For a loop, arrange the values before and after each iteration in a table. AIR starts from this **execution trace**. Instead of following gate wiring, check that one state transitions correctly to the next.
+The same computation can also be recorded as states over time. For a loop, arrange the values before and after each iteration in a table. AIR starts from this **[execution trace](./terms/execution-traces)**. Instead of following gate wiring, check that one state transitions correctly to the next.
 
 ### 5.2 Transition and boundary constraints
 

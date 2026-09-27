@@ -6,6 +6,8 @@ Updated: September 27, 2026
 
 [Syllabus](./) · [Sessions](./sessions) · [Topic index](./topics) · [Exercises, tools and manuals](../exercises/)
 
+[Session 4 term guide: NP relations, circuits, constraints and more](./terms/)
+
 ## Where to start {#start}
 
 1. **Before Session 1:** review algebraic expressions, sets, functions, logic and elementary probability. Try the [self-check](#check) and start with unfamiliar items.
