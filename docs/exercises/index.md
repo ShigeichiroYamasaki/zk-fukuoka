@@ -61,6 +61,27 @@ outline: [2, 3]
 
 公式資料の参照確認日: **2026年9月27日**。主に英語のマニュアルです。掲載した例とPLONK対応を資料で確認しており、全実装のローカル実行を検証したものではありません。
 
+## STARKの実装例と操作マニュアル {#stark}
+
+[第13回・STARK](../learn/session-13)に対応する外部の実装例です。**仕組みをPythonで追うならAnatomy of a STARK、AIRを自分で記述するならWinterfell、プログラムの実行を証明するならMiden VM**を選べます。実装サイトと、著者・開発元の操作手順やコード例を対にしています。
+
+| 実装サイト | 演習で扱う例・学習の目的 | 環境・目安 | 操作マニュアル・実行例 |
+| --- | --- | --- | --- |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) | Rescue-Primeの計算を証明する教育用Python実装。有限体・多項式・FRI・STARKを段階的に組み立てる | ローカルのPython。第3〜6回を復習しながら実装を学ぶ人向け | [著者のチュートリアル](https://aszepieniec.github.io/stark-anatomy/) / [Part 5: 証明系の組み立て](https://aszepieniec.github.io/stark-anatomy/rescue-prime) / [Pythonコードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code)。READMEのJekyll起動手順は解説サイト用で、Python演習の手順ではない |
+| [Winterfell](https://github.com/facebook/winterfell) | 値を3乗して42を加える反復計算の例。実行トレース、遷移制約、境界の指定、証明生成・検証を対応づける | ローカルのRust/Cargo。Rust経験者向け | [公式の利用チュートリアル](https://github.com/facebook/winterfell#usage) / [演習用の実装例](https://github.com/facebook/winterfell/tree/main/examples) / [APIマニュアル](https://docs.rs/winterfell/latest/winterfell/) |
+| [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyの加算やFibonacciの例。VMでプログラムを実行し、その実行証明を生成・検証する | ローカルのRust/CargoとMiden VM CLI。VMを使う演習向け | [公式クレートREADME・利用例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) / [CLI操作](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#cli-interface) / [Fibonacci演習](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#fibonacci-example)。リンクは開発ブランチ `next` のため、利用するリリースと手順の版を揃える |
+
+### STARK演習の進め方
+
+1. 実装を1つ選び、バージョンまたはコミットを記録する。対応する手順に従い、小さい入力・短い実行トレースで例を動かす。
+2. 公開入力・出力、実行トレース、遷移制約、境界制約がコードのどこにあるかを確認する。VMを使う場合は、命令列とVMが生成するトレースの役割を区別する。
+3. 正しい実行の証明を検証する。証明を固定したまま公開の出力などを変え、検証が失敗することを確かめる。
+4. トレース長を変更して証明サイズ・生成時間・検証時間を記録する。安全性パラメータやハッシュ関数も併記し、同じ条件で比較する。
+
+**学習上の区別:** 計算の正しさを証明できることと、ウィットネスの情報が漏れないゼロ知識性は別の性質です。Winterfellは公式READMEで完全なゼロ知識性を提供していないと明記しています。実装ごとの性質を確認し、演習には公開してよいサンプル入力を使います。
+
+資料の参照確認日: **2026年9月27日**。外部の解説・操作マニュアルは主に英語です。掲載した実装・手順を資料で確認しており、全実装のローカル実行を検証したものではありません。
+
 ## ツールとマニュアル
 
 | リンク集 | 探せるもの |

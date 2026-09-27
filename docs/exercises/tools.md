@@ -25,3 +25,5 @@
 [Groth16の実装例と操作マニュアルの一覧](./#groth16)では、Circom＋snarkjs、ZoKrates、gnark、bellmanの例を、公式手順と対にして探せます。
 
 [PLONKの実装例と操作マニュアルの一覧](./#plonk)では、Circom＋snarkjs、gnark、Dusk PLONKの公式手順と、汎用SRS・回路ごとの前処理を比較する演習案を紹介しています。
+
+[STARKの実装例と操作マニュアルの一覧](./#stark)では、Anatomy of a STARK、Winterfell、Miden VMの実装例と手順を対にして紹介しています。
