@@ -10,25 +10,17 @@ next:
 
 # Session 13: STARK
 
-::: info Lecture manuscript
-This is an English translation of the supplied Session 13 manuscript. Editorial notes clarify construction, complexity, and security assumptions. The multiplicative-group reference has been corrected to Session 3.
-:::
-
 [Sessions](./sessions) · [Topics](./topics) · [Session 13 in the syllabus](./#session-13) · [Exercises](../exercises/)
 
 ## Context and learning objectives
 
-The manuscript describes the Groth16 and PLONK protocols studied so far as pairing- and KZG-based protocols requiring trusted setup. STARK (Scalable Transparent ARgument of Knowledge; Ben-Sasson et al., 2018), our subject today, starts from the goal of **eliminating trusted setup itself** and makes extensive use of the coding-theoretic tools developed in Sessions 5 and 6: Reed–Solomon codes and FRI.
+Groth16 and KZG-based PLONK both use pairings and trusted setup. Groth16 is a direct QAP-and-pairing construction; unlike PLONK, it does not incorporate KZG as a component. STARK (Scalable Transparent ARgument of Knowledge; Ben-Sasson et al., 2018), our subject today, starts from the goal of **eliminating trusted setup itself** and makes extensive use of the coding-theoretic tools developed in Sessions 5 and 6: Reed–Solomon codes and FRI.
 
 The three learning objectives are:
 
-1. Understand why eliminating trusted setup (transparency) motivates the choice of AIR and FRI.
+1. Understand a representative AIR/FRI-based STARK construction pursuing transparency.
 2. Understand the overall STARK construction using the three-stage map from Session 10.
 3. Evaluate tradeoffs between transparency and other properties: proof size, verification cost, and post-quantum security.
-
-::: info Editorial note: which constructions are being compared?
-Groth16 is a direct pairing-based construction, not a protocol that incorporates KZG commitments as a component. Here, PLONK refers to the original KZG-based construction. Transparency alone does not uniquely require AIR and FRI; this lecture covers representative AIR/FRI-based STARKs. See [Session 11](./session-11) and [Session 12](./session-12).
-:::
 
 ---
 
@@ -36,13 +28,13 @@ Groth16 is a direct pairing-based construction, not a protocol that incorporates
 
 ### 1.1 Concerns about trusted setup
 
-As discussed in Sessions 11 and 12, Groth16 and PLONK depend on trusted setup, including secret trapdoors used during SRS generation. If those secrets leak, soundness can fail. Multi-party generation, mentioned in Session 11, reduces this risk, but cannot provide complete, directly verifiable assurance that nobody knows the secret.
+As discussed in Sessions 11 and 12, Groth16 and KZG-based PLONK depend on trusted setup, including secret trapdoors used during SRS generation. If those secrets leak, soundness can fail. Multi-party generation, mentioned in Session 11, reduces this risk, but cannot provide complete, directly verifiable assurance that nobody knows the secret.
 
 ### 1.2 Defining transparency
 
-**Transparency** means that setup requires no secret information. Parameters are derived only from public randomness, such as publicly verifiable values generated using known hash functions.
+**Transparency** means that setup does not require generating, retaining, or destroying a secret trapdoor. Parameters follow public procedures, and any required setup randomness can be public. Not every parameter needs to be random.
 
-STARK makes transparency a design goal from the outset. It avoids pairing-based KZG commitments, which require the secret trapdoor $\tau$ from Session 8, and instead adopts **FRI-based commitments described as relying only on hash-function collision resistance**, also introduced in Session 8.
+We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does hash collision resistance alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
 
 ---
 
@@ -54,7 +46,9 @@ As we learned in Session 4, AIR (Algebraic Intermediate Representation) starts f
 
 ### 2.2 Revisiting and extending transition and boundary constraints
 
-Beyond the transition and boundary constraints introduced in Session 4, STARK implementations often combine multiple constraints into one polynomial using a random linear combination. This applies the intuition behind the Schwartz–Zippel lemma from Session 3: probabilistically checking many conditions through one randomly weighted combination. The recurring idea of gathering many constraints into one polynomial condition appears again here.
+Transition constraints relate designated computation steps; boundary constraints specify public conditions such as initial values and outputs. Requiring a constraint polynomial to vanish at its applicable points is expressed as divisibility by those points' vanishing polynomial.
+
+The resulting quotients have specified degree bounds and are combined with random coefficients into a composition polynomial. Those coefficients must be selected after the trace is committed. Bounding the chance that invalid constraints accidentally cancel connects to Session 3's probabilistic polynomial checks. In addition to low degree, consistency of the composition with the original trace must be checked.
 
 ---
 
@@ -62,23 +56,25 @@ Beyond the transition and boundary constraints introduced in Session 4, STARK im
 
 ### 3.1 Outline of the steps
 
-At a high level, STARK proof generation involves:
+A representative non-interactive AIR/FRI construction follows this flow. Details vary by system, but commitments must precede the challenges that depend on them:
 
-1. Execute the computation and generate its trace.
-2. Interpolate each trace column over an evaluation set to obtain a polynomial, using Lagrange interpolation from Session 3.
-3. Construct transition and boundary constraints from these trace polynomials, using AIR from Session 4.
-4. Combine constraints with random coefficients to construct a single composition polynomial.
-5. Use FRI from Session 6 to test whether the composition polynomial has low degree.
-6. Authenticate evaluation values through Merkle-tree commitments from Session 8.
-7. Apply Fiat–Shamir from Session 9, deriving the random coefficients and query points deterministically from hashes to make the protocol non-interactive.
+1. Execute the computation and generate its trace, with public initial/output conditions in the boundary constraints.
+2. Interpolate each trace column, extend it to a larger evaluation domain, and commit to the evaluation tables with Merkle trees.
+3. Derive constraint-combination coefficients through Fiat–Shamir from the transcript and commitments so far.
+4. Construct the composition polynomial using quotients by the transition/boundary vanishing polynomials, then commit to its evaluation table.
+5. In each FRI stage, commit to a table before deriving the folding challenge, progressively reducing the degree bound.
+6. Derive query points and open the required trace, composition, and FRI evaluations with Merkle authentication paths.
+7. Verify the authentication paths, the relation between trace and composition, and FRI's folding and terminal conditions.
 
-::: info Editorial note: connecting constraints with low-degree testing
-This list organizes components rather than specifying the message order. The trace is extended to a larger evaluation domain and committed before challenges are derived. Constraints vanishing on designated points are expressed through divisibility by vanishing polynomials; quotient-based composition and consistency with the trace must also be checked. FRI’s low-degree proximity test alone does not establish computation correctness. See the [STARK paper](https://eprint.iacr.org/2018/046).
-:::
+**FRI alone does not establish correctness of the computation.** Low-degree proximity, constraint divisibility, consistency between tables, and binding to public inputs must be checked together. See the [STARK paper](https://eprint.iacr.org/2018/046).
+
+For zero knowledge, random masking compatible with degree bounds and constraints must also prevent the opened trace evaluations and other messages from leaking witness information. Transparency and FRI do not automatically provide zero knowledge.
 
 ### 3.2 Verification cost and proof size
 
-The manuscript describes STARK proof size as proportional to the number of FRI rounds, logarithmic in the original degree, and therefore larger than Groth16’s constant-size proof. It gives tens to hundreds of kilobytes as a practical rule of thumb. It also describes verification as logarithmic and relatively more expensive than Groth16’s constant-time verification. We return to the scope of these comparisons below.
+A proof contains queried values and Merkle authentication paths as well as FRI round information. Neither proof size nor verification cost can therefore be inferred as simply proportional to the number of FRI rounds.
+
+With fixed security and coding parameters, representative constructions target polylogarithmic proof size and verification cost in trace length. Concrete costs depend on query counts, hash lengths, folding choices, aggregation, and compression. Public-input reading and processing must also be accounted for. Size comparisons in kilobytes need specified circuits, inputs, implementations, and security parameters.
 
 ---
 
@@ -86,33 +82,31 @@ The manuscript describes STARK proof size as proportional to the number of FRI r
 
 ### 4.1 Proof size and verification cost
 
-Recall the comparison in Session 8. The manuscript groups Groth16 and PLONK as KZG-based systems providing constant-size proofs and constant-time verification at the cost of trusted setup. It contrasts them with FRI-based STARKs, which avoid trusted setup but have logarithmic proof size and verification cost. The intended lesson is that **transparency trades away part of the ideal of constant-size succinctness** in these representative designs.
+For fixed groups and security parameters, Groth16 and original KZG-based PLONK have proofs containing constant numbers of group elements and related values, independent of circuit size. Public-input processing remains necessary: total verification is not constant in the number of public inputs.
 
-::: info Editorial note: conditions for complexity comparisons
-Sections 3.2 and 4.1 are schematic. STARK proofs include Merkle authentication paths; their size and verification cost depend on query counts, security parameters, and construction choices. Generally, think in terms of polylogarithmic costs rather than inferring simple logarithmic scaling from FRI rounds alone. The size range in the manuscript is illustrative, not a guarantee for all implementations. Groth16 and KZG-based PLONK also incur public-input processing costs, so total verification is not constant in the number of public inputs. This comparison of representative constructions is not an impossibility theorem about transparency.
-:::
+The FRI-based STARKs studied here avoid trusted setup while incurring communication and verification costs for evaluations and authentication paths. **Compare setup, proof size, and verification cost for specified constructions and conditions.** This is not an impossibility theorem saying that transparent proofs must be larger, and Groth16 should not be classified as a KZG-based construction.
 
 ### 4.2 Post-quantum security
 
-As anticipated in Session 8, **post-quantum security** is another important benefit of STARKs. The elliptic-curve discrete-logarithm assumptions underlying Groth16 and KZG-based PLONK are vulnerable to Shor’s efficient quantum algorithm. The manuscript contrasts this with STARKs’ reliance on hash-function collision resistance, noting that appropriately designed hashes are believed to remain robust against known quantum attacks.
+Shor's algorithm efficiently solves elliptic-curve discrete logarithms on a sufficiently large fault-tolerant quantum computer. Groth16 and KZG-based PLONK require this problem to remain hard and are not secure against such an adversary. Hash-based STARKs avoid that algebraic prerequisite, making them promising constructions for post-quantum security.
 
-::: info Editorial note: security requires more than collision resistance
-Distinguish collision resistance for Merkle binding from security of the entire non-interactive proof system. The latter also requires soundness analysis for FRI and other components, and reasoning about Fiat–Shamir in the random-oracle model. Against quantum adversaries, the quantum random-oracle model and suitable hash lengths and parameters require consideration. Using a hash does not automatically establish post-quantum security. See the research on [Fiat–Shamir security in the quantum random-oracle model](https://arxiv.org/abs/1902.07556).
-:::
+However, collision resistance for Merkle binding is distinct from security of the complete non-interactive proof system. The latter also needs soundness-error analysis for FRI and other components, together with Fiat–Shamir security. Quantum adversaries require analysis in an appropriate quantum random-oracle model, suitable hash lengths and parameters, and verification of the applicable theorem's conditions. **Using hashes does not automatically establish post-quantum security.**
+
+The research on [Fiat–Shamir in the quantum random-oracle model](https://arxiv.org/abs/1902.07556) illustrates this distinction. Its theorem must not be applied to arbitrary multi-round STARKs without checking its conditions.
 
 ### 4.3 Prover computation cost
 
-STARK designs often achieve quasi-linear prover complexity, roughly $O(n \log n)$, through AIR arithmetization and FFT-like polynomial operations (NTTs). The multiplicative-group structure discussed in [Session 3](./session-03) becomes practically important here. Such designs can have advantages for large computations compared with R1CS/QAP-based constructions.
+For fixed trace width, constraint degree, and security parameters, STARK designs often achieve quasi-linear prover complexity in trace length $n$, roughly $O(n \log n)$, through AIR arithmetization and FFT-like polynomial operations (NTTs). The multiplicative-group structure discussed in [Session 3](./session-03) becomes practically important here. Constraint evaluation, hashing, memory use, and hardware also affect wall-clock time. This does not establish universal superiority over R1CS/QAP or other systems; compare the same computation and security conditions.
 
 ---
 
 ## 5. Revisiting the map from Session 10
 
-- **IOP design:** AIR arithmetization from Session 4, with transition and boundary constraints aggregated using random linear combinations.
-- **Implementation:** FRI-based commitments from Session 8—combining Merkle trees with FRI from Session 6—enable verification of polynomial relations while preserving transparency.
-- **Non-interactivity:** Apply Fiat–Shamir from Session 9.
+- **IOP design:** Express AIR constraints through quotient polynomials; combine randomized aggregation and FRI proximity testing with checks of consistency with the trace.
+- **Implementation:** Merkle trees commit to oracle evaluation tables and authenticate queried values. FRI supplies low-degree proximity testing, a different role from Merkle binding.
+- **Non-interactivity:** Apply Fiat–Shamir to the commitments and transcript, with an explicit security model (Session 9).
 
-This shares the overall “IOP design → implementation → non-interactivity” structure of PLONK. The fundamental difference is the **implementation-stage choice: pairings and KZG versus hashes and FRI**. This distinction underlies the transparency, proof-size, and post-quantum-security tradeoffs discussed across these three sessions.
+This shares the overall “IOP design → implementation → non-interactivity” structure of PLONK. The fundamental difference is the **implementation-stage choice: pairings and KZG versus hashes and FRI**. This choice strongly affects transparency, proof size, and post-quantum security; arithmetization, parameters, and implementation also influence performance and security.
 
 ---
 
@@ -120,9 +114,9 @@ This shares the overall “IOP design → implementation → non-interactivity�
 
 Today we learned:
 
-- Transparency motivates FRI-based commitments instead of KZG in the construction studied here.
+- AIR, FRI, and Merkle trees provide a representative transparent construction.
 - AIR is well suited to FRI, using transition and boundary constraints.
-- Seven broad steps organize the STARK construction and connect it to the tools from earlier sessions.
+- Commitments precede their dependent challenges; constraints, low-degree proximity, and consistency between tables must be verified together.
 - Designs involve tradeoffs across transparency, proof size, verification cost, post-quantum security, and prover computation.
 
 Next time (Session 14), we integrate Act III. We compare how Groth16, PLONK, and STARK satisfy the completeness, soundness, and zero-knowledge properties introduced in Act I, and identify where the cryptographic assumptions and complexity-theoretic results from Act II enter each construction.
