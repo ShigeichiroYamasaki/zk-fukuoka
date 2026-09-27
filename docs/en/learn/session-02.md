@@ -70,11 +70,15 @@ The comparison here is between distributions of the real view and simulator outp
 
 <StudyDiagram id="02-1" :en="true" />
 
+An **honest verifier** is a verifier that follows the prescribed protocol, not a judgment about someone’s character. It samples challenges from the specified distribution and applies the specified acceptance rule. We still allow it to record and analyze the messages and its own randomness. **Honest-verifier zero-knowledge (HVZK)** means that this verifier’s view can be simulated without the witness. This differs from zero-knowledge against verifiers that deviate from the protocol, for example by choosing challenges differently.
+
 **Graph isomorphism example.** Let the public graphs be $G_0,G_1$ and the secret isomorphism be $\pi:G_0\to G_1$. The prover samples a random vertex permutation $\rho$, sends $H=\rho(G_0)$, receives a uniform bit $b$, and returns an isomorphism $G_b\to H$: $\rho$ for $b=0$, or $\rho\circ\pi^{-1}$ for $b=1$. Answers to both challenges for the same $H$ yield an isomorphism between the public graphs by composition.
 
 An honest-verifier simulator can choose $b$ and a random isomorphism $G_b\to H$ first. Malicious-verifier security requires a separate argument involving rewinding. Generating a record and answering a live verifier are different tasks.
 
 ### 2.3 Checking the intuition
+
+The next explanation previews the **Schnorr identification protocol**, developed in Section 4.1. It demonstrates knowledge of a secret exponent corresponding to a public value without handing over that exponent. It has three stages: the prover sends an initial message (commitment), the verifier sends a random challenge, and the prover responds. An honest verifier in this Schnorr-type protocol samples its challenge uniformly from the specified set after receiving the commitment, then checks the response using the prescribed equation.
 
 If a transcript can be generated without the witness, could a dishonest prover do the same? Distinguish an output record from a live interaction with a verifier. For example, a Schnorr-type honest-verifier simulator can first choose a challenge and response, then derive a commitment satisfying the verification equation. A real prover commits before receiving the verifier’s challenge. The order differs. This intuition alone does not establish zero-knowledge against arbitrary malicious verifiers.
 
