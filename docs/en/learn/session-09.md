@@ -10,15 +10,15 @@ next:
 
 # Session 9: The Fiat–Shamir transform and the merits and limits of ROM
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 9 lecture manuscript.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Exercises](../exercises/)
 
 ## Position in the course and learning objectives
 
-The protocols discussed so far, including Schnorr, FRI, and KZG openings, have been described through **interactive** exchanges between a prover and verifier. In practice, SNARKs and STARKs are used **non-interactively**: a prover generates a proof that a verifier can check later without interacting with the prover. Today we study the Fiat–Shamir transform, its theoretical security foundations, and its limitations.
+We have seen procedures in which the verifier supplies random questions during an exchange. But repeated interaction becomes a burden if a proof should be created once and checked later by others. Today we ask how to replace those questions, distinguishing the Fiat–Shamir procedure from the model used to prove its security. Note that a KZG evaluation opening itself is non-interactive once the point is specified.
 
 There are three learning objectives:
 
@@ -32,11 +32,11 @@ There are three learning objectives:
 
 ### 1.1 Practical requirements
 
-Interactive protocols require the prover and verifier to be online together, and each round trip takes time. Applications such as blockchain verification benefit from a proof generated once and verifiable by anyone even after the prover goes offline. This motivates non-interactivity in practice.
+Consider placing a proof on a blockchain. It is easier for each participant to inspect a published proof than to conduct a separate exchange with the prover. The prover need not remain available to respond later. This operational goal motivates non-interactivity.
 
 ### 1.2 A common structure in earlier protocols
 
-Recall the pattern in Schnorr from Session 2 and FRI from Session 6: the prover sends a commitment, the verifier sends a random challenge, and the prover sends a response. The manuscript describes this as a **Σ-protocol-style** structure. The shared feature is that the verifier's messages essentially supply random values.
+Schnorr uses commitment, challenge, and response. FRI also fixes tables before random challenges, but the complete protocol is a multi-round IOP rather than simply a three-message Σ-protocol. The common feature is issuing random challenges after preceding messages in a public-coin exchange.
 
 ---
 
@@ -44,7 +44,7 @@ Recall the pattern in Schnorr from Session 2 and FRI from Session 6: the prover 
 
 ### 2.1 The basic idea
 
-The central idea of Fiat–Shamir (1986) is:
+Could a reproducible rule replace the verifier’s fresh random choice? Fiat–Shamir hashes information already fixed in the exchange to obtain a challenge that anyone can recompute. The idea is:
 
 > Replace the verifier's random challenge with a value that the prover computes by hashing the transcript so far.
 
@@ -52,11 +52,11 @@ For a Σ-protocol-style protocol, instead of receiving challenge $c$ from the ve
 
 $$c = H(\text{commitment}, x)$$
 
-where $H$ is a cryptographic hash function. This removes the interactive round trip: the prover can generate and send a commitment–response pair in one go.
+The prover is not the only party computing this hash. The verifier recomputes the challenge from the same input and checks the response. Actual constructions unambiguously encode the statement, public parameters, preceding messages, protocol identifiers, and other required context. Choosing what enters the hash is part of the protocol.
 
 ### 2.2 Security intuition
 
-The intuition is that the prover cannot freely choose a favorable challenge $c$ for its commitment. Since $c$ is determined by hashing the commitment, the prover cannot simply arrange an invalid commitment together with a desired challenge by inverting the hash. This is intended to preserve, in a non-interactive form, the soundness provided by the verifier's random challenge in the interactive protocol.
+The prover can choose commitments and inspect their hashes, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
 
 ---
 
@@ -64,7 +64,7 @@ The intuition is that the prover cannot freely choose a favorable challenge $c$ 
 
 ### 3.1 Definition of the model
 
-ROM provides a setting for rigorous security arguments based on this intuition. It idealizes $H$ as a truly random function:
+To model how responses to inputs are determined, treat the hash as an ideal random function: the Random Oracle Model. “Random” does not mean that repeated queries to the same input receive different answers. The model has all three properties below.
 
 - A query on a previously unseen input receives a uniformly random output.
 - Repeated queries on the same input always receive the same output, ensuring consistency.
@@ -72,7 +72,7 @@ ROM provides a setting for rigorous security arguments based on this intuition. 
 
 ### 3.2 The structure of a security proof in ROM
 
-For suitable protocols, security after Fiat–Shamir can be proved using the forking lemma from Session 6. By forking an adversary while changing a response to a random-oracle query, a reduction mimics rewinding in the interactive setting and obtains responses to two distinct challenges. This allows knowledge-extraction arguments from interactive protocols to be carried over to the non-interactive setting.
+For constructions such as Schnorr satisfying the required conditions, Session 6’s forking lemma can be used. Fork an adversary’s execution, change an oracle response, and obtain accepting transcripts for different challenges from which a witness can be extracted. This proof does not apply identically to every public-coin protocol; check the source protocol’s properties and the target security guarantee.
 
 ---
 
@@ -80,15 +80,15 @@ For suitable protocols, security after Fiat–Shamir can be proved using the for
 
 ### 4.1 Instantiating ROM remains a heuristic
 
-A crucial distinction is that **a security proof in ROM is not a proof about a concrete hash function such as SHA-256**. ROM is a mathematical model that assumes an idealized hash function. An implementation replaces this ideal object with a concrete hash function, and the ROM proof alone does not guarantee that this replacement is secure.
+After proving security in ROM, ask exactly what was proved. The theorem concerns a scheme using an ideal random oracle. An implementation uses a concrete function such as SHA-256. The same guarantee does not automatically survive that substitution. Distinguish the theorem inside the model from the judgment of applying that model to an implementation.
 
 ### 4.2 Theoretical counterexamples
 
-Canetti, Goldreich, and Halevi's 2004 result, commonly called the CGH result, gives artificial constructions that are provably secure in ROM but become insecure under any concrete implementation of the random oracle $H$. This demonstrates that a ROM proof is not a universal guarantee of real-world security.
+Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete hash instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
 
 ### 4.3 Why ROM is still widely used
 
-Despite these counterexamples, ROM remains widely accepted in practice because:
+Does the counterexample make ROM analysis useless? There is value in analyzing a scheme, including adversarial queries, under explicit idealized conditions. But security claims must stay within what was proved. Consider the practical reasons below while retaining that distinction.
 
 - Counterexamples such as CGH are deliberately constructed to exhibit pathological behavior; they do not themselves provide concrete attacks on practical protocols such as Fiat–Shamir-based Schnorr signatures.
 - A ROM proof provides strong evidence against structural flaws in a protocol within the model.
@@ -96,13 +96,13 @@ Despite these counterexamples, ROM remains widely accepted in practice because:
 
 ### 4.4 How to use this critical perspective
 
-The goal is to evaluate technology while recognizing that ROM is useful but imperfect. When examining the security of zk-SNARKs and zk-STARKs, identifying which parts rely on ROM is an essential part of evaluating and implementing these systems.
+When reading a scheme, trace where it uses a random oracle and what that assumption establishes. Instead of stopping at “there is a security proof,” distinguish the model, assumptions, and implementation. We will use this reading method for PLONK and STARKs.
 
 ---
 
 ## Summary and next session
 
-Today we learned:
+Today we studied a transformation removing interaction and the model used to analyze it. Review the procedure, model, and implementation separately.
 
 - Fiat–Shamir replaces interactive challenges with hash outputs to obtain non-interactivity.
 - ROM supports security proofs using an idealized hash function, with the forking lemma from Session 6 providing a concrete proof technique.

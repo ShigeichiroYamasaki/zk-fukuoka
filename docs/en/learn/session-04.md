@@ -10,15 +10,15 @@ next:
 
 # Session 4: Arithmetization techniques and complexity theory
 
-::: info Lecture manuscript
-An English translation of the supplied Japanese manuscript for Session 4.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Exercises](../exercises/)
 
 ## Context and learning objectives
 
-In the previous session, the Schwartz–Zippel lemma helped us understand how polynomials can represent large amounts of information with short descriptions and support efficient probabilistic checking. Today we study **arithmetization**: techniques for **translating general computation itself** into the language of polynomials.
+Last time, we learned to test polynomial identities at random points. What must we prepare to apply that test to a program’s execution? Today we study **arithmetization: translating general computation into polynomial constraints**. Compare R1CS, QAP, and AIR by asking what we will verify after the translation.
 
 Our three objectives are:
 
@@ -32,9 +32,9 @@ This session turns the shift identified in Session 2—from using a group homomo
 
 ## 1. What is arithmetization? — Revisiting the motivation
 
-As we saw in Session 2, general NP relations do not inherently provide a structure corresponding to the group homomorphism used in Schnorr's protocol. Computation consists of branches, loops, and comparisons, which cannot be treated algebraically as they stand.
+Programs include branches, loops, and comparisons. Schnorr’s verification equation from Session 2 need not apply directly to such descriptions. First identify which values must satisfy which conditions for the computation to be correct.
 
-Arithmetization **transforms a claim that a computation produces a particular output on a particular input into a system of constraints on polynomials, or on their evaluations**. Once this translation is available, we can apply tools from the previous session, including probabilistic checking through the Schwartz–Zippel lemma.
+Arithmetization expresses the computation from input to output as constraints that include intermediate values. The translation must make satisfying assignments correspond to valid executions. **The goal is not merely to write equations, but to check execution correctness through their satisfaction.** Conditions such as degree and value ranges must survive the translation.
 
 The three techniques we study today—R1CS, QAP, and AIR—are different implementations of the same translation: computation → polynomial constraints.
 
@@ -44,7 +44,7 @@ The three techniques we study today—R1CS, QAP, and AIR—are different impleme
 
 ### 2.1 Why this theorem underpins arithmetization
 
-The Cook–Levin theorem from complexity theory, dating to 1971, provides the justification for arithmetization:
+Can the same approach handle general NP problems, rather than just one program? The background is the Cook–Levin theorem establishing NP-completeness of SAT. Here we reason using the corresponding NP-completeness of CircuitSAT.
 
 > **Cook–Levin theorem:** CircuitSAT, the problem of determining whether a Boolean circuit is satisfiable, is NP-complete.
 
@@ -56,12 +56,12 @@ The theorem justifies concentrating the design of arithmetization techniques on 
 
 Circuit size and depth correspond to complexity classes. In particular:
 
-- **NC (Nick's Class):** computations performed by polynomial-size circuits of logarithmic depth, closely associated with parallel computation.
-- **P:** computations performed in polynomial time; in circuit terms, polynomial-size circuits without a depth restriction.
+- **NC (Nick's Class):** computations performed by uniform polynomial-size circuit families of polylogarithmic depth, closely associated with parallel computation.
+- **P:** computations performed in polynomial time; equivalently, polynomial-size circuit families with suitable uniformity and no depth restriction.
 
-When discussing the efficiency of a proof system, especially the prover's computation cost, whether the computation belongs to NC or P has practical significance. For example, AIR-based arithmetization in STARKs uses execution traces, making it natural for deep sequential computations across P, while circuit-based R1CS can directly represent arbitrary circuit structures. We will revisit this difference when comparing the design philosophies of STARKs and SNARKs.
+A complexity class does not directly determine an implementation speed ranking. Separate parts that parallelize readily from parts waiting for preceding state, then ask whether wiring or a sequence of states is the more useful representation.
 
-*(We will not explore the detailed NC/P hierarchy here. The goal is to build the intuition that the appropriate translation technique depends on the computation model being arithmetized.)*
+Also check uniformity of circuit families. NC normally permits polylogarithmic depth, and correspondence with P uses uniform families. Polynomial-size circuits without uniformity define P/poly. For implementation choices, inspect a computation’s actual depth, width, and repetition pattern rather than relying only on a class name. AIR arranges states over time; R1CS arranges constraints between variables. Which representation is convenient depends on the computation.
 
 ---
 
@@ -69,21 +69,21 @@ When discussing the efficiency of a proof system, especially the prover's comput
 
 ### 3.1 Definition
 
-An R1CS represents computation using a variable vector $\mathbf{z} = (1, x_1, \dots, x_n, w_1, \dots, w_m)$, combining public inputs and witnesses, and a triple of matrices $(A, B, C)$ with constraints
+First collect the intermediate values as variables. Let $\mathbf{z}=(1,x_1,\dots,x_n,w_1,\dots,w_m)$ include the constant one, public inputs, and witness. R1CS imposes the following condition using three matrices $(A,B,C)$.
 
 $$(A \mathbf{z}) \circ (B \mathbf{z}) = (C \mathbf{z}).$$
 
-Each row corresponds to one constraint, and $\circ$ denotes the elementwise product.
+Read this equation row by row. Since $\circ$ is entrywise multiplication, each row requires that the product of two linear combinations equal a third. Choosing the matrices specifies how the variables are combined for checking.
 
 ### 3.2 Why “rank-1”? A concrete example
 
-Each constraint states that the product of two linear combinations equals another linear combination. For example, a multiplication gate $z_3 = z_1 \cdot z_2$ corresponds directly to one row of an R1CS. Addition and multiplication by constants can be absorbed into the linear combinations, so constraints are essentially needed only for multiplication.
+For $z_3=z_1\cdot z_2$, select $z_1$ and $z_2$ in the two input linear combinations and $z_3$ in the result. The quadratic part comes from an outer product of two coefficient vectors, explaining “Rank-1.” Addition and constant multiplication can be absorbed into linear combinations, but equalities for separately stored values and output conditions still need constraints where required.
 
-**Connection to circuits:** Any Boolean or arithmetic circuit can be translated gate by gate into R1CS constraints. The Cook–Levin theorem reduces any NP relation to a circuit, giving the chain of reductions from any NP relation to R1CS.
+Also check the **circuit correspondence**. Multiplication gates fit this constraint form, while addition uses linear combinations. Boolean circuits represented over a field also need values constrained to zero or one. Translating input, intermediate, and output conditions as well as gate equations preserves the correspondence with circuit satisfiability.
 
 ### 3.3 A worked exercise
 
-On the board, work through the classic example of converting “I know an $x$ satisfying $x^3 + x + 5 = 35$” into an R1CS, with $x=3$. Introduce intermediate variables and construct constraints for the multiplication gates to make the translation concrete.
+Use the relation “I know $x$ satisfying $x^3+x+5=35$.” Rather than only substituting $x=3$, name intermediate values such as its square and cube, and write down which relationships must be checked. Include the final output condition of 35 to work through the full translation from computation to constraints.
 
 ---
 
@@ -91,7 +91,7 @@ On the board, work through the classic example of converting “I know an $x$ sa
 
 ### 4.1 From R1CS to QAP
 
-R1CS is a linear-algebraic representation using matrices and vectors. A QAP translates it into the language of **polynomials**, encoding each R1CS row, or constraint, as values at a particular evaluation point.
+R1CS represents constraints as matrix rows. Now assign distinct evaluation points to the rows and represent each column by a polynomial. Moving to QAP means reading the same constraints as polynomial evaluations. This is where Session 3’s Lagrange interpolation is needed.
 
 Specifically, use Lagrange interpolation from Session 3 to turn each column of the R1CS matrices $A, B, C$ into polynomials $A_i(X), B_i(X), C_i(X)$. Then express simultaneous satisfaction of all R1CS constraints through polynomial divisibility:
 
@@ -101,7 +101,7 @@ Here, $Z(X)$ is the polynomial whose roots are the constraint evaluation points.
 
 ### 4.2 Why this transformation matters
 
-In R1CS, we had to check **many** conditions, one for each row. A QAP combines them into **one** condition: divisibility of a polynomial. This puts the claim into a form that can be checked with high probability by evaluation at a random point using the Schwartz–Zippel lemma. This is the first concrete application of the tools developed in Session 3.
+The computation to be checked has not changed; the form of the check has. Vanishing at every constraint point becomes divisibility by a vanishing polynomial. With degree bounds, including on the quotient, and fixed polynomials, one can test this relation at a random point. Combining conditions into one equation is a step toward a proof system, not the entire security argument.
 
 ---
 
@@ -109,7 +109,7 @@ In R1CS, we had to check **many** conditions, one for each row. A QAP combines t
 
 ### 5.1 A different starting point from R1CS/QAP
 
-R1CS/QAP directly represents circuit structure, while AIR starts from a **computation's execution trace**. For a sequential computation, such as a loop repeating the same operation, arrange the state at each step in a table called a trace table.
+The same computation can also be recorded as states over time. For a loop, arrange the values before and after each iteration in a table. AIR starts from this **execution trace**. Instead of following gate wiring, check that one state transitions correctly to the next.
 
 ### 5.2 Transition and boundary constraints
 
@@ -118,17 +118,17 @@ AIR imposes two types of constraints:
 - **Transition constraints:** polynomial relations that must hold between consecutive trace rows—for example, that the next value is the square of the previous value.
 - **Boundary constraints:** required values at particular rows, such as the initial or final state.
 
-Interpolate each trace column to represent the trace as polynomials, again using Lagrange interpolation from Session 3. Transition constraints then become polynomial relations between adjacent evaluation points.
+Separate the roles of the two constraints. Correct transitions do not establish the intended computation if the starting or ending state is wrong. Interpolating columns turns both relations between adjacent times and values at specified times into polynomial conditions. Session 3’s interpolation again connects tables to polynomials.
 
 ### 5.3 Understanding AIR through comparison with R1CS/QAP
 
-Both approaches serve the same purpose of arithmetization, but R1CS/QAP uses individual circuit gates as its units, while AIR uses state transitions over time steps. In Act III, we will contrast these ideas in STARKs, based on AIR, and Groth16/PLONK, based on R1CS/QAP, with PLONK using its own custom-gate approach.
+R1CS/QAP and AIR pursue the same goal but choose different units of computation. The former emphasizes variables and gates; the latter emphasizes states and transitions. In Act III, compare Groth16’s QAP, PLONK’s own gate and copy constraints, and representative AIR-based STARKs. Do not classify PLONK itself as an R1CS/QAP construction.
 
 ---
 
 ## Recap and next session
 
-Today we studied:
+Today we expressed the same computation through different constraints. Review what the translation preserved and what became easier to check.
 
 - How the Cook–Levin theorem reduces any NP relation to circuit satisfiability, justifying arithmetization without loss of generality.
 - R1CS: representing circuit gates as linear-algebraic constraints.

@@ -10,15 +10,15 @@ next:
 
 # Session 3: Algebra of finite fields and polynomials; probabilistic checking
 
-::: info Lecture manuscript
-An English translation of the supplied Japanese manuscript for Session 3.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations)
 
 ## Context and learning objectives
 
-The previous session completed Act I, purpose and motivation. Today we begin Act II: assembling the tools. Whenever we introduce a mathematical tool in Act II, we will explicitly identify which problem from Act I it helps solve.
+Last time, we saw why general computations need translation into a form that can be checked. We now assemble the tools, starting with finite fields and polynomials. As we introduce each definition, ask which property helps reduce the burden of verification.
 
 Today's three objectives are:
 
@@ -32,9 +32,9 @@ In terms of the two-axis matrix introduced in the previous session, today we beg
 
 ## 1. Why polynomials? — Revisiting the motivation
 
-As we saw in Session 2, handling general computation—arbitrary NP relations—requires moving beyond methods that rely on group homomorphisms, such as Schnorr's protocol. Instead, we need to translate computation into algebraic objects. The objects chosen for this translation are **polynomials**.
+Why translate computation into polynomials? In Session 2, Schnorr used the group structure of its relation to obtain a verification equation. We cannot simply reuse that equation for arbitrary computation. Instead, we represent computation in a common algebraic language and use checking methods for that language.
 
-Why polynomials? To anticipate today's material: **polynomials can represent large amounts of information with a short description and allow the correctness of that information to be checked probabilistically with few queries**. The mathematical guarantee behind this useful property is today's central topic, the Schwartz–Zippel lemma.
+The property to notice is that **distinct low-degree polynomials cannot agree at too many points**. This suggests comparing values at random points instead of comparing every coefficient. Merely writing data as a polynomial does not compress it; it gives the data a structure useful for verification.
 
 We will study concrete arithmetization techniques—how to turn computation into polynomial constraints—in Session 4. Today we prepare by developing the algebra of polynomials and the testing capabilities it provides.
 
@@ -46,15 +46,15 @@ We will study concrete arithmetization techniques—how to turn computation into
 
 For a prime $p$, $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ is a field. In addition to addition, subtraction, and multiplication, every nonzero element has a multiplicative inverse. In cryptography and proof systems, we generally work with finite fields $\mathbb{F}_q$ of order $p$, a prime, or $p^k$, a prime power.
 
-**Why use finite fields?** Arithmetic over the real numbers $\mathbb{R}$ cannot be performed exactly on computers because of rounding errors. Finite fields avoid this problem and can be handled exactly on computers while retaining the field axioms, especially the existence of multiplicative inverses.
+**Why use a finite field?** Ordinary floating-point arithmetic introduces rounding errors, while proof constraints require exact equalities. Finite fields support exact arithmetic on finite representations. The useful property is not merely having finitely many elements, but being able to divide by every nonzero element.
 
 ### 2.2 A brief mention of extension fields
 
-We can construct an extension field $\mathbb{F}_{p^k}$ using an irreducible polynomial over $\mathbb{F}_p$. STARK implementations often use such extension fields—for example, extensions of $\mathbb{F}_{2^{64}}$—for efficient arithmetic. We will not pursue the details today, but revisit them as needed in the sessions on FRI and AIR.
+An irreducible polynomial over $\mathbb{F}_p$ defines an extension field $\mathbb{F}_{p^k}$. Extensions are useful when balancing the size of a sampling space with efficient machine arithmetic. Distinguish extensions of prime fields from extensions in characteristic two. We defer the construction; for now, learn to ask which field an FRI or AIR construction uses.
 
 ### 2.3 The structure of the multiplicative group
 
-$\mathbb{F}_p^*$, the multiplicative group of nonzero elements, is cyclic of order $p-1$. The existence of primitive roots, or generators, and the subgroup structure of $\mathbb{F}_p^*$, especially subgroups of power-of-two order, will matter when we study the number-theoretic transform (NTT), which makes arithmetization more efficient. For today, it is enough to remember that this group is cyclic.
+The nonzero elements $\mathbb{F}_p^*$ form a cyclic group of order $p-1$. Powers of a generator give structured evaluation points. A desired power-of-two subgroup requires its order to divide $p-1$. This condition matters when using NTTs to accelerate evaluation and interpolation.
 
 ---
 
@@ -62,7 +62,7 @@ $\mathbb{F}_p^*$, the multiplicative group of nonzero elements, is cyclic of ord
 
 ### 3.1 Definitions and basic operations
 
-Let $\mathbb{F}_p[X]$ be the ring of univariate polynomials over a finite field. Review degree, polynomial addition and multiplication, and polynomial division:
+$\mathbb{F}_p[X]$ is the ring of univariate polynomials with finite-field coefficients. Distinguish arithmetic on coefficients from arithmetic on expressions involving $X$. Besides addition and multiplication, division by a nonzero polynomial $g(X)$ yields $f(X)=q(X)g(X)+r(X)$ with $\deg r<\deg g$. QAP will use a zero remainder to express satisfaction of constraints.
 
 $$f(X) = q(X) g(X) + r(X), \qquad \deg r < \deg g.$$
 
@@ -72,7 +72,7 @@ The following fundamental fact holds for polynomials over a field:
 
 > **Theorem:** If $f(X) \in \mathbb{F}_p[X]$ is not identically zero and has degree $d$, then $f$ has at most $d$ roots.
 
-This follows from the integral-domain property of a field: it has no zero divisors. It is also precisely the univariate version of the Schwartz–Zippel lemma. Emphasize this theorem as a bridge to the multivariate result in the next section.
+Read this theorem from the perspective of checking. For a nonzero polynomial, the number of locations where a random evaluation might be zero is bounded by its degree. The absence of zero divisors in a field supports this bound. Next, we extend the idea to several variables.
 
 ### 3.3 Lagrange interpolation
 
@@ -80,7 +80,7 @@ Given $d+1$ distinct points $(x_0, y_0), \dots, (x_d, y_d)$, there is a unique p
 
 $$f(X) = \sum_{i=0}^{d} y_i \prod_{j \ne i} \frac{X - x_j}{x_i - x_j}.$$
 
-**Why this matters:** A polynomial has two equivalent representations: its coefficients and its values at evaluation points, or evaluation representation. Moving freely between these representations underpins the efficiency of later arithmetization techniques and commitment schemes. Today we establish this fact; efficient conversion using the NTT will be covered later.
+In this formula, each product is one at its designated point and zero at the other specified points. Weighting and adding these products gives the required values. **Given a degree bound and sufficiently many distinct points, coefficients and evaluation values specify the same polynomial.** Arithmetization will turn tables into polynomials; commitments will allow their values to be checked. Notice why both representations are useful.
 
 ---
 
@@ -88,7 +88,7 @@ $$f(X) = \sum_{i=0}^{d} y_i \prod_{j \ne i} \frac{X - x_j}{x_i - x_j}.$$
 
 ### 4.1 Motivation: how can we check polynomial identities?
 
-Suppose we want to determine whether two polynomials $f(X), g(X)$ are identically equal. We could compare all their coefficients. But when the degree is large—for example, when a polynomial encodes an entire execution trace—the number of coefficients can be enormous, making this inefficient.
+Suppose we want to check whether $f(X)$ and $g(X)$ are the same polynomial. Comparing all coefficients works, but can itself burden the verifier for a polynomial encoding a large computation. The goal is to establish equality, not to read coefficients. Can we reduce the number of evaluation points we inspect?
 
 **Question:** Can we determine identity with high probability by evaluating at just one random point, without inspecting the entire polynomial?
 
@@ -101,13 +101,13 @@ For one variable, $n=1$, this is exactly the fact from Section 3.2 that a polyno
 
 ### 4.3 What the lemma tells us
 
-To test whether two polynomials $f, g$ are equal, consider their difference $h = f - g$ and check whether $h(r) = 0$ at a random point $r$. If $h$ is not identically zero—that is, $f \ne g$—the lemma bounds the probability of mistakenly finding $h(r)=0$ by $d / |S|$. Taking $|S|$ sufficiently large makes this error probability arbitrarily small.
+To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider extension fields or repetition.
 
-**Instead of comparing entire polynomials, we can therefore test identity with high probability using the lightweight operation of evaluation at a single point.**
+What becomes small here is the number of points checked. Computing an evaluation is not automatically cheap. The argument also fails if polynomials can be chosen after seeing the test point. A proof system must fix them first and authenticate the required evaluations.
 
 ### 4.4 The complexity-theoretic significance
 
-The importance of this lemma goes beyond algebra. It gives a **representative example of a probabilistic polynomial-time decision algorithm, a BPP algorithm**, and has a historically important place in randomized complexity theory through polynomial identity testing (PIT).
+As an algorithm, this test always recognizes an identically zero polynomial and may err only on a nonzero one. Given an efficiently evaluable representation and a suitable sampling space, PIT admits a one-sided-error randomized algorithm. It is also in BPP; identifying the direction of error clarifies the connection to soundness.
 
 For this course, its crucial role is as **the theoretical foundation for polynomial identity testing, a core technique in PCPs and IOPs**. In many SNARK and STARK protocols, the prover claims that a polynomial relation holds. Rather than checking the entire relation, the verifier checks evaluations at random points, or random linear combinations. The Schwartz–Zippel lemma provides the mathematical justification for this idea of checking at a random point without examining the whole object.
 
@@ -117,7 +117,7 @@ For this course, its crucial role is as **the theoretical foundation for polynom
 
 ## 5. Exercises: concrete examples of identity testing
 
-Use examples such as the following in class to practice applying the lemma:
+Use the lemma to design a test. Once the polynomial degree and sampling set are chosen, what error bound follows? Work through the following examples to connect the formula to that decision.
 
 - Test whether two polynomials are equal using only evaluation at a random point. Choose expressions whose equality could be checked by expansion, but for which expansion is tedious.
 - Calculate how the error probability changes as $|S|$ varies.
@@ -127,7 +127,7 @@ Use examples such as the following in class to practice applying the lemma:
 
 ## Recap and next session
 
-Today we studied:
+Today we studied fields and polynomials as tools for later checks. Review which property enabled which operation through the following points.
 
 - The basics of finite fields $\mathbb{F}_p$ and polynomial rings $\mathbb{F}_p[X]$, and the correspondence between coefficient and evaluation representations through Lagrange interpolation.
 - The Schwartz–Zippel lemma: polynomial identities can be tested probabilistically at one random point without inspecting the entire polynomial.

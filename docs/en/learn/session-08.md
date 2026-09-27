@@ -10,15 +10,15 @@ next:
 
 # Session 8: Polynomial commitments and cryptographic commitment theory
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 8 lecture manuscript.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 8 in the syllabus](./#session-8) · [Exercises](../exercises/)
 
 ## Position in the course and learning objectives
 
-The previous session introduced pairings as an algebraic tool, while Session 6 introduced FRI as a coding-theoretic tool. Today these two strands meet in **polynomial commitments**, a central component of proof systems. We will study KZG, based on pairings, and FRI-based commitments as concrete examples within the general framework of **cryptographic commitment schemes**.
+To test a polynomial at a random point, we want it fixed before revealing that point. When we later ask for a value, how do we establish that it belongs to the polynomial originally fixed? Polynomial commitments address this goal. Compare pairing-based KZG from Session 7 and FRI-based constructions from Session 6 as two ways to answer the same question.
 
 There are three learning objectives:
 
@@ -32,22 +32,22 @@ There are three learning objectives:
 
 ### 1.1 Motivation: The face-down card analogy
 
-A commitment can be compared to placing a card face down. By placing a value $v$ face down, we want two properties simultaneously: the other party cannot learn $v$ without seeing the card (hiding), and we cannot later replace it with a different card (binding).
+Imagine placing one card face down. We want its value $v$ hidden until it is revealed, and we must not be able to replace it after seeing the other party’s reaction. **Hiding a value and preventing later changes are distinct requirements.** A commitment scheme aims to realize both through computational procedures.
 
 ### 1.2 Formal components
 
-A commitment scheme generally has two algorithms:
+Separate the example into fixing a value and later checking its opening. Including randomness, the algorithms can be written as follows:
 
 - $\mathrm{Commit}(v, r) \to c$: Generate a commitment $c$ from a value $v$ and randomness $r$.
 - $\mathrm{Open}(c, v, r)$: Verify that commitment $c$ corresponds to value $v$ and randomness $r$.
 
 ### 1.3 Binding
 
-**Binding** means that a committed value cannot later be replaced with a different one. Formally, an adversary must not be able to open the same commitment $c$ using both $(v_1, r_1)$ and $(v_2, r_2)$ where $v_1 \ne v_2$.
+**Binding** prevents valid openings of the same $c$ to different values. Consider two openings $(v_1,r_1)$ and $(v_2,r_2)$ that both verify with $v_1\ne v_2$. We require this to be impossible for the specified adversary or to have only negligible success probability.
 
 ### 1.4 Hiding
 
-**Hiding** means that the commitment $c$ alone reveals no information about $v$, in a statistical or computational sense.
+**Hiding** asks whether a party seeing $c$ can distinguish which value was committed. Binding alone does not establish this property. The definition also distinguishes statistical hiding from hiding against a computationally bounded adversary.
 
 ### 1.5 Extending to polynomial commitments
 
@@ -55,7 +55,7 @@ A polynomial commitment extends this framework to the case where the value $v$ i
 
 $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
-For the committed polynomial $f$, a short proof $\pi$ allows a verifier to check that $f(x) = y$ without revealing the entire polynomial. This additional functionality is central to the role of commitments in SNARKs and STARKs: a prover first commits to polynomials obtained through arithmetization in Session 4, then efficiently opens their values at random evaluation points requested by the verifier.
+This equation describes checking the claim $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
 
 ---
 
@@ -63,7 +63,7 @@ For the committed polynomial $f$, a short proof $\pi$ allows a verifier to check
 
 ### 2.1 Setup
 
-A trusted setup generates a structured reference string (SRS) for a secret value $\tau$ that must not remain known:
+KZG publishes group elements corresponding to powers of a secret evaluation point $\tau$, without publishing the point itself. The portion of the trusted-setup SRS used to commit to a polynomial has the following form.
 
 $$\{g, g^\tau, g^{\tau^2}, \dots, g^{\tau^d}\}$$
 
@@ -75,7 +75,7 @@ For a polynomial $f(X) = \sum_i a_i X^i$ of degree at most $d$, compute the comm
 
 $$C = g^{f(\tau)} = \prod_i (g^{\tau^i})^{a_i}$$
 
-It can be computed by combining the SRS elements $g^{\tau^i}$ with the coefficients, without knowing $\tau$ itself.
+This formula does not require learning $\tau$. The coefficients $a_i$ and public elements $g^{\tau^i}$ suffice to compute the right-hand side. Building the needed group element without knowing the exponent value is the reason for preparing the SRS.
 
 ### 2.3 Opening and verification: The role of pairings
 
@@ -85,11 +85,11 @@ The verifier checks the following pairing equation:
 
 $$e(C \cdot g^{-y}, g) = e(\pi, g^{\tau} \cdot g^{-x})$$
 
-By bilinearity, this checks the relation $f(\tau) - y = q(\tau) \cdot (\tau - x)$ without revealing $\tau$. **The multiplicative verification capability emphasized in the previous session now plays a concrete role.**
+Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point. The equation abbreviates the generators as $g$; asymmetric pairings distinguish the two input groups and also require the second group’s generator and its $\tau$ multiple in the verifier’s parameters.
 
 ### 2.4 Security foundations
 
-KZG's binding property is proved by reduction to the q-SDH assumption introduced in the previous session. The reduction argument from Session 7 takes the following form: an adversary able to produce different polynomials with the same commitment would yield an algorithm for solving the q-SDH problem.
+The binding property to check here concerns evaluation: opening one commitment at the same point to different values. KZG analyzes it under an SDH-type assumption corresponding to the degree bound. Knowledge extraction and hiding require separate treatment. The basic commitment shown so far is deterministic and is not inherently hiding; zero-knowledge requires appropriate randomization.
 
 ---
 
@@ -97,17 +97,17 @@ KZG's binding property is proved by reduction to the q-SDH assumption introduced
 
 ### 3.1 A different approach: No trusted setup
 
-KZG requires trusted setup to generate a secret $\tau$ that must not remain known. FRI-based commitments instead apply low-degree testing from Session 6 to obtain a **transparent construction requiring no trusted setup**.
+Can we achieve the goal without generating a setup secret? FRI-based constructions fix a value table using hashes and test its relationship to low-degree polynomials. Merkle trees and proximity testing take the place of pairings and a secret evaluation point.
 
 ### 3.2 Construction outline
 
 The prover commits to the evaluation representation of a polynomial $f$ using a Merkle tree: evaluation values are organized into a hash tree, and its root is sent as the commitment. To open a value, the prover supplies the Merkle path for the requested evaluation point, proving that the value belongs to the committed table.
 
-FRI provides the low-degree guarantee. It checks that the committed table is close to the evaluation representation of a low-degree polynomial, while Merkle paths verify openings at particular points. The construction combines these two techniques.
+A Merkle path establishes membership of a value in the fixed table. FRI separately tests proximity to a low-degree polynomial. Opening a polynomial at an arbitrary point also needs a mechanism, such as a quotient-polynomial check, connecting that claim to the table. Distinguish table membership, low-degree proximity, and correctness of the claimed evaluation.
 
 ### 3.3 Security foundations
 
-Binding in FRI-based commitments relies on the collision resistance of the hash function used in the Merkle tree and on FRI's soundness. Unlike KZG, it relies on general hash-function properties rather than algebraic assumptions associated with pairings. This is also one reason STARKs claim post-quantum security: quantum algorithms can efficiently solve elliptic curve discrete logarithms, whereas suitably designed hash functions are expected to retain collision resistance at appropriate security parameters.
+Hash collision resistance prevents changing the committed table; FRI soundness rejects tables far from low degree. The combined evaluation protocol must be analyzed as a whole. Non-interactive versions also introduce Fiat–Shamir and an oracle model. Assessing quantum resistance requires examining the transformed protocol, not merely the hash choice.
 
 ---
 
@@ -120,13 +120,13 @@ Binding in FRI-based commitments relies on the collision resistance of the hash 
 | Security foundation | Reduction to q-SDH | Hash collision resistance + FRI soundness |
 | Proof size | Constant | Logarithmic; depends on the FRI stages |
 
-This comparison captures a central design distinction when contrasting Groth16/PLONK on the pairing/KZG side with STARKs on the FRI side in Act III. Whether trusted setup is required is more than an implementation detail: it reflects the nature of the cryptographic assumptions underlying the protocols.
+Compare what is fixed, what is checked, and which assumptions are used. The table’s logarithmic FRI size describes folding depth; count authentication paths and queries when measuring the whole proof. Act III compares KZG-based PLONK with representative FRI-based STARKs. Groth16 uses pairings but does not incorporate KZG as a component; preserve that distinction when reading the constructions.
 
 ---
 
 ## Summary and next session
 
-Today we learned:
+Today we fixed polynomials before checking their values. Review the following while distinguishing binding, hiding, and correct evaluation.
 
 - The general security definitions for commitments: binding prevents changing the committed value, while hiding protects its secrecy.
 - Polynomial commitments extend ordinary commitments with efficient openings of evaluations at specific points.

@@ -10,15 +10,15 @@ next:
 
 # Session 5: Error-correcting codes and the information-theoretic perspective
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 5 lecture manuscript.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 5 in the syllabus](./#session-5) · [Exercises](../exercises/)
 
 ## Position in the course and learning objectives
 
-In the previous session, we learned how arithmetization translates computations into polynomials or their evaluation representations. Today we shift our perspective and ask: **How reliably can we handle information encoded as polynomials?** Coding theory and information theory provide a language for this question.
+Last time, we translated computation into polynomial constraints. Today, consider what to check when receiving a table of polynomial values. Can we identify the original information if some entries differ? How different is a table obtained from a low-degree polynomial from one that is not? Coding theory gives us tools for these questions.
 
 There are three learning objectives:
 
@@ -34,13 +34,13 @@ Today's material provides the foundation for low-degree testing and FRI in Sessi
 
 ### 1.1 Why arithmetization alone is not enough
 
-We have learned how to express computations as polynomial constraints using R1CS, QAP, and AIR. But when a verifier actually checks a polynomial, the question remains: how much can the information supplied by the prover be trusted? In particular, how can we detect a dishonest prover who supplies a manipulated function that is not low-degree in place of the expected low-degree polynomial?
+Arithmetization specifies conditions satisfied by a correct computation. But a table submitted by the prover need not be the kind of object to which those conditions safely apply. Instead of a low-degree polynomial, the prover might select convenient values independently at each point. First define valid tables and how to measure deviation from them.
 
 To prepare to answer this question, we introduce the concept of a **code**, particularly Reed–Solomon codes.
 
 ### 1.2 The fundamental question of coding theory
 
-Coding theory originally studies how accurately an original message can be recovered when noise enters a communication channel. In proof systems, we can reinterpret this as asking how robustly we can detect or recover the intended correct polynomial from possibly corrupted data supplied by a prover.
+Communication adds redundancy so that the original message can be recovered after corruption. In a proof system, keeping valid data objects sufficiently separated can likewise help detect invalid data. Channel noise and deliberate prover misconduct have different causes, however; we will distinguish their error models.
 
 ---
 
@@ -52,11 +52,11 @@ Consider the encoding that maps every polynomial of degree less than $d$, from $
 
 $$f \mapsto (f(x_1), f(x_2), \dots, f(x_n))$$
 
-This is a Reed–Solomon code (RS code). Each codeword is precisely the evaluation representation of a polynomial of degree less than $d$. The correspondence between coefficient and evaluation representations provided by Lagrange interpolation in Session 3 therefore becomes the theoretical basis for encoding and decoding.
+This mapping is a Reed–Solomon code. After fixing the polynomial, we evaluate it at more points than are needed to determine it. The extra values are not unrelated data; they come from the same polynomial. That relationship supplies redundancy. Read Session 3’s interpolation now as a representation that protects information.
 
 ### 2.2 Minimum distance
 
-A fundamental measure of a code's performance is its **minimum distance**. For an RS code, it is
+If two messages produce almost identical tables, a few errors may make them indistinguishable. Measure the minimum number of positions at which distinct codewords differ: the **minimum distance**. For the Reed–Solomon code with the preceding degree bound, it is:
 
 $$\delta = n - d + 1$$
 
@@ -64,7 +64,7 @@ This follows from the fact established in Session 3: a nonzero polynomial of deg
 
 ### 2.3 Error-correcting capability
 
-A basic principle of coding theory is that a code of minimum distance $\delta$ can uniquely correct up to $\lfloor (\delta - 1)/2 \rfloor$ errors. RS codes are also **MDS (Maximum Distance Separable) codes**: for given parameters $n$ and $d$, their minimum distance attains the theoretical limit known as the Singleton bound.
+For minimum distance $\delta$, changing at most $\lfloor(\delta-1)/2\rfloor$ positions around each codeword gives disjoint neighborhoods. This is why unique correction is possible. Reed–Solomon codes attain the Singleton bound for length $n$ and dimension $d$, making them MDS codes. Notice how distance determines the number of correctable errors.
 
 ---
 
@@ -72,15 +72,15 @@ A basic principle of coding theory is that a code of minimum distance $\delta$ c
 
 ### 3.1 Two different error models
 
-Coding theory has two broad approaches, depending on how errors are modeled.
+Before asking how many errors can be corrected, decide how errors arise. Modeling natural noise probabilistically and allowing an adversary to choose positions and values deliberately require different guarantees.
 
-**The Shannon model (probabilistic errors):** Assume a probabilistic communication channel in which each symbol independently incurs a random error with a certain probability. The Shannon limit gives the maximum rate at which information can be transmitted reliably under these probabilistic errors.
+The **Shannon model** specifies a probabilistic channel; independent symbol errors are one example. Channel capacity bounds rates achievable with asymptotically vanishing decoding error. Do not read reliable transmission as necessarily having zero error at finite blocklength.
 
 **The Hamming model (worst-case errors):** Make no probabilistic assumption about error locations or values, and consider how much corruption can occur in the worst case. The Hamming bound, or sphere-packing bound, limits what codes can achieve against such errors.
 
 ### 3.2 Why this distinction matters for proof systems
 
-In a proof system, errors—that is, a prover's dishonest behavior—are not random natural phenomena. They are caused by **an adversary deliberately seeking the worst case**. Consequently, code properties based on the **Hamming worst-case model**, such as minimum distance and error-correcting capability, are central to soundness analysis, rather than a Shannon-style model of probabilistic errors. This distinction is consistent with the cryptographic goal of guaranteeing security against the worst adversary, rather than only on average.
+A verifier cannot assume that a prover’s errors are independent random noise. The prover may choose positions and values that are likely to pass inspection. We therefore need worst-case properties, such as distance from codewords. Randomizing the verifier’s queries is different from assuming the errors themselves are random.
 
 ---
 
@@ -88,11 +88,11 @@ In a proof system, errors—that is, a prover's dishonest behavior—are not ran
 
 ### 4.1 The limit of unique decoding
 
-Unique decoding based on minimum distance loses its guarantee beyond the threshold $(\delta-1)/2$. Even with more errors, however, it may still be possible to output a list of candidate codewords. This is the idea of **list decoding**.
+Beyond $(\delta-1)/2$ errors, the original codeword may not be uniquely determined. What if we relax the requirement of choosing exactly one? Instead, produce a short list of codewords within a specified distance. This is list decoding.
 
 ### 4.2 Why this concept matters: A preview
 
-RS codes are known to admit efficient list decoding within the range associated with the Johnson bound, for example through the Guruswami–Sudan algorithm. This provides a foundation for understanding how low-degree testing and FRI can tolerate some corruption while still providing quantitative soundness guarantees. In particular, bounds on FRI's soundness error connect to coding-theoretic parameters governing list decoding.
+For Reed–Solomon codes, algorithms such as Guruswami–Sudan support list decoding in a range related to the Johnson bound. FRI analysis also needs to bound how many low-degree polynomials can be nearby. This does not mean the verifier performs list decoding on every execution; properties of candidate counts and distance inform the soundness-error analysis.
 
 *We will not cover specific list-decoding algorithms today. The goal is to recognize the possibility of robust information recovery beyond unique decoding, and to understand that this idea supports later soundness analysis.*
 
@@ -100,7 +100,7 @@ RS codes are known to admit efficient list decoding within the range associated 
 
 ## 5. Exercises: Minimum distance and parameter design
 
-Work through the following examples during the lecture:
+Use the formulas to investigate what changes when evaluation points are added. Besides error tolerance, the amount of data and evaluation work changes. In the following examples, consider the guarantee together with the work needed to obtain it.
 
 - Given concrete values of $n$ and $d$, calculate minimum distance and error-correcting capability.
 - Discuss how choosing smaller or larger evaluation sets $D$ within the finite field changes the trade-off between the code rate $d/n$ and error-correcting capability.
@@ -110,7 +110,7 @@ Work through the following examples during the lecture:
 
 ## Summary and next session
 
-Today we learned:
+Today we reread polynomial evaluation tables as codes. Check how distance between tables helps distinguish errors.
 
 - Reed–Solomon codes encode degree-bounded polynomials through their evaluation representations. The correspondence established by Lagrange interpolation in Session 3 directly underpins this construction.
 - Minimum distance determines error-correcting capability, and RS codes are MDS codes that attain the Singleton bound.

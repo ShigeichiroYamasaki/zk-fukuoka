@@ -10,15 +10,15 @@ next:
 
 # Session 2: Zero-knowledge and the generalization of witnesses
 
-::: info Lecture manuscript
-An English translation of the supplied Japanese manuscript for Session 2.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2)
 
 ## Context and learning objectives
 
-The previous session addressed the background of interactive proofs: questioning Assumption B, non-interaction. Today we directly tackle the remaining question: **Assumption A, full disclosure**. Our three objectives are:
+Last time, we asked what changes when a verifier can ask questions. Today we question the other assumption: must we hand over the witness to have a claim checked? If we do not, how can we establish that no extra information is conveyed? Today’s three objectives are:
 
 1. Formally define zero-knowledge through the simulator paradigm and understand the hierarchy of indistinguishability.
 2. Introduce knowledge soundness and extractors as concepts that capture whether a prover really knows a witness.
@@ -30,7 +30,7 @@ Today completes Act I, purpose and motivation. In the next session, we begin Act
 
 ## 1. Introduction: making “prove without revealing a secret” precise
 
-The previous session introduced GMR's problem: proving that you know a secret without revealing it. But what, exactly, does “not revealing a secret” mean?
+First, consider what “not revealing a secret” means. Last time, we stated a goal: establish knowledge without handing over the secret. Stating that goal does not yet let us decide whether a procedure achieves it.
 
 One might initially think it is enough not to send the witness $w$ to the verifier. That is insufficient, however: the **process** of interaction can itself leak partial information about the witness. Examples include the timing of the prover's responses, statistical biases in those responses, and information accumulated across multiple proofs.
 
@@ -42,7 +42,7 @@ How can we formalize “nothing leaks”? GMR's answer was the **simulator parad
 
 ### 2.1 The central idea
 
-The central idea of the definition can be expressed as follows:
+What should we compare the information obtained by the verifier against? We use information that can be generated without the witness. The simulator paradigm expresses this idea as follows:
 
 > Everything a verifier obtains from an interaction is something it could **simulate on its own, without knowing the witness**.
 
@@ -50,7 +50,7 @@ In other words, if an algorithm that generates a transcript—a simulator $S$—
 
 ### 2.2 A formal definition
 
-An interactive proof system $(P, V)$ is **zero-knowledge** for a language $L$ (with relation $R$) if, for every potentially malicious verifier $V^*$, there exists a simulator $S$ such that
+Consider an interactive proof system $(P,V)$ for language $L$ and relation $R$. For every efficient verifier $V^*$, we require an efficient simulator $S$ that reproduces its view without the witness. The following is shorthand for this condition; $S$ may depend on the verifier. The left-hand side denotes the verifier’s view, including its randomness and received messages. A full definition also specifies security parameters and auxiliary inputs.
 
 $$\{\langle P(w), V^*\rangle(x)\}_{x \in L} \approx \{S(x)\}_{x \in L}.$$
 
@@ -60,11 +60,11 @@ Here, $\approx$ denotes indistinguishability. Depending on how strong a requirem
 - **Statistical zero-knowledge:** their statistical distance is negligible.
 - **Computational zero-knowledge:** computationally bounded distinguishers cannot distinguish the distributions.
 
-Many practical zk-SNARKs and zk-STARKs aim for computational zero-knowledge. Notice how this hierarchy complements the distinction between proofs and arguments introduced in the previous session. That distinction concerns restrictions on the prover's computational power; this one concerns restrictions on the verifier's or distinguisher's computational power.
+The comparison here is between distributions of the real view and simulator output. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
 
 ### 2.3 Checking the intuition
 
-At first, it may seem strange that a simulator can “fabricate” an interaction without a witness. A useful teaching example is a proof of equality of discrete logarithms, such as the Chaum–Pedersen protocol. Briefly sketch how a simulator fabricates an interaction by changing the order of construction—choosing the response first and then arranging the challenge. We will study the precise construction after developing the algebraic tools in Act II; sharing the intuition now makes that later discussion easier to follow.
+If a transcript can be generated without the witness, could a dishonest prover do the same? Distinguish an output record from a live interaction with a verifier. For example, a Schnorr-type honest-verifier simulator can first choose a challenge and response, then derive a commitment satisfying the verification equation. A real prover commits before receiving the verifier’s challenge. The order differs. This intuition alone does not establish zero-knowledge against arbitrary malicious verifiers.
 
 ---
 
@@ -72,7 +72,7 @@ At first, it may seem strange that a simulator can “fabricate” an interactio
 
 ### 3.1 Why soundness alone is insufficient
 
-The soundness defined in the previous session only guarantees that a statement is not accepted when $x \notin L$. Many cryptographic applications require more: a guarantee that the prover actually **knows** a witness $w$. In an authentication protocol, for example, we want to establish not merely that $x \in L$, but that the prover we are interacting with really possesses the secret.
+Soundness requires that false claims are unlikely to be accepted. But is a claim being true the same as this prover knowing a witness? In authentication, it is not enough that someone with the secret exists. We want the party responding now to possess it. Knowledge soundness addresses this distinction.
 
 ### 3.2 The concept of an extractor
 
@@ -80,7 +80,7 @@ The soundness defined in the previous session only guarantees that a statement i
 
 > If a prover $P^*$ can convince the verifier with high probability, an **extractor** $E$ with access to the inputs and outputs of $P^*$ can efficiently obtain an actual witness $w$ by observing—and, if necessary, rewinding—$P^*$.
 
-This definition makes “the prover is accepted” and “the prover knows a witness” mathematically equivalent claims. The key point is that the existence of an extractor provides an operational definition of the prover's “knowledge.”
+Here, “knowing” does not describe the prover’s mental state. It is an operational condition: an extractor with the specified access can recover a witness. The definition must specify success probability, knowledge error, and extractor running time; one accepted execution is not unconditionally equivalent to knowledge.
 
 *(Specific extraction techniques, especially rewinding and the forking lemma, will be discussed in Session 6 of Act II alongside soundness amplification.)*
 
@@ -92,24 +92,24 @@ This is the second half of today's lecture and the closing topic of Act I as a w
 
 ### 4.1 Simple witnesses: proofs built on structure
 
-Consider the Schnorr identification protocol. The prover knows a discrete logarithm $w$ (an element of the group $\mathbb{Z}_p^*$) and wants to convince the verifier that $y = g^w$. The protocol has the following outline:
+Use Schnorr identification to make the distinction concrete. Let $g$ generate a cyclic group of prime order $q$, and let the prover know the exponent $w\in\mathbb{Z}_q$ satisfying $y=g^w$. Even when the group is a subgroup of a finite field’s multiplicative group, distinguish group elements from exponents. The following exponent arithmetic is modulo $q$. The protocol proceeds as follows:
 
 1. Prover: choose a random $r$ and send the commitment $t = g^r$.
 2. Verifier: send a challenge $c$.
 3. Prover: send the response $s = r + cw$.
 4. Verifier: check that $g^s = t \cdot y^c$.
 
-The essential point is that the verification equation $g^s = t \cdot y^c$ follows **directly** from the **group homomorphism property** $g^{r + cw} = g^r \cdot (g^w)^c$. Knowledge extraction also relies on this structure. Given responses $s_1, s_2$ to two different challenges $c_1 \ne c_2$, we can recover $w$ directly using simple linear algebra:
+The verification equation $g^s=t\cdot y^c$ follows from the homomorphism $g^{r+cw}=g^r\cdot(g^w)^c$. Distinguish why that identity holds from knowing the secret. For extraction, take accepting responses $s_1,s_2$ to different challenges $c_1\ne c_2$ with **the same initial commitment**. Subtracting cancels the common randomness and gives:
 
 $$w = \frac{s_1 - s_2}{c_1 - c_2}.$$
 
-This is called special soundness.
+Read division as multiplication by an inverse in $\mathbb{Z}_q$. The challenge difference is nonzero, so the exponent $w$ can be recovered. Extraction from distinct accepting responses sharing the first message is called special soundness.
 
 **The algebraic structure of the relation becomes the structure of the protocol itself.** As the mathematical object changes—discrete logarithms, quadratic residues, and so on—we can design a tailored protocol for each case.
 
 ### 4.2 General witnesses: when that structure is absent
 
-What if the relation is “I know an input $x$ such that executing this program produces $y$”? This is a general NP relation and can be reduced to Circuit-SAT through the Cook–Levin theorem. A computation consists of non-algebraic operations such as branches, loops, and comparisons. It does not inherently provide a structure like the group homomorphism used by Schnorr's protocol.
+Now extend the relation to a general program. Consider an NP relation, with bounded computation time and witness length, expressing knowledge of an input producing a specified output. A computation containing branches and comparisons need not come with a group relation to which Schnorr’s verification equation directly applies. We therefore need to translate the computation into a form we can check.
 
 The qualitative shift is worth making explicit:
 
@@ -119,19 +119,19 @@ This translation mechanism is **arithmetization**, a central topic of Act II tha
 
 ### 4.3 How efficiency requirements change
 
-A simple witness such as a discrete logarithm has a fixed length, so proof size and verification cost proportional to the witness need not cause a major problem. The situation changes when computations may have arbitrary complexity. If verification cost scales directly with the computation itself, we lose the very reason for using SNARKs and STARKs: shifting work from the verifier to the prover.
+Generalizing computation also raises the question of how much work the verifier performs. In the discrete-log example, the exponent is small once security parameters are fixed. A program’s execution record grows with the computation. Checking the whole record may establish correctness, but does it achieve the goal of delegating computation to reduce verification work?
 
-Once we handle general computation, **succinctness**—proof size and verification time that are nearly independent of witness complexity—therefore becomes an **essential requirement**, rather than an optional property. The PCP theorem and IOP framework, previously introduced only through their results, now become necessary tools rather than merely topics of theoretical interest. We will study them technically in Session 10 of Act II.
+For that goal, we require **succinctness**: proof size and verification time should be small relative to the original computation or witness. Costs such as reading public inputs remain. General zero-knowledge proofs need not be succinct; distinguish succinctness as a design goal of the SNARKs and STARKs studied here. Session 10 introduces PCPs and IOPs as frameworks for pursuing it.
 
 ### 4.4 The increasing difficulty of knowledge extraction
 
-Another technical difficulty caused by the loss of structure is the growing complexity of extractors. For simple algebraic relations, two transcripts allowed us to recover $w$ directly through linear algebra. For general relations, however, $w$ is an assignment satisfying an entire circuit. Extraction requires more sophisticated techniques, such as traversing a tree of transcripts, as in generalized special soundness used in PLONK. This increase in technical difficulty itself illustrates the qualitative difference between the simple and general cases.
+Changing the witness representation also changes extraction. In Schnorr, two accepting transcripts with the same first commitment and different challenges yield the exponent. For a general computation, the target is an assignment satisfying circuit constraints. Required transcripts and access depend on the scheme; extraction may use several response stages or knowledge properties of commitments. Do not assume that two transcripts always suffice in the same way.
 
 ---
 
 ## 5. Organizing the landscape in a two-axis matrix
 
-We can organize the discussion along two independent axes: **expressiveness, or the generality of witnesses**, and **efficiency, including removal of interaction and succinctness**.
+Separate the questions into **what can be expressed** and **how much interaction and computation is needed**. The following table is a map of the course’s tools. Non-interactivity and succinctness are distinct properties: Fiat–Shamir alone does not make a proof of general computation succinct.
 
 | | Interactive, non-succinct | Non-interactive, succinct |
 | --- | --- | --- |
@@ -144,7 +144,7 @@ The message of this table is that **zk-SNARKs and zk-STARKs result from simultan
 
 ## Recap and next session
 
-Today we studied:
+Today we separated hiding information, knowing a witness, and expressing general computation. Check whether you can explain the following points in your own words.
 
 - The formal definition of zero-knowledge through the simulator paradigm and the three levels of indistinguishability: perfect, statistical, and computational.
 - Knowledge soundness and extractors as an operational definition of a prover really knowing a witness.

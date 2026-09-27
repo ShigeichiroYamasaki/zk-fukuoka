@@ -10,11 +10,15 @@ next:
 
 # Session 14: An integrated perspective — revisiting Acts I–III
 
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 27, 2026<br>
+Last updated: September 27, 2026
+
 [Sessions](./sessions) · [Topics](./topics) · [Session 14 in the syllabus](./#session-14) · [Exercises](../exercises/)
 
 ## Context and learning objectives
 
-Across the previous thirteen sessions, we have covered Act I (Purpose and motivation), Act II (Tools), and the main protocols of Act III (Integration). In this penultimate session, we organize Groth16, PLONK, and STARK side by side, showing **where and how each protocol answers the questions from Act I using the tools from Act II**.
+We have read Groth16, PLONK, and STARKs separately. Today compare them by returning to Session 1’s questions. What ensures acceptance of true claims? Which assumptions prevent cheating? What hides witness information? **Reading constructions from their goals** reveals the roles of Act II’s tools.
 
 The three learning objectives are:
 
@@ -30,11 +34,11 @@ We introduce few new concepts. The emphasis is on reconnecting earlier material.
 
 ### 1.1 Completeness
 
-In all three protocols, an honest prover with a correct witness is accepted with certainty or overwhelming probability, according to the completeness guarantee. This is the fundamental property defined in Session 1; it does not create an essential distinction among the three here.
+First consider an honest prover following the procedure with a valid witness. All three systems require the verifier to accept with high probability: Session 1’s completeness. Different constructions share this starting goal.
 
 ### 1.2 Soundness: proof or argument?
 
-Recall the proof/argument distinction from Session 1. Groth16, PLONK, and STARK are all **arguments**, assuming computationally bounded provers (Session 1, Section 4.2). None retains its full soundness guarantee against an unbounded prover. The types of assumptions underlying soundness differ substantially:
+Next consider an adversary trying to establish a false claim. Groth16, PLONK, and STARKs are arguments, providing guarantees against computationally bounded adversaries—the distinction in Session 1, Section 5.2. That classification alone does not identify their security premises. Use the table to separate the bases of each guarantee.
 
 | Protocol | Main premises and components for reading its security analysis |
 | --- | --- |
@@ -48,7 +52,7 @@ Cook–Levin and circuit reductions from Session 4 provide theoretical backgroun
 
 ### 1.3 Zero knowledge
 
-The three families should not be assigned one uniform level of zero knowledge. Check the construction, model, and simulator establishing the property.
+Does a mechanism for soundness also protect secrets? Keep the two properties separate. Zero-knowledge requires showing that the verifier’s information can be simulated without the witness. For each scheme, identify what is randomized and the model used for simulation.
 
 - **Groth16:** Fresh prover randomness blinds the proof's group elements. The original paper establishes **perfect zero knowledge** (Session 11, Section 3.2).
 - **PLONK:** Witness-encoding polynomials and the grand-product polynomial are randomized to prevent leakage through openings. Permutation-checking challenges have a different role from privacy-preserving blinding.
@@ -56,7 +60,7 @@ The three families should not be assigned one uniform level of zero knowledge. C
 
 ### 1.4 Knowledge soundness and extractors
 
-For Schnorr in Session 2, two accepting transcripts sharing the first message but using distinct challenges yield a witness through linear algebra. For general-computation proof systems, extractors depend on the protocol and security model.
+In Session 2, two accepting Schnorr transcripts sharing the first commitment but differing in challenge yielded the witness. Does exactly the same extraction work for general computation? When the target becomes a circuit assignment, the information used and extractor access vary by scheme.
 
 Groth16's generic-group analysis, PLONK's polynomial-commitment construction, and STARK's coding-theoretic construction cannot all be described as generalizations of rewinding or the forking lemma. Identify what is extracted, which access the extractor has, and which assumptions it uses.
 
@@ -64,7 +68,7 @@ Groth16's generic-group analysis, PLONK's polynomial-commitment construction, an
 
 ## 2. Revisiting Act II: a cross-protocol map
 
-The following table maps the tools we studied to their roles in each protocol.
+Now shift from properties to tools. Even the same finite fields and polynomials can serve different checks. In the table below, go beyond naming a tool: explain which proving or verification operation each entry represents.
 
 | Tool (session) | Groth16 | PLONK | STARK |
 | --- | --- | --- | --- |
@@ -77,13 +81,13 @@ The following table maps the tools we studied to their roles in each protocol.
 | Fiat–Shamir and ROM (9) | Not used: directly non-interactive in the CRS model | Used | Used |
 | PCP/IOP (10) | Theoretical background | Explicit IOP design framework | Explicit IOP design framework |
 
-The table highlights how **each protocol selects a different combination from the same Act II toolbox**. Groth16 and KZG-based PLONK share pairings, but Groth16 is not a KZG-based system. Commitment choices can be compared between PLONK and STARK, distinguishing Merkle binding from FRI low-degree proximity in STARKs.
+Sharing tools does not make entire constructions equivalent. Groth16 and KZG-based PLONK both use pairings, but Groth16 does not incorporate KZG openings. In a STARK, Merkle trees fix tables while FRI checks low-degree proximity. Read across and down the table to check these different roles.
 
 ---
 
 ## 3. Comparing design priorities using the two axes from Act I
 
-Recall the expressiveness × efficiency matrix from Session 2. All three protocols support general NP relations. Their differences lie in **which aspects of efficiency they prioritize**.
+All three systems can handle general NP relations. Does that make them interchangeable? Although similar on Session 2’s expressiveness axis, they differ in setup requirements, proof size, and proving and verification costs. Rather than reducing efficiency to one number, specify what should be made small.
 
 Fix groups and security parameters when considering scaling with circuit or trace size. Account separately for public-input processing.
 
@@ -97,26 +101,26 @@ Fix groups and security parameters when considering scaling with circuit or trac
 
 STARK costs depend on query counts and authentication paths, not just FRI rounds. Prover speed depends on circuits, trace width, implementation, hardware, memory, and security parameters; this table establishes no universal speed ranking. Hashing alone does not establish post-quantum security of a non-interactive STARK (Session 13, Section 4.2).
 
-**Choose according to setup trust, required security, proof size, and computing resources, rather than declaring one system universally superior.** Exercise decisions should use measurements for the same computation and security conditions.
+**State the requirements before selecting a scheme.** Identify whom the setup may trust, the security needed, and whether communication or computation is the limiting resource. In the exercises, justify choices using measurements made under aligned conditions.
 
 ---
 
 ## 4. Exercise: simulating design decisions
 
-Present the following scenarios and ask students to select a protocol and justify their choice:
+Imagine choosing a scheme for each situation below. Give more than its name: explain the priority, the cost you accept, and any information still needed to make the decision.
 
 - On-chain verification cost must be minimized under a strict gas budget.
 - New applications must be released frequently, without time to repeat trusted setup for each circuit.
 - Long-term security against future practical quantum computers is the highest priority.
 - Prover resources are limited, but large computations must be proved efficiently.
 
-The aim is to go beyond recalling facts and develop the ability to **apply the course’s tradeoff structure to practical decisions**.
+If groups reach different conclusions, compare their premises first. One may prioritize verification cost, another setup or long-term security. Asking which changed condition would change the decision is a practical way to understand the tradeoffs.
 
 ---
 
 ## Summary and next session
 
-Today we:
+Today we compared three systems through goals, tools, and conditions. Be ready to explain a choice in terms of its requirements rather than just a scheme name.
 
 - Compared how the three protocols satisfy completeness, soundness, and zero knowledge from Act I.
 - Mapped the selective combinations of tools from Act II in each protocol.

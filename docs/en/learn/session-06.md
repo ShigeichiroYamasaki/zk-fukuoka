@@ -10,15 +10,15 @@ next:
 
 # Session 6: Low-degree testing and soundness amplification
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 6 lecture manuscript.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Exercises](../exercises/)
 
 ## Position in the course and learning objectives
 
-In the previous session, we learned about Reed–Solomon codes and why the Hamming worst-case model is central to soundness analysis in proof systems. Today we apply these ideas to FRI, a protocol for efficiently checking whether a function supplied by a prover is close to a low-degree polynomial. We also introduce soundness amplification and cryptographic proof techniques, including rewinding and the forking lemma.
+Last time, we viewed low-degree polynomial evaluations as codewords and measured deviations by distance. Today we ask how to detect tables far from low-degree polynomials without reading the whole table. FRI is our main tool. We also distinguish techniques for reducing erroneous acceptance from rewinding techniques used to prove security.
 
 There are three learning objectives:
 
@@ -32,7 +32,7 @@ There are three learning objectives:
 
 ### 1.1 Problem statement
 
-Suppose a prover supplies a function $f: D \to \mathbb{F}$, represented as a table of values on an evaluation set $D$. The verifier wants to check whether $f$ is the evaluation representation of a polynomial of degree less than $d$, without reading all of $D$—that is, using only a small number of queries. This is the low-degree testing problem.
+Suppose the prover supplies an evaluation table $f:D\to\mathbb{F}$. We want to accept tables obtained from low-degree polynomials and reject, with high probability, tables far from every polynomial of degree below $d$. Distinguish this from deciding exact equality using a few queries. The low-degree testing considered here concerns proximity.
 
 ### 1.2 Why is it difficult?
 
@@ -46,9 +46,9 @@ Reading $f$ at every point would allow us to decide membership, but would requir
 
 ### 2.1 The basic idea: Fold the degree in half
 
-FRI reduces proximity testing for polynomials of degree less than $d$ to proximity testing for polynomials of degree less than $d/2$. Repeating this **reduction** recursively shrinks the problem to constant degree, where verification becomes easy.
+Can we move to a smaller problem instead of inspecting a large table at once? FRI repeatedly applies an operation that roughly halves the degree of a low-degree polynomial and checks consistency between stages. First understand the operation on honest polynomials; proximity analysis supplies the guarantee against invalid tables.
 
-Specifically, decompose a polynomial $f(X)$ into its even- and odd-degree terms:
+First separate even and odd powers. The following equations describe the multiplicative FRI setting over an odd-characteristic field, where evaluation points can be paired. In characteristic two, the same evaluation-table folding cannot simply be assumed.
 
 $$f(X) = f_{\text{even}}(X^2) + X \cdot f_{\text{odd}}(X^2)$$
 
@@ -60,14 +60,14 @@ The new polynomial $f'$ has roughly half the degree. The prover supplies its eva
 
 ### 2.2 Recursive folding and the commit and query phases
 
-Repeated folding decreases the degree bound as $d \to d/2 \to d/4 \to \cdots$, eventually reaching a polynomial of constant or very small degree. At that point, checking all evaluation points is easy.
+Reducing the degree as $d\to d/2\to d/4\to\cdots$ eventually leaves a small polynomial that can be checked directly. Fix each stage’s table before obtaining the next folding challenge. If the prover could alter an earlier table after seeing the challenge, the test would lose its purpose.
 
 The protocol has two main phases:
 
 - **Commit phase:** The prover successively commits to the polynomials, or their evaluation representations, at each folding stage.
 - **Query phase:** The verifier chooses random evaluation points and checks consistency at each stage—whether the folding relation holds.
 
-Consistency can be checked with roughly $O(1)$ queries per stage. With about $\log d$ stages, proximity testing takes roughly $O(\log d)$ queries overall. This provides the succinctness associated with logarithmic verification cost.
+One query path checks a constant number of values per stage, giving roughly $O(\log d)$ values as the stages shrink. The number of paths needed depends on the target soundness error. A Merkle-tree implementation also requires authentication-path verification. Count queried values separately from proof size and total verification work.
 
 ### 2.3 Why the claim is approximate
 
@@ -81,11 +81,11 @@ FRI addresses the approximate claim that $f$ is **close** to a low-degree polyno
 
 ### 3.1 Why amplification is necessary
 
-A single protocol execution often has a soundness error—the probability that a dishonest prover is incorrectly accepted—that is too large for practical use. For example, very few cryptographic applications could tolerate an error probability of roughly $1/2$ per execution.
+Even if a test can detect an invalid table, a miss probability of $1/2$ is too large for cryptographic use. First decide the target error, then design the queries or repetitions needed to reach it. Soundness amplification addresses this requirement.
 
 ### 3.2 Parallel and sequential repetition
 
-The basic method for reducing error probability is to repeat the protocol independently. The intuition is that $k$ independent repetitions reduce error exponentially to $\epsilon^k$. However, proving that this intuition holds can vary greatly in technical difficulty depending on whether repetition is parallel or sequential, and whether zero-knowledge is preserved. We will not pursue those details here; the key principle is that repetition provides quantitative control over error probability.
+Repeat a test with independent randomness and accept only if every run passes. With per-run error $\epsilon$, the target bound is $\epsilon^k$ after $k$ repetitions. But the relevant conditional bounds must be established. Parallel and sequential repetition may allow different adversarial strategies. Check soundness amplification separately from preservation of zero-knowledge.
 
 ---
 
@@ -93,7 +93,7 @@ The basic method for reducing error probability is to repeat the protocol indepe
 
 ### 4.1 The idea of rewinding
 
-Earlier sessions introduced knowledge extraction through an extractor that observes a prover. **Rewinding** is a concrete technique for doing this: run the prover's algorithm up to a particular point, then **rerun it from that state with a different challenge**.
+Now consider a technique for proving knowledge extraction, separate from reducing error. **Rewinding** returns an adversary’s algorithm to an earlier state within a security proof, then reruns it with a different challenge. It does not mean an ordinary verifier can rewind an actual remote party at will.
 
 Recall the special soundness of the Schnorr protocol in Session 2. Responses to two distinct challenges $c_1, c_2$ allowed us to recover the witness. Rewinding obtains these two responses within a simulation: return the prover to the state with the same randomness and initial commitment, then rerun it with a different challenge.
 
@@ -103,17 +103,17 @@ The **forking lemma** of Pointcheval and Stern (1996) formalizes the rewinding i
 
 > If an adversary can forge in a suitable non-interactive protocol, running it multiple times while changing a response to a random-oracle query can produce two forked executions from which the desired information, such as a secret key or witness, can be extracted with a probability related to the adversary's success.
 
-This technique appears in security arguments for signature and proof constructions, including pairing-based constructions related to the next session. Today, focus on the basic pattern: use rewinding to obtain related executions, then compare them to extract information.
+This is intuition for schemes meeting the lemma’s conditions, not a theorem extracting information from every non-interactive protocol. In Fiat–Shamir-type signatures studied in Session 9, the probability of a successful fork depends on factors including oracle queries and the adversary’s success probability.
 
 ### 4.3 Why these techniques matter
 
-Rewinding and the forking lemma are tools for mathematically **proving** why a proof system is secure. Knowing such techniques is essential to understanding rigorous security arguments, beyond simply designing a protocol. They provide background for our discussion of security proofs in Act III, including the discussion of Groth16.
+Being able to implement a procedure is different from proving it secure. Rewinding and the forking lemma help analyze adversarial behavior for the latter purpose. Not every proof system uses the same extraction technique. In Act III, check each scheme’s model and proof method, including Groth16’s generic bilinear group model.
 
 ---
 
 ## Summary and next session
 
-Today we learned:
+Today we distinguished low-degree proximity testing from techniques used to argue security. Review the guarantee each is intended to support.
 
 - Low-degree testing can be viewed as proximity testing for RS codes.
 - FRI's recursive folding structure repeatedly halves the degree bound to achieve logarithmic verification cost.

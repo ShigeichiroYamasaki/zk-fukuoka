@@ -10,11 +10,15 @@ next:
 
 # Session 12: PLONK
 
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 27, 2026<br>
+Last updated: September 27, 2026
+
 [Sessions](./sessions) · [Topics](./topics) · [Session 12 in the syllabus](./#session-12) · [Exercises](../exercises/)
 
 ## Context and learning objectives
 
-Groth16, studied last time, offers excellent proof size and verification cost, but has a major practical limitation: circuit-specific trusted setup is required. Today we study PLONK (Gabizon, Williamson, Ciobotaru, 2019), designed to overcome this restriction.
+Groth16 used circuit-specific keys and setup to obtain small proofs. When handling many circuits, how much of that preparation can be shared? Today we read PLONK as an answer. Circuit-specific information does not disappear; trace where it is placed instead.
 
 The three learning objectives are:
 
@@ -28,11 +32,11 @@ The three learning objectives are:
 
 ### 1.1 Revisiting Groth16’s restriction
 
-As we saw last time, Groth16’s SRS is generated according to the QAP structure—the circuit itself. A changed circuit requires corresponding proving and verification keys. Even procedures with a shared preparatory phase retain a circuit-specific setup phase. This creates a significant operational burden for practitioners supporting many different applications and circuits.
+Groth16’s keys correspond to the circuit being proved. Changing an application’s circuit therefore requires preparing corresponding keys. A circuit-specific stage remains even where preparation can partly be shared. For frequent circuit updates, assess that preparation work alongside proof size.
 
 ### 1.2 Desired properties: universal and updatable
 
-PLONK aims for trusted setup with two properties:
+Separate two requirements: reuse one SRS across circuits, and avoid relying on a single setup participant. PLONK expresses them through the following properties.
 
 - **Universal:** A single SRS can be reused for **any circuit** within a predetermined size bound.
 - **Updatable:** Multiple participants can update the SRS sequentially. Provided updates are correctly verified and at least one honest participant securely erases their secret, the setup trapdoor remains unrecoverable. This extends the multi-party generation idea from Session 11 in a more flexible form.
@@ -45,9 +49,9 @@ PLONK separates a circuit-independent polynomial-commitment SRS from circuit-spe
 
 ### 2.1 How the approach differs from QAPs
 
-QAPs (Session 4) express R1CS constraints as polynomial divisibility. Groth16 encodes the circuit-specific polynomials defining its QAP in the reference parameters. This circuit dependence is a choice in Groth16's construction, not a requirement imposed by QAP representation itself.
+QAP in Session 4 expresses constraints through polynomial divisibility. QAP itself does not force a circuit-specific SRS; Groth16 chooses to encode circuit polynomials into its SRS. Separating the representation from how keys encode it helps locate PLONK’s change.
 
-PLONK arranges computation in gate rows and uses **selector polynomials** to specify each row's operation. Selectors and the wiring permutation are fixed preprocessing data derived from the circuit; their commitments are bound to the verification key. They cannot be freely changed by the prover for each proof. The important separation is between a universal SRS and this circuit-specific preprocessing.
+PLONK arranges gates in rows and uses **selector polynomials** to specify each row’s operation. Selectors and the wiring permutation are circuit-derived preprocessing data, bound into the verification key through commitments. The prover cannot choose them opportunistically. Separating a universal SRS from circuit-specific preprocessing does not remove the need to fix the circuit being verified.
 
 ### 2.2 The basic constraint
 
@@ -71,11 +75,11 @@ for a quotient polynomial $T_{\mathrm{gate}}(X)$. The full protocol combines thi
 
 ### 3.1 Why it is needed: consistent wiring
 
-The gate constraints in Section 2.2 alone do not guarantee **wiring consistency**: that one gate’s output is correctly used as another gate’s input. R1CS naturally expresses this consistency by sharing variables $z_i$. In a PLONKish representation, the separate gate entries in columns $a, b, c$ require an additional guarantee that values are copied correctly wherever needed.
+Correct gate computations do not by themselves establish a correct circuit: a gate’s output might differ from the value used by another gate as input. R1CS shares variables $z_i$ to express this connection. In PLONK’s columns $a,b,c$, equality across positions must be checked. That is why copy constraints are needed.
 
 ### 3.2 The idea behind the permutation argument
 
-Copy constraints require **equal values at circuit-designated positions**. Merely permuting values always preserves their multiset, so that equality alone cannot establish correct wiring.
+Can wiring be checked merely by comparing multisets before and after reordering values? Any reordering preserves the multiset. The required property is **equality at the positions specified by the circuit**. We therefore combine values with position information.
 
 PLONK assigns distinct labels to positions and fixes a circuit-dependent permutation $\sigma$ whose cycles connect positions that must share a value. Let $v_j$ be the value at position $j$ and $\mathrm{id}_j$ its label. After committing to the values, random challenges $\beta,\gamma$ are chosen to check
 
@@ -87,7 +91,7 @@ PLONK uses a grand-product polynomial to handle the many factors, enforcing adja
 
 ### 3.3 The broader significance of copy constraints
 
-The permutation argument is not exclusive to PLONK. It solves a general problem: efficiently verifying, using polynomials, that values appearing at different locations are equal. Many later protocols reuse this technique.
+This check concerns the correspondence between values in separate locations. Similar questions arise beyond circuit wiring whenever a value must be used consistently in several places. Understand permutation arguments through the consistency they establish, not only as a PLONK term.
 
 ---
 
@@ -95,13 +99,13 @@ The permutation argument is not exclusive to PLONK. It solves a general problem:
 
 ### 4.1 Motivation: making common patterns more efficient
 
-Using only the basic addition and multiplication gates from Section 2.2, complex operations—such as elliptic-curve point operations or the internal operations of a particular hash function—can require many gates, increasing proving cost.
+Expressibility with basic gates does not guarantee implementation efficiency. Repeated elliptic-curve operations or hash rounds repeat the same small operation patterns. Could a frequent pattern be expressed directly as one constraint?
 
 **Custom gates** directly define common complex operation patterns using dedicated selector polynomials and constraints. For example, an application-specific gate can combine several multiplications and additions in a single gate.
 
 ### 4.2 Expressiveness and efficiency
 
-Custom gates extend the **expressiveness** axis introduced in Session 2 beyond the theoretical question of whether NP relations can be represented, toward the practical question of **how efficiently they can be represented**. Basic gates already suffice to represent NP relations expressed as finite circuits. Custom gates matter as a practical design choice that can substantially affect the prover’s actual computation cost.
+The aim is not only to express a computation, but to reduce the rows and operations needed to do so. A relation already expressible with basic gates may admit a representation requiring less prover work. Add this practical question of representation efficiency to Session 2’s expressiveness axis.
 
 Custom gates should be understood as PLONKish extensions. Fewer rows need not mean lower cost if constraint degree, column count, or opened evaluations increase. Adding gate types does not automatically enlarge the SRS; the required degree bound and commitment scheme also matter.
 
@@ -109,7 +113,7 @@ Custom gates should be understood as PLONKish extensions. Fewer rows need not me
 
 ## 5. Revisiting the map from Session 10
 
-Once again, organize PLONK into the three stages “IOP design → implementation → non-interactivity”:
+Review where circuit-specific information is fixed, which relations are checked, and how interaction is removed. Session 10’s three stages organize these choices as follows.
 
 - **Polynomial IOP design:** Gate constraints, public inputs, and copy constraints for fixed selectors and wiring are checked using degree-bounded polynomial relations and random challenges.
 - **Implementation:** KZG commitments (Session 8) enable efficient verification of these relations at evaluation points. The shared tool with Groth16 is pairings; Groth16 does not itself incorporate KZG. PLONKish derivatives can use FRI or other commitments, but changes require revisiting the protocol and security analysis. Distinguish their setup and performance properties from original PLONK.
@@ -119,7 +123,7 @@ Once again, organize PLONK into the three stages “IOP design → implementatio
 
 ## Summary and next session
 
-Today we learned:
+Today we read PLONK as reducing preparation for circuit changes. Review which parts can be shared and which remain fixed per circuit.
 
 - The motivation for universal and updatable setup: overcoming Groth16’s circuit-specific trusted setup.
 - PLONKish arithmetization separates fixed selector/wiring preprocessing from the universal SRS and expresses domain constraints through vanishing-polynomial divisibility.

@@ -10,15 +10,15 @@ next:
 
 # Session 10: The PCP theorem and the IOP framework — A complexity-theoretic synthesis
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 10 lecture manuscript.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 27, 2026<br>
+Last updated: September 27, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 10 in the syllabus](./#session-10) · [Exercises](../exercises/)
 
 ## Position in the course and learning objectives
 
-Today concludes Act II, our toolkit-building stage. We bring together the complexity-theoretic background introduced so far—IP = PSPACE in Session 1 and Cook–Levin in Session 4—through the PCP theorem, then introduce Interactive Oracle Proofs (IOPs) as a unifying framework. This framework maps how techniques such as arithmetization, FRI, and commitments combine in concrete protocols.
+At the end of Act II, let us connect the tools: represent computation through arithmetization, inspect a few values, and authenticate them with commitments. Can we describe such designs independently of a particular scheme? PCPs and IOPs provide a map for reading the protocols in Act III.
 
 There are three learning objectives:
 
@@ -32,17 +32,17 @@ There are three learning objectives:
 
 ### 1.1 What is a PCP?
 
-A Probabilistically Checkable Proof is a specially encoded proof whose correctness can be checked with high probability by **randomly reading only a tiny part** of it.
+Can a long proof be checked without reading it all? Simply sampling a few arbitrary locations might miss deliberately placed errors. A PCP jointly designs the proof representation and checking procedure so that few queries can detect false claims.
 
 ### 1.2 Statement of the PCP theorem
 
 > **PCP theorem** (Arora–Safra 1992; Arora–Lund–Motwani–Sudan–Szegedy 1992): $\mathrm{NP} = \mathrm{PCP}[O(\log n), O(1)]$.
 
-For every NP language, there is a polynomial-size proof format allowing a verifier to decide correctly with high probability by reading only a **constant number** of proof locations and using only logarithmically many random bits.
+The two quantities specify the verifier’s random bits and proof-bit queries. Every NP language admits polynomial-length proofs checkable with logarithmically many random bits and constantly many queries, satisfying completeness and constant soundness error. Reducing that error further incurs additional checking costs.
 
 ### 1.3 What makes this surprising?
 
-When introducing the NP verifier paradigm in Session 1, we considered the premise that the verifier reads the **entire** witness $w$. The PCP theorem shows that a suitable encoding allows verification with high probability **without reading most of the proof**. This supports the idea that a proof need not be read in full, from a different perspective than the disclosure question raised in Session 1. It is a landmark result in complexity theory.
+Session 1’s definition of NP did not require every witness bit to be read. The PCP theorem gives a more specific guarantee: every NP language admits a proof representation checkable with few queries. Reading less and revealing no secret are different properties, so zero-knowledge does not follow automatically.
 
 *The proof of the PCP theorem is highly technical and is outside this course. We focus on the result and its significance.*
 
@@ -52,13 +52,13 @@ When introducing the NP verifier paradigm in Session 1, we considered the premis
 
 ### 2.1 Why does the PCP theorem connect to approximation algorithms?
 
-The PCP theorem, developed in the theory of proof systems, also became a tool for revealing **limits of approximation algorithms**.
+How can checking a few proof locations relate to optimization? Read the verifier’s acceptance conditions as constraints to satisfy. A construction separating true claims that satisfy many conditions from false claims that leave a fixed fraction unsatisfied gives a tool for proving approximation limits.
 
 Intuitively, constructions used in the theorem can be turned into reductions showing that distinguishing optimization instances with different optimum values—for example, instances of MAX-3SAT—is NP-hard. This yields **hardness-of-approximation** results: unless P = NP, polynomial-time algorithms cannot guarantee approximation beyond certain ratios.
 
 ### 2.2 What this connection tells us
 
-The PCP theorem is not merely a tool for SNARKs and STARKs. It has **independent significance within complexity theory**. The same mathematical result illuminates both practical proof-system design and theoretical limits of approximation algorithms, illustrating the interdisciplinary character of this field.
+The same theorem serves two different questions: efficient proof checking and limits of algorithms. Treating PCPs only as components for SNARKs and STARKs obscures that relationship. The constraint structure helps explain both what can be done efficiently and where hardness begins.
 
 *We will not study specific thresholds, such as exact approximation bounds for MAX-3SAT. The goal is to understand the PCP theorem's deep connections to other areas of complexity theory.*
 
@@ -68,7 +68,7 @@ The PCP theorem is not merely a tool for SNARKs and STARKs. It has **independent
 
 ### 3.1 Definition of an IOP
 
-An IOP combines PCPs with interactive proofs (IPs). The prover and verifier interact over multiple rounds, but the verifier has **oracle access to each prover message, querying only selected locations rather than reading the entire message**.
+Session 1 allowed interaction; PCPs allowed reading only part of a proof. What happens when we combine them? In an IOP, the prover fixes a long message each round and the verifier queries selected positions. Here, an oracle describes access to that fixed message.
 
 A useful comparison is:
 
@@ -78,24 +78,24 @@ A useful comparison is:
 
 ### 3.2 Revisiting earlier techniques in the language of IOPs
 
-The IOP framework organizes the tools from Act II as follows:
+For each tool, identify what it represents, what it fixes, and what it checks. Techniques using polynomials can still serve different roles.
 
 - **Arithmetization (Session 4):** Preprocessing that translates computation into polynomial relations suitable for an IOP.
 - **FRI (Session 6):** A special form of IOP called an Interactive Oracle Proof of Proximity (IOPP), used to test proximity to low-degree polynomials.
 - **Polynomial commitments (Session 8):** Cryptographic mechanisms, using Merkle trees or pairings, that implement access to committed data and turn abstract oracle-based frameworks into realizable protocols.
 - **Fiat–Shamir (Session 9):** The final transformation that turns suitable multi-round protocols into non-interactive proofs.
 
-This gives the three-stage design pattern: **design an IOP → implement it with polynomial commitments → apply Fiat–Shamir for non-interactivity**. This map helps organize our study of concrete protocols in Act III by asking where each construction introduces its particular ideas.
+One approach designs a polynomial IOP, implements the required access using commitments, and applies Fiat–Shamir. This does not allow arbitrary IOPs and commitments to be combined without checking access types and security conditions. Groth16 in Session 11 is instead constructed directly in the CRS model. Use the map while respecting its scope.
 
 ### 3.3 Restating the SNARK/STARK comparison
 
-The KZG/FRI comparison from Session 8 can also be organized through this framework. The manuscript groups Groth16/PLONK on the pairing-based side, using relations obtained from QAP/PLONKish arithmetization, and STARKs on the FRI-based side, using relations obtained from AIR. **Arithmetization and commitment choices are, in principle, separate design decisions**, and different combinations lead to a broad range of protocols. This perspective helps with both Act III and future research directions.
+Original PLONK checks polynomial relations through KZG; representative STARKs combine AIR with FRI-based constructions. Groth16 is a direct QAP-and-pairing construction, not one incorporating KZG openings. Separating arithmetization and commitment choices is useful, but recombining them requires revisiting degrees, evaluation domains, verification procedures, and security.
 
 ---
 
 ## Summary and next session
 
-Today we learned:
+Today we connected the tools through checking with few queries. Use the following map when reading individual systems in Act III.
 
 - The PCP theorem allows NP proofs to be encoded so that randomized verification reads only a tiny part of the proof.
 - Its connection to hardness of approximation gives it independent importance beyond proof systems.

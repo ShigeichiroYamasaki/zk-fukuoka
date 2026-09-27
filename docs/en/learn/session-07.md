@@ -10,15 +10,15 @@ next:
 
 # Session 7: Elliptic curves and pairings
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 7 lecture manuscript.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 26, 2026<br>
+Last updated: September 27, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Exercises](../exercises/)
 
 ## Position in the course and learning objectives
 
-Sessions 3–6 developed one family of tools: polynomials and coding theory. Today we begin another family, **elliptic curves and pairings**, which underpins SNARK protocols, particularly Groth16 in Act III.
+So far, we have studied polynomial evaluations and how to check a table’s proximity to low-degree polynomials. Today we add another tool. How can we check multiplication relations while handling values as group elements? This question motivates elliptic curves and pairings, preparing us to read Groth16 in Act III.
 
 There are three learning objectives:
 
@@ -34,7 +34,7 @@ The Schnorr protocol in Session 2 relied on the hardness of discrete logarithms.
 
 ### 1.1 Definition
 
-An elliptic curve over a finite field $\mathbb{F}_p$, with $p > 3$, is defined by the points satisfying
+First specify the objects on which we will compute. For a prime $p>3$, consider the following equation over the finite field $\mathbb{F}_p$.
 
 $$y^2 = x^3 + ax + b \quad (4a^3 + 27b^2 \ne 0)$$
 
@@ -42,11 +42,11 @@ where $(x, y) \in \mathbb{F}_p \times \mathbb{F}_p$, together with a point at in
 
 ### 1.2 Group structure
 
-An addition operation can be defined using intersections of lines with the curve. The resulting structure is an abelian group with identity $O$. We will state the addition rule, based on the third intersection of a line with the curve, without deriving it in detail. The important fact is that **elliptic curve points over finite fields provide cryptographically useful finite abelian groups**.
+A set of points alone is not yet a cryptographic tool. Defining addition of points gives a finite abelian group with the point at infinity $O$ as identity. Lines intersecting the curve provide a geometric interpretation of that addition. Rather than deriving every formula here, establish that we can add points and multiply them by integer scalars.
 
 ### 1.3 Why use elliptic curves?
 
-The discrete logarithm problem can also be defined in the multiplicative group $\mathbb{F}_p^*$ introduced in Session 3. For elliptic curve groups, however, the best known attacks are less efficient, allowing substantially shorter keys at the same security level. This implementation advantage is a major reason for their widespread adoption.
+The discrete-log problem can also be defined in $\mathbb{F}_p^*$ from Session 3. One reason to choose elliptic curves is that appropriate curves allow shorter keys at a comparable security level. This is not a guarantee for every curve; assess the chosen group, known attacks, and required security together.
 
 ---
 
@@ -54,7 +54,7 @@ The discrete logarithm problem can also be defined in the multiplicative group $
 
 ### 2.1 Definition
 
-A bilinear pairing is a map
+Given group addition and scalar multiplication, what extra operation lets us check a relation involving the product of two hidden scalars? Consider the following map from two groups into a target group.
 
 $$e: G_1 \times G_2 \to G_T$$
 
@@ -64,11 +64,11 @@ where $G_1, G_2, G_T$ are cyclic groups of order $q$, satisfying:
 - **Non-degeneracy:** $e(P, Q) \ne 1$ when $P$ and $Q$ are generators.
 - **Efficient computability:** $e$ can be computed in polynomial time.
 
-The groups $G_1$ and $G_2$ are suitable subgroups of elliptic curve point groups, while $G_T$ lies in the multiplicative group of an extension field. Constructions use pairings such as the Weil and Tate pairings. We will treat them as black boxes satisfying these properties rather than study their construction.
+Here $G_1,G_2$ are suitable subgroups of elliptic-curve groups, while $G_T$ is a subgroup of an extension field’s multiplicative group. Constructions such as Weil and Tate pairings realize this map. Today, focus on the verification equations enabled by the three properties above rather than the algorithms computing the map.
 
 ### 2.2 Pairing-friendly curves
 
-Not every elliptic curve is suitable for pairings. Curves designed to support efficiently computable pairings are called **pairing-friendly curves**. Common examples include:
+Making pairings easy to compute is not enough; some choices undermine security. We need to balance efficient pairing computation with hardness of discrete logarithms. Examples of curves designed for this purpose include:
 
 - **BN254:** A Barreto–Naehrig curve that has long been widely used in many systems.
 - **BLS12-381:** A curve widely adopted for its higher security level.
@@ -77,7 +77,7 @@ Selecting parameters such as the embedding degree requires number-theoretic anal
 
 ### 2.3 The new capability provided by pairings
 
-Bilinearity makes it possible to **verify multiplicative relations between exponents through a pairing**. In multiplicative notation, the relation $e(g^a, g^b) = e(g, g)^{ab}$ illustrates how a relation involving $a \times b$ can be checked without revealing $a$ or $b$ themselves.
+Read bilinearity as a verification tool. Given $aP$ and $bQ$, the pairing produces $e(P,Q)^{ab}$: the product appears in an exponent without recovering $a$ or $b$. Symmetric notation writes this as $e(g^a,g^b)=e(g,g)^{ab}$, but actual constructions may require distinct generators in $G_1$ and $G_2$. Keep those types clear.
 
 This is a **multiplicative verification capability** unavailable from ordinary discrete-log group operations alone, which provide additive structure in the exponents. Many SNARKs, including Groth16, use this property to verify polynomial multiplication relations in QAPs from Session 4. This connection will be crucial when studying Groth16 in Act III.
 
@@ -87,22 +87,22 @@ This is a **multiplicative verification capability** unavailable from ordinary d
 
 ### 3.1 Why are assumptions needed?
 
-To use pairings securely, we must identify which computational problems a cryptographic construction relies on being hard. This section organizes representative assumptions into a hierarchy.
+More available operations do not by themselves give a secure scheme. Specify which problem the adversary is assumed unable to solve. For each assumption, ask what the adversary receives and what it is challenged to compute, rather than memorizing its name.
 
 ### 3.2 The discrete logarithm (DL) assumption
 
-Given a generator $g$ of a group $G$ and an element $g^x$, finding $x$ is assumed to be computationally hard. This is a fundamental assumption underlying the security of Schnorr in Session 2.
+The DL assumption says that an adversary given a generator $g$ of a group $G$ and $g^x$ cannot efficiently recover $x$. Notice the asymmetry between computing an exponentiation and reversing it. Schnorr in Session 2 checked knowledge of such a secret exponent.
 
 ### 3.3 Moving to stronger assumptions
 
-For many pairing-based constructions, security cannot be established from the DL assumption alone, and stronger, non-standard assumptions are often used. Examples include:
+DL alone may not suffice to prove a scheme’s required properties. Some constructions use hardness problems with richer input or assumptions about knowledge behind an output. The following examples distinguish computational hardness from knowledge assumptions involving extractors.
 
-- **The q-SDH (q-Strong Diffie–Hellman) assumption:** Given $g, g^x, g^{x^2}, \dots, g^{x^q}$, it is hard to find a pair of the form $(c, g^{1/(x+c)})$. The supplied manuscript associates this assumption with the security foundations of SNARK constructions including Groth16.
+- **The q-SDH (q-Strong Diffie–Hellman) assumption:** Given $g, g^x, g^{x^2}, \dots, g^{x^q}$, it is hard to find a pair of the form $(c, g^{1/(x+c)})$. It is used in analyses such as KZG evaluation binding. Original Groth16 knowledge soundness is analyzed separately in the generic bilinear group model.
 - **The Knowledge-of-Exponent Assumption (KEA):** An adversary given $g$ and $g^x$ that outputs a pair $(g^a, (g^x)^a)$ is assumed to know the exponent $a$. Unlike standard computational hardness assumptions, this is an assumption about knowledge.
 
 ### 3.4 What the distinction between standard and non-standard assumptions means
 
-Standard assumptions such as DL have earned broad confidence through many years of research. Non-standard assumptions such as q-SDH and KEA were introduced for particular constructions and are presented here as stronger assumptions warranting closer scrutiny. The manuscript emphasizes that reliance on non-standard assumptions gives a relatively weaker basis for confidence in security. Keep the strength of the underlying assumptions in mind when discussing Groth16 in Act III.
+Labels such as “standard” and “non-standard” do not order all security guarantees on one scale. Assess the history of analysis, information given to the adversary, and whether an extractor’s existence is assumed. q-SDH and KEA are different kinds of assumptions. Groth16’s original knowledge-soundness analysis in Session 11 uses the generic bilinear group model; distinguish it from q-SDH-based evaluation binding for KZG.
 
 ---
 
@@ -110,7 +110,7 @@ Standard assumptions such as DL have earned broad confidence through many years 
 
 ### 4.1 The basic idea
 
-Many cryptographic security proofs have this structure:
+Suppose an adversary can break the scheme. Can we use it to solve another problem? Such a construction makes the connection between an attack and an assumed hardness problem explicit. A reduction has the following basic form:
 
 > If an efficient adversary $\mathcal{A}$ can break a protocol $\Pi$, then we can use $\mathcal{A}$ to construct an efficient algorithm $\mathcal{B}$ that solves a supposedly hard computational problem $P$, such as discrete logarithms.
 
@@ -118,7 +118,7 @@ If this construction is possible, then assuming $P$ is hard implies that breakin
 
 ### 4.2 Why this form matters
 
-A reduction establishes security relative to a more fundamental and widely trusted assumption, rather than proving security absolutely. Rewinding and the forking lemma from Session 6 are technical tools for constructing such reductions: by running and rewinding the adversary $\mathcal{A}$, we build an algorithm $\mathcal{B}$ that solves the hard problem.
+A reduction establishes that an attack is difficult if the assumed problem is difficult. It does not prove the assumption itself. Rewinding and the forking lemma from Session 6 can help construct the algorithm establishing that relationship. Check the allowed access and how success probability and running time change.
 
 This perspective explains why an assumption such as q-SDH might be introduced: it enables a security proof for a construction by reducing an attack on that construction to the assumed-hard problem.
 
@@ -126,7 +126,7 @@ This perspective explains why an assumption such as q-SDH might be introduced: i
 
 ## Summary and next session
 
-Today we learned:
+Today we studied a tool for checking multiplication and the premises for using it securely. Distinguish available computations from security guarantees.
 
 - The definition of elliptic curve groups and their role as cryptographically useful finite abelian groups.
 - The definition of bilinear pairings and their multiplicative verification capability.

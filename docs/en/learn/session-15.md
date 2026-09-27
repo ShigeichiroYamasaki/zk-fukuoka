@@ -8,11 +8,15 @@ next: false
 
 # Session 15 (final): Directions for further development
 
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 27, 2026<br>
+Last updated: September 27, 2026
+
 [Sessions](./sessions) · [Topics](./topics) · [Session 15 in the syllabus](./#session-15) · [Exercises](../exercises/)
 
 ## Context and learning objectives
 
-Across Acts I–III, we have studied the purposes, tools, and concrete protocols of zk-SNARKs and zk-STARKs. This final session looks at ongoing research. Rather than presenting an unordered collection of new topics, we organize them around **the expressiveness × efficiency axes introduced in Session 2 and revisited in Session 14, asking where research is making progress**.
+We have set goals, assembled tools, and read concrete proof systems. In this final session, consider the remaining problems. How can proofs of long computations be linked? How can prover work be reduced? Use the expressiveness–efficiency framework from Sessions 2 and 14 to identify the questions that new techniques address.
 
 The three learning objectives are:
 
@@ -26,17 +30,17 @@ The three learning objectives are:
 
 ### 1.1 The idea: verifying a proof inside a proof
 
-The protocols studied so far prove that a computation was performed correctly. Recursive proofs go a step further: **another SNARK or STARK proves that a proof was verified correctly**. The verification algorithm $V$ itself becomes the computation to be arithmetized, as in Session 4, and its correct execution is wrapped in a new proof.
+Verifying a proof is itself a computation. Could we arithmetize the verification algorithm $V$ and prove that execution correct inside another proof? This motivates recursion: apply Session 4’s translation from programs to constraints to verification itself.
 
 ### 1.2 Why this is powerful
 
-Recursion enables aggregation and incremental proofs of the **finite computation history completed so far**, such as a sequence of state transitions. Some constructions keep proof size independent of the number of steps, but dependencies on security parameters and public-state size remain. This does not mean proving that an infinite computation has completed.
+At each state transition, prove the new computation together with the accumulated proof. This handles the **finite history completed so far**. Even a proof whose size is independent of step count can depend on security parameters and public-state size. It establishes the completed prefix of an ongoing computation, not completion of an infinite computation.
 
 Sessions 11–13 studied proofs of individual computations. Recursion composes them by treating verification as another computation.
 
 ### 1.3 Technical requirements: making verification amenable to recursion
 
-The verification algorithm $V$ must be efficiently represented in the outer proof system. Pairings can be expensive to arithmetize, and differing fields for group operations and outer-circuit arithmetic can also add cost.
+A verifier that is fast on an ordinary machine may still be expensive inside an outer circuit. We must represent $V$’s group operations or pairings over the outer proof system’s field. Assess recursion-friendly verification including the cost of emulating arithmetic over a different field.
 
 One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve's base field matches the other's scalar field, and vice versa. This helps represent group operations in circuits, including recursion without pairings. A cycle is not defined merely as a pair that makes pairing operations efficient, and not every recursive construction requires one. See the [Nova paper](https://eprint.iacr.org/2021/370).
 
@@ -46,13 +50,13 @@ One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve'
 
 ### 2.1 Practical challenges of recursive proofs
 
-Naive recursion embeds verification of the previous proof into a circuit at each step, potentially imposing substantial prover work. Pairing-based verifiers incur pairing costs, but not every recursive scheme uses pairings.
+Fully verifying the preceding proof at every step repeatedly proves a verifier circuit. That repetition creates overhead. Pairings can add cost in schemes using them, but the problem is broader. Can we carry correctness of accumulated computation forward through a smaller update?
 
 Folding schemes such as Nova (Kothapalli, Setty, Tzialla) reduce this repeated overhead. Nova appeared on [ePrint in 2021](https://eprint.iacr.org/2021/370) and at CRYPTO 2022.
 
 ### 2.2 The idea: folding the relations to be verified
 
-Nova **combines relaxed R1CS instances into one and updates the corresponding witness**. Its IVC (incrementally verifiable computation) construction uses lightweight folding verification instead of repeatedly embedding an expensive SNARK verifier to accumulate computation history.
+Nova **combines relaxed R1CS instances and updates their corresponding witness**. Instead of repeatedly verifying a large proof, it checks the folding relation. Combining this with the linkage between steps yields incrementally verifiable computation, or IVC. Identify what is updated instead of being fully verified again.
 
 Folding alone does not produce a complete succinct zero-knowledge proof. Distinguish folding that aggregates relations, IVC that enforces the correct sequence of steps, and compression that proves the accumulated relation succinctly. Final proof size, verification cost, and zero knowledge depend on the combined construction.
 
@@ -60,7 +64,7 @@ FRI from Session 6 also uses folding, but reduces polynomial degree for proximit
 
 ### 2.3 Where this approach helps
 
-Folding schemes target cumulative proving costs for sequential computations such as repeated state transitions. Benefits depend on the step computation, commitments, compression frequency, and implementation. Evaluate folding overhead together with the final proof-generation cost.
+Do not measure folding’s benefit from a single fold alone. Include step computation, commitments, and final compression in the total work of proving accumulated computation. Compression frequency and implementation affect the improvement.
 
 ---
 
@@ -68,7 +72,7 @@ Folding schemes target cumulative proving costs for sequential computations such
 
 ### 3.1 Revisiting the sumcheck protocol
 
-We now return to sumcheck, previewed in Session 1. For a multivariate polynomial $g(X_1, \dots, X_n)$, sumcheck verifies a claimed value of
+Return to sumcheck, previewed in Session 1. For a sum with many terms, consider checking it without the verifier adding every term. The object is the following sum of a multivariate polynomial $g(X_1,\dots,X_n)$.
 
 $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
@@ -76,17 +80,17 @@ interactively, fixing one variable at a time, without the verifier evaluating ev
 
 ### 3.2 The GKR protocol
 
-GKR (Goldwasser–Kalai–Rothblum, 2008) applies sumcheck layer by layer to construct an interactive proof of a circuit computation. It provides an arithmetization and verification approach different from the R1CS/AIR approaches in Session 4.
+GKR verifies claims about circuit outputs by reducing them to claims about preceding layers, using sumcheck for the reduction. Unlike directly checking R1CS or AIR constraints, it exploits layered circuit structure. Understand the 2008 Goldwasser–Kalai–Rothblum protocol through this connection between its goal and tool.
 
 ### 3.3 Why these approaches are receiving renewed attention
 
-GKR/sumcheck-based techniques exploit layered circuits and multilinear representations to reduce prover work. Large circuits and machine-learning inference provide examples for asking which computation structure a prover can exploit.
+Where does the time go when proving a large circuit? GKR and sumcheck allow designs exploiting layered structure and multilinear representations to reduce prover work. For machine-learning inference, ask which repeated operations and structures the design can use.
 
 This establishes no universal ranking over KZG-based systems. Sumcheck and KZG are not components at the same level: a sumcheck-based proof system may also use polynomial commitments. Compare complete systems with aligned circuit structures, commitments, memory budgets, and security parameters. See [Thaler's textbook](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html).
 
 ### 3.4 Position within the IOP framework
 
-Original GKR is an interactive proof, without polynomial commitments or Fiat–Shamir as mandatory components. To build a non-interactive cryptographic argument, one can consider authenticating required polynomial evaluations through commitments and deriving challenges with Fiat–Shamir. The security conditions for the components and transformation must then be checked.
+Original GKR is interactive. Building a non-interactive cryptographic argument requires choosing what to commit to and which challenges to derive with Fiat–Shamir. These are added construction choices, not mandatory parts of GKR’s definition. Check security conditions for the combined protocol.
 
 Session 10's “IOP design → implementation → non-interactivity” map helps compare such constructions. Distinguish GKR itself from the non-interactive proof system built around it.
 
@@ -94,7 +98,7 @@ Session 10's “IOP design → implementation → non-interactivity” map helps
 
 ## 4. A research map: expanding the two-axis matrix
 
-Let us expand the matrix from Sessions 2 and 14 one final time. Act III has shown that efficiency is not a single quantity: it includes **proof size, verification cost, prover cost, setup flexibility, and long-term security**. The techniques in this session target dimensions such as composability and prover cost. Security and setup assumptions are also design requirements to check alongside performance.
+Session 14 showed why efficiency cannot be reduced to one number. Read this session’s techniques the same way. Do they improve proof size, verification cost, or prover cost? Add composability? Leave setup or long-term security conditions unchanged? The following table maps techniques to these questions.
 
 | Technique | Main dimension improved |
 | --- | --- |
@@ -102,7 +106,7 @@ Let us expand the matrix from Sessions 2 and 14 one final time. Act III has show
 | Folding schemes | Prover cost, particularly for sequential computation |
 | GKR/sumcheck | Prover cost, particularly for large parallel computations |
 
-This table highlights **directions that improve prover cost and composability alongside succinct verification**. Use it to identify improvements and remaining conditions or costs, rather than treating the entire field as moving toward a single objective.
+Use the table as a set of questions for evaluating new schemes. Lower prover cost might come with greater communication or memory demands. Read improvements together with remaining conditions, including succinct verification and composability. The table does not say the entire field has moved to a single goal.
 
 ### 4.1 An application perspective: Ethereum zkEVMs {#ethereum-zkevm}
 
@@ -124,7 +128,7 @@ EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not est
 
 ### 4.4 Connecting the application to the course's research map
 
-This table is a course-oriented interpretation of these developments. It does not claim that EIP-8025 selects a particular folding scheme or GKR construction.
+Return from the Ethereum example to the course’s questions. The following table connects application decisions to the tools studied. It does not claim that EIP-8025 selects a particular folding scheme or GKR construction.
 
 | Application question | Course connection | Evaluation dimensions |
 | --- | --- | --- |
@@ -139,13 +143,13 @@ Discussion prompts: “If a proof is small but slow to generate, how do L2 batch
 
 ## Summary: the course as a whole
 
-Across the 15 sessions, we followed this path:
+Review the path from our initial questions. Starting with the goals let us connect each mathematical tool and protocol to the role it needed to serve.
 
 - **Act I:** Starting from the limitations of classical proof paradigms, we defined interaction and zero knowledge as goals arising from both complexity theory and cryptography. We then understood why generalizing witnesses requires a qualitative shift: arithmetization.
 - **Act II:** We developed the tools needed for those goals—polynomials, coding theory, elliptic curves, pairings, commitments, and PCPs/IOPs—with their cryptographic and complexity-theoretic significance, rather than as a disconnected list of mathematical topics.
 - **Act III:** We read Groth16, PLONK, and STARK through the way they combine Act II's tools, compared their design choices using Act I's axes, and finally considered where ongoing research is extending those axes.
 
-The lasting goal is not memorization of every protocol detail. It is **the habit of asking why a technology takes its particular form, using a consistent framework of goals, tools, and trade-offs**. This field continues to develop rapidly. The two-axis map helps us independently identify what a new technique is trying to improve.
+When reading a new proof system, first ask what it aims to achieve. Which computation does it translate into which representation, and what does it ask the verifier to check? Which assumptions and resources does it require? This order helps connect unfamiliar schemes to known tools. The skill to carry forward is **explaining design choices by moving between goals, tools, and tradeoffs**.
 
 ---
 
