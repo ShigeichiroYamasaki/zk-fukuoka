@@ -41,6 +41,17 @@ We define zero-knowledge in the next session. Before that, we reconsider checkin
 
 First, consider how to check whether a claim is true. Even when checking the claim directly is difficult, information supporting it may allow us to check it efficiently. We call this information a witness.
 
+For example, consider the claim **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. If someone supplies the number 7, the verifier can check $1<7<91$ and $91=7\times13$. Here the input being checked is 91, and the witness is 7.
+
+| Role | In this example |
+| --- | --- |
+| Claim | 91 is composite |
+| Public input | 91 |
+| Witness | The nontrivial divisor 7 |
+| Verification | Check that 7 is an integer strictly between 1 and 91 and divides 91 exactly |
+
+Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a claim, not the claim itself, and it need not be unique.** This small example illustrates the roles. Handing over 7 directly does not constitute a zero-knowledge proof hiding the witness.
+
 Before reading the formula, review **sets, elements, membership and formal languages**. Here $x\in L$ means that input x belongs to the set L of Yes instances. A language is a set of encoded inputs, not a natural language; $L\in\mathrm{NP}$ instead classifies the decision problem. See [Sets, membership and languages: reading x ∈ L](./terms/sets-and-languages) for examples and a step-by-step reading of the symbols.
 
 The verifier definition of NP formalizes this idea. A language $L \in \mathrm{NP}$ is one for which there exists a polynomial-time verification algorithm $V$ satisfying
