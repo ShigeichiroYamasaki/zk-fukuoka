@@ -26,6 +26,9 @@ Updated: September 27, 2026
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
+[Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
+
+
 ## Proof foundations & security definitions {#proofs}
 
 | Topic | Lecture sections |

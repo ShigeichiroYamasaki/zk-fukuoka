@@ -10,6 +10,9 @@ Choose implementations and computation environments for Act III (Sessions 11–1
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
+[Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
+
+
 ## Choose tools for Act III {#choose}
 
 | Session and objective | Starting option | Why choose it? | Instructions |

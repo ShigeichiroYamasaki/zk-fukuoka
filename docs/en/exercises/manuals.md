@@ -12,6 +12,9 @@ Documentation checked: September 27, 2026. This page provides a reading order an
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
+[Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
+
+
 ## Act III exercise route {#route}
 
 | Session | Activity | Instructions | Completion target |

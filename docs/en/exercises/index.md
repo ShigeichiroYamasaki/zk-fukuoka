@@ -10,6 +10,9 @@ Explore lecture concepts through calculations and implementation. Find exercise 
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
+[Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
+
+
 ## Start here
 
 1. Work through the [introductory finite-field exercise](../learn/foundations): addition, multiplication, and inverses modulo 7.

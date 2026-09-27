@@ -31,6 +31,8 @@
 | 演習・ツール・マニュアル | [docs/exercises/](./docs/exercises/) |
 | ZK rollup応用編（全6段階） | [docs/rollup/](./docs/rollup/) |
 | 応用編の配布コード | [docs/public/examples/rollup/](./docs/public/examples/rollup/) |
+| ZKML応用編・入力を隠した推論 | [docs/zkml/](./docs/zkml/) |
+| ZKMLの実行用コード | [docs/public/examples/zkml/](./docs/public/examples/zkml/) |
 | ホワイトペーパー | [docs/whitepaper.md](./docs/whitepaper.md) |
 | ADR | [docs/adr/](./docs/adr/) |
 | 英語版 | [docs/en/](./docs/en/) |

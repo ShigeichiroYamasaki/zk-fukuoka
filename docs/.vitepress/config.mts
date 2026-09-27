@@ -42,6 +42,15 @@ const sidebar = (en: boolean) => {
       ],
     },
     {
+      text: en ? "APPLIED: ZKML" : "応用編：ZKML",
+      collapsed: false,
+      items: [
+        { text: en ? "Private-input inference" : "入力を隠したAI推論", link: p + "zkml/" },
+        { text: en ? "1. Train and arithmetize" : "1. モデルの学習と算術化", link: p + "zkml/01-model" },
+        { text: en ? "2. Prove and verify" : "2. 証明生成・検証と配布コード", link: p + "zkml/02-proof" },
+      ],
+    },
+    {
       text: en ? "APPLIED: ZK ROLLUP" : "応用編：ZK rollup",
       collapsed: false,
       items: [

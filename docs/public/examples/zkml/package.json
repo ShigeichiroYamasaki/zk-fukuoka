@@ -1,0 +1,7 @@
+{
+  "name": "zk-fukuoka-private-inference-lab",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": { "demo": "node run.cjs" },
+  "devDependencies": { "circom2": "0.2.22", "snarkjs": "0.7.5" }
+}

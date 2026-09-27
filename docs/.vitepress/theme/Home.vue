@@ -140,6 +140,7 @@ const t = (ja, english) => (en.value ? english : ja);
         <a :href="link('learn/topics.html')">{{ t('トピック別インデックス', 'Topic index') }} ↗</a>
         <a :href="link('learn/foundations.html')">{{ t('初学者向け・前提知識と補助教材', 'Beginner prerequisites & resources') }} ↗</a>
         <a :href="link('rollup/')">{{ t('応用編・ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }} ↗</a>
+        <a :href="link('zkml/')">{{ t('応用編・入力を隠したAI推論', 'Applied course: private-input AI inference') }} ↗</a>
         <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
       </nav>
       <p class="lesson-scroll-hint">{{ t('一覧内をスクロールして全15回を確認できます。', 'Scroll within the list to browse all 15 sessions.') }}</p>
@@ -175,9 +176,24 @@ const t = (ja, english) => (en.value ? english : ja);
         </a>
       </nav>
     </section>
+    <section id="applied-zkml" class="applied-section section-pad" aria-labelledby="zkml-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">03 / APPLIED COURSE · ZKML</span>
+          <h2 id="zkml-title">{{ t('応用編：入力を隠したAI推論を検証する', 'Applied course: verify private-input AI inference') }}</h2>
+        </div>
+        <a class="text-link" :href="link('zkml/')">{{ t('ZKMLの実装例を見る', 'Explore the ZKML implementation') }} ↗</a>
+      </div>
+      <p class="section-intro">{{ t('小さな分類モデルを学習し、入力を公開せずに推論結果の正しさを証明します。Python・Circom・Groth16で動かすコードと、改ざんを拒否するテストを用意しました。', 'Train a small classifier and prove its inference without revealing the input. Run the Python, Circom and Groth16 example, including tampering tests.') }}</p>
+      <nav class="applied-chapters" :aria-label="t('ZKML応用編', 'ZKML applied course')">
+        <a :href="link('zkml/')"><span class="applied-number">START</span><span>{{ t('何を隠し、何を証明するか', 'What is private, what is proven') }}</span><span aria-hidden="true">→</span></a>
+        <a :href="link('zkml/01-model.html')"><span class="applied-number">01</span><span>{{ t('モデルの学習と算術化', 'Training and arithmetization') }}</span><span aria-hidden="true">→</span></a>
+        <a :href="link('zkml/02-proof.html')"><span class="applied-number">02</span><span>{{ t('証明生成・検証と配布コード', 'Proving, verification and code') }}</span><span aria-hidden="true">→</span></a>
+      </nav>
+    </section>
     <section class="community-section section-pad">
       <div class="community-copy">
-        <span class="section-kicker">03 / OPEN BY DESIGN</span>
+        <span class="section-kicker">04 / OPEN BY DESIGN</span>
         <h2>
           {{ t("学びも、コミュニティも。", "An open community.") }}<br />{{
             t("いっしょにつくっていく。", "Built with you.")
