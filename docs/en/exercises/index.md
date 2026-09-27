@@ -20,6 +20,8 @@ Explore lecture concepts through calculations and implementation. Find exercise 
 
 New exercise materials will be added here as they become available.
 
+For Sessions 11–15, follow the [Act III operation guide](./manuals#route) from proving and verification to comparison and advanced exercises.
+
 ## Groth16 implementations and operation manuals {#groth16}
 
 These external examples accompany [Session 11: Groth16](../learn/session-11). Each implementation is paired with its official instructions. We suggest starting with the **Circom + snarkjs circuit example** to follow the complete path from writing a circuit to generating and verifying a proof.
@@ -87,6 +89,6 @@ Documentation checked on **September 27, 2026**. External instructions are mainl
 | Directory | What you can find |
 | --- | --- |
 | [Available tools](./tools) | Browser-based calculation, finite fields and polynomials, circuit writing, proof generation and verification |
-| [Basic operation manuals](./manuals) | Installation and basic operations, circuit creation, witness calculation, and editing materials with Git |
+| [Basic operation manuals](./manuals) | Act III: Groth16, PLONK and STARK workflows, comparison and advanced exercises |
 
 [Syllabus](../learn/) · [Session index](../learn/sessions) · [Topic index](../learn/topics)
