@@ -10,13 +10,14 @@ next:
 
 <script setup>
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 </script>
 
 # Session 3: Algebra of finite fields and polynomials; probabilistic checking
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations)
 
@@ -88,6 +89,16 @@ $$f(X) = \sum_{i=0}^{d} y_i \prod_{j \ne i} \frac{X - x_j}{x_i - x_j}.$$
 
 In this formula, each product is one at its designated point and zero at the other specified points. Weighting and adding these products gives the required values. **Given a degree bound and sufficiently many distinct points, coefficients and evaluation values specify the same polynomial.** Arithmetization will turn tables into polynomials; commitments will allow their values to be checked. Notice why both representations are useful.
 
+First view the construction as a curve over the reals. Interpolate $(0,1),(1,2),(2,5)$ with degree at most two. With $\ell_0=(X-1)(X-2)/2$, $\ell_1=-X(X-2)$ and $\ell_2=X(X-1)/2$,
+
+$$f(X)=1\ell_0(X)+2\ell_1(X)+5\ell_2(X)=X^2+1.$$
+
+At each prescribed point exactly one basis is one. Toggle the weighted bases to compare the terms with their sum. Without the degree restriction, other polynomials can pass through the same three points.
+
+<PolynomialVisual kind="interpolation" :en="true" />
+
+Now read the same $X^2+1$ over $\mathbb{F}_7$: for example, $f(3)=10\equiv3\pmod7$. Coordinates no longer describe the real curve.
+
 <StudyDiagram id="03-2" :en="true" />
 
 ---
@@ -112,6 +123,10 @@ For one variable, $n=1$, this is exactly the fact from Section 3.2 that a polyno
 To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider extension fields or repetition.
 
 What becomes small here is the number of points checked. Computing an evaluation is not automatically cheap. The argument also fails if polynomials can be chosen after seeing the test point. A proof system must fix them first and authenticate the required evaluations.
+
+Compare $f(X)=X^2+1$ with $g(X)=4X-2$. Their difference is $h(X)=(X-1)(X-3)$. Intersections with the horizontal axis are precisely the test points that miss this difference. Fix the polynomials before sampling.
+
+<PolynomialVisual kind="testing" :en="true" />
 
 <StudyDiagram id="03-3" :en="true" />
 

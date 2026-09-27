@@ -36,3 +36,17 @@ for(const [id,d] of Object.entries(diagrams)){
 }
 assert.equal(Object.keys(diagrams).length,43);
 console.log('43 bilingual diagram definitions: coverage, RS distance, finite-field points, curve, trace, bounds and extraction verified.');
+
+// Session 3: real interpolation and exact Schwartz-Zippel example counts.
+const { basis, quadratic, difference, gridZeros } = await import('../docs/.vitepress/theme/polynomialExamples.js');
+for (let k=-4;k<=24;k++) {
+ const x=k/10;
+ assert.ok(Math.abs(basis.reduce((sum,b)=>sum+b(x),0)-quadratic(x))<1e-12);
+}
+assert.deepEqual([0,1,2].map(x=>basis.map(b=>b(x) || 0)),[[1,0,0],[0,2,0],[0,0,5]]);
+assert.equal(Array.from({length:7},(_,x)=>difference(x)).filter(y=>y===0).length,2);
+let zeros=0;
+for(let x=0;x<7;x++)for(let y=0;y<7;y++)if(gridZeros(x,y))zeros++;
+assert.equal(zeros,13);
+assert.ok(zeros/49<=2/7);
+console.log('Session 3: interpolation identities and 2/7, 13/49 zero counts verified.');
