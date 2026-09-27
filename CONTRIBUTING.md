@@ -39,6 +39,7 @@ cd zk-fukuoka
 | 第12回の講義本文 | `docs/learn/session-12.md` | `docs/en/learn/session-12.md` |
 | 第13回の講義本文 | `docs/learn/session-13.md` | `docs/en/learn/session-13.md` |
 | 第14回の講義本文 | `docs/learn/session-14.md` | `docs/en/learn/session-14.md` |
+| 第15回の講義本文 | `docs/learn/session-15.md` | `docs/en/learn/session-15.md` |
 | シラバス | `docs/learn/index.md` | `docs/en/learn/index.md` |
 | 各回の授業インデックス | `docs/learn/sessions.md` | `docs/en/learn/sessions.md` |
 | トピック別インデックス | `docs/learn/topics.md` | `docs/en/learn/topics.md` |
@@ -94,12 +95,12 @@ npm run docs:dev
 
 ### 講義
 
-たとえば第15回を追加する場合:
+全15回の講義本文は公開済みです。追加教材を整備する際も、次の手順で本文と導線を揃えます（第15回のファイルを例示）:
 
-1. `docs/learn/session-15.md` と `docs/en/learn/session-15.md` を作成する。
+1. `docs/learn/session-15.md` と `docs/en/learn/session-15.md` を作成・編集する。
 2. シラバスの第15回から講義本文へリンクを追加する。
 3. `sessions.md` と `topics.md` の該当リンクを講義本文へ変更する。
-4. `docs/.vitepress/theme/lessons.ts` の第15回の `material` を `"learn/session-15.html"` に変更する。トップページに「公開済み」と表示される。
+4. `docs/.vitepress/theme/lessons.ts` の対象回の `material` に本文のパス（例: `"learn/session-15.html"`）を設定する。トップページに「公開済み」と表示される。
 5. 必要に応じて `config.mts` のサイドバーと、前後の講義の `prev`・`next` を更新する。
 6. 「準備中」などの案内を、実際の公開状況に合わせて日英とも更新する。
 

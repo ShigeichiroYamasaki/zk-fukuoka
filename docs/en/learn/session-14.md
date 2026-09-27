@@ -4,8 +4,8 @@ prev:
   text: Session 13 · STARK
   link: /en/learn/session-13
 next:
-  text: Session 15 · Future directions (syllabus)
-  link: /en/learn/#session-15
+  text: Session 15 · Future directions
+  link: /en/learn/session-15
 ---
 
 # Session 14: An integrated perspective — revisiting Acts I–III

@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–14 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. All 15 sessions link to their published lecture manuscripts.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -23,7 +23,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–14 link to t
 | Zero-knowledge, simulators, indistinguishability | [Session 2](./session-02) / [Session 14](./session-14) |
 | Knowledge soundness and extractors | [Session 2](./session-02) |
 | Witnesses, NP relations, Schnorr, Chaum–Pedersen | [Session 2](./session-02) |
-| Expressiveness, interaction, succinctness | [Session 2](./session-02) / [Session 15](./#session-15) |
+| Expressiveness, interaction, succinctness | [Session 2](./session-02) / [Session 15](./session-15) |
 
 ## Finite fields, polynomials & arithmetization {#algebra}
 
@@ -94,7 +94,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–14 link to t
 
 | Topic | Related sessions |
 | --- | --- |
-| Recursive proofs and recursive SNARKs | [Session 15](./#session-15) |
-| Folding schemes and Nova | [Session 15](./#session-15) |
-| GKR and sumcheck | [Session 15](./#session-15) |
-| Research directions through expressiveness and efficiency | [Session 15](./#session-15) |
+| Recursive proofs and recursive SNARKs | [Session 15](./session-15) |
+| Folding schemes and Nova | [Session 15](./session-15) |
+| GKR and sumcheck | [Session 15](./session-15) |
+| Research directions through expressiveness and efficiency | [Session 15](./session-15) |

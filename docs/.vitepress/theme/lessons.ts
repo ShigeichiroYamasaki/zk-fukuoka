@@ -88,6 +88,6 @@ export const lessons = [
     "number": 15,
     "ja": "発展の方向性",
     "en": "Directions for further development",
-    "material": null
+    "material": "learn/session-15.html"
   }
 ];

@@ -4,8 +4,8 @@ prev:
   text: 第13回 · STARK
   link: /learn/session-13
 next:
-  text: 第15回 · 発展の方向性（シラバス）
-  link: /learn/#session-15
+  text: 第15回 · 発展の方向性
+  link: /learn/session-15
 ---
 
 # 第14回:統合的視点 — 幕I〜IIIの往還

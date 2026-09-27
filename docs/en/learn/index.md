@@ -151,6 +151,8 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - Map where the cryptographic assumptions and complexity-theoretic results from Act II enter each protocol.
 
 ### Session 15: Directions for further development {#session-15}
+
+[Read the Session 15 lecture manuscript →](./session-15)
 - Recursive proofs (recursive SNARKs) and folding schemes (such as Nova).
 - New directions based on GKR and sumcheck.
 - Organize current research along the two axes from Act I: expressiveness and efficiency.
@@ -159,4 +161,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–14 are available; materials for Session 15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for all 15 sessions are available.
