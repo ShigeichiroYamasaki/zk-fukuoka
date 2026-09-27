@@ -10,6 +10,7 @@ next:
 
 <script setup>
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
+import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
 </script>
 
 # Session 2: Zero-knowledge and the generalization of witnesses
@@ -79,6 +80,8 @@ An honest-verifier simulator can choose $b$ and a random isomorphism $G_b\to H$ 
 ### 2.3 Checking the intuition
 
 The next explanation previews the **Schnorr identification protocol**, developed in Section 4.1. It demonstrates knowledge of a secret exponent corresponding to a public value without handing over that exponent. It has three stages: the prover sends an initial message (commitment), the verifier sends a random challenge, and the prover responds. An honest verifier in this Schnorr-type protocol samples its challenge uniformly from the specified set after receiving the commitment, then checks the response using the prescribed equation.
+
+<SchnorrOverview :en="true" />
 
 If a transcript can be generated without the witness, could a dishonest prover do the same? Distinguish an output record from a live interaction with a verifier. For example, a Schnorr-type honest-verifier simulator can first choose a challenge and response, then derive a commitment satisfying the verification equation. A real prover commits before receiving the verifier’s challenge. The order differs. This intuition alone does not establish zero-knowledge against arbitrary malicious verifiers.
 
