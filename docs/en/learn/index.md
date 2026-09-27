@@ -144,6 +144,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - Trade-offs associated with transparency.
 
 ### Session 14: An integrated perspective — moving between Acts I–III {#session-14}
+
+[Read the Session 14 lecture manuscript →](./session-14)
+
 - Compare how Groth16, PLONK, and STARK each meet the completeness, soundness, and zero-knowledge definitions introduced in Act I.
 - Map where the cryptographic assumptions and complexity-theoretic results from Act II enter each protocol.
 
@@ -156,4 +159,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–13 are available; materials for Sessions 14–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–14 are available; materials for Session 15 will be developed later.

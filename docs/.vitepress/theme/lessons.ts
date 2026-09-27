@@ -82,7 +82,7 @@ export const lessons = [
     "number": 14,
     "ja": "統合的視点 — 幕I〜IIIの往還",
     "en": "An integrated perspective — moving between Acts I–III",
-    "material": null
+    "material": "learn/session-14.html"
   },
   {
     "number": 15,

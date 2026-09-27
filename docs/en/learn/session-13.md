@@ -4,8 +4,8 @@ prev:
   text: Session 12 · PLONK
   link: /en/learn/session-12
 next:
-  text: Session 14 · An integrated perspective (syllabus)
-  link: /en/learn/#session-14
+  text: Session 14 · An integrated perspective
+  link: /en/learn/session-14
 ---
 
 # Session 13: STARK

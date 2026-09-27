@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–13 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–14 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -19,8 +19,8 @@ Find relevant sessions by topic across the three acts. Sessions 1–13 link to t
 | Topic | Related sessions |
 | --- | --- |
 | Interactive proofs, Arthur–Merlin, IP = PSPACE | [Session 1](./session-01) |
-| Completeness, soundness, proofs vs arguments | [Session 1](./session-01) / [Session 14](./#session-14) |
-| Zero-knowledge, simulators, indistinguishability | [Session 2](./session-02) / [Session 14](./#session-14) |
+| Completeness, soundness, proofs vs arguments | [Session 1](./session-01) / [Session 14](./session-14) |
+| Zero-knowledge, simulators, indistinguishability | [Session 2](./session-02) / [Session 14](./session-14) |
 | Knowledge soundness and extractors | [Session 2](./session-02) |
 | Witnesses, NP relations, Schnorr, Chaum–Pedersen | [Session 2](./session-02) |
 | Expressiveness, interaction, succinctness | [Session 2](./session-02) / [Session 15](./#session-15) |
@@ -44,7 +44,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–13 link to t
 | Cook–Levin, Circuit-SAT, NC, P | [Session 4](./session-04) |
 | The PCP theorem and hardness of approximation | [Session 10](./session-10) |
 | IOPs and probabilistic checking | [Session 3](./session-03) / [Session 10](./session-10) |
-| Mapping complexity-theoretic results to protocols | [Session 14](./#session-14) |
+| Mapping complexity-theoretic results to protocols | [Session 14](./session-14) |
 
 ## Error-correcting codes & information theory {#coding}
 
@@ -69,7 +69,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–13 link to t
 | Elliptic curve groups and bilinear pairings | [Session 7](./session-07) |
 | BN254 and BLS12-381 | [Session 7](./session-07) |
 | Discrete logarithm, q-SDH, reductions | [Session 7](./session-07) |
-| Standard and non-standard assumptions; protocol connections | [Session 7](./session-07) / [Session 14](./#session-14) |
+| Standard and non-standard assumptions; protocol connections | [Session 7](./session-07) / [Session 14](./session-14) |
 
 ## Commitments & non-interactive proofs {#commitments}
 
@@ -88,7 +88,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–13 link to t
 | PLONK, permutation arguments, custom gates | [Session 12](./session-12) |
 | STARK; FRI and AIR | [Session 13](./session-13) |
 | Trusted setup, universal setup, transparency | [Session 11](./session-11) / [Session 12](./session-12) / [Session 13](./session-13) |
-| Integrated comparison of Groth16 / PLONK / STARK | [Session 14](./#session-14) |
+| Integrated comparison of Groth16 / PLONK / STARK | [Session 14](./session-14) |
 
 ## Recursion, folding & further directions {#research}
 

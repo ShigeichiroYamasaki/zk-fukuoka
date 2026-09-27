@@ -1,6 +1,6 @@
 # Session index
 
-Browse all 15 sessions in curriculum order. Sessions 1–13 link to their lecture manuscripts. Sessions 14–15 link to their syllabus sections; their full lesson materials are in preparation.
+Browse all 15 sessions in curriculum order. Sessions 1–14 link to their lecture manuscripts. Session 15 links to its syllabus section; its full lesson material is in preparation.
 
 [Browse by topic](./topics) · [Read the syllabus](./)
 
@@ -25,7 +25,7 @@ Browse all 15 sessions in curriculum order. Sessions 1–13 link to their lectur
 - [Session 11: Groth16](./session-11)
 - [Session 12: PLONK](./session-12)
 - [Session 13: STARK](./session-13)
-- [Session 14: An integrated perspective — moving between Acts I–III](./#session-14)
+- [Session 14: An integrated perspective — moving between Acts I–III](./session-14)
 - [Session 15: Directions for further development](./#session-15)
 
 [Supplement · An introductory finite-field exercise](./foundations)

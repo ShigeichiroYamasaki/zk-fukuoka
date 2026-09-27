@@ -4,8 +4,8 @@ prev:
   text: 第12回 · PLONK
   link: /learn/session-12
 next:
-  text: 第14回 · 統合的視点（シラバス）
-  link: /learn/#session-14
+  text: 第14回 · 統合的視点
+  link: /learn/session-14
 ---
 
 # 第13回:STARK

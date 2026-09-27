@@ -23,6 +23,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Session 11 · Groth16" : "第11回 · Groth16", link: p + "learn/session-11" },
         { text: en ? "Session 12 · PLONK" : "第12回 · PLONK", link: p + "learn/session-12" },
         { text: en ? "Session 13 · STARK" : "第13回 · STARK", link: p + "learn/session-13" },
+        { text: en ? "Session 14 · An integrated perspective" : "第14回 · 統合的視点", link: p + "learn/session-14" },
         {
           text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",
