@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 8 in the syllabus](./#session-8) · [Exercises](../exercises/)
 
@@ -89,9 +89,9 @@ To prove that $f(x) = y$, the prover uses the fact that $f(X) - y$ is divisible 
 
 The verifier checks the following pairing equation:
 
-$$e(C \cdot g^{-y}, g) = e(\pi, g^{\tau} \cdot g^{-x})$$
+$$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
-Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point. The equation abbreviates the generators as $g$; asymmetric pairings distinguish the two input groups and also require the second group’s generator and its $\tau$ multiple in the verifier’s parameters.
+Write the preceding generator $g$ as $g_1\in G_1$ and include $g_2,g_2^\tau\in G_2$ in the verifier parameters. Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point.
 
 <StudyDiagram id="08-2" :en="true" />
 
@@ -127,10 +127,10 @@ Hash collision resistance prevents changing the committed table; FRI soundness r
 |---|---|---|
 | Underlying tool | Pairings (Session 7) | Low-degree testing / FRI (Session 6) |
 | Trusted setup | Required to generate the SRS | Not required; transparent |
-| Security foundation | Reduction to q-SDH | Hash collision resistance + FRI soundness |
-| Proof size | Constant | Logarithmic; depends on the FRI stages |
+| Evaluation correctness | Evaluation binding under a degree-appropriate SDH assumption | Table binding + FRI soundness + consistency with the evaluation claim |
+| Evaluation-proof size | Constant number of group elements for a fixed group | Count queried values and Merkle paths; polylogarithmic in representative constructions |
 
-Compare what is fixed, what is checked, and which assumptions are used. The table’s logarithmic FRI size describes folding depth; count authentication paths and queries when measuring the whole proof. Act III compares KZG-based PLONK with representative FRI-based STARKs. Groth16 uses pairings but does not incorporate KZG as a component; preserve that distinction when reading the constructions.
+Compare what is fixed, what is checked, and which assumptions are used. Folding depth is distinct from total proof size including authentication paths and queries. Non-interactivity and knowledge extraction require additional security conditions beyond evaluation binding. Act III compares KZG-based PLONK with representative FRI-based STARKs. Groth16 uses pairings but does not incorporate KZG as a component; preserve that distinction when reading the constructions.
 
 ---
 

@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Exercises](../exercises/)
 
@@ -28,9 +28,9 @@ There are three learning objectives:
 
 1. Understand the definition and basic structure of elliptic curve groups.
 2. Understand bilinear pairings and the new cryptographic capabilities they provide.
-3. Understand the hierarchy of hardness assumptions, including discrete logarithms and q-SDH, and the basic structure of security arguments based on reductions.
+3. Understand the types and relationships of hardness assumptions, including discrete logarithms and q-SDH, and the basic structure of security arguments based on reductions.
 
-The Schnorr protocol in Session 2 relied on the hardness of discrete logarithms. Pairings extend this algebraic toolkit and provide a foundation for succinct proofs such as Groth16.
+Session 2 used algebraic properties to establish Schnorr special soundness and honest-verifier simulation. Hardness of recovering the secret exponent from the public key relies on discrete logarithms. Distinguish these roles. Pairings extend the available algebraic tools toward succinct systems such as Groth16.
 
 ---
 
@@ -91,7 +91,7 @@ This is a **multiplicative verification capability** unavailable from ordinary d
 
 ---
 
-## 3. A hierarchy of cryptographic hardness assumptions
+## 3. A types and relationships of cryptographic hardness assumptions {#_3-a-hierarchy-of-cryptographic-hardness-assumptions}
 
 ### 3.1 Why are assumptions needed?
 
@@ -105,7 +105,7 @@ The DL assumption says that an adversary given a generator $g$ of a group $G$ an
 
 DL alone may not suffice to prove a scheme’s required properties. Some constructions use hardness problems with richer input or assumptions about knowledge behind an output. The following examples distinguish computational hardness from knowledge assumptions involving extractors.
 
-- **The q-SDH (q-Strong Diffie–Hellman) assumption:** Given $g, g^x, g^{x^2}, \dots, g^{x^q}$, it is hard to find a pair of the form $(c, g^{1/(x+c)})$. It is used in analyses such as KZG evaluation binding. Original Groth16 knowledge soundness is analyzed separately in the generic bilinear group model.
+- **The q-SDH (q-Strong Diffie–Hellman) assumption:** Given $g, g^x, g^{x^2}, \dots, g^{x^q}$, it is hard to find a pair of the form $(c, g^{1/(x+c)})$ with $x+c\ne0$. Here q bounds the supplied powers; it is separate from the group order denoted q in Section 2. Exponents and c are taken modulo the prime group order. It is used in analyses such as KZG evaluation binding. Original Groth16 knowledge soundness is analyzed separately in the generic bilinear group model.
 - **The Knowledge-of-Exponent Assumption (KEA):** An adversary given $g$ and $g^x$ that outputs a pair $(g^a, (g^x)^a)$ is assumed to know the exponent $a$. Unlike standard computational hardness assumptions, this is an assumption about knowledge.
 
 ### 3.4 What the distinction between standard and non-standard assumptions means

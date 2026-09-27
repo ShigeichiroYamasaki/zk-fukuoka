@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Exercises](../exercises/)
 
@@ -56,9 +56,9 @@ The three techniques we study today—R1CS, QAP, and AIR—are different impleme
 
 Can the same approach handle general NP problems, rather than just one program? The background is the Cook–Levin theorem establishing NP-completeness of SAT. Here we reason using the corresponding NP-completeness of CircuitSAT.
 
-> **Cook–Levin theorem:** [CircuitSAT](./terms/reductions), the problem of determining whether a [Boolean circuit](./terms/circuits) is satisfiable, is NP-complete.
+> **Circuit formulation corresponding to Cook–Levin:** [CircuitSAT](./terms/reductions), the problem of determining whether a [Boolean circuit](./terms/circuits) is satisfiable, is NP-complete.
 
-This means that **any NP relation can be transformed into a Boolean circuit satisfiability problem by a [polynomial-time reduction](./terms/reductions)**. In other words, the claim “I know an input x such that running this program produces y” can, without losing generality, be reduced to “I know an input satisfying this circuit.”
+NP-completeness concerns decision-problem reductions. To prove knowledge of a witness, also check how witnesses correspond. Expanding the polynomial-time verifier for an NP relation $R(x,w)$ into a circuit and fixing public input $x$ gives $C_x(w)=1$ exactly when $R(x,w)=1$. Introducing variables for intermediate values gives a satisfying assignment for the accepting computation. This explicit correspondence supports the translation into constraints.
 
 The theorem justifies concentrating the design of arithmetization techniques on one task: translating circuits, or comparable computation models, into polynomial constraints. There is no need to create a separate proof system for each individual program.
 
@@ -152,7 +152,7 @@ R1CS/QAP and AIR pursue the same goal but choose different units of computation.
 
 Today we expressed the same computation through different constraints. Review what the translation preserved and what became easier to check.
 
-- How the Cook–Levin theorem reduces any NP relation to circuit satisfiability, justifying arithmetization without loss of generality.
+- How, against the background of Cook–Levin, circuitizing the NP-relation verifier preserves the correspondence between witnesses and satisfying assignments.
 - R1CS: representing circuit gates as linear-algebraic constraints.
 - QAP: combining R1CS constraints into a single polynomial divisibility condition, putting the Schwartz–Zippel lemma to work.
 - AIR: arithmetizing execution traces through transition and boundary constraints, with a natural fit for sequential computation.
@@ -170,5 +170,5 @@ In Session 5, we examine how to treat these polynomial representations as codes 
 ## Suggested classroom questions
 
 - Have students introduce intermediate variables and perform the R1CS conversion in Section 3.3 themselves to gain practical experience with arithmetization.
-- Ask why multiplication needs constraints while addition does not, to develop their understanding of linear combinations and nonlinearity.
+- Ask when addition can be absorbed into a linear combination and when a separately stored value needs an equality constraint, to develop their understanding of linear combinations and nonlinearity.
 - After presenting AIR transition constraints, ask why AIR feels more natural even though the same computation could be expressed in R1CS. Use this to explore the difference in design philosophy.

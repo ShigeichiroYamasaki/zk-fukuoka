@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Exercises](../exercises/)
 
@@ -77,7 +77,7 @@ One query path checks a constant number of values per stage, giving roughly $O(\
 
 ### 2.3 Why the claim is approximate
 
-FRI addresses the approximate claim that $f$ is **close** to a low-degree polynomial in the Hamming-distance sense introduced in Session 5. Quantifying this closeness involves list-decoding parameters, including Johnson-type bounds. Soundness error depends on a precise analysis of coding-theoretic parameters, and practical choices such as the number of folding rounds and queries are based on that analysis.
+FRI bounds the probability of accepting a table that is far from every permitted low-degree polynomial, using the Hamming distance introduced in Session 5. One accepting execution does not establish closeness with certainty. Quantifying this closeness involves list-decoding parameters, including Johnson-type bounds. Soundness error depends on a precise analysis of coding-theoretic parameters, and practical choices such as the number of folding rounds and queries are based on that analysis.
 
 *The detailed formulas are beyond this lecture. The key structure to understand is the trade-off between verification cost and soundness error, whose precise form is quantified using coding theory.*
 
@@ -126,11 +126,11 @@ Being able to implement a procedure is different from proving it secure. Rewindi
 Today we distinguished low-degree proximity testing from techniques used to argue security. Review the guarantee each is intended to support.
 
 - Low-degree testing can be viewed as proximity testing for RS codes.
-- FRI's recursive folding structure repeatedly halves the degree bound to achieve logarithmic verification cost.
+- FRI repeatedly halves the degree bound, checking logarithmically many values along one query path. Count authentication paths and repetitions separately for total cost.
 - Soundness amplification uses repetition to control error probability quantitatively.
 - Rewinding and the forking lemma are cryptographic proof techniques supporting knowledge extraction and security arguments for non-interactive protocols.
 
-In Session 7, we will study elliptic curves and pairings, algebraic structures underlying SNARK protocols, particularly Groth16. We will also introduce the hierarchy of cryptographic hardness assumptions, including discrete logarithms and qSDH, and the idea of reduction proofs.
+In Session 7, we will study elliptic curves and pairings, algebraic structures underlying SNARK protocols, particularly Groth16. We will also introduce the types and relationships of cryptographic hardness assumptions, including discrete logarithms and q-SDH, and the idea of reduction proofs.
 
 ---
 

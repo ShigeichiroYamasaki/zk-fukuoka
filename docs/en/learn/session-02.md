@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2)
 
@@ -42,6 +42,8 @@ How can we formalize “nothing leaks”? GMR's answer was the **simulator parad
 
 ---
 
+Timing and power side channels are not automatically covered by the abstract zero-knowledge definition: its guarantee concerns the verifier view included in the model.
+
 ## 2. Defining zero-knowledge through the simulator paradigm
 
 ### 2.1 The central idea
@@ -58,7 +60,7 @@ Consider an interactive proof system $(P,V)$ for language $L$ and relation $R$. 
 
 $$\{\langle P(w), V^*\rangle(x)\}_{x \in L} \approx \{S(x)\}_{x \in L}.$$
 
-Here, $\approx$ denotes indistinguishability. Depending on how strong a requirement it imposes, we obtain three levels:
+The condition is required for every $(x,w)\in R$, without giving $w$ to the simulator. Depending on the definition, simulation runs in polynomial or expected polynomial time. Here, $\approx$ denotes indistinguishability. Depending on how strong a requirement it imposes, we obtain three levels:
 
 - **Perfect zero-knowledge:** the two distributions are identical.
 - **Statistical zero-knowledge:** their statistical distance is negligible.
@@ -67,6 +69,10 @@ Here, $\approx$ denotes indistinguishability. Depending on how strong a requirem
 The comparison here is between distributions of the real view and simulator output. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
 
 <StudyDiagram id="02-1" :en="true" />
+
+**Graph isomorphism example.** Let the public graphs be $G_0,G_1$ and the secret isomorphism be $\pi:G_0\to G_1$. The prover samples a random vertex permutation $\rho$, sends $H=\rho(G_0)$, receives a uniform bit $b$, and returns an isomorphism $G_b\to H$: $\rho$ for $b=0$, or $\rho\circ\pi^{-1}$ for $b=1$. Answers to both challenges for the same $H$ yield an isomorphism between the public graphs by composition.
+
+An honest-verifier simulator can choose $b$ and a random isomorphism $G_b\to H$ first. Malicious-verifier security requires a separate argument involving rewinding. Generating a record and answering a live verifier are different tasks.
 
 ### 2.3 Checking the intuition
 
@@ -101,7 +107,7 @@ This is the second half of today's lecture and the closing topic of Act I as a w
 Use Schnorr identification to make the distinction concrete. Let $g$ generate a cyclic group of prime order $q$, and let the prover know the exponent $w\in\mathbb{Z}_q$ satisfying $y=g^w$. Even when the group is a subgroup of a finite field’s multiplicative group, distinguish group elements from exponents. The following exponent arithmetic is modulo $q$. The protocol proceeds as follows:
 
 1. Prover: choose a random $r$ and send the commitment $t = g^r$.
-2. Verifier: send a challenge $c$.
+2. Verifier: sample a uniform challenge $c\in\mathbb{Z}_q$ and send it.
 3. Prover: send the response $s = r + cw$.
 4. Verifier: check that $g^s = t \cdot y^c$.
 
@@ -141,10 +147,10 @@ Changing the witness representation also changes extraction. In Schnorr, two acc
 
 Separate the questions into **what can be expressed** and **how much interaction and computation is needed**. The following table is a map of the course’s tools. Non-interactivity and succinctness are distinct properties: Fiat–Shamir alone does not make a proof of general computation succinct.
 
-| | Interactive, non-succinct | Non-interactive, succinct |
-| --- | --- | --- |
-| **Algebraic relations (simple witnesses)** | Schnorr, Chaum–Pedersen | Σ-protocol + Fiat–Shamir (succinctness is not yet obtained) |
-| **General NP relations (arbitrary computation)** | GMR-style general ZK (theoretical constructions) | Groth16 / PLONK / STARK |
+| Relation | Interactive examples | Non-interactive examples | Reading succinctness |
+| --- | --- | --- | --- |
+| Algebraic relations | Schnorr, Chaum–Pedersen | Fiat–Shamir applied to suitable Sigma protocols | These relations admit short proofs; Fiat–Shamir itself is not proof compression |
+| General NP relations | Interactive ZK constructions for general NP | Groth16 / PLONK / STARK | Assess proof size and verification cost relative to computation size separately from non-interactivity |
 
 The message of this table is that **zk-SNARKs and zk-STARKs result from simultaneously advancing along two independent axes—expressiveness and efficiency—rather than simply making an existing protocol more efficient**. In Act II, we will assemble the tools supporting both axes in parallel.
 

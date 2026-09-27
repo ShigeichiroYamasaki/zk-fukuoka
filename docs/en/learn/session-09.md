@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Exercises](../exercises/)
 
@@ -101,8 +101,8 @@ Canetti, Goldreich, and Halevi show that this distinction has mathematical conse
 Does the counterexample make ROM analysis useless? There is value in analyzing a scheme, including adversarial queries, under explicit idealized conditions. But security claims must stay within what was proved. Consider the practical reasons below while retaining that distinction.
 
 - Counterexamples such as CGH are deliberately constructed to exhibit pathological behavior; they do not themselves provide concrete attacks on practical protocols such as Fiat–Shamir-based Schnorr signatures.
-- A ROM proof provides strong evidence against structural flaws in a protocol within the model.
-- Constructions with security proofs in the standard model are often much less efficient, or are not yet known for the desired functionality.
+- A ROM proof establishes the specified security property within the idealized model; it does not certify an implementation or rule out every kind of attack.
+- The cost of avoiding ROM depends on the functionality and setup assumptions. Groth16, for example, is non-interactive in the CRS model without Fiat–Shamir.
 
 ### 4.4 How to use this critical perspective
 

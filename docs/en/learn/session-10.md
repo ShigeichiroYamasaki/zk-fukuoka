@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 10 in the syllabus](./#session-10) · [Exercises](../exercises/)
 
@@ -111,7 +111,7 @@ Today we connected the tools through checking with few queries. Use the followin
 - Its connection to hardness of approximation gives it independent importance beyond proof systems.
 - IOPs combine PCPs and interactive proofs and organize arithmetization, FRI, commitments, and Fiat–Shamir through the stages of design, implementation, and non-interactive compilation.
 
-This completes Act II. Session 11 begins Act III, integration, with Groth16. We will examine how pairings and QAPs achieve succinctness and why trusted setup is needed, using today's design map as a guide.
+This completes Act II. Session 11 begins Act III, integration, with Groth16. We will examine how pairings and QAPs achieve succinctness and why trusted setup is needed, comparing it with today's design map while treating it as a direct CRS-model construction without Fiat–Shamir.
 
 ---
 

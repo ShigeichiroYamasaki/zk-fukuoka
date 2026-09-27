@@ -18,36 +18,36 @@ const numbers = {witness:1,interaction:2,graphs:3,motives:4,properties:5,models:
       <div class="shared">{{ t('公開されている問題の入力 x', 'Public instance x') }}</div>
       <div class="flow"><div class="node"><b>{{ t('証明者 P', 'Prover P') }}</b><span>{{ t('ウィットネス w を用意', 'Provides a witness w') }}</span></div><div class="arrow"><span>w</span>→</div><div class="node teal"><b>{{ t('検証者 V', 'Verifier V') }}</b><span>{{ t('V(x, w) を計算', 'Computes V(x, w)') }}</span></div></div>
       <div class="result">{{ t('検査の結果：受理 / 拒否', 'Check result: accept / reject') }}</div>
-      <p class="note">{{ t('この方法では w そのものを渡す。正しさの検査と，秘密を守ることは別の要求。', 'This procedure sends w itself. Checking correctness and protecting a secret are separate requirements.') }}</p>
+      <p class="note">{{ t('この方法では w そのものを渡す．正しさの検査と，秘密を守ることは別の要求．', 'This procedure sends w itself. Checking correctness and protecting a secret are separate requirements.') }}</p>
     </template>
     <template v-else-if="kind === 'interaction'">
       <div class="lanes"><b>{{ t('証明者（Merlin）', 'Prover (Merlin)') }}</b><b>{{ t('検証者（Arthur）', 'Verifier (Arthur)') }}</b></div>
       <ol class="messages"><li><span>{{ t('ランダムな質問', 'Random question') }}</span><span class="message-arrow">←</span></li><li><span>{{ t('質問に応じた返答', 'Response to the question') }}</span><span class="message-arrow">→</span></li><li><span>{{ t('必要なラウンドを繰り返す', 'Repeat for the required rounds') }}</span><span class="message-arrow">↔</span></li></ol>
       <div class="result">{{ t('検証者が，やり取りと自分の乱数を使って判定する', 'The verifier decides using the exchange and its randomness') }}</div>
-      <p class="note">{{ t('公開コイン型のやり取りを模式化。最初の発言者やラウンド数は方式による。対話するだけでゼロ知識になるわけではない。', 'A schematic public-coin exchange. The first speaker and round count depend on the protocol. Interaction alone does not imply zero-knowledge.') }}</p>
+      <p class="note">{{ t('公開コイン型のやり取りを模式化．最初の発言者やラウンド数は方式による．対話するだけでゼロ知識になるわけではない．', 'A schematic public-coin exchange. The first speaker and round count depend on the protocol. Interaction alone does not imply zero-knowledge.') }}</p>
     </template>
     <template v-else-if="kind === 'graphs'">
-      <svg viewBox="0 0 620 220" role="img" :aria-label="t('G1はA-B-C-Dの道。G2は3-1-4-2の道。同型写像はAを3，Bを1，Cを4，Dを2へ対応づける。','G1 is the path A-B-C-D. G2 is the path 3-1-4-2. The isomorphism maps A to 3, B to 1, C to 4 and D to 2.')">
+      <svg viewBox="0 0 620 220" role="img" :aria-label="t('G1はA-B-C-Dの道．G2は3-1-4-2の道．同型写像はAを3，Bを1，Cを4，Dを2へ対応づける．','G1 is the path A-B-C-D. G2 is the path 3-1-4-2. The isomorphism maps A to 3, B to 1, C to 4 and D to 2.')">
         <g class="edges"><path d="M55 75L180 75L180 165L55 165"/><path d="M385 165L450 65L505 165L570 65"/></g>
         <g class="vertices"><circle cx="55" cy="75" r="21"/><circle cx="180" cy="75" r="21"/><circle cx="180" cy="165" r="21"/><circle cx="55" cy="165" r="21"/><circle cx="385" cy="165" r="21"/><circle cx="450" cy="65" r="21"/><circle cx="505" cy="165" r="21"/><circle cx="570" cy="65" r="21"/></g>
         <g class="labels" text-anchor="middle"><text x="118" y="25">G₁</text><text x="478" y="25">G₂</text><text x="55" y="82">A</text><text x="180" y="82">B</text><text x="180" y="172">C</text><text x="55" y="172">D</text><text x="385" y="172">3</text><text x="450" y="72">1</text><text x="505" y="172">4</text><text x="570" y="72">2</text><text x="300" y="110">≅</text></g>
       </svg>
       <div class="shared">π : A → 3 · B → 1 · C → 4 · D → 2</div>
-      <p class="note">{{ t('辺 AB・BC・CD は，それぞれ 3–1・1–4・4–2 に対応する。ここでは説明のため写像 π を表示した。問いは，この写像を渡さず同型性を納得させられるか，である。', 'Edges AB, BC and CD map to 3–1, 1–4 and 4–2. The mapping π is displayed here for illustration. The question is whether isomorphism can be established without handing over this mapping.') }}</p>
+      <p class="note">{{ t('辺 AB・BC・CD は，それぞれ 3–1・1–4・4–2 に対応する．ここでは説明のため写像 π を表示した．問いは，この写像を渡さず同型性を納得させられるか，である．', 'Edges AB, BC and CD map to 3–1, 1–4 and 4–2. The mapping π is displayed here for illustration. The question is whether isomorphism can be established without handing over this mapping.') }}</p>
     </template>
     <template v-else-if="kind === 'motives'">
       <div class="pair"><div class="node"><b>{{ t('計算量理論の問い', 'Complexity-theoretic question') }}</b><span>{{ t('限られた検証者は，どこまで確認できるか？', 'What can a limited verifier check?') }}</span></div><div class="node teal"><b>{{ t('暗号学の問い', 'Cryptographic question') }}</b><span>{{ t('確認の過程で，何が相手に伝わるか？', 'What information does checking reveal?') }}</span></div></div>
       <div class="merge" aria-hidden="true">↘　↙</div><div class="result"><b>{{ t('対話型証明系 (P, V)', 'Interactive proof system (P, V)') }}</b><br>{{ t('メッセージを交換し，最後に受理・拒否を決める', 'Exchange messages, then accept or reject') }}</div>
-      <p class="note">{{ t('共通するのは記述の枠組み。完全性・健全性・ゼロ知識性は，それぞれ別に定義する。', 'The descriptive framework is shared. Completeness, soundness and zero-knowledge are defined separately.') }}</p>
+      <p class="note">{{ t('共通するのは記述の枠組み．完全性・健全性・ゼロ知識性は，それぞれ別に定義する．', 'The descriptive framework is shared. Completeness, soundness and zero-knowledge are defined separately.') }}</p>
     </template>
     <template v-else-if="kind === 'properties'">
       <div class="pair"><div class="node teal"><b>{{ t('完全性', 'Completeness') }}</b><span>x ∈ L</span><span>{{ t('正しい主張 ＋ 正直な証明者', 'True statement + honest prover') }}</span><span class="down">↓</span><strong>{{ t('高い確率で受理', 'Accept with high probability') }}</strong><small>Pr[accept] ≥ 1 − negl</small></div><div class="node"><b>{{ t('健全性', 'Soundness') }}</b><span>x ∉ L</span><span>{{ t('誤った主張 ＋ 任意の不正な証明者', 'False statement + any dishonest prover') }}</span><span class="down">↓</span><strong>{{ t('受理される確率はごく小さい', 'Acceptance probability is negligible') }}</strong><small>Pr[accept] ≤ negl</small></div></div>
-      <p class="note">{{ t('何でも受理する検証者は健全性を満たさず，何でも拒否する検証者は完全性を満たさない。二つを同時に要求する。', 'Accepting everything fails soundness; rejecting everything fails completeness. Both properties are required.') }}</p>
+      <p class="note">{{ t('何でも受理する検証者は健全性を満たさず，何でも拒否する検証者は完全性を満たさない．二つを同時に要求する．', 'Accepting everything fails soundness; rejecting everything fails completeness. Both properties are required.') }}</p>
     </template>
     <template v-else>
       <div class="pair"><div class="node"><b>Proof</b><span>{{ t('不正な証明者の計算能力に制限なし', 'No computational bound on the dishonest prover') }}</span><span class="down">↓</span><strong>{{ t('統計的健全性', 'Statistical soundness') }}</strong></div><div class="node teal"><b>Argument</b><span>{{ t('不正な証明者を多項式時間に制限', 'Dishonest prover is polynomial-time bounded') }}</span><span class="down">↓</span><strong>{{ t('計算量的健全性', 'Computational soundness') }}</strong></div></div>
       <div class="result">SNARK / STARK : A = Argument</div>
-      <p class="note">{{ t('どちらも検証者は効率的に動く。ここで比べているのは，不正な証明者に対する保証の範囲であり，ゼロ知識性の強さではない。', 'In both cases the verifier is efficient. The distinction concerns guarantees against dishonest provers, not the strength of zero-knowledge.') }}</p>
+      <p class="note">{{ t('どちらも検証者は効率的に動く．ここで比べているのは，不正な証明者に対する保証の範囲であり，ゼロ知識性の強さではない．', 'In both cases the verifier is efficient. The distinction concerns guarantees against dishonest provers, not the strength of zero-knowledge.') }}</p>
     </template>
   </figure>
 </template>

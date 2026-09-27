@@ -8,7 +8,7 @@ export const diagrams = {
       "Real interaction and simulation without a witness"
     ],
     "note": [
-      "公開入力xは共通。比較するのは検証者のviewの分布であり，個々の実行記録の一致ではない。",
+      "公開入力xは共通．比較するのは検証者のviewの分布であり，個々の実行記録の一致ではない．",
       "Both use public input x. We compare distributions of verifier views, not equality of individual execution records."
     ],
     "nodes": [
@@ -18,7 +18,7 @@ export const diagrams = {
           "Real interaction"
         ],
         "body": [
-          "Pはウィットネスwを使う。V*は受信内容・自分の乱数などを得る。",
+          "Pはウィットネスwを使う．V*は受信内容・自分の乱数などを得る．",
           "P uses witness w. V* obtains received messages, its randomness and other view components."
         ]
       },
@@ -28,7 +28,7 @@ export const diagrams = {
           "Simulation"
         ],
         "body": [
-          "Sはwを使わず，V*のviewを再現する。",
+          "Sはwを使わず，V*のviewを再現する．",
           "S reproduces V*’s view without using w."
         ]
       }
@@ -46,7 +46,7 @@ export const diagrams = {
       "Schnorr: two responses to one commitment"
     ],
     "note": [
-      "素数位数qの群を想定し，指数の計算はmod q。同じtに対する異なるチャレンジが必要であり，一つの記録だけからの抽出を示す図ではない。",
+      "素数位数qの群を想定し，指数の計算はmod q．同じtに対する異なるチャレンジが必要であり，一つの記録だけからの抽出を示す図ではない．",
       "Use a prime-order group of order q; exponent arithmetic is modulo q. Extraction needs distinct challenges for the same t, not just one transcript."
     ],
     "nodes": [
@@ -90,7 +90,7 @@ export const diagrams = {
       "Separate expressiveness from efficiency"
     ],
     "note": [
-      "非対話性と簡潔性は別の要求。Fiat–Shamirだけで一般計算の証明が短くなるわけではない。",
+      "非対話性と簡潔性は別の要求．Fiat–Shamirだけで一般計算の証明が短くなるわけではない．",
       "Non-interactivity and succinctness are separate requirements. Fiat–Shamir alone does not make general-computation proofs short."
     ],
     "headers": [
@@ -157,7 +157,7 @@ export const diagrams = {
       "Arithmetic modulo 7: divide by multiplying an inverse"
     ],
     "note": [
-      "0には逆元がない。有限体の要素と，その乗法群の指数を区別する。",
+      "0には逆元がない．有限体の要素と，その乗法群の指数を区別する．",
       "Zero has no inverse. Distinguish field elements from exponents in its multiplicative group."
     ],
     "nodes": [
@@ -201,7 +201,7 @@ export const diagrams = {
       "Read a finite-field polynomial as an evaluation table"
     ],
     "note": [
-      "F₇上のf(X)=X²+1。実数の放物線ではないため，点を曲線で結んでいない。次数2以下なら，相異なる3点の値が多項式を一意に定める。",
+      "F₇上のf(X)=X²+1．実数の放物線ではないため，点を曲線で結んでいない．次数2以下なら，相異なる3点の値が多項式を一意に定める．",
       "f(X)=X²+1 over F₇. Points are not joined: this is not a real-valued parabola. Three distinct evaluations uniquely determine a polynomial of degree at most 2."
     ],
     "maxX": 6,
@@ -225,7 +225,7 @@ export const diagrams = {
       6
     ],
     "alt": [
-      "xが0から6のときyは1,2,5,3,3,5,2となる離散点。",
+      "xが0から6のときyは1,2,5,3,3,5,2となる離散点．",
       "Discrete points: for x from 0 to 6, y is 1,2,5,3,3,5,2."
     ],
     "series": [
@@ -272,7 +272,7 @@ export const diagrams = {
       "A larger sample set lowers the false-acceptance bound"
     ],
     "note": [
-      "全次数d=2の非零多項式に対するSchwartz–Zippelの上界。各座標を独立一様に選ぶ。実測値ではなく理論上界であり，多項式は点の選択前に固定する。",
+      "全次数d=2の非零多項式に対するSchwartz–Zippelの上界．各座標を独立一様に選ぶ．実測値ではなく理論上界であり，多項式は点の選択前に固定する．",
       "Schwartz–Zippel bounds for a fixed nonzero polynomial of total degree d=2, with independent uniform coordinates. These are theoretical bounds, not measurements; the polynomial is fixed before sampling."
     ],
     "max": 100,
@@ -303,7 +303,7 @@ export const diagrams = {
       "Split x³+x+5=35 into constraints on intermediate values"
     ],
     "note": [
-      "x=3の計算例。加算も出力条件も含めて制約を満たす必要がある。実際のR1CSでは各式を二つの線形結合の積の形へ書く。",
+      "x=3の計算例．加算も出力条件も含めて制約を満たす必要がある．実際のR1CSでは各式を二つの線形結合の積の形へ書く．",
       "Worked example with x=3. Addition and the output condition must also hold. Each relation is written as a product of linear combinations in R1CS."
     ],
     "nodes": [
@@ -347,7 +347,7 @@ export const diagrams = {
       "R1CS to QAP: row checks become divisibility"
     ],
     "note": [
-      "割り切れ性の表現だけでは暗号学的な証明は完成しない。次数の制限と，評価値が固定された多項式に対応することの保証も必要になる。",
+      "割り切れ性の表現だけでは暗号学的な証明は完成しない．次数の制限と，評価値が固定された多項式に対応することの保証も必要になる．",
       "Divisibility alone is not a cryptographic proof. Degree bounds and guarantees tying evaluations to fixed polynomials are also needed."
     ],
     "nodes": [
@@ -391,7 +391,7 @@ export const diagrams = {
       "AIR: rows track time and constraints check transitions"
     ],
     "note": [
-      "F₁₇上でsₜ₊₁=sₜ²，初期値s₀=3を例にしたトレース。遷移制約は隣り合う行，境界制約は指定した行に課す。",
+      "F₁₇上でsₜ₊₁=sₜ²，初期値s₀=3を例にしたトレース．遷移制約は隣り合う行，境界制約は指定した行に課す．",
       "Example trace over F₁₇ with sₜ₊₁=sₜ² and s₀=3. Transition constraints link adjacent rows; boundary constraints apply to specified rows."
     ],
     "headers": [
@@ -445,7 +445,7 @@ export const diagrams = {
       "See RS distance in five evaluations"
     ],
     "note": [
-      "F₇，次数<2，評価点0〜4のRS符号。n=5，d=2なので最小距離は4，一意訂正は1誤りまで。二つの表示符号語も4箇所で異なる。",
+      "F₇，次数<2，評価点0〜4のRS符号．n=5，d=2なので最小距離は4，一意訂正は1誤りまで．二つの表示符号語も4箇所で異なる．",
       "RS code over F₇ of degree <2, evaluated at 0–4. With n=5 and d=2, minimum distance is 4 and one error is uniquely correctable. The two displayed codewords differ in four positions."
     ],
     "headers": [
@@ -497,7 +497,7 @@ export const diagrams = {
       "Separate noise models from adversarial models"
     ],
     "note": [
-      "検証者の乱数は，不正な証明者のデータに対する検査をランダム化するために使う。不正そのものを自然なランダム誤りと仮定するわけではない。",
+      "検証者の乱数は，不正な証明者のデータに対する検査をランダム化するために使う．不正そのものを自然なランダム誤りと仮定するわけではない．",
       "Verifier randomness randomizes checks on adversarial data; it does not assume cheating behaves like natural random noise."
     ],
     "nodes": [
@@ -507,7 +507,7 @@ export const diagrams = {
           "Shannon perspective"
         ],
         "body": [
-          "通信路の確率モデルを置く。レートと復号失敗確率を考える。",
+          "通信路の確率モデルを置く．レートと復号失敗確率を考える．",
           "Specify a probabilistic channel. Study rate and decoding failure probability."
         ]
       },
@@ -517,7 +517,7 @@ export const diagrams = {
           "Hamming perspective"
         ],
         "body": [
-          "誤りの位置・内容を最悪ケースで考える。距離と訂正能力を調べる。",
+          "誤りの位置・内容を最悪ケースで考える．距離と訂正能力を調べる．",
           "Allow worst-case error locations and values. Study distance and error correction."
         ]
       }
@@ -531,7 +531,7 @@ export const diagrams = {
       "Unique versus list decoding: what must be returned?"
     ],
     "note": [
-      "概念図。候補リストを許すだけで任意の誤りを訂正できるわけではない。許容距離とリストサイズの条件が必要。FRIの検証者が毎回復号を実行するという意味でもない。",
+      "概念図．候補リストを許すだけで任意の誤りを訂正できるわけではない．許容距離とリストサイズの条件が必要．FRIの検証者が毎回復号を実行するという意味でもない．",
       "Conceptual comparison. Allowing a list does not correct arbitrary corruption: radius and list-size conditions are required. FRI verification does not run a decoder at every query."
     ],
     "top": [
@@ -545,7 +545,7 @@ export const diagrams = {
           "Unique decoding"
         ],
         "body": [
-          "保証される半径内で，元の符号語を一つに定める。",
+          "保証される半径内で，元の符号語を一つに定める．",
           "Within the guaranteed radius, identify one codeword."
         ]
       },
@@ -555,7 +555,7 @@ export const diagrams = {
           "List decoding"
         ],
         "body": [
-          "指定半径内の候補を，サイズを制限したリストとして返す。",
+          "指定半径内の候補を，サイズを制限したリストとして返す．",
           "Return a bounded list of codewords within a specified radius."
         ]
       }
@@ -569,7 +569,7 @@ export const diagrams = {
       "FRI: halve the degree bound at each step"
     ],
     "note": [
-      "乗法的FRIの模式図。各段階で表を固定してから新しいチャレンジを得る。近接性と折り畳みの一貫性を検査するのであって，表を半分捨てるだけではない。",
+      "乗法的FRIの模式図．各段階で表を固定してから新しいチャレンジを得る．近接性と折り畳みの一貫性を検査するのであって，表を半分捨てるだけではない．",
       "Schematic multiplicative FRI. Fix each table before receiving its new challenge. Check proximity and folding consistency; this is not simply discarding half a table."
     ],
     "nodes": [
@@ -613,7 +613,7 @@ export const diagrams = {
       "Repetition count and soundness error"
     ],
     "note": [
-      "各試行で誤受理確率≤1/2，かつ適切な独立性・繰り返し定理の条件を満たし，全試行の受理を要求する例。一般の対話プロトコルに無条件でこの曲線を適用できない。",
+      "各試行で誤受理確率≤1/2，かつ適切な独立性・繰り返し定理の条件を満たし，全試行の受理を要求する例．一般の対話プロトコルに無条件でこの曲線を適用できない．",
       "Example where each false-acceptance probability is ≤1/2, the necessary independence/repetition conditions hold, and all trials must accept. This bound does not apply unconditionally to arbitrary interactive protocols."
     ],
     "max": 100,
@@ -648,7 +648,7 @@ export const diagrams = {
       "Rewinding: change the challenge from the same state"
     ],
     "note": [
-      "安全性証明内で敵対者を再実行する技法。現実の相手を時間的に巻き戻す操作ではない。Forking lemmaではランダムオラクルへの応答を変える条件も扱う。",
+      "安全性証明内で敵対者を再実行する技法．現実の相手を時間的に巻き戻す操作ではない．Forking lemmaではランダムオラクルへの応答を変える条件も扱う．",
       "A technique for rerunning an adversary inside a security proof, not literally rewinding a remote party. Forking lemmas also address conditions for changing random-oracle answers."
     ],
     "top": [
@@ -690,7 +690,7 @@ export const diagrams = {
       "An elliptic curve over a finite field is a discrete set"
     ],
     "note": [
-      "F₁₇上のy²=x³+2x+2を満たす18個の有限点。これに無限遠点Oを加えて群を作る。実数上の滑らかな曲線とは異なり，点を結んでいない。この小さな曲線は学習用で，暗号用途ではない。",
+      "F₁₇上のy²=x³+2x+2を満たす18個の有限点．これに無限遠点Oを加えて群を作る．実数上の滑らかな曲線とは異なり，点を結んでいない．この小さな曲線は学習用で，暗号用途ではない．",
       "The 18 affine points of y²=x³+2x+2 over F₁₇. Add the point at infinity O to obtain the group. Unlike a smooth real curve, the points are not joined. This tiny curve is educational, not cryptographically secure."
     ],
     "maxX": 16,
@@ -710,7 +710,7 @@ export const diagrams = {
       16
     ],
     "alt": [
-      "法17で楕円曲線の方程式を満たす18点の散布図。座標の一覧も下に示す。",
+      "法17で楕円曲線の方程式を満たす18点の散布図．座標の一覧も下に示す．",
       "Scatterplot of 18 points satisfying the elliptic-curve equation modulo 17, with coordinates listed below."
     ],
     "series": [
@@ -801,7 +801,7 @@ export const diagrams = {
       "Pairings expose a product in the exponent"
     ],
     "note": [
-      "G₁とG₂は加法表記，G_Tは乗法表記。aやbを復元する図ではなく，群で符号化された値の関係を検証する能力を示す。",
+      "G₁とG₂は加法表記，G_Tは乗法表記．aやbを復元する図ではなく，群で符号化された値の関係を検証する能力を示す．",
       "G₁ and G₂ use additive notation; G_T uses multiplicative notation. This does not recover a or b: it enables checking relations between encoded values."
     ],
     "nodes": [
@@ -845,7 +845,7 @@ export const diagrams = {
       "A reduction turns an attacker into a solver"
     ],
     "note": [
-      "安全性は仮定・モデル・還元の損失とともに読む。DL，q-SDH，KEAを一列の単純な強弱ランキングにする図ではない。",
+      "安全性は仮定・モデル・還元の損失とともに読む．DL，q-SDH，KEAを一列の単純な強弱ランキングにする図ではない．",
       "Read security together with its assumption, model and reduction loss. DL, q-SDH and KEA are not a simple linear ranking."
     ],
     "nodes": [
@@ -889,7 +889,7 @@ export const diagrams = {
       "Binding and hiding are separate requirements"
     ],
     "note": [
-      "拘束性を示しただけでは隠蔽性は得られない。多項式コミットメントでは，さらに点での評価の正しさを検証する機能を考える。",
+      "拘束性を示しただけでは隠蔽性は得られない．多項式コミットメントでは，さらに点での評価の正しさを検証する機能を考える．",
       "Binding does not imply hiding. Polynomial commitments additionally support verification of evaluations at chosen points."
     ],
     "nodes": [
@@ -899,7 +899,7 @@ export const diagrams = {
           "Binding: constrain the sender"
         ],
         "body": [
-          "同じコミットメントを，別の値にすり替えて開示できない。",
+          "同じコミットメントを，別の値にすり替えて開示できない．",
           "The same commitment cannot be opened inconsistently to a different value."
         ]
       },
@@ -909,7 +909,7 @@ export const diagrams = {
           "Hiding: limit the receiver"
         ],
         "body": [
-          "コミットメントから，隠された値を識別できない。",
+          "コミットメントから，隠された値を識別できない．",
           "The commitment does not reveal which hidden value was committed."
         ]
       }
@@ -923,7 +923,7 @@ export const diagrams = {
       "KZG: check divisibility with a pairing"
     ],
     "note": [
-      "群を区別した表記。次数に対応するG₁のべきのSRSと，G₂のg₂・g₂^τを使う。基本形のKZGは隠蔽性を自動では与えない。",
+      "群を区別した表記．次数に対応するG₁のべきのSRSと，G₂のg₂・g₂^τを使う．基本形のKZGは隠蔽性を自動では与えない．",
       "Typed-group notation: use the required G₁ powers in the SRS and g₂, g₂^τ in G₂. Basic KZG does not automatically provide hiding."
     ],
     "nodes": [
@@ -967,11 +967,11 @@ export const diagrams = {
       "A Merkle tree authenticates membership in a table"
     ],
     "note": [
-      "四つの葉の模式図。順序を固定してハッシュする。低次数性はMerkle経路だけでは分からず，FRI等の検査が別に必要になる。",
+      "四つの葉の模式図．順序を固定してハッシュする．低次数性はMerkle経路だけでは分からず，FRI等の検査が別に必要になる．",
       "Schematic four-leaf tree with ordered hashing. A Merkle path alone does not prove low degree; that requires an additional test such as FRI."
     ],
     "alt": [
-      "四つの値のハッシュを二つずつ結合し，最後にrootへ結合する二分木。",
+      "四つの値のハッシュを二つずつ結合し，最後にrootへ結合する二分木．",
       "A binary tree combining hashes of four values in pairs, then into a root."
     ],
     "bottom": [
@@ -987,7 +987,7 @@ export const diagrams = {
       "Fiat–Shamir changes where challenges come from"
     ],
     "note": [
-      "概念図。実装では公開入力・プロトコル識別子・それまでの記録などを曖昧さなく符号化する。ハッシュの一方向性だけで変換の安全性が証明されるわけではない。",
+      "概念図．実装では公開入力・プロトコル識別子・それまでの記録などを曖昧さなく符号化する．ハッシュの一方向性だけで変換の安全性が証明されるわけではない．",
       "Conceptual diagram. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the hash alone does not establish security."
     ],
     "nodes": [
@@ -1021,7 +1021,7 @@ export const diagrams = {
       "Random oracle: fresh input, random answer; repeated input, same answer"
     ],
     "note": [
-      "小さな出力の説明例。実際の安全性解析では十分な出力長と問い合わせ回数を考える。異なる入力に同じ出力が出る可能性もある。",
+      "小さな出力の説明例．実際の安全性解析では十分な出力長と問い合わせ回数を考える．異なる入力に同じ出力が出る可能性もある．",
       "Illustrative short outputs. Security analysis uses an appropriate output length and query bound. Different inputs can still receive the same answer."
     ],
     "headers": [
@@ -1080,7 +1080,7 @@ export const diagrams = {
       "Separate ideal-model proofs from implementation security"
     ],
     "note": [
-      "CGHの反例は，この置き換えをすべての構成について正当化できないことを示す。ここから，実用のFiat–Shamir構成がすべて破られるとはいえない。",
+      "CGHの反例は，この置き換えをすべての構成について正当化できないことを示す．ここから，実用のFiat–Shamir構成がすべて破られるとはいえない．",
       "The CGH counterexample rules out a universal justification of this replacement; it does not show that every practical Fiat–Shamir construction is broken."
     ],
     "nodes": [
@@ -1090,7 +1090,7 @@ export const diagrams = {
           "Claim in the ROM"
         ],
         "body": [
-          "Hを理想的なランダムオラクルとして扱い，安全性を証明する。",
+          "Hを理想的なランダムオラクルとして扱い，安全性を証明する．",
           "Prove security while treating H as an ideal random oracle."
         ]
       },
@@ -1100,7 +1100,7 @@ export const diagrams = {
           "Concrete implementation"
         ],
         "body": [
-          "SHA-256等の具体的な関数を使う。プロトコルと実装の条件を評価する。",
+          "SHA-256等の具体的な関数を使う．プロトコルと実装の条件を評価する．",
           "Use a concrete function such as SHA-256 and assess protocol and implementation conditions."
         ]
       }
@@ -1118,7 +1118,7 @@ export const diagrams = {
       "PCP, IP and IOP: separate access from interaction"
     ],
     "note": [
-      "問い合わせの少なさとゼロ知識性は別の性質。オラクルは固定されたデータへの問い合わせを表す理論的なアクセスモデル。",
+      "問い合わせの少なさとゼロ知識性は別の性質．オラクルは固定されたデータへの問い合わせを表す理論的なアクセスモデル．",
       "Few queries and zero-knowledge are different properties. An oracle represents a theoretical access model to fixed data."
     ],
     "headers": [
@@ -1179,7 +1179,7 @@ export const diagrams = {
       "From PCPs to a gap optimization problem"
     ],
     "note": [
-      "近似困難性への概念的な対応。具体的なギャップや近似率は帰着と定理に依存する。多項式時間で解けないという結論にはP≠NP等の条件が伴う。",
+      "近似困難性への概念的な対応．具体的なギャップや近似率は帰着と定理に依存する．多項式時間で解けないという結論にはP≠NP等の条件が伴う．",
       "Conceptual connection to hardness of approximation. Concrete gaps and approximation ratios depend on the reduction and theorem; impossibility conclusions are conditional on assumptions such as P≠NP."
     ],
     "top": [
@@ -1193,7 +1193,7 @@ export const diagrams = {
           "YES case"
         ],
         "body": [
-          "正しい主張には，多くの検査を満たす証明がある。",
+          "正しい主張には，多くの検査を満たす証明がある．",
           "A true instance has a proof satisfying many tests."
         ]
       },
@@ -1203,7 +1203,7 @@ export const diagrams = {
           "NO case"
         ],
         "body": [
-          "誤った主張では，どの証明にも一定割合の失敗が残る。",
+          "誤った主張では，どの証明にも一定割合の失敗が残る．",
           "For a false instance, every proof fails a nontrivial fraction of tests."
         ]
       }
@@ -1221,7 +1221,7 @@ export const diagrams = {
       "From abstract checks to a non-interactive cryptographic protocol"
     ],
     "note": [
-      "代表的な公開コインIOP／多項式IOPの構成図。各段階の安全性条件が必要。Groth16をこの変換列そのものとして扱わない（第11回）。",
+      "代表的な公開コインIOP／多項式IOPの構成図．各段階の安全性条件が必要．Groth16をこの変換列そのものとして扱わない（第11回）．",
       "A representative public-coin IOP / polynomial-IOP construction. Each stage needs security conditions. Groth16 does not follow this exact compilation path (Session 11)."
     ],
     "nodes": [
@@ -1275,7 +1275,7 @@ export const diagrams = {
       "Move the QAP product into a target-group relation"
     ],
     "note": [
-      "発想を示す模式図。この式だけではGroth16の健全性もゼロ知識性も得られない。実際の構成は回路固有の鍵・追加項・乱数化を使う。",
+      "発想を示す模式図．この式だけではGroth16の健全性もゼロ知識性も得られない．実際の構成は回路固有の鍵・追加項・乱数化を使う．",
       "Conceptual sketch only. This relation alone gives neither Groth16 soundness nor zero-knowledge; the construction also needs circuit-specific keys, additional terms and randomization."
     ],
     "nodes": [
@@ -1319,7 +1319,7 @@ export const diagrams = {
       "Roles of the terms in Groth16 verification"
     ],
     "note": [
-      "検証式は e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂)。A,B,Cは証明の群要素であり，QAP多項式と区別する。ペアリング回数は定数でも，公開入力の処理は残る。",
+      "検証式は e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂)．A,B,Cは証明の群要素であり，QAP多項式と区別する．ペアリング回数は定数でも，公開入力の処理は残る．",
       "Verification: e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂). Here A,B,C are proof group elements, distinct from QAP polynomials. Constant pairing count does not remove public-input processing."
     ],
     "headers": [
@@ -1371,7 +1371,7 @@ export const diagrams = {
       "Circuit-specific keys and secrets that must not remain"
     ],
     "note": [
-      "秘密のトラップドアはτだけではない。MPCでは所定の正直性・消去条件を必要とする。共有できる準備段階があっても，Groth16の回路固有の段階は残る。",
+      "秘密のトラップドアはτだけではない．MPCでは所定の正直性・消去条件を必要とする．共有できる準備段階があっても，Groth16の回路固有の段階は残る．",
       "The toxic waste includes more than τ. MPC requires the stated honesty and erasure conditions. Reusable preparation does not remove Groth16’s circuit-specific phase."
     ],
     "nodes": [
@@ -1391,7 +1391,7 @@ export const diagrams = {
           "Publish versus erase"
         ],
         "body": [
-          "証明鍵・検証鍵を残す。秘密のトラップドアを消去する。",
+          "証明鍵・検証鍵を残す．秘密のトラップドアを消去する．",
           "Keep proving and verification keys. Erase the secret trapdoors."
         ]
       },
@@ -1415,7 +1415,7 @@ export const diagrams = {
       "Selectors choose the operation on the same columns"
     ],
     "note": [
-      "公開入力項を0とした基本ゲートの例。各行で条件を満たすのであり，多項式が体の全点で0という意味ではない。公開入力やコピー制約は別途組み込む。",
+      "公開入力項を0とした基本ゲートの例．各行で条件を満たすのであり，多項式が体の全点で0という意味ではない．公開入力やコピー制約は別途組み込む．",
       "Basic-gate examples with the public-input term set to zero. The relation holds on gate rows, not necessarily at every field point. Public inputs and copy constraints must also be incorporated."
     ],
     "headers": [
@@ -1468,7 +1468,7 @@ export const diagrams = {
       "Copy constraints must bind specific positions"
     ],
     "note": [
-      "三つの位置を同じ変数に割り当てる例。値だけの多重集合は並べ替えても変わらないため，位置ラベルと回路で固定された置換を使う。",
+      "三つの位置を同じ変数に割り当てる例．値だけの多重集合は並べ替えても変わらないため，位置ラベルと回路で固定された置換を使う．",
       "Example with three positions assigned to one variable. Values alone form the same multiset after any permutation; position labels and a circuit-fixed permutation are essential."
     ],
     "nodes": [
@@ -1512,7 +1512,7 @@ export const diagrams = {
       "Shared SRS versus circuit-specific information"
     ],
     "note": [
-      "汎用性には次数等の上限がある。KZG型PLONKではトラステッドセットアップとFiat–Shamirの両方を使う。カスタムゲートの効率は次数・列数等も含めて評価する。",
+      "汎用性には次数等の上限がある．KZG型PLONKではトラステッドセットアップとFiat–Shamirの両方を使う．カスタムゲートの効率は次数・列数等も含めて評価する．",
       "Universality is bounded, for example by degree. KZG-based PLONK uses both trusted setup and Fiat–Shamir. Custom-gate efficiency also depends on degree and column count."
     ],
     "top": [
@@ -1554,7 +1554,7 @@ export const diagrams = {
       "Transparency and the guarantees of each component"
     ],
     "note": [
-      "AIR・FRI型STARKの代表例。透明性だけからAIRやFRIが唯一の選択として決まるわけではない。",
+      "AIR・FRI型STARKの代表例．透明性だけからAIRやFRIが唯一の選択として決まるわけではない．",
       "Representative AIR/FRI-based STARK. Transparency alone does not uniquely require AIR or FRI."
     ],
     "nodes": [
@@ -1564,7 +1564,7 @@ export const diagrams = {
           "Merkle tree"
         ],
         "body": [
-          "開示値を，先に固定した表に結び付ける。",
+          "開示値を，先に固定した表に結び付ける．",
           "Tie opened values to a previously fixed table."
         ]
       },
@@ -1574,7 +1574,7 @@ export const diagrams = {
           "FRI"
         ],
         "body": [
-          "表が低次数多項式の評価に近いことを検査する。",
+          "表が低次数多項式の評価に近いことを検査する．",
           "Test proximity to evaluations of a low-degree polynomial."
         ]
       }
@@ -1592,7 +1592,7 @@ export const diagrams = {
       "STARK: commit before deriving challenges"
     ],
     "note": [
-      "非対話型構成の概略。問い合わせは必要なコミットメントが固定された後に決める。ゼロ知識性には別途マスキング等が必要。",
+      "非対話型構成の概略．問い合わせは必要なコミットメントが固定された後に決める．ゼロ知識性には別途マスキング等が必要．",
       "Non-interactive construction outline. Choose queries only after the required commitments are fixed. Zero-knowledge additionally requires masking or other suitable measures."
     ],
     "nodes": [
@@ -1646,7 +1646,7 @@ export const diagrams = {
       "Compare proof sizes using consistent accounting"
     ],
     "note": [
-      "模式的な比較であり，実測値や速度ランキングではない。固定した安全性パラメータを前提とし，公開入力の処理コストを別途数える。",
+      "模式的な比較であり，実測値や速度ランキングではない．固定した安全性パラメータを前提とし，公開入力の処理コストを別途数える．",
       "Schematic comparison, not measurements or a speed ranking. Fix security parameters and account separately for public-input processing."
     ],
     "headers": [
@@ -1699,7 +1699,7 @@ export const diagrams = {
           "Evaluations, FRI and Merkle authentication paths"
         ],
         [
-          "透明なセットアップ。全通信量を数える",
+          "透明なセットアップ．全通信量を数える",
           "Transparent setup; count total communication"
         ]
       ]
@@ -1713,7 +1713,7 @@ export const diagrams = {
       "Read security through four questions"
     ],
     "note": [
-      "いずれの方式でも，各性質を成立させる構成と仮定を個別に確認する。一つの性質だけでは他の性質を示したことにならない。",
+      "いずれの方式でも，各性質を成立させる構成と仮定を個別に確認する．一つの性質だけでは他の性質を示したことにならない．",
       "For every construction, check the mechanisms and assumptions for each property separately. Establishing one property does not establish the others."
     ],
     "headers": [
@@ -1777,7 +1777,7 @@ export const diagrams = {
       "Shared tools, different constructions"
     ],
     "note": [
-      "Groth16をKZGの応用やFiat–Shamirの変換結果として分類しない。表は本講義で扱った代表構成についてのもの。",
+      "Groth16をKZGの応用やFiat–Shamirの変換結果として分類しない．表は本講義で扱った代表構成についてのもの．",
       "Do not classify Groth16 as a KZG application or a Fiat–Shamir compilation. The table describes the representative constructions taught here."
     ],
     "headers": [
@@ -1833,7 +1833,7 @@ export const diagrams = {
       "Fix evaluation conditions before choosing a system"
     ],
     "note": [
-      "選択肢は一律に順位付けできない。同じ計算・安全性条件で，全体のコストを比較する。",
+      "選択肢は一律に順位付けできない．同じ計算・安全性条件で，全体のコストを比較する．",
       "There is no universal ranking. Compare end-to-end costs for the same computation and security conditions."
     ],
     "nodes": [
@@ -1843,7 +1843,7 @@ export const diagrams = {
           "Set requirements"
         ],
         "body": [
-          "秘密のセットアップは許容できるか。どの安全性が必要か。",
+          "秘密のセットアップは許容できるか．どの安全性が必要か．",
           "Is a secret setup acceptable? Which security properties are required?"
         ]
       },
@@ -1853,7 +1853,7 @@ export const diagrams = {
           "Identify constraints"
         ],
         "body": [
-          "生成時間・検証時間・通信量・メモリのどれが限界か。",
+          "生成時間・検証時間・通信量・メモリのどれが限界か．",
           "Which of proving time, verification time, communication or memory is limiting?"
         ]
       },
@@ -1863,7 +1863,7 @@ export const diagrams = {
           "Measure under matched conditions"
         ],
         "body": [
-          "回路・ハードウェア・公開入力・安全性パラメータを揃える。",
+          "回路・ハードウェア・公開入力・安全性パラメータを揃える．",
           "Match circuit, hardware, public inputs and security parameters."
         ]
       },
@@ -1873,7 +1873,7 @@ export const diagrams = {
           "Choose with evidence"
         ],
         "body": [
-          "何を改善し，何を引き受けたかを説明する。",
+          "何を改善し，何を引き受けたかを説明する．",
           "Explain the improvement and the costs or assumptions accepted."
         ]
       }
@@ -1887,7 +1887,7 @@ export const diagrams = {
       "Recursion: include verification of the previous proof in the next computation"
     ],
     "note": [
-      "各時点までの有限の履歴を扱う模式図。公開状態とステップの連鎖を正しく結び付ける必要がある。検証回路の効率は群や体の選択にも依存する。",
+      "各時点までの有限の履歴を扱う模式図．公開状態とステップの連鎖を正しく結び付ける必要がある．検証回路の効率は群や体の選択にも依存する．",
       "Schematic for a finite history up to each step. Bind the public state and step linkage correctly. Verifier-circuit efficiency also depends on group and field choices."
     ],
     "nodes": [
@@ -1931,7 +1931,7 @@ export const diagrams = {
       "Separate the roles of folding, IVC and compression"
     ],
     "note": [
-      "Novaを念頭に置いた概念図。foldingだけで簡潔なゼロ知識証明が完成するわけではない。FRIの次数縮小とは対象も安全性の議論も異なる。",
+      "Novaを念頭に置いた概念図．foldingだけで簡潔なゼロ知識証明が完成するわけではない．FRIの次数縮小とは対象も安全性の議論も異なる．",
       "Conceptual view motivated by Nova. Folding alone is not a succinct zero-knowledge proof. Its objects and security arguments differ from FRI degree reduction."
     ],
     "nodes": [
@@ -1975,7 +1975,7 @@ export const diagrams = {
       "Sumcheck: reduce a sum claim to checking one evaluation"
     ],
     "note": [
-      "各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ。最後の評価の確認は省けない。GKRでは層ごとの主張の縮約にこの考え方を使う。",
+      "各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ．最後の評価の確認は省けない．GKRでは層ごとの主張の縮約にこの考え方を使う．",
       "Check degree bounds and sum consistency each round, choosing the challenge after the message. The final evaluation check is essential. GKR uses such reductions between layers."
     ],
     "nodes": [
@@ -2029,7 +2029,7 @@ export const diagrams = {
       "Ethereum: distinguish L2 proofs from L1 execution proofs"
     ],
     "note": [
-      "本文の2026年9月27日時点の整理を図解。EIP-8025のDraft提案では証明は任意の補助チェックで，再実行を継続する。メインネットでの有効化を示す図ではない。",
+      "本文の2026年9月27日時点の整理を図解．EIP-8025のDraft提案では証明は任意の補助チェックで，再実行を継続する．メインネットでの有効化を示す図ではない．",
       "Visual summary of the lecture’s September 27, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation."
     ],
     "nodes": [
@@ -2049,7 +2049,7 @@ export const diagrams = {
           "L1 execution proof"
         ],
         "body": [
-          "Ethereum本体のブロック実行が対象。EIP-8025は任意の証明の配布・検証を提案。",
+          "Ethereum本体のブロック実行が対象．EIP-8025は任意の証明の配布・検証を提案．",
           "Targets Ethereum block execution itself. EIP-8025 proposes distribution and verification of optional proofs."
         ]
       }

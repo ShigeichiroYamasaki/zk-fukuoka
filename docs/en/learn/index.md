@@ -38,7 +38,7 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 
 [Read the Session 1 lecture manuscript →](./session-01)
 
-- Limits of the NP verifier paradigm: question the implicit assumptions of revealing the entire witness and reading it only once.
+- Limits of the NP verifier paradigm: distinguish access to a witness from interaction and privacy. The definition does not require reading every bit or making only one pass.
 - Complexity-theoretic motivation: present Arthur–Merlin games and the IP = PSPACE theorem as results.
 - Cryptographic motivation: the problem setting of Goldwasser–Micali–Rackoff (1985), with password authentication and graph isomorphism as concrete examples.
 - Emphasize how these two motivations converge on the same framework of interactive proof systems.
@@ -51,13 +51,13 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 - Define zero-knowledge formally through the simulator paradigm and introduce the hierarchy of indistinguishability notions.
 - Introduce knowledge soundness and extractors.
 - Examine the qualitative difference between simple witnesses (algebraic relations such as discrete logarithms) and general NP relations (arbitrary computations).
-- Confirm how Schnorr-type protocols rely directly on the homomorphic structure of groups → general computations lack directly usable algebraic structure → motivate the need for arithmetization.
-- Map expressiveness (generality of witnesses) against efficiency (interaction and succinctness), and discuss why succinctness becomes an essential requirement.
+- Confirm how Schnorr-type protocols rely directly on the homomorphic structure of groups → general computations need not come with the algebraic structure used by Schnorr → motivate the need for arithmetization.
+- Map expressiveness (generality of witnesses) against efficiency (interaction and succinctness), and discuss why succinctness is a goal for delegated computation.
 
-| | Interactive, non-succinct | Non-interactive, succinct |
-| --- | --- | --- |
-| **Algebraic relations (simple witnesses)** | Schnorr, Chaum–Pedersen | Σ-protocol + Fiat–Shamir (succinctness is not yet achieved) |
-| **General NP relations (arbitrary computations)** | GMR-style general ZK (theoretical constructions) | Groth16 / PLONK / STARK |
+| Relation | Interactive examples | Non-interactive examples | Reading succinctness |
+| --- | --- | --- | --- |
+| Algebraic relations | Schnorr, Chaum–Pedersen | Fiat–Shamir applied to suitable Sigma protocols | These relations admit short proofs; Fiat–Shamir itself is not proof compression |
+| General NP relations | Interactive ZK constructions for general NP | Groth16 / PLONK / STARK | Assess proof size and verification cost relative to computation size separately from non-interactivity |
 
 ---
 
@@ -99,7 +99,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 [Read the Session 7 lecture manuscript →](./session-07)
 
 - Define elliptic curve groups, bilinear pairings $e: G_1 \times G_2 \to G_T$, and pairing-friendly curves (BN254, BLS12-381).
-- **Cryptographic perspective:** The hierarchy of hardness assumptions such as discrete logarithm and q-SDH; the idea of reductions. What the distinction between standard and non-standard assumptions means.
+- **Cryptographic perspective:** The types and relationships of hardness assumptions such as discrete logarithm and q-SDH; the idea of reductions. What the distinction between standard and non-standard assumptions means.
 
 ### Session 8: Polynomial commitments and the theory of cryptographic commitments {#session-8}
 
@@ -145,7 +145,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 [Read the Session 13 lecture manuscript →](./session-13)
 
-- How the design goal of eliminating trusted setup motivates FRI and AIR.
+- A representative transparent construction combining AIR, FRI and Merkle trees; transparency does not uniquely require this combination.
 - Trade-offs associated with transparency.
 
 ### Session 14: An integrated perspective — moving between Acts I–III {#session-14}
