@@ -58,7 +58,7 @@ export const lessons = [
     "number": 10,
     "ja": "PCP定理とIOPの枠組み — 計算量理論的総括",
     "en": "The PCP theorem and the IOP framework — a complexity-theoretic synthesis",
-    "material": null
+    "material": "learn/session-10.html"
   },
   {
     "number": 11,

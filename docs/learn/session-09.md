@@ -4,8 +4,8 @@ prev:
   text: 第8回 · 多項式コミットメントと暗号学的コミットメントの理論
   link: /learn/session-08
 next:
-  text: 第10回 · PCP定理とIOPの枠組み（シラバス）
-  link: /learn/#session-10
+  text: 第10回 · PCP定理とIOPの枠組み
+  link: /learn/session-10
 ---
 
 # 第9回:Fiat-Shamir変換とROMの功罪

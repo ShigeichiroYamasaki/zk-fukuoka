@@ -19,6 +19,7 @@ const sidebar = (en: boolean) => {
         { text: en ? "Session 7 · Elliptic curves and pairings" : "第7回 · 楕円曲線とペアリング", link: p + "learn/session-07" },
         { text: en ? "Session 8 · Polynomial commitments" : "第8回 · 多項式コミットメント", link: p + "learn/session-08" },
         { text: en ? "Session 9 · Fiat–Shamir and ROM" : "第9回 · Fiat-Shamir変換とROMの功罪", link: p + "learn/session-09" },
+        { text: en ? "Session 10 · PCP and IOP" : "第10回 · PCP定理とIOPの枠組み", link: p + "learn/session-10" },
         {
           text: en ? "Supplement · Finite fields" : "補助教材 · 有限体",
           link: p + "learn/foundations",

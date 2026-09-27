@@ -4,8 +4,8 @@ prev:
   text: Session 8 · Polynomial commitments and cryptographic commitment theory
   link: /en/learn/session-08
 next:
-  text: Session 10 · The PCP theorem and the IOP framework (syllabus)
-  link: /en/learn/#session-10
+  text: Session 10 · The PCP theorem and the IOP framework
+  link: /en/learn/session-10
 ---
 
 # Session 9: The Fiat–Shamir transform and the merits and limits of ROM

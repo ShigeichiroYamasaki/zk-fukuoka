@@ -111,6 +111,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 - **Cryptographic perspective:** Security proofs in the Random Oracle Model and their limitations, including critiques of the ROM heuristic and the existence of counterexamples.
 
 ### Session 10: The PCP theorem and the IOP framework — a complexity-theoretic synthesis {#session-10}
+
+[Read the Session 10 lecture manuscript →](./session-10)
+
 - State the PCP theorem and its significance (use the result without following its proof).
 - Develop a unified understanding through IOPs (Interactive Oracle Proofs).
 - **Complexity-theoretic perspective:** Connect to hardness-of-approximation research and explain why the PCP theorem is independently important in complexity theory.
@@ -144,4 +147,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–9 are available; materials for Sessions 10–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–10 are available; materials for Sessions 11–15 will be developed later.

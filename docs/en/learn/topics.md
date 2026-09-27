@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–9 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–10 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -42,8 +42,8 @@ Find relevant sessions by topic across the three acts. Sessions 1–9 link to th
 | Topic | Related sessions |
 | --- | --- |
 | Cook–Levin, Circuit-SAT, NC, P | [Session 4](./session-04) |
-| The PCP theorem and hardness of approximation | [Session 10](./#session-10) |
-| IOPs and probabilistic checking | [Session 3](./session-03) / [Session 10](./#session-10) |
+| The PCP theorem and hardness of approximation | [Session 10](./session-10) |
+| IOPs and probabilistic checking | [Session 3](./session-03) / [Session 10](./session-10) |
 | Mapping complexity-theoretic results to protocols | [Session 14](./#session-14) |
 
 ## Error-correcting codes & information theory {#coding}
