@@ -10,21 +10,21 @@ next:
 
 # Session 1: What is a proof? — Background and formalization of interactive proofs
 
-::: info Lecture manuscript
-An English translation of the supplied Japanese manuscript for Session 1.
-:::
+**Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
+Created: September 24, 2026<br>
+Last updated: September 27, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1)
 
 ## Context and learning objectives
 
-This lecture is the starting point for a 15-session course on zk-SNARKs and zk-STARKs. Today's three objectives are:
+Over 15 sessions, this course explores zk-SNARKs and zk-STARKs. The first question is what we want these technologies to achieve. Before assembling the mathematics needed to understand their mechanisms, let us establish why those mechanisms are needed. Today's three objectives are:
 
 1. Make explicit the implicit assumptions behind the classical concept of a proof—the NP verifier paradigm—and question them.
 2. Understand how removing those assumptions leads to interactive proofs, independently motivated by two different contexts: complexity theory and cryptography.
 3. Take the first steps toward a mathematical definition of interactive proofs: completeness, soundness, and the distinction between proofs and arguments.
 
-The definition of zero-knowledge itself comes in the next session, Session 2. Today we establish the preceding foundation: why interaction is needed.
+We define zero-knowledge in the next session. Before that, we reconsider checking correctness as a computational procedure. In particular, what changes if the verifier can ask the prover questions?
 
 ---
 
@@ -32,25 +32,33 @@ The definition of zero-knowledge itself comes in the next session, Session 2. To
 
 ### 1.1 The NP verifier paradigm
 
-A language $L \in \mathrm{NP}$ is one for which there exists a polynomial-time verification algorithm $V$ satisfying
+First, consider how to check whether a claim is true. Even when checking the claim directly is difficult, information supporting it may allow us to check it efficiently. We call this information a witness.
+
+The verifier definition of NP formalizes this idea. A language $L \in \mathrm{NP}$ is one for which there exists a polynomial-time verification algorithm $V$ satisfying
 
 $$x \in L \iff \exists w,\ |w| \le \mathrm{poly}(|x|),\ V(x, w) = 1$$
 
-Here, $w$ is called a witness. In this framework, a proof consists of presenting the witness $w$ itself and having the verifier check it using a deterministic polynomial-time algorithm: a single exchange.
+Here, $x$ is the input describing the problem, $w$ is the witness, and $V(x,w)=1$ means that the verifier accepts. The witness length is bounded by a polynomial in the input length.
 
-**Let us identify two assumptions implicit in this paradigm:**
+Read this statement in both directions. If the claim is true, there is a witness that the verifier accepts. Conversely, if the claim is false, no witness meeting the length bound is accepted.
+
+Using this definition directly as a proving procedure means giving the witness to the verifier for inspection. Notice the choice this procedure makes about how information is communicated.
+
+**Let us identify two assumptions in this way of verifying:**
 
 - **Assumption A (full disclosure):** The prover reveals the entire witness $w$ to the verifier.
 - **Assumption B (non-interaction and one-way communication):** Verification is completed in a single reading, with no questions from the verifier to the prover.
 
-At first, both assumptions may seem obvious. Yet questioning each one is where the story of this course begins.
+Here, “a single reading” means inspecting a received witness without sending questions back. The definition of NP neither requires every bit to be read nor limits the verifier to one pass.
+
+Giving the witness allows verification, but is giving it necessary? Is there a reason the verifier should not ask questions? Separating the goal of checking correctness from the chosen method lets us question these two assumptions.
 
 ### 1.2 Asking the questions
 
 - Questioning Assumption A: “Can we convince someone that $x \in L$ without revealing the entire witness?” This foreshadows **zero-knowledge**, which we discuss next time.
 - Questioning Assumption B: “If the verifier and prover exchange messages repeatedly rather than relying on a single reading, does the power of proofs—the class of languages that can be verified—change?” This is today's topic.
 
-These questions appear independent, but later converge on the same mathematical framework: interactive proof systems. Today we first trace the question behind Assumption B through two different origins.
+One question concerns what information to give the verifier. The other concerns which exchanges to allow. They are different questions, but interactive proof systems provide a common framework for addressing them. We first examine the motivations for interaction from the perspectives of complexity theory and cryptography.
 
 ---
 
@@ -58,25 +66,29 @@ These questions appear independent, but later converge on the same mathematical 
 
 ### 2.1 Arthur–Merlin games
 
-In 1985, Babai proposed an interactive game in which the verifier can use randomness. The setting is a conversation between Merlin, an all-powerful but untrustworthy prover, and Arthur, a computationally limited verifier who can use randomness.
+In 1985, Babai proposed interactive games in which the verifier uses randomness. The prover, Merlin, has no computational restriction; the verifier, Arthur, has limited computational resources.
 
-A natural first intuition is that allowing interaction might not expand the power of proofs—the class of verifiable languages—much beyond NP. After all, showing an entire witness at once and exchanging it through several rounds of interaction may not seem fundamentally different.
+Merlin's power does not make its answers trustworthy. Arthur must check Merlin's claims within its own computational budget. Randomness and interaction provide tools for doing so.
+
+At this point, one might ask how sending a witness in pieces differs from sending it all at once. The important feature is not merely increasing the number of transmissions. The verifier issues random questions, and the prover responds to them.
+
+Does allowing such exchanges change which claims can be verified? When comparing Arthur–Merlin public-coin models with general IP, conditions such as the number of rounds must be distinguished. The next result concerns IP with polynomially many rounds.
 
 ### 2.2 IP = PSPACE (presenting the result)
 
-That expectation was dramatically overturned. Work by Lund–Fortnow–Karloff–Nisan, followed by Shamir (1992), established
+The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result. We refer here to the 1992 paper.
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
 
-IP is the class of languages decidable through interactive proofs with a polynomial-time verifier; PSPACE is the class decidable using polynomial space. PSPACE contains NP ($\mathrm{NP} \subseteq \mathrm{PSPACE}$) and is believed to be strictly larger—a far broader class.
+IP is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. PSPACE is the class decidable using polynomial workspace. NP $\subseteq$ PSPACE holds, but NP and PSPACE have not been proved distinct. Keep that open question separate from the theorem IP = PSPACE.
 
-**The meaning of this result deserves emphasis:** Allowing interaction and randomness expands the power of proofs from NP to an astonishing extent. It is a remarkable result in complexity theory, demonstrating the strength of the dynamic paradigm of questioning through interaction compared with the static paradigm of writing out a complete proof.
+**The distinction to notice is between solving a problem yourself and checking correctness with another party's help.** A verifier running in polynomial time can, through interaction, handle all of PSPACE. The point is not to trust the powerful party, but to construct a procedure unlikely to accept even when that party makes a false claim.
 
-*(We will discuss the sumcheck protocol, a technique used in the proof, after assembling the polynomial tools in Act II. Today we focus only on the result and its significance.)*
+*(We discuss sumcheck, a technique used in the proof, after assembling the polynomial tools in Act II. Today, rather than following the proof, we establish what this result makes possible.)*
 
 ### 2.3 Summary of this motivation
 
-In complexity theory, interactive proofs were discovered as a tool for expanding verification power. Secrecy and trustworthiness are not the particular focus here; the question is how far interaction can increase the power to decide languages.
+From the perspective of complexity theory, the central question is how much a computationally limited verifier can check through interaction. Verification must work without trusting the prover, but this question alone does not require keeping a secret from the verifier. We next turn to cryptography, where the information communicated becomes an issue in its own right.
 
 ---
 
@@ -84,80 +96,94 @@ In complexity theory, interactive proofs were discovered as a tool for expanding
 
 ### 3.1 The Goldwasser–Micali–Rackoff problem setting (1985)
 
-In the same year, 1985, a second origin of interactive proofs emerged from an entirely different motivation. GMR posed a question along these lines:
+Also in 1985, Goldwasser, Micali, and Rackoff studied what knowledge is conveyed through a proof. The concern is not only which claims can be verified, but how much information must be given to another party for verification. With authentication applications in mind, we can pose the question as follows:
 
 > How can you convince someone that you know a secret without revealing it?
 
-This concern differs entirely from the complexity-theoretic aim of expanding the power of proofs. Here, the characters of prover and verifier are assigned **adversarial roles**:
+This question requires considering **the possibility that either the prover or the verifier departs from the intended procedure**.
 
 - The prover may be dishonest: they might pretend to know a secret they do not actually know.
 - The verifier may be curious: they might try to extract secret information from the proof process.
 
-Classical proof theory does not have this kind of adversarial perspective. A mathematical proof is judged correct or incorrect regardless of who reads it; the intentions of the prover or verifier are not the issue. GMR brought a cryptographic way of thinking to this setting.
+Interactive proofs in complexity theory already required protection against dishonest provers. Cryptography additionally considers whether a verifier might learn extra information from the exchange.
+
+“Being able to check that a claim is true” and “not needing to disclose a secret to do so” are different properties. “The claim is true” and “the prover knows its witness” must also be distinguished. Defining these separately, rather than treating them as one notion, is a task for the coming sessions.
 
 ### 3.2 Building intuition with examples
 
-**Example 1: Password authentication.** Rather than merely sending a password hash to a server, we want to prove knowledge of the password itself without revealing it.
+**Example 1: Password authentication.** What we want to check is that the other party knows a password. Receiving the password may enable that check, but it also gives the secret to the party performing the check. If sending the same hash value suffices for authentication, someone who obtains that value may be able to reuse it. Can we check knowledge without sending either the secret or a fixed value that substitutes for it? Here we examine the motivation; the requirements for an actual authentication scheme need separate consideration.
 
-**Example 2: Graph isomorphism.** Suppose the prover knows an isomorphism $\pi$ between two graphs $G_1, G_2$. How can the prover convince the verifier that $G_1 \cong G_2$ without revealing $\pi$?
+**Example 2: Graph isomorphism.** Suppose there are two graphs $G_1, G_2$, and the prover knows an isomorphism $\pi$. Given this mapping, the verifier could inspect the correspondence between vertices and edges to check isomorphism. But if the claim to be checked is $G_1 \cong G_2$, is handing over the mapping itself necessary? We want to consider ways to establish isomorphism through interaction.
 
-*(We will construct the concrete interactive protocol for graph isomorphism in detail next time, alongside the formal definition of zero-knowledge. Today it serves only as motivation: questions like this called for the framework of interactive proofs.)*
+*(We study the concrete procedure for graph isomorphism next time, together with the definition of zero-knowledge. Today, use it to distinguish giving someone a witness from having them check a claim.)*
 
 ### 3.3 Summary of this motivation
 
-In cryptography, interactive proofs were motivated as a tool for proving knowledge while protecting secret information. Adversarial participants take center stage; the origin is quite different from the complexity-theoretic motivation.
+From the cryptographic perspective, we want both to check a claim and to control what the other party learns in the process. This also requires a framework for describing exchanges between a prover and a verifier mathematically. Interactive proofs supply that framework, but interaction alone does not protect a secret.
 
 ---
 
 ## 4. The convergence of the two motivations
 
-It is noteworthy that in the same year, 1985, the separate fields of complexity theory and cryptography independently called for the same mathematical object: interactive proofs.
+We have now examined two motivations for interactive proofs. The 1985 work of Babai and GMR addresses exchanges between provers and verifiers from different starting questions. Placing their goals side by side makes the distinction clearer.
 
 - Complexity theory: “How far can interaction increase verification power?”
 - Cryptography: “How can we prove something without revealing a secret?”
 
-These two questions lead to a common formal framework: the **interactive proof system**. From here on, we develop this shared framework and construct interactive proofs that meet the cryptographic requirement of zero-knowledge.
+In both settings, the verifier receives messages from the prover, asks questions as needed, and finally decides whether to accept or reject. We define this shared procedure as an **interactive proof system**.
+
+First, we specify conditions for accepting true claims and rejecting false ones. Then we add the requirement of not giving the verifier extra information. This order helps us keep track of why each definition is needed.
 
 ---
 
 ## 5. A formal definition of interactive proof systems
 
-With these motivations in place, we now define interactive proof systems mathematically.
+Let us rewrite the preceding discussion as conditions a procedure must satisfy. Descriptions such as “convincing” or “hard to deceive” are insufficient for comparing schemes or proving security. We need to specify who accepts, under which circumstances, and with what probability.
 
 ### 5.1 Completeness and soundness
 
-An interactive proof system $(P, V)$ for a language $L$ is an interactive protocol between a prover $P$ with unrestricted computational power and a probabilistic polynomial-time verifier $V$, satisfying the following properties:
+For a language $L$, consider a pair $(P,V)$ consisting of prover $P$ and verifier $V$. The prover has unrestricted computational power, while the verifier runs in probabilistic polynomial time. We write $\langle P,V\rangle(x)=1$ when the verifier accepts as the outcome of their exchange.
 
-**Completeness:** If $x \in L$, the verifier $V$ accepts with overwhelming probability when interacting with the honest prover $P$.
+Here, we state the two conditions in a form where error probabilities are negligible. $\mathrm{negl}(|x|)$ denotes a function that eventually becomes smaller than every inverse polynomial as the input length grows. IP can also be defined starting with constant error probabilities, which appropriate repetition can reduce.
+
+**Completeness:** If the claim is true and the honest prover follows the procedure, the verifier accepts with high probability. For $x \in L$, we require
 
 $$x \in L \implies \Pr[\langle P, V \rangle(x) = 1] \ge 1 - \mathrm{negl}(|x|)$$
 
-**Soundness:** If $x \notin L$, the verifier $V$ rejects with overwhelming probability regardless of which dishonest prover $P^*$ it interacts with.
+**Soundness:** If the claim is false, the probability that the verifier accepts is negligible, however the dishonest prover responds. For $x \notin L$, we require
 
 $$x \notin L \implies \forall P^*,\ \Pr[\langle P^*, V \rangle(x) = 1] \le \mathrm{negl}(|x|)$$
 
-The universal quantification over every prover in the soundness definition is a major difference from classical NP verification, described as accepting whenever the witness is correct. Here, the possibility of a dishonest prover is addressed directly.
+Notice the universal quantification over all provers in the soundness condition. Examining only a party that follows the procedure honestly does not establish soundness. We must also consider a party that uses the preceding exchange to adapt its responses.
+
+The definition of NP already required that no witness be accepted for a false claim. Interactive proofs extend the object of this requirement from a fixed witness to a prover's strategy for responding throughout an exchange.
+
+A verifier that accepts everything could satisfy completeness alone. A verifier that rejects everything could satisfy soundness alone. A useful verification procedure must satisfy both.
 
 ### 5.2 Proof vs argument
 
-Two different strengths of this notion arise depending on how we restrict the computational power of $P^*$ in the soundness definition:
+Next, consider how much computational power to allow the dishonest prover $P^*$. Changing that condition changes what is guaranteed, even if both cases are described informally as “hard to deceive.”
 
 - **Interactive proof:** No restriction is placed on the computational power of $P^*$. Soundness in this setting is called **statistical soundness**. The class IP is defined in this sense.
 - **Interactive argument:** $P^*$ is restricted to polynomial-time algorithms. Soundness in this setting is called **computational soundness**.
 
-This distinction may appear minor, but it becomes crucial later in the course. **Many zk-SNARKs and zk-STARKs are, strictly speaking, arguments rather than proofs.** Their soundness may therefore not be guaranteed against an adversarial prover with unlimited computational power. Keep this in mind now as something we must check when reading each protocol in Act III.
+A proof requires soundness even without restricting the adversary's computational power. An argument requires soundness against adversaries that can compute efficiently. Cryptographic constructions typically measure the adversary's running time and success probability in terms of a security parameter.
+
+**The A in SNARK and STARK stands for Argument.** We may call them proofs in everyday discussion, but this distinction matters when reading their mathematical guarantees. When a scheme is described as secure, ask what the adversary is assumed unable to compute and under which assumptions the guarantee holds. We will use this perspective again when comparing protocols in Act III.
 
 ---
 
 ## Summary and next session
 
-Today we:
+Before studying proof mechanisms, today we considered what we want to check and what procedures we allow for that purpose. The three points to retain are:
 
 - Made explicit two implicit assumptions in the NP verifier paradigm: full disclosure and non-interaction.
 - Saw how interactive proofs were motivated independently by complexity theory (IP = PSPACE) and cryptography (GMR).
 - Introduced formal definitions of completeness and soundness and the distinction between proofs and arguments.
 
-In Session 2, we directly address the question behind Assumption A—full disclosure—which we deliberately left unexplored today. We introduce the formal definition of zero-knowledge through the simulator paradigm, then examine the qualitative significance of extending witnesses from simple algebraic objects, such as discrete logarithms, to general computations.
+These definitions alone do not establish that a witness remains secret. A procedure that simply hands over the witness can still satisfy completeness and soundness.
+
+Next time, we question the remaining Assumption A. How should we define not giving the verifier extra information? We introduce the simulator paradigm for that purpose. We also consider what changes when witnesses extend from algebraic relations, such as discrete logarithms, to general computations.
 
 ---
 
