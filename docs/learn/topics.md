@@ -97,4 +97,5 @@
 | 再帰的証明・recursive SNARKs | [第15回](./session-15) |
 | Folding schemes・Nova | [第15回](./session-15) |
 | GKR・sumcheck | [第15回](./session-15) |
+| EthereumのzkEVM・L1実行証明・EIP-8025 | [第15回の応用動向](./session-15#ethereum-zkevm) |
 | 表現力・効率性から見る研究の方向 | [第15回](./session-15) |

@@ -97,4 +97,5 @@ Find relevant sessions by topic across the three acts. All 15 sessions link to t
 | Recursive proofs and recursive SNARKs | [Session 15](./session-15) |
 | Folding schemes and Nova | [Session 15](./session-15) |
 | GKR and sumcheck | [Session 15](./session-15) |
+| Ethereum zkEVMs, L1 execution proofs, EIP-8025 | [Session 15 application directions](./session-15#ethereum-zkevm) |
 | Research directions through expressiveness and efficiency | [Session 15](./session-15) |

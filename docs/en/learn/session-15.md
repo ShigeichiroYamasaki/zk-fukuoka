@@ -114,6 +114,39 @@ Let us expand the matrix from Sessions 2 and 14 one final time. Act III has show
 
 This organization highlights a broader trend: **while early SNARK/STARK research emphasized minimizing verifier cost through succinctness, increasing attention is being directed toward minimizing prover cost**.
 
+### 4.1 An application perspective: Ethereum zkEVMs {#ethereum-zkevm}
+
+**A zkEVM proves correct EVM execution.** ZK rollups execute L2 transactions and verify their validity on Ethereum L1. **L1 zkEVM research**, in contrast, targets Ethereum's own block execution, aiming eventually to replace validators' re-execution burden with proof verification. These are distinct applications. Correct execution and cheaper verification are the goals here; the name zkEVM does not by itself imply transaction privacy. See Ethereum's [L1 zkEVM overview](https://ethereum.org/roadmap/zkevm/) and [ZK-rollup overview](https://ethereum.org/developers/docs/scaling/zk-rollups/).
+
+### 4.2 Recent directions: interoperability and security alongside speed
+
+::: info Information checked on September 27, 2026
+This is a snapshot of research and proposals based on primary sources. Roadmap objectives, EIP proposals, and mainnet activation are different stages.
+:::
+
+- **A common zkVM foundation:** Proving EVM execution programs inside general-purpose zkVMs requires compatible guest interfaces. The February 16, 2026 zkVM Standards v0 release defines RV64IM + Zicclsm and C interfaces for precompiles and IO. Guests still need recompilation and relinking; this is not universal binary portability. [EF standards announcement](https://zkevm.ethereum.foundation/blog/zkevm-standards-v0-release)
+- **Evaluating security alongside speed:** Average proving time is insufficient; difficult blocks matter too. EF's May 2026 rollout article discusses worst-case proving, while a separate article examines the scope and assumptions of formal verification. Benchmarks and a “formally verified” label cannot establish security of the entire stack. [Rollout and worst-case challenges](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota), [formal-verification scope](https://zkevm.ethereum.foundation/blog/sp1-fv)
+- **A staged path from optional proofs:** EF's September 7, 2026 priorities describe movement toward eventual mandatory execution proofs. Ordering relative to post-quantum milestones remains under discussion; this is not a confirmed activation date. [EF Protocol: Current and Emerging Priorities](https://blog.ethereum.org/2026/09/07/protocol-priorities)
+
+### 4.3 EIP-8025: Optional Execution Proofs {#eip-8025}
+
+[EIP-8025](https://eips.ethereum.org/EIPS/eip-8025) is **Draft** at the review date. It proposes opt-in execution-proof distribution and verification over the consensus-layer P2P network. **Current specifications retain payload re-execution: proofs are supplementary checks.** Mandatory proofs and removing re-execution belong to a later EIP. This proposal adds no proving rewards. See its [Consensus Layer section](https://eips.ethereum.org/EIPS/eip-8025#consensus-layer).
+
+EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not establish mainnet activation. [Hegotá proposal article](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
+
+### 4.4 Connecting the application to the course's research map
+
+This table is a course-oriented interpretation of these developments. It does not claim that EIP-8025 selects a particular folding scheme or GKR construction.
+
+| Application question | Course connection | Evaluation dimensions |
+| --- | --- | --- |
+| Does the proof capture every required EVM execution rule? | Arithmetization (Session 4) and general computation | Expressiveness, compatibility, implementation correctness |
+| Can proofs arrive within the required time? | GKR/sumcheck, parallelization, prover cost | Average and worst-case latency, memory and hardware cost |
+| Can proofs of computation segments be combined efficiently? | Recursion and aggregation; folding where appropriate to the construction | Proof size, proving cost, bandwidth |
+| Can validation become cheaper through a safe transition? | Soundness (Sessions 1 and 14) and staged protocol adoption | Verification cost, security, operational reliability |
+
+Discussion prompts: “If a proof is small but slow to generate, how do L2 batching and L1 block validation differ?” and “What measurements and security evidence are needed before supplementary proofs become mandatory?” These questions connect theoretical efficiency to operational requirements.
+
 ---
 
 ## Summary: the course as a whole
