@@ -4,8 +4,8 @@ prev:
   text: Session 9 · The Fiat–Shamir transform and the merits and limits of ROM
   link: /en/learn/session-09
 next:
-  text: Session 11 · Groth16 (syllabus)
-  link: /en/learn/#session-11
+  text: Session 11 · Groth16
+  link: /en/learn/session-11
 ---
 
 # Session 10: The PCP theorem and the IOP framework — A complexity-theoretic synthesis

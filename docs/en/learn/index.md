@@ -123,6 +123,9 @@ Each session makes explicit both the cryptographic perspective (connections to s
 ## Act III: Integration — origins and future directions — Sessions 11–15 {#act-3}
 
 ### Session 11: Groth16 {#session-11}
+
+[Read the Session 11 lecture manuscript →](./session-11)
+
 - How combining pairings and QAPs achieves succinctness.
 - Why trusted setup became necessary.
 
@@ -147,4 +150,4 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ## Supplementary materials
 
-[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–10 are available; materials for Sessions 11–15 will be developed later.
+[An introductory finite-field exercise](./foundations) — a short supplement related to Session 3. The manuscripts for Sessions 1–11 are available; materials for Sessions 12–15 will be developed later.

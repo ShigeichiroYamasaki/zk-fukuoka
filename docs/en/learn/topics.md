@@ -1,6 +1,6 @@
 # Topic index
 
-Find relevant sessions by topic across the three acts. Sessions 1–10 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
+Find relevant sessions by topic across the three acts. Sessions 1–11 link to their lecture manuscripts. Other session links open the current draft syllabus; their full lesson materials are in preparation.
 
 [Browse by session](./sessions) · [Read the syllabus](./)
 
@@ -32,7 +32,7 @@ Find relevant sessions by topic across the three acts. Sessions 1–10 link to t
 | Finite fields, extension fields, polynomial rings | [Session 3](./session-03) |
 | Lagrange interpolation, Schwartz–Zippel, polynomial identity testing | [Session 3](./session-03) |
 | Arithmetization and R1CS | [Session 2](./session-02) / [Session 4](./session-04) |
-| QAP | [Session 4](./session-04) / [Session 11](./#session-11) |
+| QAP | [Session 4](./session-04) / [Session 11](./session-11) |
 | AIR | [Session 4](./session-04) / [Session 13](./#session-13) |
 
 [Supplement · An introductory finite-field exercise](./foundations)
@@ -84,10 +84,10 @@ Find relevant sessions by topic across the three acts. Sessions 1–10 link to t
 
 | Topic | Related sessions |
 | --- | --- |
-| Groth16; pairings and QAPs | [Session 11](./#session-11) |
+| Groth16; pairings and QAPs | [Session 11](./session-11) |
 | PLONK, permutation arguments, custom gates | [Session 12](./#session-12) |
 | STARK; FRI and AIR | [Session 13](./#session-13) |
-| Trusted setup, universal setup, transparency | [Session 11](./#session-11) / [Session 12](./#session-12) / [Session 13](./#session-13) |
+| Trusted setup, universal setup, transparency | [Session 11](./session-11) / [Session 12](./#session-12) / [Session 13](./#session-13) |
 | Integrated comparison of Groth16 / PLONK / STARK | [Session 14](./#session-14) |
 
 ## Recursion, folding & further directions {#research}

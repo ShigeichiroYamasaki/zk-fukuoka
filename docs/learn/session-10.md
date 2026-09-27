@@ -4,8 +4,8 @@ prev:
   text: 第9回 · Fiat-Shamir変換とROMの功罪
   link: /learn/session-09
 next:
-  text: 第11回 · Groth16（シラバス）
-  link: /learn/#session-11
+  text: 第11回 · Groth16
+  link: /learn/session-11
 ---
 
 # 第10回:PCP定理とIOPの枠組み — 計算量理論的総括

@@ -64,7 +64,7 @@ export const lessons = [
     "number": 11,
     "ja": "Groth16",
     "en": "Groth16",
-    "material": null
+    "material": "learn/session-11.html"
   },
   {
     "number": 12,
