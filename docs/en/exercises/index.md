@@ -88,7 +88,7 @@ Documentation checked on **September 27, 2026**. External instructions are mainl
 
 | Directory | What you can find |
 | --- | --- |
-| [Available tools](./tools) | Browser-based calculation, finite fields and polynomials, circuit writing, proof generation and verification |
+| [Available tools](./tools) | Choose tools by Act III session, programming language and learning objective |
 | [Basic operation manuals](./manuals) | Act III: Groth16, PLONK and STARK workflows, comparison and advanced exercises |
 
 [Syllabus](../learn/) · [Session index](../learn/sessions) · [Topic index](../learn/topics)
