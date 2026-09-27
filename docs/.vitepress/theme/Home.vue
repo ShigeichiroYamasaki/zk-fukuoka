@@ -7,6 +7,14 @@ const acts = [
  { ja: "幕II · 道具立て", en: "Act II · Tools", start: 3, end: 10 },
  { ja: "幕III · 統合", en: "Act III · Integration", start: 11, end: 15 },
 ];
+const rollupChapters = [
+  { path: '01-ledger', ja: '残高台帳と保存則', en: 'Ledger and conservation' },
+  { path: '02-state', ja: 'Merkle木と状態ルート', en: 'Merkle trees and state roots' },
+  { path: '03-circuit', ja: '署名と送金回路', en: 'Signatures and transfer circuits' },
+  { path: '04-batches', ja: 'バッチ証明と公開入力', en: 'Batch proofs and public inputs' },
+  { path: '05-bridge', ja: 'ERC-20とL1検証', en: 'ERC-20 and L1 verification' },
+  { path: '06-availability', ja: 'データ公開・退出・総合テスト', en: 'Data availability, exits and testing' },
+];
 const { lang } = useData();
 const en = computed(() => lang.value === "en");
 const link = (s) => withBase((en.value ? "/en/" : "/") + s);
@@ -150,9 +158,26 @@ const t = (ja, english) => (en.value ? english : ja);
         </section>
       </div>
     </section>
+    <section id="applied-course" class="applied-section section-pad" aria-labelledby="applied-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">02 / APPLIED COURSE</span>
+          <h2 id="applied-title">{{ t('応用編：ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }}</h2>
+        </div>
+        <a class="text-link" :href="link('rollup/')">{{ t('応用編の全体像を見る', 'Explore the applied course') }} ↗</a>
+      </div>
+      <p class="section-intro">{{ t('全15回で学んだ技術を、入金・送金・出金のあるシステムへ。参照モデルと入門回路を動かしながら、6段階で状態遷移の証明、L1検証、データ公開と退出の実装に取り組みます。', 'Put the 15 lectures into practice with deposits, transfers and withdrawals. Run the reference model and introductory circuit, then work through six stages of state-transition proofs, L1 verification, data availability and exits.') }}</p>
+      <nav class="applied-chapters" :aria-label="t('応用編の各章', 'Applied course chapters')">
+        <a v-for="(chapter, index) in rollupChapters" :key="chapter.path" :href="link('rollup/' + chapter.path + '.html')">
+          <span class="applied-number">0{{ index + 1 }}</span>
+          <span>{{ t(chapter.ja, chapter.en) }}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </nav>
+    </section>
     <section class="community-section section-pad">
       <div class="community-copy">
-        <span class="section-kicker">02 / OPEN BY DESIGN</span>
+        <span class="section-kicker">03 / OPEN BY DESIGN</span>
         <h2>
           {{ t("学びも、コミュニティも。", "An open community.") }}<br />{{
             t("いっしょにつくっていく。", "Built with you.")

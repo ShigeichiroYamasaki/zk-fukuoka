@@ -319,6 +319,34 @@
   padding: 1px 7px;
   margin-left: 9px;
 }
+.applied-section {
+  background: #edf4e5;
+  border-block: 1px solid #d3dfc7;
+}
+.applied-chapters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 12px;
+}
+.applied-chapters a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid #cbd9bf;
+  border-radius: 10px;
+  background: #fff;
+  color: #253a29;
+  font-size: 14px;
+  font-weight: 600;
+}
+.applied-chapters a:hover,
+.applied-chapters a:focus-visible {
+  border-color: #4b702a;
+  background: #f7fbea;
+}
+.applied-chapters a > :last-child { margin-left: auto; }
+.applied-number { color: #526c39; font-size: 12px; }
 .learning-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
