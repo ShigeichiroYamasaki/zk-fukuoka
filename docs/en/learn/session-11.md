@@ -10,21 +10,17 @@ next:
 
 # Session 11: Groth16
 
-::: info Lecture manuscript
-This page is an English translation of the supplied Session 11 lecture manuscript. Editorial notes based on the original paper clarify verification cost and the security model.
-:::
-
 [Sessions](./sessions) · [Topics](./topics) · [Session 11 in the syllabus](./#session-11) · [Exercises](../exercises/)
 
 ## Context and learning objectives
 
-Today we begin Act III (Integration). We study Groth16 (Groth, 2016) as our first concrete protocol, bringing together the tools developed in Act II: arithmetization, pairings, polynomial commitments, and Fiat–Shamir.
+Today we begin Act III (Integration). Groth16 (Groth, 2016) combines arithmetization and pairings from Act II. It is a direct QAP-and-pairing construction: it neither incorporates KZG as a component nor uses Fiat–Shamir to obtain non-interactivity.
 
 The three learning objectives are:
 
 1. Understand how Groth16 combines the QAP from Session 4 with the pairings from Session 7 to achieve succinctness.
 2. Understand why trusted setup is necessary in Groth16 as a consequence of its construction.
-3. Revisit Groth16 using the three-stage map from Session 10: “IOP design → implementation → non-interactivity.”
+3. Compare Groth16 with the map from Session 10 and understand its direct non-interactive construction in the common reference string (CRS) model.
 
 ---
 
@@ -34,7 +30,7 @@ Recall the QAP from Session 4. Satisfaction of every R1CS constraint was express
 
 $$A(X) \cdot B(X) - C(X) = H(X) \cdot Z(X)$$
 
-Here, polynomials such as $A(X) = \sum_i z_i A_i(X)$ incorporate the witness $z$, and $Z(X)$ is the known polynomial whose roots are the constraint points. The prover wants to demonstrate knowledge of a correct $H(X)$ (and $z$, the witness), while the verifier wants to check this equation without learning $z$.
+Here, polynomials such as $A(X) = \sum_i z_i A_i(X)$ incorporate an assignment vector $z$ containing the constant 1, public inputs, and the private witness. $Z(X)$ is the known polynomial whose roots are the constraint points. The prover demonstrates knowledge of a witness consistent with the public inputs and of the quotient polynomial $H(X)$. The verifier checks the relation without learning the private witness.
 
 **This equation is the starting point for the entire protocol.** The tools from Act II are brought together to verify this single equation succinctly and in zero knowledge.
 
@@ -44,15 +40,15 @@ Here, polynomials such as $A(X) = \sum_i z_i A_i(X)$ incorporate the witness $z$
 
 ### 2.1 A naive approach and its difficulties
 
-If the prover simply sent $A(\tau), B(\tau), C(\tau), H(\tau)$ as numbers at some evaluation point $\tau$, the verifier could directly check $A(\tau)B(\tau) - C(\tau) = H(\tau)Z(\tau)$. However, revealing these evaluations would fail to provide the zero knowledge required in Session 2. Moreover, under the assumption that the verifier knows $\tau$, the prover could choose polynomials tailored to $\tau$, undermining soundness.
+If the prover simply sent $A(\tau), B(\tau), C(\tau), H(\tau)$ as numbers at some evaluation point $\tau$, the verifier could directly check $A(\tau)B(\tau) - C(\tau) = H(\tau)Z(\tau)$. Simply revealing evaluations does not guarantee that no witness information leaks. Also, if the prover can choose polynomials after learning the test point $\tau$, it can arrange for an invalid polynomial identity to hold at that point. Checking the evaluation equation alone does not establish knowledge of an assignment consistent with the specified QAP and public inputs.
 
-### 2.2 Applying the idea behind KZG commitments
+### 2.2 Encoding polynomial evaluations as group elements
 
-The idea behind the KZG commitment from Session 8 now becomes useful. Embed the secret $\tau$ in an SRS and handle polynomial evaluations only as group elements, such as $g^{A(\tau)}$ and $g^{B(\tau)}$. The relation the verifier wants to check then corresponds to
+An intuition shared with KZG from Session 8 is to encode evaluations at a secret point as group elements. Groth16 does not, however, incorporate KZG opening proofs. Embed the secret $\tau$ in an SRS and handle polynomial evaluations only as group elements, such as $g^{A(\tau)}$ and $g^{B(\tau)}$. The relation the verifier wants to check then corresponds to
 
 $$g^{A(\tau)B(\tau)} \overset{?}{=} g^{C(\tau) + H(\tau)Z(\tau)}$$
 
-However, **multiplication** of the exponents, $A(\tau) \cdot B(\tau)$, cannot be computed from $g^{A(\tau)}$ and $g^{B(\tau)}$ alone (by the discrete-logarithm hardness intuition).
+However, **multiplication** of the exponents, $A(\tau) \cdot B(\tau)$, is not directly implemented by ordinary group operations on $g^{A(\tau)}$ and $g^{B(\tau)}$: multiplying group elements adds their exponents, while exponentiating by a known scalar multiplies the exponent by that scalar.
 
 ### 2.3 The pairing-based solution
 
@@ -60,7 +56,7 @@ The pairing from Session 7 plays the decisive role. Given $g^{A(\tau)} \in G_1$ 
 
 $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
-This lets us check a **product** in the exponent without revealing $\tau$. It is exactly the “multiplicative verification capability” emphasized in Session 7, and it captures the central idea behind Groth16.
+This represents a **product** of exponents in the target group $G_T$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
 
 ---
 
@@ -68,25 +64,27 @@ This lets us check a **product** in the exponent without revealing $\tau$. It is
 
 ### 3.1 Trusted setup
 
-The secret trapdoor $(\tau, \alpha, \beta, \gamma, \delta)$ is used to generate the SRS. These values must be destroyed after setup, or generated through a multi-party computation so that no individual learns them. The extra randomness beyond $\tau$ serves both zero knowledge (through random blinding terms) and soundness, discussed below (preventing a malicious prover from reusing proofs across different circuits). We will not derive the role of every term here. The key idea is that multiple trapdoor values address the requirements of both soundness and zero knowledge.
+The secret trapdoor $(\tau, \alpha, \beta, \gamma, \delta)$ is used to generate circuit-specific proving and verification keys. The published structured reference string (SRS) contains prescribed combinations encoded as group elements, not these scalars themselves. Setup secrets must be securely destroyed. Appropriate MPC ceremonies rely on participant honesty and secret erasure to prevent reconstruction of the required trapdoor information.
+
+The trapdoor components help enforce consistency of the QAP assignment and bind public inputs to the private witness. Zero knowledge additionally uses fresh prover randomness $r,s$ for each proof. Setup secrets and per-proof randomness have different roles.
 
 ### 3.2 Proof generation
 
-Using linear combinations of the group elements in the SRS, the prover computes three commitment-like group elements $(A, B, C) \in G_1 \times G_2 \times G_1$. These incorporate quantities corresponding to $A(\tau)$ and $B(\tau)$ from Section 2.2, together with random blinding terms for zero knowledge.
+The prover computes the QAP quotient from its assignment and combines proving-key elements to generate $\pi=(\pi_A,\pi_B,\pi_C)\in G_1\times G_2\times G_1$. Fresh randomness $r,s$ blinds the proof. The QAP polynomials $A(X),B(X),C(X)$ and proof elements $\pi_A,\pi_B,\pi_C$ are different objects. The original construction has perfect zero knowledge.
 
 ### 3.3 Verification
 
-The verifier computes $\mathrm{IC}$ (Input Commitment) from the part of the SRS corresponding to the public inputs, and checks the pairing equation
+Write $[a]_1=g^a\in G_1$ and $[a]_2=h^a\in G_2$ to distinguish secret scalars from public group elements. For public inputs $x_1,\dots,x_\ell$ and verification-key elements $K_0,\dots,K_\ell\in G_1$, compute
 
-$$e(A, B) = e(\alpha, \beta) \cdot e(\mathrm{IC}, \gamma) \cdot e(C, \delta)$$
+$$\mathrm{IC}=K_0\prod_{i=1}^{\ell}K_i^{x_i}$$
 
-This single equation checks the QAP divisibility relation from Section 2.1 succinctly and in zero knowledge. The proof consists of only three group elements, $(A, B, C)$, so its size is **constant**, independent of the witness size or circuit complexity. Verification takes only a few pairings and is therefore also described as constant time in the supplied manuscript.
+and check
 
-::: info Editorial note: the scope of the verification-cost claim
-The number of proof elements and pairing operations is constant. Computing $\mathrm{IC}$ requires group operations proportional to the number of public inputs, so total verification time is not independent of that number. In the displayed verification equation, $\alpha,\beta,\gamma,\delta$ abbreviate the corresponding encoded group elements in the verification key, not the secret scalars themselves. See the construction and efficiency discussion in the [original paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
-:::
+$$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\pi_C,[\delta]_2)$$
 
-*The exact linear combinations and the detailed roles of $\alpha, \beta, \gamma, \delta$ are left to the original paper or supplementary lecture material. Our priority here is to understand the structure: verifying the QAP through one pairing equation.*
+The encoded elements $[\alpha]_1,[\beta]_2,[\gamma]_2,[\delta]_2$ belong to the verification key; the verifier need not know their secret scalars. The equation verifies a proof for the QAP encoded in the keys and the specified public inputs.
+
+The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]_1,[\beta]_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
 
 ---
 
@@ -94,31 +92,29 @@ The number of proof elements and pairing operations is constant. Computing $\mat
 
 ### 4.1 Revisiting the necessity
 
-As discussed for KZG in Session 8, the $\tau$ embedded in the SRS must remain unknown to the prover, the verifier, and everyone else. If $\tau$ leaks, someone who knows it can undermine soundness and generate false proofs. This brings back the problem from Section 2.1: a prover who knows $\tau$ can choose polynomials to fit that point.
+Groth16's soundness requires correctly generated reference parameters and setup secrets unavailable to adversaries. Recovering trapdoor information can allow a verifier-accepted proof without a valid witness. Secret management therefore concerns the entire setup, not only $\tau$. The intuition in Section 2.1—fitting values to a known evaluation point—helps motivate this concern but is not a complete security argument.
 
 ### 4.2 The restriction of circuit-specific setup
 
-Another important feature of Groth16 is that the SRS depends on the **circuit structure itself**, expressed as an R1CS/QAP. Whenever the computation to be proved changes, a new trusted setup is needed. This is a significant practical restriction and one motivation for the universal setup pursued by PLONK, which we study next.
+Another important feature of Groth16 is that the SRS depends on the **circuit structure itself**, expressed as an R1CS/QAP. A changed circuit requires corresponding proving and verification keys. Some setup procedures share a preparatory phase across circuits, but a circuit-specific phase remains. This is a significant practical restriction and one motivation for the universal setup pursued by PLONK, which we study next.
 
-### 4.3 The security basis: reductions to assumptions
+### 4.3 The security basis: the generic bilinear group model
 
-The supplied manuscript describes Groth16 soundness as guaranteed by reductions to pairing-based hardness assumptions such as q-SDH, introduced in Session 7. It presents the setup-based security proof as showing, under these assumptions, that an adversary who does not know $\tau$ cannot construct a false proof.
+The original Groth16 paper proves knowledge soundness in the **generic bilinear group model**. This model restricts how adversaries manipulate group elements to the permitted group operations, pairings, and related model interfaces.
 
-::: info Editorial note: the security model in the original paper
-The preceding description needs correction. The original Groth16 paper proves knowledge soundness in the **generic bilinear group model**; it should not be described simply as a reduction to q-SDH. Distinguish the security basis of KZG from Session 8 from that of Groth16. The [original paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf) analyzes adversaries in a model that restricts how they manipulate group elements.
-:::
+Groth16 should therefore not be described simply as a reduction to q-SDH; its security basis differs from that of KZG in Session 8. The paper also establishes completeness and perfect zero knowledge, while the knowledge-soundness result carries the model conditions just described. Consult the [original paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf) to distinguish each property and its premises.
 
 ---
 
 ## 5. Revisiting the map from Session 10
 
-Let us place Groth16 on the three-stage map “IOP design → implementation → non-interactivity” from Session 10:
+Session 10's “IOP design → implementation → non-interactivity” map helps explain many modern proof systems, but it is not Groth16's literal construction recipe. We can instead compare common design questions and the differences in their answers:
 
-- **IOP design:** QAP arithmetization (Session 4) specifies the polynomial relation to be verified: a single divisibility equation.
-- **Implementation:** The KZG-like idea and pairings (Sessions 7 and 8) implement verification of this relation without disclosing the secret evaluation point $\tau$.
-- **Non-interactivity:** Groth16 is designed to be non-interactive from the outset using an SRS and trusted setup. It does not pass through the Fiat–Shamir transform, an important distinction from other protocols.
+- **What is proved?** QAP arithmetization (Session 4) expresses circuit constraints as polynomial divisibility. Arithmetization alone is not an IOP.
+- **Which tools verify it?** Circuit-specific keys and pairings (Session 7) verify a QAP proof bound to public inputs. Secret-point encodings share an intuition with KZG, but this is not a construction using KZG as a component.
+- **Which model provides non-interactivity?** Groth16 is directly non-interactive in the CRS model, with reference parameters supplied by setup. It does not use Fiat–Shamir.
 
-This last feature—obtaining non-interactivity directly through setup rather than Fiat–Shamir—will matter when comparing Groth16 with PLONK next time and STARK the following session.
+These distinctions help compare arithmetization, verification tools, and the source of non-interactivity with PLONK and STARK in the following sessions.
 
 ---
 
@@ -129,8 +125,9 @@ Today we learned:
 - The QAP divisibility equation is the starting point of Groth16.
 - The multiplicative verification capability of pairings is central to succinct, zero-knowledge verification of the QAP.
 - Groth16 consists of trusted setup, proof generation, and verification through a single pairing equation.
-- Keeping $\tau$ secret underpins soundness, and circuit-specific setup creates a practical restriction.
-- Groth16 can be revisited using the three-stage map from Session 10.
+- Setup secret management and circuit-specific keys are required; the original knowledge-soundness analysis uses the generic bilinear group model.
+- Proof-element and pairing counts are constant, but public-input processing still has a cost.
+- Comparison with Session 10 highlights Groth16’s direct non-interactive construction without Fiat–Shamir.
 
 Next time (Session 12), we study PLONK: the motivation for universal setup to address Groth16’s circuit-specific setup, the introduction of the permutation argument, and the significance of custom gates.
 
@@ -145,5 +142,5 @@ Next time (Session 12), we study PLONK: the motivation for universal setup to ad
 ## Suggested classroom questions
 
 - Before presenting the difficulties in Section 2.1, ask students what could go wrong if $A(\tau)$ and $B(\tau)$ were simply sent as numbers. This helps motivate the need for pairings.
-- Display $e(A,B) = e(\alpha,\beta) \cdot e(\mathrm{IC},\gamma) \cdot e(C,\delta)$ and ask students to identify which terms correspond to which parts of the QAP.
-- Ask why trusted setup must be repeated for each circuit, encouraging students to anticipate the motivation for universal setup in the next session.
+- Display $e(\pi_A,\pi_B) = e([\alpha]_1,[\beta]_2) \cdot e(\mathrm{IC},[\gamma]_2) \cdot e(\pi_C,[\delta]_2)$ and ask where the public inputs enter and which multiplication relation the pairing checks.
+- Ask why circuit-specific key generation is needed, encouraging students to anticipate the motivation for universal setup in the next session.
