@@ -8,10 +8,6 @@ next: false
 
 # Session 15 (final): Directions for further development
 
-::: info Lecture manuscript
-This is an English translation of the supplied Session 15 manuscript, with reference links and editorial notes on recursion, folding, and performance comparisons.
-:::
-
 [Sessions](./sessions) · [Topics](./topics) · [Session 15 in the syllabus](./#session-15) · [Exercises](../exercises/)
 
 ## Context and learning objectives
@@ -34,19 +30,15 @@ The protocols studied so far prove that a computation was performed correctly. R
 
 ### 1.2 Why this is powerful
 
-This enables aggregation of several proofs into one and continual compression of an indefinitely continuing computation, such as a blockchain's sequence of state transitions, into a proof of fixed size. Whereas Sessions 11–13 described proofs of individual computations, recursion makes those proofs composable. It is a **technique for combining protocols at a higher level**.
+Recursion enables aggregation and incremental proofs of the **finite computation history completed so far**, such as a sequence of state transitions. Some constructions keep proof size independent of the number of steps, but dependencies on security parameters and public-state size remain. This does not mean proving that an infinite computation has completed.
+
+Sessions 11–13 studied proofs of individual computations. Recursion composes them by treating verification as another computation.
 
 ### 1.3 Technical requirements: making verification amenable to recursion
 
-The verification algorithm $V$ must be easy to express in the outer proof system's arithmetization. Pairing operations from Session 7 can be particularly expensive to arithmetize inside another proof system. This motivates advanced algebraic constructions beyond Act II, such as **pairs of elliptic curves forming a cycle**, described in the manuscript as curve pairs designed to express pairing operations on one curve efficiently as R1CS on another.
+The verification algorithm $V$ must be efficiently represented in the outer proof system. Pairings can be expensive to arithmetize, and differing fields for group operations and outer-circuit arithmetic can also add cost.
 
-*We do not derive curve cycles here. The structural lesson is that making a verifier easier to represent in another proof system motivates new algebraic tools.*
-
-::: info Note: recursion and curve cycles
-An “indefinitely continuing computation” means proving the **finite history completed so far** at each step. Even when proof size is independent of the number of steps, it can depend on security parameters and the size of public state.
-
-A curve cycle matches the base field of one curve to the scalar field of the other. Such cycles also support recursion without pairings; they are not defined solely as pairs that make pairing operations efficient. Nor does every recursive construction require a curve cycle. See the [Nova paper](https://eprint.iacr.org/2021/370).
-:::
+One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve's base field matches the other's scalar field, and vice versa. This helps represent group operations in circuits, including recursion without pairings. A cycle is not defined merely as a pair that makes pairing operations efficient, and not every recursive construction requires one. See the [Nova paper](https://eprint.iacr.org/2021/370).
 
 ---
 
@@ -54,21 +46,21 @@ A curve cycle matches the base field of one curve to the scalar field of the oth
 
 ### 2.1 Practical challenges of recursive proofs
 
-Naive recursion, which performs complete verification inside each proof, can repeatedly incur expensive operations such as pairings and substantially increase prover cost. Folding schemes, exemplified by Nova (Kothapalli, Setty, Tzialla, 2021), address this challenge.
+Naive recursion embeds verification of the previous proof into a circuit at each step, potentially imposing substantial prover work. Pairing-based verifiers incur pairing costs, but not every recursive scheme uses pairings.
 
-### 2.2 The idea: folding instead of full verification
+Folding schemes such as Nova (Kothapalli, Setty, Tzialla) reduce this repeated overhead. Nova appeared on [ePrint in 2021](https://eprint.iacr.org/2021/370) and at CRYPTO 2022.
 
-The central idea is to **fold two computation instances into one new instance instead of fully verifying them**. Folding is much lighter than full proof generation and verification. Computation steps are folded incrementally, and a complete proof is generated for the accumulated final instance.
+### 2.2 The idea: folding the relations to be verified
 
-An intuitive analogy is FRI's **recursive folding structure** from Session 6, which halves polynomial degree. FRI reduces polynomial degree, whereas folding schemes aggregate the instances to be proved. These are different objects, but both use incremental operations to avoid repeatedly performing all the expensive work.
+Nova **combines relaxed R1CS instances into one and updates the corresponding witness**. Its IVC (incrementally verifiable computation) construction uses lightweight folding verification instead of repeatedly embedding an expensive SNARK verifier to accumulate computation history.
+
+Folding alone does not produce a complete succinct zero-knowledge proof. Distinguish folding that aggregates relations, IVC that enforces the correct sequence of steps, and compression that proves the accumulated relation succinctly. Final proof size, verification cost, and zero knowledge depend on the combined construction.
+
+FRI from Session 6 also uses folding, but reduces polynomial degree for proximity testing; Nova aggregates constraint-satisfaction instances. The incremental-processing analogy does not make them the same protocol or give them the same soundness proof.
 
 ### 2.3 Where this approach helps
 
-Folding schemes target the prover-cost axis in Session 14's comparison, especially for sequential computations such as repeated blockchain state transitions. They are particularly useful for proving cumulative computation.
-
-::: info Note: folding versus the final proof
-Nova folds relaxed R1CS instances and witnesses. Folding alone is not a complete succinct zero-knowledge proof: distinguish the IVC construction from final compression. The comparison with FRI is an intuition, not a claim that they use the same protocol or soundness proof. The manuscript's 2021 date is the [ePrint publication year](https://eprint.iacr.org/2021/370); the reference's 2022 date is the CRYPTO publication year.
-:::
+Folding schemes target cumulative proving costs for sequential computations such as repeated state transitions. Benefits depend on the step computation, commitments, compression frequency, and implementation. Evaluate folding overhead together with the final proof-generation cost.
 
 ---
 
@@ -80,7 +72,7 @@ We now return to sumcheck, previewed in Session 1. For a multivariate polynomial
 
 $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
-interactively, fixing one variable at a time, without the verifier evaluating every summand. It is also central to the proof techniques behind IP = PSPACE from Session 1.
+interactively, fixing one variable at a time, without the verifier evaluating every summand. Each variable needs a degree bound, and the verifier checks degrees and sum consistency round by round. The final random-point evaluation of $g$ must also be verified, either directly or through another appropriate mechanism; without that check, the claimed sum is not established. Sumcheck is also central to IP = PSPACE from Session 1.
 
 ### 3.2 The GKR protocol
 
@@ -88,23 +80,21 @@ GKR (Goldwasser–Kalai–Rothblum, 2008) applies sumcheck layer by layer to con
 
 ### 3.3 Why these approaches are receiving renewed attention
 
-The manuscript emphasizes **theoretical improvements in prover cost compared with other methods, particularly FFT-heavy KZG-based approaches**, as a reason for renewed interest. Applications to large computations where proving is the bottleneck, including proofs of machine-learning inference, are actively studied.
+GKR/sumcheck-based techniques exploit layered circuits and multilinear representations to reduce prover work. Large circuits and machine-learning inference provide examples for asking which computation structure a prover can exploit.
+
+This establishes no universal ranking over KZG-based systems. Sumcheck and KZG are not components at the same level: a sumcheck-based proof system may also use polynomial commitments. Compare complete systems with aligned circuit structures, commitments, memory budgets, and security parameters. See [Thaler's textbook](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html).
 
 ### 3.4 Position within the IOP framework
 
-Returning to Session 10's framework, GKR/sumcheck-based approaches can also be viewed through “IOP design (layer-by-layer sumcheck) → implementation (polynomial commitments) → non-interactivity (Fiat–Shamir).” The tools already learned can therefore serve as a map for understanding new research directions.
+Original GKR is an interactive proof, without polynomial commitments or Fiat–Shamir as mandatory components. To build a non-interactive cryptographic argument, one can consider authenticating required polynomial evaluations through commitments and deriving challenges with Fiat–Shamir. The security conditions for the components and transformation must then be checked.
 
-::: info Note: sumcheck assumptions and the scope of comparisons
-Sumcheck requires bounds on the degree in each variable and a way to verify the polynomial's final random-point evaluation. Original GKR is an interactive proof and does not inherently include polynomial commitments or Fiat–Shamir. Read Section 3.4 as a guide to constructing a non-interactive cryptographic argument.
-
-Section 3.3 and the next section organize research around prover cost. They do not establish that every GKR/sumcheck system outperforms every KZG system. Comparisons need aligned circuit structures, commitments, memory budgets, and security parameters. See [Thaler's textbook](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html).
-:::
+Session 10's “IOP design → implementation → non-interactivity” map helps compare such constructions. Distinguish GKR itself from the non-interactive proof system built around it.
 
 ---
 
 ## 4. A research map: expanding the two-axis matrix
 
-Let us expand the matrix from Sessions 2 and 14 one final time. Act III has shown that efficiency is not a single quantity: it includes **proof size, verification cost, prover cost, setup flexibility, and long-term security**. Research can be understood as improving particular dimensions, especially prover cost, within this multidimensional space.
+Let us expand the matrix from Sessions 2 and 14 one final time. Act III has shown that efficiency is not a single quantity: it includes **proof size, verification cost, prover cost, setup flexibility, and long-term security**. The techniques in this session target dimensions such as composability and prover cost. Security and setup assumptions are also design requirements to check alongside performance.
 
 | Technique | Main dimension improved |
 | --- | --- |
@@ -112,7 +102,7 @@ Let us expand the matrix from Sessions 2 and 14 one final time. Act III has show
 | Folding schemes | Prover cost, particularly for sequential computation |
 | GKR/sumcheck | Prover cost, particularly for large parallel computations |
 
-This organization highlights a broader trend: **while early SNARK/STARK research emphasized minimizing verifier cost through succinctness, increasing attention is being directed toward minimizing prover cost**.
+This table highlights **directions that improve prover cost and composability alongside succinct verification**. Use it to identify improvements and remaining conditions or costs, rather than treating the entire field as moving toward a single objective.
 
 ### 4.1 An application perspective: Ethereum zkEVMs {#ethereum-zkevm}
 
@@ -120,9 +110,7 @@ This organization highlights a broader trend: **while early SNARK/STARK research
 
 ### 4.2 Recent directions: interoperability and security alongside speed
 
-::: info Information checked on September 27, 2026
-This is a snapshot of research and proposals based on primary sources. Roadmap objectives, EIP proposals, and mainnet activation are different stages.
-:::
+**Information checked on September 27, 2026.** This is a snapshot of research and proposals based on primary sources. Roadmap objectives, EIP proposals, and mainnet activation are different stages.
 
 - **A common zkVM foundation:** Proving EVM execution programs inside general-purpose zkVMs requires compatible guest interfaces. The February 16, 2026 zkVM Standards v0 release defines RV64IM + Zicclsm and C interfaces for precompiles and IO. Guests still need recompilation and relinking; this is not universal binary portability. [EF standards announcement](https://zkevm.ethereum.foundation/blog/zkevm-standards-v0-release)
 - **Evaluating security alongside speed:** Average proving time is insufficient; difficult blocks matter too. EF's May 2026 rollout article discusses worst-case proving, while a separate article examines the scope and assumptions of formal verification. Benchmarks and a “formally verified” label cannot establish security of the entire stack. [Rollout and worst-case challenges](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota), [formal-verification scope](https://zkevm.ethereum.foundation/blog/sp1-fv)
