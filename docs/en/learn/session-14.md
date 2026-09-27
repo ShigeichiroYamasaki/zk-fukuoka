@@ -10,10 +10,6 @@ next:
 
 # Session 14: An integrated perspective — revisiting Acts I–III
 
-::: info Lecture manuscript
-This is an English translation of the supplied Session 14 manuscript. Its comparison tables are retained, with editorial notes on security, zero knowledge, and performance, plus references.
-:::
-
 [Sessions](./sessions) · [Topics](./topics) · [Session 14 in the syllabus](./#session-14) · [Exercises](../exercises/)
 
 ## Context and learning objectives
@@ -26,7 +22,7 @@ The three learning objectives are:
 2. Map the cryptographic assumptions and complexity-theoretic results from Act II to their roles in each protocol.
 3. Understand their design differences as **different optimization choices along the expressiveness and efficiency axes**, rather than merely performance comparisons.
 
-We introduce few new concepts. The emphasis is on reorganizing and reconnecting the material from the first thirteen sessions.
+We introduce few new concepts. The emphasis is on reconnecting earlier material. We compare Groth16, original KZG-based PLONK, and representative AIR/FRI-based STARKs. Derivatives can have different components and assumptions; a family name alone does not determine its properties.
 
 ---
 
@@ -40,33 +36,31 @@ In all three protocols, an honest prover with a correct witness is accepted with
 
 Recall the proof/argument distinction from Session 1. Groth16, PLONK, and STARK are all **arguments**, assuming computationally bounded provers (Session 1, Section 4.2). None retains its full soundness guarantee against an unbounded prover. The types of assumptions underlying soundness differ substantially:
 
-| Protocol | Soundness basis as summarized in the manuscript |
+| Protocol | Main premises and components for reading its security analysis |
 | --- | --- |
-| Groth16 | Reduction to pairing-based hardness assumptions such as q-SDH (Session 7) |
-| PLONK | Pairing-based assumptions through KZG binding (Session 8), plus permutation-argument soundness (Session 12) |
-| STARK | Hash collision resistance and FRI soundness (Session 6), with quantitative analysis involving list-decoding parameters (Session 5) |
+| Groth16 | Given correctly generated CRS parameters, the original paper proves knowledge soundness in the generic bilinear group model, not simply by reduction to q-SDH |
+| KZG-based PLONK | Polynomial-IOP soundness, commitment security of KZG, and Fiat–Shamir analysis in the ROM; knowledge soundness also requires the applicable extraction conditions |
+| AIR/FRI-based STARK | AIR constraint/consistency checks, FRI soundness, hash collision resistance for Merkle binding, and Fiat–Shamir analysis in the ROM |
 
-The Cook–Levin theorem from Session 4 provides common theoretical background for translating general NP statements into constraints and justifying arithmetization.
+This table guides the reading of security proofs; listing assumptions and models does not itself prove security. See the [Groth16 paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf) and [Sessions 11](./session-11), [12](./session-12), and [13](./session-13) for the constructions.
+
+Cook–Levin and circuit reductions from Session 4 provide theoretical background for representing general NP relations as constraints. Correctness of each arithmetization and cryptographic soundness still require their own arguments.
 
 ### 1.3 Zero knowledge
 
-The supplied manuscript describes all three as achieving computational zero knowledge—the weakest of the three levels from Session 2, but sufficient for practical purposes. The mechanisms differ:
+The three families should not be assigned one uniform level of zero knowledge. Check the construction, model, and simulator establishing the property.
 
-- Groth16 introduces random blinding terms during proof generation (Session 11, Section 3.2).
-- PLONK similarly uses blinding, with randomness also present in the permutation argument.
-- STARK uses random masking polynomials to prevent trace information from leaking through its commitments. Session 13 did not develop this in detail; implementations incorporate randomness into the relevant stages.
+- **Groth16:** Fresh prover randomness blinds the proof's group elements. The original paper establishes **perfect zero knowledge** (Session 11, Section 3.2).
+- **PLONK:** Witness-encoding polynomials and the grand-product polynomial are randomized to prevent leakage through openings. Permutation-checking challenges have a different role from privacy-preserving blinding.
+- **STARK:** A zero-knowledge construction needs masking compatible with degree bounds and constraints to prevent leakage from trace evaluations and other openings. Transparency and FRI alone do not guarantee zero knowledge.
 
 ### 1.4 Knowledge soundness and extractors
 
-Revisit knowledge soundness and extractors from Session 2. For a simple algebraic relation such as Schnorr, an extractor can recover the witness using linear algebra on two transcripts (Session 2, Section 4.1). For general computations in Groth16, PLONK, and STARK, extractor constructions are more sophisticated. The manuscript relates this to generalizations of rewinding and the forking lemma from Session 6. This increased complexity illustrates the qualitative difficulty associated with the loss of simple algebraic structure anticipated in Session 2.
+For Schnorr in Session 2, two accepting transcripts sharing the first message but using distinct challenges yield a witness through linear algebra. For general-computation proof systems, extractors depend on the protocol and security model.
+
+Groth16's generic-group analysis, PLONK's polynomial-commitment construction, and STARK's coding-theoretic construction cannot all be described as generalizations of rewinding or the forking lemma. Identify what is extracted, which access the extractor has, and which assumptions it uses.
 
 ---
-
-::: info Editorial note: security foundations and levels of zero knowledge
-The Groth16 entry in Section 1.2 needs correction: the original paper proves knowledge soundness in the generic bilinear group model, not by a simple reduction to q-SDH. It also establishes **perfect zero knowledge**, so Section 1.3 should not be read as assigning the same precise zero-knowledge level to all three constructions. See the [Groth16 paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
-
-Non-interactive PLONK and STARK also require Fiat–Shamir and ROM analysis beyond the entries in the table. A STARK implementation is not automatically zero knowledge; inspect the concrete masking construction. Random challenges for checking permutations have a different role from privacy-preserving blinding. Extractors do not all arise by generalizing rewinding or the forking lemma; their construction depends on the proof system and security model. See the notes in [Session 11](./session-11), [Session 12](./session-12), and [Session 13](./session-13).
-:::
 
 ## 2. Revisiting Act II: a cross-protocol map
 
@@ -77,13 +71,13 @@ The following table maps the tools we studied to their roles in each protocol.
 | Finite fields, polynomials, Schwartz–Zippel (3) | Foundation for polynomial identity reasoning at QAP evaluation points | Foundation for gate and permutation polynomial checks | Foundation for aggregating constraints with random linear combinations |
 | Arithmetization: R1CS/QAP/AIR (4) | QAP | PLONKish arithmetization with selectors | AIR execution traces |
 | Error-correcting codes (5) | Not used directly | Not used directly | Encode trace polynomials as Reed–Solomon codewords |
-| FRI and soundness amplification (6) | Not used directly | Used in FRI-based derivatives | Core low-degree testing component |
+| FRI and soundness amplification (6) | Not used directly | Not used in original KZG-based PLONK | Core low-degree testing component |
 | Elliptic curves and pairings (7) | Central to the verification equation | Foundation for KZG commitments | Not used directly |
-| Polynomial commitments (8) | Described in the manuscript as implicit KZG integrated into verification | KZG | FRI-based commitments |
-| Fiat–Shamir and ROM (9) | Not used: directly non-interactive through trusted setup | Used | Used |
+| Polynomial commitments (8) | Direct QAP-and-pairing construction; does not use KZG as a component | KZG | FRI-based commitments |
+| Fiat–Shamir and ROM (9) | Not used: directly non-interactive in the CRS model | Used | Used |
 | PCP/IOP (10) | Theoretical background | Explicit IOP design framework | Explicit IOP design framework |
 
-The table highlights how **each protocol selects a different combination from the same Act II toolbox**. The division between pairing-based Groth16/PLONK and coding-based STARK runs through the commitment discussion from Session 8.
+The table highlights how **each protocol selects a different combination from the same Act II toolbox**. Groth16 and KZG-based PLONK share pairings, but Groth16 is not a KZG-based system. Commitment choices can be compared between PLONK and STARK, distinguishing Merkle binding from FRI low-degree proximity in STARKs.
 
 ---
 
@@ -91,22 +85,21 @@ The table highlights how **each protocol selects a different combination from th
 
 Recall the expressiveness × efficiency matrix from Session 2. All three protocols support general NP relations. Their differences lie in **which aspects of efficiency they prioritize**.
 
-| Priority | Groth16 | PLONK | STARK |
-| --- | --- | --- | --- |
-| Proof size and verification speed | Highest priority; constant-size proof | High priority; constant-size proof, somewhat larger than Groth16 | Relatively less compact; described as logarithmic size |
-| Setup flexibility | Low: circuit-specific | High: universal and updatable | Highest: no trusted setup |
-| Long-term, post-quantum security | Low: relies on elliptic curves | Low: relies on elliptic curves | High: relies on hashes |
-| Prover computation cost | Relatively high | Relatively high | Amenable to quasi-linear computation |
+Fix groups and security parameters when considering scaling with circuit or trace size. Account separately for public-input processing.
 
-**The central point is not that one protocol is universally superior. Different constraints—acceptable setup trust, long-term security needs, or strict proof-size limits—lead to different choices.**
+| Property | Groth16 | KZG-based PLONK | AIR/FRI-based STARK |
+| --- | --- | --- | --- |
+| Proof size | Three group elements | Constant numbers of group and field elements | Includes queried values and Merkle paths; polylogarithmic in representative constructions |
+| Verification cost | Public-input processing plus constant pairing count | Public-input processing plus verification of constant numbers of openings and related checks | Queries, authentication paths, and FRI checks; polylogarithmic for representative constructions with fixed parameters |
+| Setup | Circuit-specific keys and trusted setup | Universal, updatable SRS plus circuit-specific public preprocessing | No secret trapdoor required |
+| Post-quantum security | Not secure against sufficiently large quantum computers | Not secure against sufficiently large quantum computers | Requires suitable hashes, parameters, and security analysis in a quantum model |
+| Assessing prover cost | Measure QAP processing, group operations, and related work | Measure polynomial processing, commitments, and related work | Measure trace processing, low-degree extension, hashing, FRI, and related work |
+
+STARK costs depend on query counts and authentication paths, not just FRI rounds. Prover speed depends on circuits, trace width, implementation, hardware, memory, and security parameters; this table establishes no universal speed ranking. Hashing alone does not establish post-quantum security of a non-interactive STARK (Session 13, Section 4.2).
+
+**Choose according to setup trust, required security, proof size, and computing resources, rather than declaring one system universally superior.** Exercise decisions should use measurements for the same computation and security conditions.
 
 ---
-
-::: info Editorial note: how to read the comparison tables
-The Groth16 polynomial-commitment entry is not an accurate component description. Groth16 directly combines QAPs and pairings; distinguish it from PLONK’s use of KZG as a component. Here, PLONK means the KZG-based construction and STARK means representative AIR/FRI-based constructions.
-
-Section 3 describes design tendencies, not a general performance ranking. STARKs include Merkle authentication paths and generally have polylogarithmic costs. Groth16 and PLONK also incur public-input-dependent verification work. Prover speed depends on the circuit, implementation, hardware, and security parameters. Post-quantum claims require appropriate hash parameters and analysis of non-interactivity in a quantum model. Base exercise decisions on requirements and measurements under comparable conditions.
-:::
 
 ## 4. Exercise: simulating design decisions
 
