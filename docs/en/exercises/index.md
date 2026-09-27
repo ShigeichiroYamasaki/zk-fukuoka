@@ -6,6 +6,8 @@ outline: [2, 3]
 
 Explore lecture concepts through calculations and implementation. Find exercise materials, available tools, and basic operation manuals here.
 
+[Before Act III: work through R1CS/QAP and AIR with a small balance program](../learn/balance-arithmetization#run) — Python arithmetic exercise for Session 4.
+
 ## Start here
 
 1. Work through the [introductory finite-field exercise](../learn/foundations): addition, multiplication, and inverses modulo 7.

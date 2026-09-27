@@ -24,6 +24,8 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 NP関係，回路，制約などは[第4回の用語ガイド](./terms/)から詳しく読めます。8つの説明ページに具体例と確認問題を用意しました。本文中の用語からも該当ページへ移動できます。
 :::
 
+[具体例：入金と出金の一致をR1CS・QAP・AIRへ変換する](./balance-arithmetization) — 行列，多項式，実行トレースを数値で追い，Pythonでも再現できます。
+
 ## 本講義の位置づけと到達目標
 
 前回は，多項式が一致しているかを，ランダムな点で確かめる方法を学んだ。では，その検査をプログラムの実行結果に使うには，何を準備すればよいだろうか。今日は，**一般の計算を多項式の制約へ翻訳する算術化**を扱う。翻訳した後で何を検証するのかを意識しながら，R1CS・QAP・AIRを比較する。
@@ -95,6 +97,8 @@ $$(A \mathbf{z}) \circ (B \mathbf{z}) = (C \mathbf{z})$$
 
 <StudyDiagram id="04-1" />
 
+[入出金の具体例でR1CSへの変換を追う](./balance-arithmetization#r1cs)
+
 ---
 
 ## 4. QAP(Quadratic Arithmetic Program)
@@ -115,6 +119,8 @@ $$\left(\sum_i z_i A_i(X)\right) \left(\sum_i z_i B_i(X)\right) - \left(\sum_i z
 
 <StudyDiagram id="04-2" />
 
+[入出金の具体例でQAPへの変換を追う](./balance-arithmetization#qap)
+
 ---
 
 ## 5. AIR(Algebraic Intermediate Representation)
@@ -133,6 +139,8 @@ AIRでは次の2種類の制約を課す:
 二つの制約の役割を分けて読もう。遷移が正しくても，出発点や到達点が指定と違えば，求める計算を示したことにはならない。列を補間して多項式にすると，隣接する時刻の関係も，指定した時刻の値も，多項式の条件として扱える。第3回の補間が，ここでも表と多項式を結び付けている。
 
 <StudyDiagram id="04-3" />
+
+[入出金の具体例でAIRへの変換を追う](./balance-arithmetization#air)
 
 ### 5.3 R1CS/QAPとの比較で捉える
 

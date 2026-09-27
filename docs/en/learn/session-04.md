@@ -24,6 +24,8 @@ Last updated: September 27, 2026
 New to NP relations, circuits or constraints? Open the [Session 4 term guide](./terms/). Each of its eight explanations includes a worked example and a self-check. Links in the lecture also lead directly to the relevant page.
 :::
 
+[Worked example: balanced deposits and withdrawals → R1CS, QAP and AIR](./balance-arithmetization) — matrices, interpolated polynomials, traces and a runnable Python example.
+
 ## Context and learning objectives
 
 Last time, we learned to test polynomial identities at random points. What must we prepare to apply that test to a program’s execution? Today we study **arithmetization: translating general computation into polynomial constraints**. Compare R1CS, QAP, and AIR by asking what we will verify after the translation.
@@ -95,6 +97,8 @@ Use the relation “I know $x$ satisfying $x^3+x+5=35$.” Rather than only subs
 
 <StudyDiagram id="04-1" :en="true" />
 
+[Follow the deposit/withdrawal example: R1CS](./balance-arithmetization#r1cs)
+
 ---
 
 ## 4. QAP: Quadratic Arithmetic Program
@@ -115,6 +119,8 @@ The computation to be checked has not changed; the form of the check has. Vanish
 
 <StudyDiagram id="04-2" :en="true" />
 
+[Follow the deposit/withdrawal example: QAP](./balance-arithmetization#qap)
+
 ---
 
 ## 5. AIR: Algebraic Intermediate Representation
@@ -133,6 +139,8 @@ AIR imposes two types of constraints:
 Separate the roles of the two constraints. Correct transitions do not establish the intended computation if the starting or ending state is wrong. Interpolating columns turns both relations between adjacent times and values at specified times into polynomial conditions. Session 3’s interpolation again connects tables to polynomials.
 
 <StudyDiagram id="04-3" :en="true" />
+
+[Follow the deposit/withdrawal example: AIR](./balance-arithmetization#air)
 
 ### 5.3 Understanding AIR through comparison with R1CS/QAP
 

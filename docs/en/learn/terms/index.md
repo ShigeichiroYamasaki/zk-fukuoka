@@ -20,3 +20,7 @@ The shared arithmetic example uses $x^3+x+5=35$ over $\mathbb F_{101}$. Integer 
 | [Linear combinations, dot products, matrices and rank one](./linear-algebra) | What do the R1CS matrices select and multiply? |
 | [Interpolation, vanishing polynomials and divisibility](./polynomials) | How do many constraints become one divisibility condition? |
 | [Execution traces, states, transitions and boundaries](./execution-traces) | How is correctness expressed over time? |
+
+## Work through one program
+
+[Balanced deposits and withdrawals → R1CS / QAP / AIR](../balance-arithmetization). Apply these terms to one program and reproduce the calculation in Python.
