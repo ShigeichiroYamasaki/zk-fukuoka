@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 
 import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 </script>
@@ -45,7 +44,9 @@ First, consider how to check whether a statement is true. Even when checking the
 
 For example, consider the statement **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. If someone supplies the number 7, the verifier can check $1<7<91$ and $91=7\times13$. Here the input being checked is 91, and the witness is 7.
 
-<CaptionedTable number="01-1" caption="Statement, witness and verifier roles for the composite number 91" :en="true">
+<div class="captioned-table" id="table-01-1" role="group" aria-labelledby="table-caption-01-1">
+
+<p class="table-caption" id="table-caption-01-1"><strong>Table 01-1：Statement, witness and verifier roles for the composite number 91</strong></p>
 
 | Role | In this example |
 | --- | --- |
@@ -54,7 +55,7 @@ For example, consider the statement **“91 is composite.”** A composite numbe
 | Witness | The nontrivial divisor 7 |
 | Verification | Check that 7 is an integer strictly between 1 and 91 and divides 91 exactly |
 
-</CaptionedTable>
+</div>
 
 Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a statement, not the statement itself, and it need not be unique.** This example illustrates the role of a witness: handing over 7 does not conceal that value. However, zero-knowledge does not require hiding information easily computed from the public input, as in this small example. We define zero-knowledge next time.
 
@@ -182,7 +183,22 @@ In both settings, the verifier receives messages from the prover, asks questions
 
 First, we specify conditions for accepting true statements and rejecting false ones. Then we add the requirement of not giving the verifier extra information. This order helps us keep track of why each definition is needed.
 
-<LectureDiagram kind="motives" :en="true" />
+<span id="diagram-motives"></span>
+
+<div class="captioned-table" id="table-01-2" role="group" aria-labelledby="table-caption-01-2">
+
+<p class="table-caption" id="table-caption-01-2"><strong>Table 01-2：Two questions, one framework</strong></p>
+
+| Perspective | Question |
+| --- | --- |
+| Complexity theory | What can a limited verifier check? |
+| Cryptography | What information does checking reveal? |
+
+</div>
+
+The shared framework is an interactive proof system (P, V): exchange messages, then accept or reject.
+
+The descriptive framework is shared. Completeness, soundness and zero-knowledge are defined separately.
 
 ---
 
@@ -212,7 +228,20 @@ The definition of NP already required that no witness be accepted for a false st
 
 A verifier that accepts everything could satisfy completeness alone. A verifier that rejects everything could satisfy soundness alone. A useful verification procedure must satisfy both.
 
-<LectureDiagram kind="properties" :en="true" />
+<span id="diagram-properties"></span>
+
+<div class="captioned-table" id="table-01-3" role="group" aria-labelledby="table-caption-01-3">
+
+<p class="table-caption" id="table-caption-01-3"><strong>Table 01-3：Completeness and soundness concern different cases</strong></p>
+
+| Property | Case | Acceptance condition |
+| --- | --- | --- |
+| Completeness | x ∈ L: true statement and honest prover | Accept with high probability: Pr[accept] ≥ 1 − negl |
+| Soundness | x ∉ L: false statement and any dishonest prover | Negligible acceptance probability: Pr[accept] ≤ negl |
+
+</div>
+
+Accepting everything fails soundness; rejecting everything fails completeness. Both properties are required.
 
 ### 5.2 Proof vs argument
 
@@ -225,7 +254,22 @@ A proof requires soundness even without restricting the adversary's computationa
 
 **The A in SNARK and STARK stands for Argument.** We may call them proofs in everyday discussion, but this distinction matters when reading their mathematical guarantees. When a scheme is described as secure, ask what the adversary is assumed unable to compute and under which assumptions the guarantee holds. We will use this perspective again when comparing protocols in Act III.
 
-<LectureDiagram kind="models" :en="true" />
+<span id="diagram-models"></span>
+
+<div class="captioned-table" id="table-01-4" role="group" aria-labelledby="table-caption-01-4">
+
+<p class="table-caption" id="table-caption-01-4"><strong>Table 01-4：How powerful may a dishonest prover be?</strong></p>
+
+| Proof system | Dishonest prover’s power | Guarantee |
+| --- | --- | --- |
+| Proof | No computational bound | Statistical soundness |
+| Argument | Polynomial-time bounded | Computational soundness |
+
+</div>
+
+The A in SNARK / STARK stands for Argument.
+
+In both cases the verifier is efficient. The distinction concerns guarantees against dishonest provers, not the strength of zero-knowledge.
 
 ---
 

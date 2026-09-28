@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 10: The PCP theorem and the IOP framework — A complexity-theoretic synthesis
@@ -60,7 +59,25 @@ How can checking a few proof locations relate to optimization? Read the verifier
 
 Intuitively, constructions used in the theorem can be turned into reductions showing that distinguishing optimization instances with different optimum values—for example, instances of MAX-3SAT—is NP-hard. This yields **hardness-of-approximation** results: unless P = NP, polynomial-time algorithms cannot guarantee approximation beyond certain ratios.
 
-<StudyDiagram id="10-2" number="10-2" :en="true" />
+Represent a PCP verifier’s local tests as constraints
+
+<span id="figure-10-2"></span>
+<span id="caption-10-2"></span>
+
+<div class="captioned-table" id="table-10-2" role="group" aria-labelledby="table-caption-10-2">
+
+<p class="table-caption" id="table-caption-10-2"><strong>Table 10-2：From PCPs to a gap optimization problem</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| YES case | A true instance has a proof satisfying many tests. |
+| NO case | For a false instance, every proof fails a nontrivial fraction of tests. |
+
+</div>
+
+Difficulty distinguishing the optimum-value gap → limits on approximation
+
+Conceptual connection to hardness of approximation. Concrete gaps and approximation ratios depend on the reduction and theorem; impossibility conclusions are conditional on assumptions such as P≠NP.
 
 ### 2.2 What this connection tells us
 
@@ -82,7 +99,22 @@ A useful comparison is:
 - IP: Multiple rounds of interaction, with messages read in full.
 - IOP: Multiple rounds of interaction, with oracle access to prover messages.
 
-<StudyDiagram id="10-1" :en="true" number="10-1" />
+<span id="figure-10-1"></span>
+<span id="caption-10-1"></span>
+
+<div class="captioned-table" id="table-10-1" role="group" aria-labelledby="table-caption-10-1">
+
+<p class="table-caption" id="table-caption-10-1"><strong>Table 10-1：PCP, IP and IOP: separate access from interaction</strong></p>
+
+| Framework | Prover supplies | Verifier access |
+| --- | --- | --- |
+| PCP | One proof string | Read selected positions |
+| IP | Messages across rounds | Receive ordinary messages |
+| IOP | Oracles across rounds | Query selected positions in each oracle |
+
+</div>
+
+Few queries and zero-knowledge are different properties. An oracle represents a theoretical access model to fixed data.
 
 ### 3.2 Revisiting earlier techniques in the language of IOPs
 
@@ -95,7 +127,23 @@ For each tool, identify what it represents, what it fixes, and what it checks. T
 
 One approach designs a polynomial IOP, implements the required access using commitments, and applies Fiat–Shamir. This does not allow arbitrary IOPs and commitments to be combined without checking access types and security conditions. Groth16 in Session 11 is instead constructed directly in the CRS model. Use the map while respecting its scope.
 
-<StudyDiagram id="10-3" number="10-3" :en="true" />
+<span id="figure-10-3"></span>
+<span id="caption-10-3"></span>
+
+<div class="captioned-table" id="table-10-3" role="group" aria-labelledby="table-caption-10-3">
+
+<p class="table-caption" id="table-caption-10-3"><strong>Table 10-3：From abstract checks to a non-interactive cryptographic protocol</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Arithmetization | Translate computations into constraints and polynomial relations |
+| 2. Design IOP checks | Check degrees, relations and consistency |
+| 3. Commit to the data | Authenticate openings of tables or polynomials |
+| 4. Apply Fiat–Shamir | Derive challenges from the transcript |
+
+</div>
+
+A representative public-coin IOP / polynomial-IOP construction. Each stage needs security conditions. Groth16 does not follow this exact compilation path (Session 11).
 
 ### 3.3 Restating the SNARK/STARK comparison
 

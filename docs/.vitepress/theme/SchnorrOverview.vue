@@ -23,17 +23,6 @@ defineProps({ en: Boolean });
    </div>
   </div>
   <p class="note">{{ en ? 'Only t, c and s cross the arrows; the secret exponent is not sent. The equations are introduced in Section 4.1. Following the protocol still allows the verifier to record and analyze its view.' : '矢印で送るのは t，c，s であり，秘密の指数そのものは送らない．具体的な式は4.1節で導入する．正直な検証者も，自分が見た情報を記録して分析できる．' }}</p>
-  <div class="sequence-scroll" tabindex="0" :aria-label="en ? 'Scrollable comparison table' : '横にスクロールできる比較表'">
-   <table class="schnorr-table">
-    <caption>{{ en ? 'Table 02-10: Message generation in the real interaction and simulation' : '表 02-10：実際の対話とシミュレーションでのメッセージ生成' }}</caption>
-    <thead><tr><th scope="col">{{ en ? 'Setting' : '場面' }}</th><th scope="col">{{ en ? 'Generation order' : '生成順序' }}</th><th scope="col">{{ en ? 'Condition' : '条件' }}</th></tr></thead>
-    <tbody>
-     <tr><th scope="row">{{ en ? 'Real interaction' : '実際の対話' }}</th><td>t → c → s</td><td>{{ en ? 'Commit before receiving the challenge.' : 'チャレンジを受け取る前にコミットする．' }}</td></tr>
-     <tr><th scope="row">{{ en ? 'Honest-verifier simulation' : '正直な検証者の記録のシミュレーション' }}</th><td>(c, s) → t</td><td>{{ en ? 'Choose c and s first; derive t. Output the record in the order (t, c, s).' : 'c と s を先に選び，t を逆算する．出力する記録の並びは (t, c, s)．' }}</td></tr>
-    </tbody>
-   </table>
-  </div>
-  <p class="note">{{ en ? 'Generating a record in this different order is not the same as responding to a live verifier. This illustration alone does not prove zero-knowledge against malicious verifiers.' : '記録を別の順序で生成できることと，実際の検証者に応答できることは別である．この図だけで悪意ある検証者に対するゼロ知識性を示したことにはならない．' }}</p>
  </figure>
 </template>
 

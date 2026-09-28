@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 13: STARK
@@ -44,7 +43,23 @@ Trusted setup retains public information while requiring secret erasure. MPC dis
 
 We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does hash collision resistance alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
 
-<StudyDiagram id="13-1" number="13-2" :en="true" />
+<span id="figure-13-1"></span>
+<span id="caption-13-1"></span>
+
+<div class="captioned-table" id="table-13-2" role="group" aria-labelledby="table-caption-13-2">
+
+<p class="table-caption" id="table-caption-13-2"><strong>Table 13-2：Transparency and the guarantees of each component</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Merkle tree | Tie opened values to a previously fixed table. |
+| FRI | Test proximity to evaluations of a low-degree polynomial. |
+
+</div>
+
+Combine these with constraint and consistency checks without a secret setup
+
+Representative AIR/FRI-based STARK. Transparency alone does not uniquely require AIR or FRI.
 
 ---
 
@@ -80,7 +95,23 @@ Connect the tools into a proving procedure. Pay particular attention to which ta
 
 For zero knowledge, random masking compatible with degree bounds and constraints must also prevent the opened trace evaluations and other messages from leaking witness information. Transparency and FRI do not automatically provide zero knowledge.
 
-<StudyDiagram id="13-2" number="13-3" :en="true" />
+<span id="figure-13-2"></span>
+<span id="caption-13-2"></span>
+
+<div class="captioned-table" id="table-13-3" role="group" aria-labelledby="table-caption-13-3">
+
+<p class="table-caption" id="table-caption-13-3"><strong>Table 13-3：STARK: commit before deriving challenges</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Execute and encode | Trace → interpolation → low-degree extension → Merkle commitment |
+| 2. Combine constraints | Derive coefficients from the transcript; construct and commit quotient/composition polynomials |
+| 3. Construct FRI | Derive each folding challenge after committing its table |
+| 4. Verify jointly | Check constraint relations, table consistency, FRI and Merkle paths |
+
+</div>
+
+Non-interactive construction outline. Choose queries only after the required commitments are fixed. Zero-knowledge additionally requires masking or other suitable measures.
 
 ### 3.2 Verification cost and proof size
 
@@ -98,7 +129,22 @@ Align the fixed parameters before comparing systems. With groups and security pa
 
 The FRI-based STARKs studied here avoid trusted setup while incurring communication and verification costs for evaluations and authentication paths. **Compare setup, proof size, and verification cost for specified constructions and conditions.** This is not an impossibility theorem saying that transparent proofs must be larger, and Groth16 should not be classified as a KZG-based construction.
 
-<StudyDiagram id="13-3" :en="true" number="13-1" />
+<span id="figure-13-3"></span>
+<span id="caption-13-3"></span>
+
+<div class="captioned-table" id="table-13-1" role="group" aria-labelledby="table-caption-13-1">
+
+<p class="table-caption" id="table-caption-13-1"><strong>Table 13-1：Compare proof sizes using consistent accounting</strong></p>
+
+| Construction | Main proof components | Design conditions |
+| --- | --- | --- |
+| Groth16 | Three group elements | Circuit-specific setup |
+| KZG-based PLONK | Constant number of group elements, evaluations, etc. | Universal SRS and Fiat–Shamir |
+| FRI-based STARK | Evaluations, FRI and Merkle authentication paths | Transparent setup; count total communication |
+
+</div>
+
+Schematic comparison, not measurements or a speed ranking. Fix security parameters and account separately for public-input processing.
 
 ### 4.2 Post-quantum security
 

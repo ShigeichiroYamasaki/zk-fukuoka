@@ -9,9 +9,7 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 14: An integrated perspective — revisiting Acts I–III
@@ -46,7 +44,9 @@ First consider an honest prover following the procedure with a valid witness. Al
 
 Next consider an adversary trying to establish a false claim. Groth16, PLONK, and STARKs are arguments, providing guarantees against computationally bounded adversaries—the distinction in Session 1, Section 5.2. That classification alone does not identify their security premises. Use the table to separate the bases of each guarantee.
 
-<CaptionedTable number="14-1" caption="Assumptions and components supporting protocol soundness" :en="true">
+<div class="captioned-table" id="table-14-1" role="group" aria-labelledby="table-caption-14-1">
+
+<p class="table-caption" id="table-caption-14-1"><strong>Table 14-1：Assumptions and components supporting protocol soundness</strong></p>
 
 | Protocol | Main premises and components for reading its security analysis |
 | --- | --- |
@@ -54,7 +54,7 @@ Next consider an adversary trying to establish a false claim. Groth16, PLONK, an
 | KZG-based PLONK | Polynomial-IOP soundness, commitment security of KZG, and Fiat–Shamir analysis in the ROM; knowledge soundness also requires the applicable extraction conditions |
 | AIR/FRI-based STARK | AIR constraint/consistency checks, FRI soundness, hash collision resistance for Merkle binding, and Fiat–Shamir analysis in the ROM |
 
-</CaptionedTable>
+</div>
 
 This table guides the reading of security proofs; listing assumptions and models does not itself prove security. See the [Groth16 paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf) and [Sessions 11](./session-11), [12](./session-12), and [13](./session-13) for the constructions.
 
@@ -74,7 +74,23 @@ In Session 2, two accepting Schnorr transcripts sharing the first commitment but
 
 Groth16's generic-group analysis, PLONK's polynomial-commitment construction, and STARK's coding-theoretic construction cannot all be described as generalizations of rewinding or the forking lemma. Identify what is extracted, which access the extractor has, and which assumptions it uses.
 
-<StudyDiagram id="14-1" :en="true" number="14-2" />
+<span id="figure-14-1"></span>
+<span id="caption-14-1"></span>
+
+<div class="captioned-table" id="table-14-2" role="group" aria-labelledby="table-caption-14-2">
+
+<p class="table-caption" id="table-caption-14-2"><strong>Table 14-2：Read security through four questions</strong></p>
+
+| Property | Question to ask |
+| --- | --- |
+| Completeness | Does honest execution with a valid witness accept? |
+| Soundness | Who can make a false statement accept, and with what probability? |
+| Zero-knowledge | Can the view be simulated without the witness? |
+| Knowledge soundness | Under what access and assumptions can a witness be extracted? |
+
+</div>
+
+For every construction, check the mechanisms and assumptions for each property separately. Establishing one property does not establish the others.
 
 ---
 
@@ -82,7 +98,9 @@ Groth16's generic-group analysis, PLONK's polynomial-commitment construction, an
 
 Now shift from properties to tools. Even the same finite fields and polynomials can serve different checks. In the table below, go beyond naming a tool: explain which proving or verification operation each entry represents.
 
-<CaptionedTable number="14-3" caption="How Act II tools map to each protocol" :en="true">
+<div class="captioned-table" id="table-14-3" role="group" aria-labelledby="table-caption-14-3">
+
+<p class="table-caption" id="table-caption-14-3"><strong>Table 14-3：How Act II tools map to each protocol</strong></p>
 
 | Tool (session) | Groth16 | PLONK | STARK |
 | --- | --- | --- | --- |
@@ -95,11 +113,26 @@ Now shift from properties to tools. Even the same finite fields and polynomials 
 | Fiat–Shamir and ROM (9) | Not used: directly non-interactive in the CRS model | Used | Used |
 | PCP/IOP (10) | Theoretical background | Explicit IOP design framework | Explicit IOP design framework |
 
-</CaptionedTable>
+</div>
 
 Sharing tools does not make entire constructions equivalent. Groth16 and KZG-based PLONK both use pairings, but Groth16 does not incorporate KZG openings. In a STARK, Merkle trees fix tables while FRI checks low-degree proximity. Read across and down the table to check these different roles.
 
-<StudyDiagram id="14-2" :en="true" number="14-4" />
+<span id="figure-14-2"></span>
+<span id="caption-14-2"></span>
+
+<div class="captioned-table" id="table-14-4" role="group" aria-labelledby="table-caption-14-4">
+
+<p class="table-caption" id="table-caption-14-4"><strong>Table 14-4：Shared tools, different constructions</strong></p>
+
+| Construction | Arithmetization | Checking tools | Non-interactivity |
+| --- | --- | --- | --- |
+| Groth16 | QAP | Circuit-specific keys and pairings | Directly in the CRS model |
+| PLONK | PLONKish | KZG | Fiat–Shamir |
+| STARK | AIR | Merkle + FRI | Fiat–Shamir |
+
+</div>
+
+Do not classify Groth16 as a KZG application or a Fiat–Shamir compilation. The table describes the representative constructions taught here.
 
 ---
 
@@ -109,7 +142,9 @@ All three systems can handle general NP relations. Does that make them interchan
 
 Fix groups and security parameters when considering scaling with circuit or trace size. Account separately for public-input processing.
 
-<CaptionedTable number="14-5" caption="Comparing Groth16, KZG-based PLONK and AIR/FRI-based STARK" :en="true">
+<div class="captioned-table" id="table-14-5" role="group" aria-labelledby="table-caption-14-5">
+
+<p class="table-caption" id="table-caption-14-5"><strong>Table 14-5：Comparing Groth16, KZG-based PLONK and AIR/FRI-based STARK</strong></p>
 
 | Property | Groth16 | KZG-based PLONK | AIR/FRI-based STARK |
 | --- | --- | --- | --- |
@@ -119,7 +154,7 @@ Fix groups and security parameters when considering scaling with circuit or trac
 | Post-quantum security | Not secure against sufficiently large quantum computers | Not secure against sufficiently large quantum computers | Requires suitable hashes, parameters, and security analysis in a quantum model |
 | Assessing prover cost | Measure QAP processing, group operations, and related work | Measure polynomial processing, commitments, and related work | Measure trace processing, low-degree extension, hashing, FRI, and related work |
 
-</CaptionedTable>
+</div>
 
 STARK costs depend on query counts and authentication paths, not just FRI rounds. Prover speed depends on circuits, trace width, implementation, hardware, memory, and security parameters; this table establishes no universal speed ranking. Hashing alone does not establish post-quantum security of a non-interactive STARK (Session 13, Section 4.2).
 
@@ -138,7 +173,23 @@ Imagine choosing a scheme for each situation below. Give more than its name: exp
 
 If groups reach different conclusions, compare their premises first. One may prioritize verification cost, another setup or long-term security. Asking which changed condition would change the decision is a practical way to understand the tradeoffs.
 
-<StudyDiagram id="14-3" number="14-6" :en="true" />
+<span id="figure-14-3"></span>
+<span id="caption-14-3"></span>
+
+<div class="captioned-table" id="table-14-6" role="group" aria-labelledby="table-caption-14-6">
+
+<p class="table-caption" id="table-caption-14-6"><strong>Table 14-6：Fix evaluation conditions before choosing a system</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Set requirements | Is a secret setup acceptable? Which security properties are required? |
+| 2. Identify constraints | Which of proving time, verification time, communication or memory is limiting? |
+| 3. Measure under matched conditions | Match circuit, hardware, public inputs and security parameters. |
+| 4. Choose with evidence | Explain the improvement and the costs or assumptions accepted. |
+
+</div>
+
+There is no universal ranking. Compare end-to-end costs for the same computation and security conditions.
 
 ---
 

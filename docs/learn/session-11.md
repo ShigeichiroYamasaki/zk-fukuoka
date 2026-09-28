@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第11回:Groth16
@@ -66,7 +65,22 @@ $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
 という形で，指数の**積**を対象群 $G_T$ の要素として扱える．これが第7回の「ペアリングが与える乗法的な検証能力」である．ただし，この性質だけで証明系が完成するわけではなく，QAP・公開入力・ウィットネスの整合性を保証する鍵の構造と，ゼロ知識性のためのランダム化が必要になる．
 
-<StudyDiagram id="11-1" number="11-2" />
+<span id="figure-11-1"></span>
+<span id="caption-11-1"></span>
+
+<div class="captioned-table" id="table-11-2" role="group" aria-labelledby="table-caption-11-2">
+
+<p class="table-caption" id="table-caption-11-2"><strong>表 11-2：QAPの積を，対象群の等式に移す</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 確認したい関係 | A(τ)B(τ) = C(τ) + H(τ)Z(τ) |
+| 2. 群要素で値を扱う | g₁^&#123;A(τ)&#125;，g₂^&#123;B(τ)&#125; |
+| 3. 双線形性で積を検査 | e(g₁^&#123;A(τ)&#125;, g₂^&#123;B(τ)&#125;) = e(g₁,g₂)^&#123;A(τ)B(τ)&#125; |
+
+</div>
+
+発想を整理した表．この式だけではGroth16の健全性もゼロ知識性も得られない．実際の構成は回路固有の鍵・追加項・乱数化を使う．
 
 ---
 
@@ -98,7 +112,23 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\
 
 証明は**3つの群要素**であり，その要素数は回路サイズやウィットネス長に依存しない．ペアリングの回数も定数で，$e([\alpha]_1,[\beta]_2)$ を事前計算すれば，実行時は3回のペアリングで等式を評価できる．一方，$\mathrm{IC}$ の計算には公開入力数 $\ell$ に比例する群演算が必要なので，**検証全体は公開入力数によらない定数時間ではない**．群と安全性パラメータを固定した場合，公開入力の処理と定数回のペアリングからなる．[原論文の構成と効率の説明](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf)を参照．
 
-<StudyDiagram id="11-2" number="11-1" />
+<span id="figure-11-2"></span>
+<span id="caption-11-2"></span>
+
+<div class="captioned-table" id="table-11-1" role="group" aria-labelledby="table-caption-11-1">
+
+<p class="table-caption" id="table-caption-11-1"><strong>表 11-1：Groth16の検証式：各項が担う役割</strong></p>
+
+| 項 | 読むポイント |
+| --- | --- |
+| e(A, B) | 証明の二つの群要素を組み合わせる |
+| e([α]₁, [β]₂) | 検証鍵に含まれる固定の項 |
+| e(IC, [γ]₂) | 公開入力からICを計算して結び付ける |
+| e(C, [δ]₂) | 証明の残りの項との整合性を確認する |
+
+</div>
+
+検証式は e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂)．A,B,Cは証明の群要素であり，QAP多項式と区別する．ペアリング回数は定数でも，公開入力の処理は残る．
 
 ---
 
@@ -112,7 +142,22 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\
 
 回路を変えると，何を作り直す必要があるだろうか．Groth16では，回路を表すQAPの情報が鍵に入っているため，新しい回路に対応する証明鍵・検証鍵が必要になる．複数回路で共有できる準備段階があっても，回路固有の段階は残る．この運用上の負担を減らすことが，次回のPLONKで汎用SRSを考える動機になる．
 
-<StudyDiagram id="11-3" number="11-3" />
+<span id="figure-11-3"></span>
+<span id="caption-11-3"></span>
+
+<div class="captioned-table" id="table-11-3" role="group" aria-labelledby="table-caption-11-3">
+
+<p class="table-caption" id="table-caption-11-3"><strong>表 11-3：回路固有の鍵と，残してはいけない秘密</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 回路とセットアップ | 回路のQAPと秘密の乱数から鍵を生成する |
+| 2. 公開するもの／破棄するもの | 証明鍵・検証鍵を残す．秘密のトラップドアを消去する． |
+| 3. 回路を変えたら | 対応する回路固有の鍵を準備し直す |
+
+</div>
+
+秘密のトラップドアはτだけではない．MPCでは所定の正直性・消去条件を必要とする．共有できる準備段階があっても，Groth16の回路固有の段階は残る．
 
 ### 4.3 安全性の根拠:汎用双線形群モデル
 

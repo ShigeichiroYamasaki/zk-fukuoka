@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
@@ -63,7 +62,21 @@ $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
 This equation describes checking the claim $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
 
-<StudyDiagram id="08-1" number="08-3" :en="true" />
+<span id="figure-08-1"></span>
+<span id="caption-08-1"></span>
+
+<div class="captioned-table" id="table-08-3" role="group" aria-labelledby="table-caption-08-3">
+
+<p class="table-caption" id="table-caption-08-3"><strong>Table 08-3：Binding and hiding are separate requirements</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Binding: constrain the sender | The same commitment cannot be opened inconsistently to a different value. |
+| Hiding: limit the receiver | The commitment does not reveal which hidden value was committed. |
+
+</div>
+
+Binding does not imply hiding. Polynomial commitments additionally support verification of evaluations at chosen points.
 
 ---
 
@@ -95,7 +108,22 @@ $$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
 Write the preceding generator $g$ as $g_1\in G_1$ and include $g_2,g_2^\tau\in G_2$ in the verifier parameters. Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point.
 
-<StudyDiagram id="08-2" number="08-4" :en="true" />
+<span id="figure-08-2"></span>
+<span id="caption-08-2"></span>
+
+<div class="captioned-table" id="table-08-4" role="group" aria-labelledby="table-caption-08-4">
+
+<p class="table-caption" id="table-caption-08-4"><strong>Table 08-4：KZG: check divisibility with a pairing</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Commit to the polynomial | C = g₁^&#123;f(τ)&#125; |
+| 2. Prove the evaluation f(x)=y | q(X) = (f(X)−y)/(X−x), π = g₁^&#123;q(τ)&#125; |
+| 3. Check the pairing equation | e(C·g₁^&#123;−y&#125;, g₂) = e(π, g₂^τ·g₂^&#123;−x&#125;) |
+
+</div>
+
+Typed-group notation: use the required G₁ powers in the SRS and g₂, g₂^τ in G₂. Basic KZG does not automatically provide hiding.
 
 ### 2.4 Security foundations
 
@@ -160,7 +188,9 @@ $$D=\{1,2,4,8,16,15,13,9\}.$$
 
 The opening point 3 lies outside this domain. This example separates table authentication, quotient consistency, and low-degree testing; a practical scheme also specifies their composition and soundness parameters.
 
-<CaptionedTable number="08-2" caption="Polynomial and opening-quotient evaluations, modulo 17" :en="true">
+<div class="captioned-table" id="table-08-2" role="group" aria-labelledby="table-caption-08-2">
+
+<p class="table-caption" id="table-caption-08-2"><strong>Table 08-2：Polynomial and opening-quotient evaluations, modulo 17</strong></p>
 
 | Point $t$ | $f(t)=t^2+2t+3$ | $q(t)=t+5$ |
 |---:|---:|---:|
@@ -173,7 +203,7 @@ The opening point 3 lies outside this domain. This example separates table authe
 | 13 | 11 | 1 |
 | 9 | 0 | 14 |
 
-</CaptionedTable>
+</div>
 
 **Fix the table.** Build a Merkle tree of the eight $f$ values and send its root $R_f$. Fix the order and bind each leaf to its position, for example with $h_i=\operatorname{Hash}(\text{leaf},i,f(t_i))$ and internal nodes $\operatorname{Hash}(\text{node},\text{left},\text{right})$, using distinct tags and unambiguous encodings. To open value 11 at $t=2$ in this eight-leaf tree, send 11 and three sibling hashes. The verifier reconstructs the root using the left/right positions.
 
@@ -211,7 +241,9 @@ The transmitted objects include the initial root $R_f$, the claimed value 1, and
 
 ## 4. Comparing KZG and FRI-based commitments
 
-<CaptionedTable number="08-1" caption="Comparing KZG and FRI-based polynomial commitments" :en="true">
+<div class="captioned-table" id="table-08-1" role="group" aria-labelledby="table-caption-08-1">
+
+<p class="table-caption" id="table-caption-08-1"><strong>Table 08-1：Comparing KZG and FRI-based polynomial commitments</strong></p>
 
 | | KZG commitments | FRI-based commitments |
 |---|---|---|
@@ -220,7 +252,7 @@ The transmitted objects include the initial root $R_f$, the claimed value 1, and
 | Evaluation correctness | Evaluation binding under a degree-appropriate SDH assumption | Table binding + FRI soundness + consistency with the evaluation claim |
 | Evaluation-proof size | Constant number of group elements for a fixed group | Count queried values and Merkle paths; polylogarithmic in representative constructions |
 
-</CaptionedTable>
+</div>
 
 Compare what is fixed, what is checked, and which assumptions are used. Folding depth is distinct from total proof size including authentication paths and queries. Non-interactivity and knowledge extraction require additional security conditions beyond evaluation binding. Act III compares KZG-based PLONK with representative FRI-based STARKs. Groth16 uses pairings but does not incorporate KZG as a component; preserve that distinction when reading the constructions.
 

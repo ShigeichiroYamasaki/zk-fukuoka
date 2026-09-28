@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第10回:PCP定理とIOPの枠組み — 計算量理論的総括
@@ -60,7 +59,25 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 直感的には，PCP定理の証明の構成そのものが，「ある最適化問題(たとえばMAX-3SATなど)に対して，真の最適値と，それに近い値とを区別することがNP困難である」ということを示す構成に転用できる．これにより，「P≠NPのもとでは，問題と帰着で定まる近似率を保証する多項式時間アルゴリズムは存在しない」という**近似困難性(hardness of approximation)**の結果が，PCP定理から導かれることになった．
 
-<StudyDiagram id="10-2" number="10-2" />
+PCP検証者の局所的な検査を，制約として表す
+
+<span id="figure-10-2"></span>
+<span id="caption-10-2"></span>
+
+<div class="captioned-table" id="table-10-2" role="group" aria-labelledby="table-caption-10-2">
+
+<p class="table-caption" id="table-caption-10-2"><strong>表 10-2：PCPからギャップのある最適化問題へ</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| YES側 | 正しい言明には，多くの検査を満たす証明がある． |
+| NO側 | 誤った言明では，どの証明にも一定割合の失敗が残る． |
+
+</div>
+
+最適値のギャップを見分ける難しさ → 近似の限界
+
+近似困難性への概念的な対応．具体的なギャップや近似率は帰着と定理に依存する．多項式時間で解けないという結論にはP≠NP等の条件が伴う．
 
 ### 2.2 この事実が伝えること
 
@@ -82,7 +99,22 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 という位置づけで整理すると理解しやすい．
 
-<StudyDiagram id="10-1" number="10-1" />
+<span id="figure-10-1"></span>
+<span id="caption-10-1"></span>
+
+<div class="captioned-table" id="table-10-1" role="group" aria-labelledby="table-caption-10-1">
+
+<p class="table-caption" id="table-caption-10-1"><strong>表 10-1：PCP・IP・IOP：読む量と対話を切り分ける</strong></p>
+
+| 枠組み | 証明者が用意するもの | 検証者のアクセス |
+| --- | --- | --- |
+| PCP | 一つの証明文字列 | 選んだ位置だけ読む |
+| IP | 対話の各メッセージ | 通常のメッセージとして受け取る |
+| IOP | 各ラウンドのオラクル | 各オラクルの選んだ位置を読む |
+
+</div>
+
+問い合わせの少なさとゼロ知識性は別の性質．オラクルは固定されたデータへの問い合わせを表す理論的なアクセスモデル．
 
 ### 3.2 これまで学んだ技法をIOPの言葉で振り返る
 
@@ -95,7 +127,23 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 このように，多項式IOPを設計し，コミットメントで必要なアクセスを実装し，Fiat-Shamirで非対話化する，という組み立て方がある．ただし，任意のIOPを任意のコミットメントと組み合わせればよいわけではない．アクセスの種類や安全性条件を合わせる必要がある．また，第11回のGroth16はこの手順をそのまま使う方式ではなく，CRSモデルで直接構成される．見取り図の共通点と適用範囲を分けて使おう．
 
-<StudyDiagram id="10-3" number="10-3" />
+<span id="figure-10-3"></span>
+<span id="caption-10-3"></span>
+
+<div class="captioned-table" id="table-10-3" role="group" aria-labelledby="table-caption-10-3">
+
+<p class="table-caption" id="table-caption-10-3"><strong>表 10-3：抽象的な検査を，非対話の暗号プロトコルへ</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 算術化 | 計算を制約と多項式の関係へ |
+| 2. IOPの検査を設計 | 次数・関係式・整合性を検査する |
+| 3. コミットメントで固定 | 表または多項式に対する認証された開示 |
+| 4. Fiat–Shamirで非対話化 | トランスクリプトからチャレンジを導出 |
+
+</div>
+
+代表的な公開コインIOP／多項式IOPの構成手順．各段階の安全性条件が必要．Groth16をこの変換列そのものとして扱わない（第11回）．
 
 ### 3.3 STARKとSNARKの違いをIOPの言葉で言い直す
 

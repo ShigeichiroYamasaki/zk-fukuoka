@@ -9,9 +9,7 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第14回:統合的視点 — 幕I〜IIIの往還
@@ -46,7 +44,9 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 次に，間違った言明を通そうとする相手を考える．Groth16・PLONK・STARKはいずれもArgumentであり，計算能力を制限した相手への保証を扱う．第1回5.2節の区別である．しかし，「Argumentである」という分類だけでは，どの前提で安全なのかは分からない．表では，方式ごとの根拠を分けて確認しよう．
 
-<CaptionedTable number="14-1" caption="各プロトコルの健全性を支える前提と構成要素">
+<div class="captioned-table" id="table-14-1" role="group" aria-labelledby="table-caption-14-1">
+
+<p class="table-caption" id="table-caption-14-1"><strong>表 14-1：各プロトコルの健全性を支える前提と構成要素</strong></p>
 
 | プロトコル | 健全性を読む際の主な前提・構成要素 |
 | --- | --- |
@@ -54,7 +54,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 | KZG型PLONK | 多項式IOPの健全性，KZGによるコミットメントの安全性，およびFiat-ShamirのROMでの解析．知識の健全性には抽出の条件も確認する |
 | AIR・FRI型STARK | AIRの制約・整合性検査とFRIの健全性，Merkle木の拘束性を支えるハッシュの衝突耐性，およびFiat-ShamirのROMでの解析 |
 
-</CaptionedTable>
+</div>
 
 表は安全性証明を読むための見取り図であり，仮定やモデルを列挙するだけで証明が完成するわけではない．Groth16のモデルについては[原論文](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf)，各構成の詳細は[第11回](./session-11)・[第12回](./session-12)・[第13回](./session-13)を参照する．
 
@@ -74,7 +74,23 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 Groth16の汎用群モデルでの解析，PLONKの多項式コミットメントを用いる構成，STARKの符号理論的な構成を，すべてrewindingやforking lemmaの一般化として説明することはできない．知識の健全性を読む際は，何が抽出されるか，抽出者にどのアクセスが許されるか，どの仮定を使うかを区別する．
 
-<StudyDiagram id="14-1" number="14-2" />
+<span id="figure-14-1"></span>
+<span id="caption-14-1"></span>
+
+<div class="captioned-table" id="table-14-2" role="group" aria-labelledby="table-caption-14-2">
+
+<p class="table-caption" id="table-caption-14-2"><strong>表 14-2：四つの問いで，安全性の説明を読む</strong></p>
+
+| 性質 | 確認する問い |
+| --- | --- |
+| 完全性 | 正しいウィットネスで正直に実行すれば受理されるか |
+| 健全性 | 誤った言明を誰が，どの確率で通せるか |
+| ゼロ知識性 | ウィットネスなしでviewを再現できるか |
+| 知識の健全性 | どのアクセス・仮定でウィットネスを抽出できるか |
+
+</div>
+
+いずれの方式でも，各性質を成立させる構成と仮定を個別に確認する．一つの性質だけでは他の性質を示したことにならない．
 
 ---
 
@@ -82,7 +98,9 @@ Groth16の汎用群モデルでの解析，PLONKの多項式コミットメン�
 
 次は性質から道具へ視点を移そう．同じ有限体や多項式でも，どの関係を検査するために使うかが異なる．以下の表では，道具の名前を確認するだけでなく，各欄が証明生成や検証のどの作業に対応するかを説明してみよう．
 
-<CaptionedTable number="14-3" caption="幕IIの道具と各プロトコルの対応">
+<div class="captioned-table" id="table-14-3" role="group" aria-labelledby="table-caption-14-3">
+
+<p class="table-caption" id="table-caption-14-3"><strong>表 14-3：幕IIの道具と各プロトコルの対応</strong></p>
 
 | 道具(講義回)                           | Groth16                                          | PLONK                                              | STARK                                |
 | -------------------------------------- | ------------------------------------------------ | -------------------------------------------------- | ------------------------------------ |
@@ -95,11 +113,26 @@ Groth16の汎用群モデルでの解析，PLONKの多項式コミットメン�
 | Fiat-Shamir・ROM(第9回)                | 使用しない(CRSモデルで直接非対話) | 使用する                                           | 使用する                             |
 | PCP/IOP(第10回)                        | 理論的背景として                                 | IOP設計の枠組みとして明示的                        | IOP設計の枠組みとして明示的          |
 
-</CaptionedTable>
+</div>
 
 共通の道具があっても，構成全体が同じとは限らない．Groth16とKZG型PLONKはペアリングを共有するが，前者にKZGの開示証明を組み込んでいるわけではない．STARKでは，表を固定するMerkle木と，低次数近接性を調べるFRIが別の仕事をしている．表の横方向と縦方向を往復して，この役割の違いを確認しよう．
 
-<StudyDiagram id="14-2" number="14-4" />
+<span id="figure-14-2"></span>
+<span id="caption-14-2"></span>
+
+<div class="captioned-table" id="table-14-4" role="group" aria-labelledby="table-caption-14-4">
+
+<p class="table-caption" id="table-caption-14-4"><strong>表 14-4：共通の道具を，異なる構成に組み合わせる</strong></p>
+
+| 構成 | 算術化 | 検証を支える道具 | 非対話性 |
+| --- | --- | --- | --- |
+| Groth16 | QAP | 回路固有の鍵・ペアリング | CRSモデルで直接 |
+| PLONK | PLONKish | KZG | Fiat–Shamir |
+| STARK | AIR | Merkle + FRI | Fiat–Shamir |
+
+</div>
+
+Groth16をKZGの応用やFiat–Shamirの変換結果として分類しない．表は本講義で扱った代表構成についてのもの．
 
 ---
 
@@ -109,7 +142,9 @@ Groth16の汎用群モデルでの解析，PLONKの多項式コミットメン�
 
 群・安全性パラメータを固定し，回路やトレースの規模に対する傾向を整理する．ただし，公開入力の処理コストは別に考慮する．
 
-<CaptionedTable number="14-5" caption="Groth16・KZG型PLONK・AIR／FRI型STARKの比較">
+<div class="captioned-table" id="table-14-5" role="group" aria-labelledby="table-caption-14-5">
+
+<p class="table-caption" id="table-caption-14-5"><strong>表 14-5：Groth16・KZG型PLONK・AIR／FRI型STARKの比較</strong></p>
 
 | 比較する性質 | Groth16 | KZG型PLONK | AIR・FRI型STARK |
 | --- | --- | --- | --- |
@@ -119,7 +154,7 @@ Groth16の汎用群モデルでの解析，PLONKの多項式コミットメン�
 | ポスト量子安全性 | 大規模な量子計算機に対して安全でない | 大規模な量子計算機に対して安全でない | 適切なハッシュ・パラメータと，量子モデルでの安全性解析が必要 |
 | 証明者コストの評価 | QAP処理・群演算等を測定 | 多項式処理・コミットメント等を測定 | トレース処理・低次数拡張・ハッシュ・FRI等を測定 |
 
-</CaptionedTable>
+</div>
 
 STARKのコストはFRIの段階数だけでは決まらず，問い合わせ回数や認証経路にも依存する．証明者の速度は，回路・トレース幅・実装・ハードウェア・メモリ・安全性パラメータで変わるため，上の表から一般的な速度順位を導くことはできない．また，ハッシュを用いるだけで非対話型STARKのポスト量子安全性が自動的に得られるわけではない(第13回4.2節)．
 
@@ -138,7 +173,23 @@ STARKのコストはFRIの段階数だけでは決まらず，問い合わせ回
 
 グループで結論が違ったら，まず前提を比べてみよう．あるグループは検証費用を，別のグループはセットアップや長期安全性を重視しているかもしれない．どの条件を変えると結論が変わるかを確認することが，トレードオフを理解する練習になる．
 
-<StudyDiagram id="14-3" number="14-6" />
+<span id="figure-14-3"></span>
+<span id="caption-14-3"></span>
+
+<div class="captioned-table" id="table-14-6" role="group" aria-labelledby="table-caption-14-6">
+
+<p class="table-caption" id="table-caption-14-6"><strong>表 14-6：方式を選ぶ前に，評価条件を固定する</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 要求を決める | 秘密のセットアップは許容できるか．どの安全性が必要か． |
+| 2. 制約を決める | 生成時間・検証時間・通信量・メモリのどれが限界か． |
+| 3. 条件を揃えて測る | 回路・ハードウェア・公開入力・安全性パラメータを揃える． |
+| 4. 根拠を示して選ぶ | 何を改善し，何を引き受けたかを説明する． |
+
+</div>
+
+選択肢は一律に順位付けできない．同じ計算・安全性条件で，全体のコストを比較する．
 
 ---
 

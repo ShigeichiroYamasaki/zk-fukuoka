@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -88,7 +87,22 @@ $$e: G_1 \times G_2 \to G_T$$
 
 これは通常の離散対数ベースの群演算(加法的な構造しか持たない)では実現できない，**乗法的な検証能力**である．Groth16をはじめとするSNARKの多くが，QAP(第4回)における多項式の乗算関係を，まさにこのペアリングの性質を使って検証している．この点は幕IIIでGroth16を読む際に決定的に重要になるので，ここで強調しておく．
 
-<StudyDiagram id="07-2" number="07-2" />
+<span id="figure-07-2"></span>
+<span id="caption-07-2"></span>
+
+<div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
+
+<p class="table-caption" id="table-caption-07-2"><strong>表 07-2：ペアリングで，指数の積を扱う</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 二つの群の入力 | aP ∈ G₁，bQ ∈ G₂ |
+| 2. 双線形写像を適用 | e(aP, bQ) |
+| 3. 対象群の関係 | e(aP, bQ) = e(P, Q)ᵃᵇ ∈ G\_T |
+
+</div>
+
+G₁とG₂は加法表記，G\_Tは乗法表記．aやbを復元する手順ではなく，群で符号化された値の関係を検証する能力を示す．
 
 ### 2.4 座標の体，スカラー体，三つの群を区別する {#pairing-math}
 
@@ -100,7 +114,9 @@ $$[a]_1=aP，\qquad [b]_2=bQ，\qquad g_T=e(P,Q)，\qquad [c]_T=g_T^c.$$
 
 $G_1,G_2$ は加法記法，$G_T$ は乗法記法で書く．第11回の $[a]_1=g^a$ などは，同じ構造を乗法記法で書いたものである．記法が変わっても，符号化されたスカラーの意味は変わらない．
 
-<CaptionedTable number="07-1" caption="ペアリングの入力・出力と，スカラーに対応する演算">
+<div class="captioned-table" id="table-07-1" role="group" aria-labelledby="table-caption-07-1">
+
+<p class="table-caption" id="table-caption-07-1"><strong>表 07-1：ペアリングの入力・出力と，スカラーに対応する演算</strong></p>
 
 | 対象 | 記法と演算 | スカラーでの意味 |
 |---|---|---|
@@ -109,7 +125,7 @@ $G_1,G_2$ は加法記法，$G_T$ は乗法記法で書く．第11回の $[a]_1=
 | $G_T$ | $[a]_T[b]_T=[a+b]_T$ | 指数の和 |
 | ペアリング | $e([a]_1,[b]_2)=[ab]_T$ | 二つのスカラーの積 |
 
-</CaptionedTable>
+</div>
 
 実用的な非対称ペアリングでは，$G_1$ の点をそのまま $G_2$ の入力位置へ置けるわけではない．$G_2$ は拡大体上の曲線やそのツイストを用いて表され，$G_T$ は適切な拡大体 $\mathbb F_{p^k}$ の乗法群の位数 $q$ の部分群になる．埋め込み次数 $k$ は $q\mid(p^k-1)$ を満たす最小の正整数であり，対象群をどの拡大体で扱うかに関係する．
 
@@ -226,7 +242,22 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\,
 
 この構成ができれば，「$P$ が困難である」という仮定のもとで，「$\Pi$ を破ることも困難である」という結論が導かれる．これが**還元証明**の基本形である．
 
-<StudyDiagram id="07-3" number="07-3" />
+<span id="figure-07-3"></span>
+<span id="caption-07-3"></span>
+
+<div class="captioned-table" id="table-07-3" role="group" aria-labelledby="table-caption-07-3">
+
+<p class="table-caption" id="table-caption-07-3"><strong>表 07-3：還元証明は，攻撃者を別の問題の解法へ変える</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 仮にプロトコルを破るAがあれば | その入力・出力を利用する |
+| 2. 還元アルゴリズムBを構成 | Aを部品として困難な問題を解く |
+| 3. 困難性仮定と矛盾するか調べる | Bの計算量と成功確率を評価する |
+
+</div>
+
+安全性は仮定・モデル・還元の損失とともに読む．DL，q-SDH，KEAを一列の単純な強弱ランキングを示すものではない．
 
 ### 4.2 なぜこの形式が重要か
 

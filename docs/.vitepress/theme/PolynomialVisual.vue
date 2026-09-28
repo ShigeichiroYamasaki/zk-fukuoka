@@ -40,8 +40,6 @@ const value = x => interpolation.value ? quadratic(x) : difference(x);
    </svg>
   </div>
   <p v-if="interpolation && showBasis" class="legend">━━ f　<span class="c0">┄ ℓ₀</span>　<span class="c1">┄ 2ℓ₁</span>　<span class="c2">┄ 5ℓ₂</span></p>
-  <div class="pv-scroll"><table v-if="interpolation"><caption>{{ tx('表 03-1：補間点における重み付き基底と多項式の値', 'Table 03-1: Weighted basis and polynomial values at interpolation points') }}</caption><thead><tr><th>x</th><th>ℓ₀(x)</th><th>2ℓ₁(x)</th><th>5ℓ₂(x)</th><th>f(x)</th></tr></thead><tbody><tr v-for="x in xs" :key="x"><th>{{ x }}</th><td v-for="(b,i) in basis" :key="i">{{ b(x) }}</td><td>{{ value(x) }}</td></tr></tbody></table>
-   <table v-else><caption>{{ tx('表 03-2：検査候補点と差の多項式の値', 'Table 03-2: Candidate test points and values of the difference polynomial') }}</caption><tbody><tr><th>x</th><td v-for="x in xs" :key="x">{{ x }}</td></tr><tr><th>h(x)</th><td v-for="x in xs" :key="x">{{ value(x) }}</td></tr></tbody></table></div>
   <p class="note">{{ interpolation ? tx('曲線は実数上の例である．有限体でも同じ補間公式を使えるが，座標は離散的な元であり，滑らかな曲線では結ばない．', 'This continuous curve is over the reals. The same interpolation formula works over finite fields, but field elements are discrete and are not joined by a smooth curve.') : tx('見逃す確率は 2/7 = d/|S|．それ以外の5点では違いを検出する．実数全体から選ぶのではなく，有限集合Sの7点から選ぶ例である．', 'The miss probability is 2/7 = d/|S|. The other five points detect a difference. Sampling is from the seven-point finite set S, not from all real numbers.') }}</p>
  </figure>
  <figure v-if="!interpolation" class="pv" aria-labelledby="pv-grid">

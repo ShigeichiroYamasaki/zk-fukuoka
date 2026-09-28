@@ -7,9 +7,7 @@ next: false
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第15回(最終回):発展の方向性
@@ -50,7 +48,22 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 この問題に取り組む道具の一つが**楕円曲線のサイクル**である．2曲線のサイクルでは，一方の曲線の基礎体が他方のスカラー体に対応し，その逆も成り立つ．この対応は群演算を回路で扱う際に有用で，ペアリングを使わない再帰でも利用される．「ペアリング演算を効率化する曲線ペア」だけを意味せず，すべての再帰的構成が曲線サイクルを必要とするわけでもない．[Nova原論文](https://eprint.iacr.org/2021/370)も参照する．
 
-<StudyDiagram id="15-1" number="15-3" />
+<span id="figure-15-1"></span>
+<span id="caption-15-1"></span>
+
+<div class="captioned-table" id="table-15-3" role="group" aria-labelledby="table-caption-15-3">
+
+<p class="table-caption" id="table-caption-15-3"><strong>表 15-3：再帰：前の証明の検証を，次の計算に含める</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 前の結果 | 状態sᵢと，その履歴の証明πᵢ |
+| 2. 次の証明対象 | πᵢの検証 ＋ sᵢ → sᵢ₊₁ の正しい実行 |
+| 3. 新しい結果 | 状態sᵢ₊₁と証明πᵢ₊₁を次のステップへ |
+
+</div>
+
+各時点までの有限の履歴を扱う手順．公開状態とステップの連鎖を正しく結び付ける必要がある．検証回路の効率は群や体の選択にも依存する．
 
 ---
 
@@ -70,7 +83,22 @@ folding単体で簡潔なゼロ知識証明が完成するわけではない．�
 
 第6回のFRIも「折り畳み」という操作を使うが，FRIは低次数近接性を検査するために多項式の次数を縮小し，Novaは制約充足のインスタンスを集約する．段階的な処理という直感は共通していても，同じプロトコルや同じ健全性証明を使うという意味ではない．
 
-<StudyDiagram id="15-2" number="15-4" />
+<span id="figure-15-2"></span>
+<span id="caption-15-2"></span>
+
+<div class="captioned-table" id="table-15-4" role="group" aria-labelledby="table-caption-15-4">
+
+<p class="table-caption" id="table-caption-15-4"><strong>表 15-4：Folding・IVC・圧縮を，別の役割として読む</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. Folding | 二つの緩和R1CSインスタンスを集約し，ウィットネスを更新 |
+| 2. IVC | 各ステップと累積した関係の連鎖を保証 |
+| 3. 圧縮 | 累積した関係を，提示しやすい簡潔な証明にする |
+
+</div>
+
+Novaを念頭に置いた概念の整理．foldingだけで簡潔なゼロ知識証明が完成するわけではない．FRIの次数縮小とは対象も安全性の議論も異なる．
 
 ### 2.3 このアプローチが解決する問題の位置づけ
 
@@ -88,7 +116,23 @@ $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
 という総和の値を，検証者が全項を計算することなく，対話的に(各変数を1つずつ確定させていく形で)検証できるプロトコルである．各変数の次数上限を定め，各ラウンドの一変数多項式の次数と和の整合性を検査する．最後に残るランダム点での $g$ の評価も，検証者自身の計算や別の適切な検証手段で確認する必要がある．この最終確認なしに，総和の正しさは保証できない．SumcheckはIP=PSPACE定理(第1回)の証明技法の中核でもある．
 
-<StudyDiagram id="15-3" number="15-5" />
+<span id="figure-15-3"></span>
+<span id="caption-15-3"></span>
+
+<div class="captioned-table" id="table-15-5" role="group" aria-labelledby="table-caption-15-5">
+
+<p class="table-caption" id="table-caption-15-5"><strong>表 15-5：Sumcheck：総和を，一つの評価の確認まで減らす</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 最初の言明 | T = ∑\_&#123;b₁,…,bₙ∈&#123;0,1&#125;&#125; g(b₁,…,bₙ) |
+| 2. 一変数の多項式で確認 | p₁(0)+p₁(1)=T → ランダムなr₁でp₁(r₁)へ |
+| 3. 変数を一つずつ確定 | 残る和について同じ検査を繰り返す |
+| 4. 最後の評価を確認 | g(r₁,…,rₙ)を独立に計算するか，適切な検証手段で確認 |
+
+</div>
+
+各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ．最後の評価の確認は省けない．GKRでは層ごとの言明の縮約にこの考え方を使う．
 
 ### 3.2 GKRプロトコル
 
@@ -112,7 +156,9 @@ GKRは，回路の出力についての言明を，前の層の値について�
 
 第14回では，効率性を一つの数字で比べられないことを確認した．最終回の技法も，同じように読もう．証明サイズ・検証コスト・証明者コストのどれを改善するのか．合成可能性という機能を加えるのか．セットアップや長期安全性にはどの条件が残るのか．次の表は，新しい技法をこの問いに対応づけるためのものである．
 
-<CaptionedTable number="15-1" caption="発展的な技術が主に改善する軸">
+<div class="captioned-table" id="table-15-1" role="group" aria-labelledby="table-caption-15-1">
+
+<p class="table-caption" id="table-caption-15-1"><strong>表 15-1：発展的な技術が主に改善する軸</strong></p>
 
 | 技術            | 主に改善する軸                     |
 | --------------- | ---------------------------------- |
@@ -120,7 +166,7 @@ GKRは，回路の出力についての言明を，前の層の値について�
 | Folding schemes | 証明者コスト(特に逐次計算)         |
 | GKR/sumcheck    | 証明者コスト(特に大規模並列計算)   |
 
-</CaptionedTable>
+</div>
 
 この表を，新しい方式を評価するときの質問表として使ってほしい．証明者コストを下げられても，通信やメモリの負担が増えるかもしれない．簡潔な検証と合成可能性も含め，改善した指標と残った条件を対にして読む．研究全体が一つの目標に移った，という意味ではない．
 
@@ -142,13 +188,31 @@ GKRは，回路の出力についての言明を，前の層の値について�
 
 2026年5月14日のEF記事はHegotáへの採用を提案しているが，提案の存在をメインネットでの有効化済みという意味に読み替えない．[Hegotáに向けた提案記事](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
 
-<StudyDiagram id="15-4" number="15-6" />
+<span id="figure-15-4"></span>
+<span id="caption-15-4"></span>
+
+<div class="captioned-table" id="table-15-6" role="group" aria-labelledby="table-caption-15-6">
+
+<p class="table-caption" id="table-caption-15-6"><strong>表 15-6：Ethereum：L2の証明とL1の実行証明を分ける</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| L2のZKロールアップ | L2の計算 → 実行の正当性の証明 → Ethereum L1で検証 |
+| L1の実行証明 | Ethereum本体のブロック実行が対象．EIP-8025は任意の証明の配布・検証を提案． |
+
+</div>
+
+「zk」という名称だけで，取引内容が秘匿されるとは限らない
+
+本文の2026年9月27日時点の整理を比較．EIP-8025のDraft提案では証明は任意の補助チェックで，再実行を継続する．メインネットでの有効化を示すものではない．
 
 ### 4.4 講義の研究地図に位置づける
 
 ここまでのEthereumの例を，講義の問いへ戻して整理しよう．次の表は，応用で必要になる判断と，学んだ道具との対応を示している．EIP-8025が特定のfolding schemeやGKRを採用すると述べるものではない．
 
-<CaptionedTable number="15-2" caption="EthereumのZK EVM応用と講義内容・評価軸の対応">
+<div class="captioned-table" id="table-15-2" role="group" aria-labelledby="table-caption-15-2">
+
+<p class="table-caption" id="table-caption-15-2"><strong>表 15-2：EthereumのZK EVM応用と講義内容・評価軸の対応</strong></p>
 
 | 応用での問い | 本講義との接続 | 評価する軸 |
 | --- | --- | --- |
@@ -157,7 +221,7 @@ GKRは，回路の出力についての言明を，前の層の値について�
 | 分割した計算の証明を扱いやすくまとめられるか | 再帰的証明・集約．foldingは構成に応じた選択肢 | 証明サイズ・生成コスト・通信量 |
 | 検証負担を下げつつ安全に移行できるか | 健全性(第1・14回)と段階的なプロトコル導入 | 検証コスト・安全性・運用上の信頼性 |
 
-</CaptionedTable>
+</div>
 
 発問例:「証明が小さくても生成が遅い場合，L2のバッチ処理とL1のブロック検証では何が異なるか」「任意の補助チェックから必須の検証へ移る前に，どのような実測と安全性の根拠が必要か」を議論すると，研究上の効率性と実際の運用要件を結びつけられる．
 

@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -88,7 +87,22 @@ Read bilinearity as a verification tool. Given $aP$ and $bQ$, the pairing produc
 
 This is a **multiplicative verification capability** unavailable from ordinary discrete-log group operations alone, which provide additive structure in the exponents. Many SNARKs, including Groth16, use this property to verify polynomial multiplication relations in QAPs from Session 4. This connection will be crucial when studying Groth16 in Act III.
 
-<StudyDiagram id="07-2" number="07-2" :en="true" />
+<span id="figure-07-2"></span>
+<span id="caption-07-2"></span>
+
+<div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
+
+<p class="table-caption" id="table-caption-07-2"><strong>Table 07-2：Pairings expose a product in the exponent</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Inputs from two groups | aP ∈ G₁, bQ ∈ G₂ |
+| 2. Apply the bilinear map | e(aP, bQ) |
+| 3. Relation in the target group | e(aP, bQ) = e(P, Q)ᵃᵇ ∈ G\_T |
+
+</div>
+
+G₁ and G₂ use additive notation; G\_T uses multiplicative notation. This does not recover a or b: it enables checking relations between encoded values.
 
 ### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
 
@@ -100,7 +114,9 @@ $$[a]_1=aP,\qquad[b]_2=bQ,\qquad g_T=e(P,Q),\qquad[c]_T=g_T^c.$$
 
 We use additive notation for the source groups and multiplicative notation for the target. Session 11's notation $[a]_1=g^a$ describes the same structure multiplicatively.
 
-<CaptionedTable number="07-1" caption="Pairing types and their corresponding scalar operations" :en="true">
+<div class="captioned-table" id="table-07-1" role="group" aria-labelledby="table-caption-07-1">
+
+<p class="table-caption" id="table-caption-07-1"><strong>Table 07-1：Pairing types and their corresponding scalar operations</strong></p>
 
 | Object | Notation and operation | Scalar interpretation |
 |---|---|---|
@@ -109,7 +125,7 @@ We use additive notation for the source groups and multiplicative notation for t
 | $G_T$ | $[a]_T[b]_T=[a+b]_T$ | Addition of exponents |
 | Pairing | $e([a]_1,[b]_2)=[ab]_T$ | Multiplication of two scalars |
 
-</CaptionedTable>
+</div>
 
 For practical asymmetric pairings, a $G_1$ element cannot simply be supplied in a $G_2$ input position. $G_2$ uses an extension-field curve or a twist representation; $G_T$ is an order-$q$ subgroup of $\mathbb F_{p^k}^*$. The embedding degree $k$ is the smallest positive integer satisfying $q\mid(p^k-1)$.
 
@@ -220,7 +236,22 @@ Suppose an adversary can break the scheme. Can we use it to solve another proble
 
 If this construction is possible, then assuming $P$ is hard implies that breaking $\Pi$ is also hard. This is the basic form of a **reduction proof**.
 
-<StudyDiagram id="07-3" number="07-3" :en="true" />
+<span id="figure-07-3"></span>
+<span id="caption-07-3"></span>
+
+<div class="captioned-table" id="table-07-3" role="group" aria-labelledby="table-caption-07-3">
+
+<p class="table-caption" id="table-caption-07-3"><strong>Table 07-3：A reduction turns an attacker into a solver</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Suppose an attacker A breaks the protocol | Use A’s inputs and outputs |
+| 2. Construct reduction B | Use A as a subroutine to solve a hard problem |
+| 3. Compare with the hardness assumption | Account for B’s runtime and success probability |
+
+</div>
+
+Read security together with its assumption, model and reduction loss. DL, q-SDH and KEA are not a simple linear ranking.
 
 ### 4.2 Why this form matters
 

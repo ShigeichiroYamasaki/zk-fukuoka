@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第5回:誤り訂正符号と情報理論的視点
@@ -74,7 +73,22 @@ $$\delta = n - d + 1$$
 
 最小距離が $\delta$ なら，各符号語の周りで $\lfloor(\delta-1)/2\rfloor$ 個まで値を変えても，他の符号語の同じ範囲とは重ならない．これが一意に訂正できる理由である．RS符号は，長さ $n$ と次元 $d$ に対するSingleton限界を達成するMDS符号である．距離の大きさが，許容できる誤りの数にどう対応するかを確認しておこう．
 
-<StudyDiagram id="05-1" number="05-1" />
+<span id="figure-05-1"></span>
+<span id="caption-05-1"></span>
+
+<div class="captioned-table" id="table-05-1" role="group" aria-labelledby="table-caption-05-1">
+
+<p class="table-caption" id="table-caption-05-1"><strong>表 05-1：RS符号の距離を，5個の評価値で確かめる</strong></p>
+
+| 評価点x | 0 | 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- | --- |
+| f(x)=2x+1 | 1 | 3 | 5 | 0 | 2 |
+| g(x)=1 | 1 | 1 | 1 | 1 | 1 |
+| 一致？ | ✓ | × | × | × | × |
+
+</div>
+
+F₇，次数&lt;2，評価点0〜4のRS符号．n=5，d=2なので最小距離は4，一意訂正は1誤りまで．二つの表示符号語も4箇所で異なる．
 
 ### 2.4 数式で読む符号のパラメータと距離 {#rs-parameters}
 
@@ -121,7 +135,21 @@ $$2t+e<\delta\quad\Longleftrightarrow\quad 2t+e\le n-d$$
 
 検証者は，証明者の間違い方が独立なランダムノイズだとは仮定できない．証明者は，検査を通りやすい場所や値を選ぶかもしれない．そのため，表が符号語からどれだけ離れているかという，最悪ケースでも使える性質が必要になる．検証者がランダムに問い合わせることと，誤り自体をランダムだと仮定することは別である．
 
-<StudyDiagram id="05-2" number="05-2" />
+<span id="figure-05-2"></span>
+<span id="caption-05-2"></span>
+
+<div class="captioned-table" id="table-05-2" role="group" aria-labelledby="table-caption-05-2">
+
+<p class="table-caption" id="table-caption-05-2"><strong>表 05-2：ノイズのモデルと，不正のモデルを分ける</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| Shannon的な見方 | 通信路の確率モデルを置く．レートと復号失敗確率を考える． |
+| Hamming的な見方 | 誤りの位置・内容を最悪ケースで考える．距離と訂正能力を調べる． |
+
+</div>
+
+検証者の乱数は，不正な証明者のデータに対する検査をランダム化するために使う．不正そのものを自然なランダム誤りと仮定するわけではない．
 
 ### 3.3 Hamming限界を球の体積から導く
 
@@ -162,7 +190,23 @@ RS符号では，Guruswami–Sudanのアルゴリズムなどにより，Johnson
 
 *(リスト復号の具体的なアルゴリズムには立ち入らない．今日は「一意復号を超えて，どこまで頑健に情報を取り出せるか」という考え方があることと，それが次回以降の健全性評価の土台になることを押さえるにとどめる．)*
 
-<StudyDiagram id="05-3" number="05-3" />
+受信した，誤りを含むかもしれない語
+
+<span id="figure-05-3"></span>
+<span id="caption-05-3"></span>
+
+<div class="captioned-table" id="table-05-3" role="group" aria-labelledby="table-caption-05-3">
+
+<p class="table-caption" id="table-caption-05-3"><strong>表 05-3：一意復号とリスト復号：出力に何を要求するか</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| 一意復号 | 保証される半径内で，元の符号語を一つに定める． |
+| リスト復号 | 指定半径内の候補を，サイズを制限したリストとして返す． |
+
+</div>
+
+概念の整理．候補リストを許すだけで任意の誤りを訂正できるわけではない．許容距離とリストサイズの条件が必要．FRIの検証者が毎回復号を実行するという意味でもない．
 
 ### 4.3 リストの定義とJohnson半径
 

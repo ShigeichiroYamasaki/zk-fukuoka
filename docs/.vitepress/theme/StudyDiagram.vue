@@ -1,38 +1,17 @@
 <script setup>
 import { computed } from 'vue';
 import { diagrams } from './studyDiagrams';
-const props = defineProps({ id: String, en: Boolean, number: String });
-// Comparisons, procedures and short numerical series are semantic tables.
-// The source data and legacy fragment IDs remain shared with existing links.
-const d = computed(() => {
- const source = diagrams[props.id];
- if (source.type === 'flow' || source.type === 'compare') {
-  const formula = source.nodes.some(node => node.formula);
-  return { ...source, type: 'matrix',
-   headers: [source.type === 'flow' ? ['手順・段階', 'Step / stage'] : ['項目', 'Item'], ['説明', 'Explanation'], ...(formula ? [['式・条件', 'Equation / condition']] : [])],
-   rows: source.nodes.map((node, i) => [
-    source.type === 'flow' ? node.title.map(title => `${i + 1}. ${title}`) : node.title,
-    node.body, ...(formula ? [node.formula || '—'] : [])
-   ])
-  };
- }
- if (source.type === 'bars') return { ...source, type: 'matrix',
-  headers: [['条件', 'Condition'], source.axis],
-  rows: source.bars.map(bar => [bar.label, `${bar.value}%`])
- };
- return source;
-});
+const props = defineProps({ id: String, en: Boolean });
+const d = computed(() => diagrams[props.id]);
 const tx = value => Array.isArray(value) ? value[props.en ? 1 : 0] : value;
 const px = x => 48 + x / d.value.maxX * 520;
 const py = y => 260 - y / d.value.maxY * 220;
 </script>
 <template>
- <component :is="d.type === 'matrix' ? 'div' : 'figure'" :role="d.type === 'matrix' ? 'group' : undefined" class="study-diagram" :id="`figure-${id}`" :aria-labelledby="`caption-${id}`">
-  <figcaption v-if="d.type !== 'matrix'" :id="`caption-${id}`"><span class="sd-number">{{ en ? 'Figure' : '図' }} {{ id }}</span><strong>{{ tx(d.title) }}</strong></figcaption>
+ <figure class="study-diagram" :id="`figure-${id}`" :aria-labelledby="`caption-${id}`">
+  <figcaption :id="`caption-${id}`"><span class="sd-number">{{ en ? 'Figure' : '図' }} {{ id }}</span><strong>{{ tx(d.title) }}</strong></figcaption>
   <p v-if="d.lead" class="sd-lead">{{ tx(d.lead) }}</p>
-  <p v-if="d.type === 'matrix' && d.top" class="sd-lead">{{ tx(d.top) }}</p>
-  <div v-if="d.type === 'matrix'" class="sd-table-wrap" tabindex="0" :aria-label="en ? 'Scrollable table' : '横にスクロールできる表'"><table class="sd-table"><caption :id="`caption-${id}`"><span class="sd-number">{{ en ? 'Table' : '表' }} {{ number || id }}</span><strong>{{ tx(d.title) }}</strong></caption><thead><tr><th v-for="(h,i) in d.headers" :key="i" scope="col">{{ tx(h) }}</th></tr></thead><tbody><tr v-for="(row,r) in d.rows" :key="r"><template v-for="(cell,c) in row" :key="c"><th v-if="c===0" scope="row">{{ tx(cell) }}</th><td v-else>{{ tx(cell) }}</td></template></tr></tbody></table></div>
-  <template v-else-if="d.type === 'scatter'">
+  <template v-if="d.type === 'scatter'">
    <div class="sd-svg-scroll" tabindex="0" :aria-label="en ? 'Scrollable graph' : '横にスクロールできるグラフ'"><svg viewBox="0 0 620 310" role="img" :aria-label="tx(d.alt)">
     <g class="sd-grid"><template v-for="tick in d.ticksX" :key="'x'+tick"><line :x1="px(tick)" :x2="px(tick)" y1="40" y2="260"/><text :x="px(tick)" y="281" text-anchor="middle">{{ tick }}</text></template><template v-for="tick in d.ticksY" :key="'y'+tick"><line x1="48" x2="568" :y1="py(tick)" :y2="py(tick)"/><text x="35" :y="py(tick)+5" text-anchor="end">{{ tick }}</text></template></g>
     <path class="sd-axes" d="M48 30V260H580"/><text class="sd-axis-label" x="592" y="264">x</text><text class="sd-axis-label" x="44" y="20">y</text>
@@ -49,9 +28,8 @@ const py = y => 260 - y / d.value.maxY * 220;
    </svg></div>
    <div class="sd-shared">{{ tx(d.bottom) }}</div>
   </template>
-  <p v-if="d.type === 'matrix' && d.bottom" class="sd-lead sd-bottom">{{ tx(d.bottom) }}</p>
   <p class="sd-note">{{ tx(d.note) }}</p>
- </component>
+ </figure>
 </template>
 <style scoped>
 .study-diagram{--sd-ink:#172d48;--sd-muted:#405570;--sd-line:#91a7bf;--sd-paper:#f3f7fc;--sd-card:#fff;--sd-accent:#07685f;--sd-tint:#e2f3ee;--sd-second:#6a43a5;margin:32px 0;padding:24px;border:1px solid var(--sd-line);border-radius:18px;background:var(--sd-paper);color:var(--sd-ink);scroll-margin-top:110px}

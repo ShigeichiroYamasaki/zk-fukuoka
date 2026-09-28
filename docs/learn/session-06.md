@@ -10,8 +10,6 @@ next:
 
 <script setup>
 import { withBase } from "vitepress";
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第6回:Low-Degree Testingと健全性増幅
@@ -48,7 +46,9 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 $K=\mathbb F_7$，$D=\{0,1,2,3,4,5,6\}$ とし，次数 $d=2$ 未満，すなわち一次以下の多項式の表を検査しよう．次の3種類の表を比べる．演算はすべてmod 7で行う．
 
-<CaptionedTable number="06-1" caption="一次以下の多項式の表，一か所だけ異なる表，どの一次以下の多項式からも遠い表">
+<div class="captioned-table" id="table-06-1" role="group" aria-labelledby="table-caption-06-1">
+
+<p class="table-caption" id="table-caption-06-1"><strong>表 06-1：一次以下の多項式の表，一か所だけ異なる表，どの一次以下の多項式からも遠い表</strong></p>
 
 | 評価点 $x$ | 正しい表 $g(x)=1+2x$ | 一か所だけ変えた表 $f_{\mathrm{near}}$ | 二次式で作った表 $f_{\mathrm{far}}(x)=x^2$ |
 | --- | --- | --- | --- |
@@ -60,7 +60,7 @@ $K=\mathbb F_7$，$D=\{0,1,2,3,4,5,6\}$ とし，次数 $d=2$ 未満，すなわ
 | 5 | 4 | 4 | 4 |
 | 6 | 6 | 0 | 1 |
 
-</CaptionedTable>
+</div>
 
 例えば $f_{\mathrm{near}}$ の点0と1だけを見ると，値は1と3なので，補間により $g(X)=1+2X$ が一意に決まる．しかし，決まったのは**その2点を通る直線の候補**であり，残りの表がその直線上にあることではない．実際，点6の表の値は0だが，$g(6)=6$ である．別の一次以下の多項式に取り替えても解決しない．点0と1を通るものは，すでに $g$ だけだからである．
 
@@ -127,7 +127,22 @@ $$f'(Y) = f_{\text{even}}(Y) + \alpha \cdot f_{\text{odd}}(Y)$$
 
 一つの問い合わせ経路は，各段階で定数個の値を調べるため，段階数に応じて $O(\log d)$ 個程度の値を扱う．ただし，実際に必要な経路の数は目標の健全性誤差に依存する．さらに，Merkle木で表を実装すると認証経路の検証も必要になる．問い合わせる値の数と，証明サイズや検証全体の計算量は分けて数えよう．
 
-<StudyDiagram id="06-1" number="06-4" />
+<span id="figure-06-1"></span>
+<span id="caption-06-1"></span>
+
+<div class="captioned-table" id="table-06-4" role="group" aria-labelledby="table-caption-06-4">
+
+<p class="table-caption" id="table-caption-06-4"><strong>表 06-4：FRI：次数上限を半分ずつにする</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 最初の表 | deg f &lt; 16：偶数項と奇数項に分解 |
+| 2. ランダムな結合で折り畳む | f′ = f\_even + α f\_odd → 次数上限 8 |
+| 3. 繰り返す | 8 → 4 → 2 → 1（定数多項式） |
+
+</div>
+
+乗法的FRIの手順．各段階で表を固定してから新しいチャレンジを得る．近接性と折り畳みの一貫性を検査するのであって，表を半分捨てるだけではない．
 
 ### 2.3 なぜ「近似的」なのかという点への注意
 
@@ -153,7 +168,9 @@ f_1(4)=6+3\cdot6=7\pmod{17}.$$
 
 ここで $4^{-1}=13$ なので，$(1-11)/4=(-10)\cdot13=6$ である．実数として割った値を丸めるわけではない．同じ操作を4組に適用すると，次の表になる．
 
-<CaptionedTable number="06-2" caption="第1段階の折り畳み：8個の評価値から4個へ，チャレンジは3">
+<div class="captioned-table" id="table-06-2" role="group" aria-labelledby="table-caption-06-2">
+
+<p class="table-caption" id="table-caption-06-2"><strong>表 06-2：第1段階の折り畳み：8個の評価値から4個へ，チャレンジは3</strong></p>
 
 | $x$ | $-x$ | $Y=x^2$ | $f_0(x)$ | $f_0(-x)$ | $f_1(Y)$ |
 |---:|---:|---:|---:|---:|---:|
@@ -162,7 +179,7 @@ f_1(4)=6+3\cdot6=7\pmod{17}.$$
 | 4 | 13 | 16 | 2 | 11 | 1 |
 | 8 | 9 | 13 | 1 | 16 | 11 |
 
-</CaptionedTable>
+</div>
 
 次に証明者は $f_1$ の表をコミットする．それから新しいチャレンジ $\alpha_1=5$ を得たとすると，$f_1(Y)=9+Y\cdot8$ だから
 
@@ -170,14 +187,16 @@ $$f_2(Z)=9+5\cdot8=15\pmod{17}$$
 
 という定数になる．$Z=Y^2$ であり，$f_1$ や $f_2$ の添字は段階を表す．微分をしているわけではない．
 
-<CaptionedTable number="06-3" caption="第2段階の折り畳み：4個の評価値から2個へ，チャレンジは5">
+<div class="captioned-table" id="table-06-3" role="group" aria-labelledby="table-caption-06-3">
+
+<p class="table-caption" id="table-caption-06-3"><strong>表 06-3：第2段階の折り畳み：4個の評価値から2個へ，チャレンジは5</strong></p>
 
 | $Y$ | $-Y$ | $Z=Y^2$ | $f_1(Y)$ | $f_1(-Y)$ | $f_2(Z)$ |
 |---:|---:|---:|---:|---:|---:|
 | 1 | 16 | 1 | 0 | 1 | 15 |
 | 4 | 13 | 16 | 7 | 11 | 15 |
 
-</CaptionedTable>
+</div>
 
 表の長さは $8\to4\to2$，次数の上限は「4未満 $\to$ 2未満 $\to$ 1未満」と変わった．証明者は最後の定数15を提示し，それも問い合わせ位置を選ぶ前に固定する．
 
@@ -220,7 +239,23 @@ $$h_1(Y)=9+8Y+Y^2，\qquad h_2(Z)=15+Z.$$
 
 同じ検査を独立な乱数で繰り返し，すべて通ったときだけ受理すれば，誤りを減らせると考えられる．1回の誤りを $\epsilon$ とすると，$k$ 回で $\epsilon^k$ という式が目標になる．ただし，各回の条件のもとでこの上限が成り立つことを示す必要がある．並列と逐次では相手の戦略も変わりうる．健全性の増幅と，繰り返した後のゼロ知識性は，別々に確認しよう．
 
-<StudyDiagram id="06-2" number="06-5" />
+<span id="figure-06-2"></span>
+<span id="caption-06-2"></span>
+
+<div class="captioned-table" id="table-06-5" role="group" aria-labelledby="table-caption-06-5">
+
+<p class="table-caption" id="table-caption-06-5"><strong>表 06-5：繰り返し回数と健全性誤差の関係</strong></p>
+
+| 条件 | 上界 (1/2)ᵏ |
+| --- | --- |
+| k = 1 | 50% |
+| k = 2 | 25% |
+| k = 4 | 6.25% |
+| k = 8 | 0.390625% |
+
+</div>
+
+各試行で誤受理確率≤1/2，かつ適切な独立性・繰り返し定理の条件を満たし，全試行の受理を要求する例．一般の対話プロトコルに無条件でこの曲線を適用できない．
 
 ---
 
@@ -240,7 +275,25 @@ Rewindingの考え方を一般化し，Fiat-Shamir変換後の非対話プロト
 
 この説明は，適用条件を満たす方式についての直感である．任意の非対話型プロトコルに対して，そのまま抽出できるという定理ではない．特に，第9回で扱うFiat-Shamir型の署名では，オラクルへの問い合わせ数や敵対者の成功確率を含めて，フォークが成功する確率を評価する．
 
-<StudyDiagram id="06-3" number="06-6" />
+同じ乱数・同じコミットまでの実行状態
+
+<span id="figure-06-3"></span>
+<span id="caption-06-3"></span>
+
+<div class="captioned-table" id="table-06-6" role="group" aria-labelledby="table-caption-06-6">
+
+<p class="table-caption" id="table-caption-06-6"><strong>表 06-6：巻き戻し：同じ状態からチャレンジを変える</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| 実行1 | チャレンジc₁ → 応答s₁ |
+| 実行2 | 異なるc₂ → 応答s₂ |
+
+</div>
+
+二つの受理記録と抽出条件から，ウィットネスを取り出す
+
+安全性証明内で敵対者を再実行する技法．現実の相手を時間的に巻き戻す操作ではない．Forking lemmaではランダムオラクルへの応答を変える条件も扱う．
 
 ### 4.3 なぜこの技法が重要か
 

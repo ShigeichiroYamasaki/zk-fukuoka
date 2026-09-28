@@ -10,8 +10,6 @@ next:
 
 <script setup>
 import { withBase } from "vitepress";
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 6: Low-degree testing and soundness amplification
@@ -48,7 +46,9 @@ The difficulty is that **we have no polynomial expression, only limited access t
 
 Take $K=\mathbb F_7$, $D=\{0,1,2,3,4,5,6\}$, and degree bound $d=2$: the target is degree at most one. Compare three tables, with all arithmetic modulo 7.
 
-<CaptionedTable number="06-1" caption="A degree-at-most-one table, a one-entry corruption, and a table far from every degree-at-most-one polynomial" :en="true">
+<div class="captioned-table" id="table-06-1" role="group" aria-labelledby="table-caption-06-1">
+
+<p class="table-caption" id="table-caption-06-1"><strong>Table 06-1：A degree-at-most-one table, a one-entry corruption, and a table far from every degree-at-most-one polynomial</strong></p>
 
 | Point $x$ | Valid table $g(x)=1+2x$ | One-entry change $f_{\mathrm{near}}$ | Quadratic table $f_{\mathrm{far}}(x)=x^2$ |
 | --- | --- | --- | --- |
@@ -60,7 +60,7 @@ Take $K=\mathbb F_7$, $D=\{0,1,2,3,4,5,6\}$, and degree bound $d=2$: the target 
 | 5 | 4 | 4 | 4 |
 | 6 | 6 | 0 | 1 |
 
-</CaptionedTable>
+</div>
 
 Querying $f_{\mathrm{near}}$ at 0 and 1 returns 1 and 3, uniquely determining $g(X)=1+2X$. But this only determines **the line through the observed points**, not whether the remaining table lies on it. At point 6 the table returns 0 whereas $g(6)=6$. No alternative line repairs this: $g$ is already the unique line through the first two points.
 
@@ -127,7 +127,22 @@ The protocol has two main phases:
 
 One query path checks a constant number of values per stage, giving roughly $O(\log d)$ values as the stages shrink. The number of paths needed depends on the target soundness error. A Merkle-tree implementation also requires authentication-path verification. Count queried values separately from proof size and total verification work.
 
-<StudyDiagram id="06-1" number="06-4" :en="true" />
+<span id="figure-06-1"></span>
+<span id="caption-06-1"></span>
+
+<div class="captioned-table" id="table-06-4" role="group" aria-labelledby="table-caption-06-4">
+
+<p class="table-caption" id="table-caption-06-4"><strong>Table 06-4：FRI: halve the degree bound at each step</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Initial table | deg f &lt; 16: split even and odd terms |
+| 2. Fold with a random combination | f′ = f\_even + α f\_odd → degree bound 8 |
+| 3. Repeat | 8 → 4 → 2 → 1 (constant polynomial) |
+
+</div>
+
+Schematic multiplicative FRI. Fix each table before receiving its new challenge. Check proximity and folding consistency; this is not simply discarding half a table.
 
 ### 2.3 Why the claim is approximate
 
@@ -151,7 +166,9 @@ $$\frac{1+11}{2}=6,\qquad \frac{1-11}{2\cdot2}=6,\qquad f_1(4)=6+3\cdot6=7\pmod{
 
 Here $4^{-1}=13$, so $(1-11)/4=(-10)\cdot13=6$. These are field inverses, not rounded real-number divisions. Applying the same operation to all four pairs gives:
 
-<CaptionedTable number="06-2" caption="First fold: eight evaluations become four, with challenge 3" :en="true">
+<div class="captioned-table" id="table-06-2" role="group" aria-labelledby="table-caption-06-2">
+
+<p class="table-caption" id="table-caption-06-2"><strong>Table 06-2：First fold: eight evaluations become four, with challenge 3</strong></p>
 
 | $x$ | $-x$ | $Y=x^2$ | $f_0(x)$ | $f_0(-x)$ | $f_1(Y)$ |
 |---:|---:|---:|---:|---:|---:|
@@ -160,7 +177,7 @@ Here $4^{-1}=13$, so $(1-11)/4=(-10)\cdot13=6$. These are field inverses, not ro
 | 4 | 13 | 16 | 2 | 11 | 1 |
 | 8 | 9 | 13 | 1 | 16 | 11 |
 
-</CaptionedTable>
+</div>
 
 The prover next commits to the table of $f_1$, before receiving the next challenge. Suppose $\alpha_1=5$. Since $f_1(Y)=9+Y\cdot8$,
 
@@ -168,14 +185,16 @@ $$f_2(Z)=9+5\cdot8=15\pmod{17}.$$
 
 Here $Z=Y^2$. Subscripts identify layers, not derivatives.
 
-<CaptionedTable number="06-3" caption="Second fold: four evaluations become two, with challenge 5" :en="true">
+<div class="captioned-table" id="table-06-3" role="group" aria-labelledby="table-caption-06-3">
+
+<p class="table-caption" id="table-caption-06-3"><strong>Table 06-3：Second fold: four evaluations become two, with challenge 5</strong></p>
 
 | $Y$ | $-Y$ | $Z=Y^2$ | $f_1(Y)$ | $f_1(-Y)$ | $f_2(Z)$ |
 |---:|---:|---:|---:|---:|---:|
 | 1 | 16 | 1 | 0 | 1 | 15 |
 | 4 | 13 | 16 | 7 | 11 | 15 |
 
-</CaptionedTable>
+</div>
 
 Table lengths shrink as $8\to4\to2$, and degree bounds as “below 4, below 2, below 1.” The prover supplies the final constant 15, fixing it before query positions are chosen.
 
@@ -218,7 +237,23 @@ Even if a test can detect an invalid table, a miss probability of $1/2$ is too l
 
 Repeat a test with independent randomness and accept only if every run passes. With per-run error $\epsilon$, the target bound is $\epsilon^k$ after $k$ repetitions. But the relevant conditional bounds must be established. Parallel and sequential repetition may allow different adversarial strategies. Check soundness amplification separately from preservation of zero-knowledge.
 
-<StudyDiagram id="06-2" number="06-5" :en="true" />
+<span id="figure-06-2"></span>
+<span id="caption-06-2"></span>
+
+<div class="captioned-table" id="table-06-5" role="group" aria-labelledby="table-caption-06-5">
+
+<p class="table-caption" id="table-caption-06-5"><strong>Table 06-5：Repetition count and soundness error</strong></p>
+
+| Condition | Bound (1/2)ᵏ |
+| --- | --- |
+| k = 1 | 50% |
+| k = 2 | 25% |
+| k = 4 | 6.25% |
+| k = 8 | 0.390625% |
+
+</div>
+
+Example where each false-acceptance probability is ≤1/2, the necessary independence/repetition conditions hold, and all trials must accept. This bound does not apply unconditionally to arbitrary interactive protocols.
 
 ---
 
@@ -238,7 +273,25 @@ The **forking lemma** of Pointcheval and Stern (1996) formalizes the rewinding i
 
 This is intuition for schemes meeting the lemma’s conditions, not a theorem extracting information from every non-interactive protocol. In Fiat–Shamir-type signatures studied in Session 9, the probability of a successful fork depends on factors including oracle queries and the adversary’s success probability.
 
-<StudyDiagram id="06-3" number="06-6" :en="true" />
+Same randomness and state up to the commitment
+
+<span id="figure-06-3"></span>
+<span id="caption-06-3"></span>
+
+<div class="captioned-table" id="table-06-6" role="group" aria-labelledby="table-caption-06-6">
+
+<p class="table-caption" id="table-caption-06-6"><strong>Table 06-6：Rewinding: change the challenge from the same state</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Run 1 | Challenge c₁ → response s₁ |
+| Run 2 | Different c₂ → response s₂ |
+
+</div>
+
+Use two accepting records and extraction conditions to recover a witness
+
+A technique for rerunning an adversary inside a security proof, not literally rewinding a remote party. Forking lemmas also address conditions for changing random-oracle answers.
 
 ### 4.3 Why these techniques matter
 

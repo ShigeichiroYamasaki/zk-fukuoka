@@ -9,9 +9,7 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverview.vue";
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 4: Arithmetization techniques and complexity theory
@@ -153,7 +151,22 @@ This identifies which relationships fail when an intermediate value is changed.
 
 Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](./balance-arithmetization).
 
-<StudyDiagram id="04-1" number="04-3" :en="true" />
+<span id="figure-04-1"></span>
+<span id="caption-04-1"></span>
+
+<div class="captioned-table" id="table-04-3" role="group" aria-labelledby="table-caption-04-3">
+
+<p class="table-caption" id="table-caption-04-3"><strong>Table 04-3：Split x³+x+5=35 into constraints on intermediate values</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Square | u = x × x → u = 9 |
+| 2. Cube | v = u × x → v = 27 |
+| 3. Constrain the output | (v + x + 5) × 1 = 35 |
+
+</div>
+
+Worked example with x=3. Addition and the output condition must also hold. Each relation is written as a product of linear combinations in R1CS.
 
 [Follow the deposit/withdrawal example: R1CS](./balance-arithmetization#r1cs)
 
@@ -191,7 +204,22 @@ Here, $Z(X)$ is the polynomial whose roots are the constraint evaluation points.
 
 The computation to be checked has not changed; the form of the check has. Vanishing at every constraint point becomes divisibility by a vanishing polynomial. With degree bounds, including on the quotient, and fixed polynomials, one can test this relation at a random point. Combining conditions into one equation is a step toward a proof system, not the entire security argument.
 
-<StudyDiagram id="04-2" number="04-4" :en="true" />
+<span id="figure-04-2"></span>
+<span id="caption-04-2"></span>
+
+<div class="captioned-table" id="table-04-4" role="group" aria-labelledby="table-caption-04-4">
+
+<p class="table-caption" id="table-caption-04-4"><strong>Table 04-4：R1CS to QAP: row checks become divisibility</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. R1CS rows | For each row j: A(z)ⱼ B(z)ⱼ = C(z)ⱼ |
+| 2. Assign evaluation points | Interpolate columns at distinct points rⱼ |
+| 3. One polynomial relation | A(X)B(X) − C(X) = H(X)Z(X)<br>Z(X) = ∏ⱼ(X − rⱼ) |
+
+</div>
+
+Divisibility alone is not a cryptographic proof. Degree bounds and guarantees tying evaluations to fixed polynomials are also needed.
 
 [Follow the deposit/withdrawal example: QAP](./balance-arithmetization#qap)
 
@@ -259,7 +287,23 @@ AIR imposes two types of constraints:
 
 Separate the roles of the two constraints. Correct transitions do not establish the intended computation if the starting or ending state is wrong. Interpolating columns turns both relations between adjacent times and values at specified times into polynomial conditions. Session 3’s interpolation again connects tables to polynomials.
 
-<StudyDiagram id="04-3" :en="true" number="04-1" />
+<span id="figure-04-3"></span>
+<span id="caption-04-3"></span>
+
+<div class="captioned-table" id="table-04-1" role="group" aria-labelledby="table-caption-04-1">
+
+<p class="table-caption" id="table-caption-04-1"><strong>Table 04-1：AIR: rows track time and constraints check transitions</strong></p>
+
+| Time t | State sₜ | Relation to check |
+| --- | --- | --- |
+| 0 | 3 | Initial boundary: s₀=3 |
+| 1 | 9 | 9 ≡ 3² mod 17 |
+| 2 | 13 | 13 ≡ 9² mod 17 |
+| 3 | 16 | 16 ≡ 13² mod 17 / final boundary: s₃=16 |
+
+</div>
+
+Example trace over F₁₇ with sₜ₊₁=sₜ² and s₀=3. Transition constraints link adjacent rows; boundary constraints apply to specified rows.
 
 [Follow the deposit/withdrawal example: AIR](./balance-arithmetization#air)
 
@@ -271,7 +315,9 @@ R1CS/QAP and AIR pursue the same goal but choose different units of computation.
 
 Over $K=\mathbb F_{17}$, start at 3 and square three times. The rule $u_{i+1}=u_i^2$ produces $3\to9\to13\to16$. Take initial value 3 and final value 16 as public conditions.
 
-<CaptionedTable number="04-2" caption="Trace and evaluation points for three successive squarings" :en="true">
+<div class="captioned-table" id="table-04-2" role="group" aria-labelledby="table-caption-04-2">
+
+<p class="table-caption" id="table-caption-04-2"><strong>Table 04-2：Trace and evaluation points for three successive squarings</strong></p>
 
 | Time $i$ | Point $\omega^i$ | State $u_i$ | Next-state relation |
 |---:|---:|---:|---|
@@ -280,7 +326,7 @@ Over $K=\mathbb F_{17}$, start at 3 and square three times. The rule $u_{i+1}=u_
 | 2 | 16 | 13 | $13^2=16\pmod{17}$ |
 | 3 | 13 | 16 | No transition constraint on the final row |
 
-</CaptionedTable>
+</div>
 
 The element $\omega=4$ has order four, so $D=\{1,4,16,13\}$ is a multiplicative subgroup. Advancing time corresponds to replacing the evaluation point $X$ by $\omega X$. Interpolating the state column gives
 

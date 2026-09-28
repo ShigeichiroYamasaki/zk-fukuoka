@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第9回:Fiat-Shamir変換とROMの功罪
@@ -62,7 +61,21 @@ $$c = H(\text{コミット}, x)$$
 
 証明者はコミットを選び，ハッシュ値を調べることができる．したがって，「都合のよい値を探すこと自体ができない」という説明は正確ではない．必要なのは，効率的な相手が試行を繰り返しても，不正な証明を作る確率を十分小さく抑えられることである．ハッシュの一方向性だけではこの結論は得られない．次のROMで，問い合わせと成功確率を明示して解析する．
 
-<StudyDiagram id="09-1" number="09-2" />
+<span id="figure-09-1"></span>
+<span id="caption-09-1"></span>
+
+<div class="captioned-table" id="table-09-2" role="group" aria-labelledby="table-caption-09-2">
+
+<p class="table-caption" id="table-caption-09-2"><strong>表 09-2：Fiat–Shamir：チャレンジの出どころが変わる</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| 対話型 | Pがコミットtを送る<br>Vがランダムなcを返す<br>Pが応答sを送る |
+| 非対話型 | Pがtを作る<br>c = H(文脈, x, t)<br>Pが(t,s)を送り，Vもcを再計算 |
+
+</div>
+
+概念の整理．実装では公開入力・プロトコル識別子・それまでの記録などを曖昧さなく符号化する．ハッシュの一方向性だけで変換の安全性が証明されるわけではない．
 
 ---
 
@@ -76,7 +89,22 @@ $$c = H(\text{コミット}, x)$$
 - 同じ入力には常に同じ出力を返す(一貫性)
 - 攻撃者を含むすべてのアルゴリズムは，$H$ の中身を直接見ることはできず，問い合わせを通じてのみアクセスできる
 
-<StudyDiagram id="09-2" number="09-1" />
+<span id="figure-09-2"></span>
+<span id="caption-09-2"></span>
+
+<div class="captioned-table" id="table-09-1" role="group" aria-labelledby="table-caption-09-1">
+
+<p class="table-caption" id="table-caption-09-1"><strong>表 09-1：ランダムオラクル：新しい入力には乱数，同じ入力には同じ値</strong></p>
+
+| 問い合わせ | 入力 | 応答 | 処理 |
+| --- | --- | --- | --- |
+| 1 | a | 0110 | 一様に選び記憶 |
+| 2 | b | 1011 | 新たに選び記憶 |
+| 3 | a | 0110 | 記憶した値を返す |
+
+</div>
+
+小さな出力の説明例．実際の安全性解析では十分な出力長と問い合わせ回数を考える．異なる入力に同じ出力が出る可能性もある．
 
 ### 3.2 ROMでの安全性証明の骨格
 
@@ -94,7 +122,23 @@ ROMで安全性を示したとき，何について証明できたのかを確�
 
 Canetti・Goldreich・Haleviの結果は，この区別が言葉だけの問題ではないことを示す．ROMでは安全でも，具体的なハッシュ関数で実体化すると安全でなくなる人工的な構成がある．2004年のJACM論文は，このような反例を扱っている．これは実用方式への攻撃を一括して示す結果ではなく，ROMから実装への保証を一般には導けないという結果である．
 
-<StudyDiagram id="09-3" number="09-3" />
+<span id="figure-09-3"></span>
+<span id="caption-09-3"></span>
+
+<div class="captioned-table" id="table-09-3" role="group" aria-labelledby="table-caption-09-3">
+
+<p class="table-caption" id="table-caption-09-3"><strong>表 09-3：理想モデルでの証明と，実装の安全性を区別する</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| ROMでの言明 | Hを理想的なランダムオラクルとして扱い，安全性を証明する． |
+| 具体的な実装 | SHA-256等の具体的な関数を使う．プロトコルと実装の条件を評価する． |
+
+</div>
+
+ROMの証明だけでは，任意の具体的ハッシュへの置き換えを保証しない
+
+CGHの反例は，この置き換えをすべての構成について正当化できないことを示す．ここから，実用のFiat–Shamir構成がすべて破られるとはいえない．
 
 ### 4.3 それでもROMが広く使われる理由
 

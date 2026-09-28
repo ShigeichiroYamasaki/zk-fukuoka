@@ -9,9 +9,7 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
 </script>
 
@@ -61,7 +59,9 @@ In other words, if an algorithm that generates a transcript—a simulator $S$—
 
 Before formalizing zero-knowledge, let us identify what is public and what we want to keep private. In Session 1, a verifier received a public input $x$ and a witness $w$. Relation $R$ specifies **which pairs of these values satisfy the required condition**.
 
-<CaptionedTable number="02-1" caption="Notation for public input, witness, relation and language" :en="true">
+<div class="captioned-table" id="table-02-1" role="group" aria-labelledby="table-caption-02-1">
+
+<p class="table-caption" id="table-caption-02-1"><strong>Table 02-1：Notation for public input, witness, relation and language</strong></p>
 
 | Symbol | Meaning |
 | --- | --- |
@@ -71,7 +71,7 @@ Before formalizing zero-knowledge, let us identify what is public and what we wa
 | $(x,w)\in R$ | The statement that $w$ is a valid witness for $x$ |
 | $L$ | The set of inputs $x$ with at least one valid witness |
 
-</CaptionedTable>
+</div>
 
 A relation here is a **binary relation**, specifying a condition on pairs of objects. Encoding inputs and witnesses as finite binary strings gives $R\subseteq\{0,1\}^*\times\{0,1\}^*$. Distinguish membership $(x,w)\in R$ from the procedure that checks it. We also sometimes write the result of this check as $R(x,w)=1$ for membership and $R(x,w)=0$ otherwise.
 
@@ -136,7 +136,9 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
 
 **A small example clarifies what comparing distributions means.** These are hypothetical two-bit records, not a zero-knowledge protocol.
 
-<CaptionedTable number="02-2" caption="Two probability distributions over two-bit records" :en="true">
+<div class="captioned-table" id="table-02-2" role="group" aria-labelledby="table-caption-02-2">
+
+<p class="table-caption" id="table-caption-02-2"><strong>Table 02-2：Two probability distributions over two-bit records</strong></p>
 
 | Record $t$ | Probability for real record $X$ | Probability for a candidate simulator's record $Y$ |
 | --- | --- | --- |
@@ -145,13 +147,31 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
 | $10$ | $1/4$ | $0$ |
 | $11$ | $1/4$ | $1/2$ |
 
-</CaptionedTable>
+</div>
 
 Each individual bit is equally likely to be 0 or 1 under either distribution. However, a distinguisher returning 1 when the bits agree has $\Pr[D(X)=1]=1/2$ and $\Pr[D(Y)=1]=1$, giving advantage $1/2$. Identical marginal distributions do not imply an identical **joint distribution of the complete record**. If this gap persists as input length grows, even computational indistinguishability fails. This is why zero-knowledge compares the entire view.
 
 The objects being compared are therefore **the distributions of the real-view random variable $X$ and simulator-output random variable $Y$, for the same fixed public input**. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
 
-<StudyDiagram id="02-1" number="02-7" :en="true" />
+Fix V\*, a valid pair (x, w) ∈ R, and auxiliary input z.<br>Do not sample and average over x or w.
+
+<span id="figure-02-1"></span>
+<span id="caption-02-1"></span>
+
+<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
+
+<p class="table-caption" id="table-caption-02-7"><strong>Table 02-7：Random variables X and Y: compare distributions of the whole record</strong></p>
+
+| Item | Explanation | Equation / condition |
+| --- | --- | --- |
+| Real interaction → random variable X | P uses x, w; V\* uses x, z.<br>Sample r\_P and r\_V independently.<br>X is V\*’s view: public and auxiliary inputs, its own randomness, and received messages. | X = (x, z, r\_V, m₁, …, m\_k) |
+| Simulation → random variable Y | S uses x, z and its own randomness r\_S.<br>It receives no w.<br>Y is a generated record in the same format as X.<br>One S must work for every valid w. | Y = S(x, z; r\_S) |
+
+</div>
+
+Compare each record’s probability: Pr[X = t] versus Pr[Y = t]<br><br>Perfect ZK: equal probabilities for every t<br>Statistical ZK: statistical distance Δ(X, Y) ≤ negl(n)<br>Computational ZK: for every efficient distinguisher D,<br>&#124;Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]&#124; ≤ negl(n)
+
+As in the text, n = &#124;x&#124;. Probabilities are over record-generation randomness, plus D’s randomness when distinguishing. Compare the entire view, not only acceptance. Individual executions need not produce equal records.
 
 An **honest verifier** is a verifier that follows the prescribed protocol, not a judgment about someone’s character. It samples challenges from the specified distribution and applies the specified acceptance rule. We still allow it to record and analyze the messages and its own randomness. **Honest-verifier zero-knowledge (HVZK)** means that this verifier’s view can be simulated without the witness. This differs from zero-knowledge against verifiers that deviate from the protocol, for example by choosing challenges differently.
 
@@ -164,6 +184,21 @@ An honest-verifier simulator can choose $b$ and a random isomorphism $G_b\to H$ 
 The next explanation previews the **Schnorr identification protocol**, developed in Section 4.1. It demonstrates knowledge of a secret exponent corresponding to a public value without handing over that exponent. It has three stages: the prover sends an initial message (commitment), the verifier sends a random challenge, and the prover responds. An honest verifier in this Schnorr-type protocol samples its challenge uniformly from the specified set after receiving the commitment, then checks the response using the prescribed equation.
 
 <SchnorrOverview :en="true" />
+
+
+
+<div class="captioned-table" id="table-02-10" role="group" aria-labelledby="table-caption-02-10">
+
+<p class="table-caption" id="table-caption-02-10"><strong>Table 02-10：Message generation in the real interaction and simulation</strong></p>
+
+| Setting | Generation order | Condition |
+| --- | --- | --- |
+| Real interaction | t → c → s | Commit before receiving the challenge. |
+| Honest-verifier simulation | (c, s) → t | Choose c and s first; derive t. Output the record in the order (t, c, s). |
+
+</div>
+
+Generating a record in this different order is not the same as responding to a live verifier. This illustration alone does not prove zero-knowledge against malicious verifiers.
 
 If a transcript can be generated without the witness, could a dishonest prover do the same? Distinguish an output record from a live interaction with a verifier. For example, a Schnorr-type honest-verifier simulator can first choose a challenge and response, then derive a commitment satisfying the verification equation. A real prover commits before receiving the verifier’s challenge. The order differs. This intuition alone does not establish zero-knowledge against arbitrary malicious verifiers.
 
@@ -211,7 +246,9 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the exact value originally stored inside the prover.
 
-<CaptionedTable number="02-3" caption="Random variables and outputs in interaction and extraction" :en="true">
+<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+
+<p class="table-caption" id="table-caption-02-3"><strong>Table 02-3：Random variables and outputs in interaction and extraction</strong></p>
 
 | Aspect | Real interaction | Extraction experiment |
 | --- | --- | --- |
@@ -220,11 +257,29 @@ The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the 
 | Probability | Acceptance $p_{P^*}(x)$ | Extraction success $e_{P^*}(x,T)$ |
 | Result | Accept or reject | Valid witness or $\bot$ |
 
-</CaptionedTable>
+</div>
 
 These are separate experiments: do not assume $p_{P^*}(x)=e_{P^*}(x,T)$. Nor is $e_{P^*}(x,T)$ the probability of learning a secret by eavesdropping on one accepting transcript. Knowledge soundness connects **the ability to cause acceptance with extraction under specified access and computational resources**.
 
-<StudyDiagram id="02-4" number="02-8" :en="true" />
+Fix public input x and prover strategy P\*, including its private information.<br>Do not assume that P\* starts with a witness.
+
+<span id="figure-02-4"></span>
+<span id="caption-02-4"></span>
+
+<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
+
+<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Acceptance and extraction: different experiments and random variables</strong></p>
+
+| Item | Explanation | Equation / condition |
+| --- | --- | --- |
+| Real interaction: P\* ↔ V | Sample prover and verifier randomness and interact.<br>V outputs accept or reject.<br>A\_x is the binary decision variable. | p\_&#123;P\*&#125;(x) = Pr[A\_x = 1] |
+| Extraction experiment: E ↔ P\* | E emulates a verifier and invokes P\*.<br>This model permits reruns and rewinding.<br>Output W: valid witness w′ or failure ⊥.<br>B = 1 for (x, W) ∈ R; otherwise B = 0. | W = E\_T^&#123;P\*&#125;(x); e\_&#123;P\*&#125;(x,T) = Pr[B = 1] |
+
+</div>
+
+Knowledge soundness: when acceptance p exceeds knowledge error κ,<br>relate p − κ to extraction success and runtime.<br>p and e are not the same probability.
+
+E is an algorithm in the security proof, not a third participant in normal interaction. Rewound responses share randomness and need not be independent. Section 2’s S outputs a record; E outputs a witness.
 
 ### 3.4 Knowledge error and extraction time
 
@@ -272,7 +327,9 @@ Use Schnorr identification to make the distinction concrete. First fix what the 
 
 The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
 
-<CaptionedTable number="02-4" caption="Schnorr public input, witness and relation" :en="true">
+<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
+
+<p class="table-caption" id="table-caption-02-4"><strong>Table 02-4：Schnorr public input, witness and relation</strong></p>
 
 | Symbol | Meaning | Who has it? |
 | --- | --- | --- |
@@ -280,7 +337,7 @@ The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order
 | $w\in\mathbb{Z}_q$ | A secret exponent satisfying $y=g^w$: the witness | The honest prover |
 | $R_{\mathrm{DL}}$ | The relation checking that the public input and exponent match | Its definition and checking procedure are public |
 
-</CaptionedTable>
+</div>
 
 In an implementation, $G$ is represented by a description of the group and its operations. With valid shared group parameters and membership of $y$ checked, define
 
@@ -357,7 +414,25 @@ In the numerical example, suppose we also obtain the accepting response $s_2=8$ 
 
 **The relation's algebraic structure directly supplies both the verification and extraction equations.** Whether arbitrary computations come with such a structure is the question leading into Section 4.2.
 
-<StudyDiagram id="02-2" number="02-9" :en="true" />
+Public input x = (G, q, g, y) and secret exponent w satisfy y = gʷ. Example: p = 23, q = 11, g = 2, y = 8, w = 3.
+
+<span id="figure-02-2"></span>
+<span id="caption-02-2"></span>
+
+<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
+
+<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Schnorr: from statement and witness to verification and extraction</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Statement and witness | Claim: know the discrete logarithm of public y.<br>Witness: exponent w. Relation R\_DL: y = gʷ. |
+| 2. Connect two algebraic structures | Exponent addition a + b (mod q) → group multiplication gᵃgᵇ.<br>φ(a) = gᵃ; φ(a + b) = φ(a)φ(b). |
+| 3. Prover P ↔ verifier V | P → V: t = gʳ / V → P: c / P → V: s = r + cw.<br>V checks gˢ = tyᶜ. Example: r = 4, t = 16, c = 2, s = 10. Both sides are 12 (mod 23). |
+| 4. Extractor E: divide two accepting equations for the same t | gˢ¹ = tyᶜ¹ and gˢ² = tyᶜ² → g⁽ˢ¹⁻ˢ²⁾ = y⁽ᶜ¹⁻ᶜ²⁾.<br>w′ = (s₁ − s₂)(c₁ − c₂)⁻¹ mod q → gʷ′ = y.<br>Example: (c₁, s₁) = (2, 10), (c₂, s₂) = (5, 8) → w′ = 3. |
+
+</div>
+
+Exponent arithmetic (w, r, c, s) is modulo q; group multiplication in this example is modulo p. Extraction requires the same t and distinct c. These small values are illustrative; never reuse r in normal interactions.
 
 For another description of the construction, see [RFC 8235 §2.2](https://www.rfc-editor.org/rfc/rfc8235.html#section-2.2). It uses subtraction in the response, so its verification equation is arranged differently from the additive-response convention used here.
 
@@ -417,20 +492,24 @@ Typical analyses use the **random oracle model (ROM)**, treating the hash as an 
 
 With these distinctions in place, the landscape can be organized as follows. Interactive versus non-interactive is not the same distinction as succinct versus non-succinct.
 
-<CaptionedTable number="02-5" caption="Relations, interaction and succinctness" :en="true">
+<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
+
+<p class="table-caption" id="table-caption-02-5"><strong>Table 02-5：Relations, interaction and succinctness</strong></p>
 
 | Relation | Interactive examples | Non-interactive examples | Reading succinctness |
 | --- | --- | --- | --- |
 | Algebraic relations | Schnorr | Fiat–Shamir applied to suitable Sigma protocols | Short transcripts for a particular relation do not mean that Fiat–Shamir compresses proofs |
 | General NP relations | Interactive ZK constructions for general NP | Groth16 / PLONK / STARK | Assess proof size and verification cost relative to computation size separately from non-interactivity |
 
-</CaptionedTable>
+</div>
 
 These constructions do not all follow the same route. For example, Groth16 is constructed non-interactively using a reference string, without applying Fiat–Shamir. Act III examines each construction's route.
 
 <span id="figure-02-3"></span>
 
-<CaptionedTable number="02-6" caption="Separate expressiveness from efficiency" :en="true">
+<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
+
+<p class="table-caption" id="table-caption-02-6"><strong>Table 02-6：Separate expressiveness from efficiency</strong></p>
 
 | Question | Algebraic relation: the Schnorr example | General computation |
 | --- | --- | --- |
@@ -440,7 +519,7 @@ These constructions do not all follow the same route. For example, Groth16 is co
 | Purpose of succinctness | Limit communication and verification group operations for the relation | Keep proof size and verification work small relative to a large computation |
 | What must be checked separately? | The relation, verifier model, and security after transformation | Prover cost, public-input processing, setup, and security assumptions |
 
-</CaptionedTable>
+</div>
 
 Increasing expressiveness and improving proof efficiency are separate design tasks. Rather than treating succinctness, non-interactivity, and zero-knowledge as a single notion of performance, distinguish the guarantees and remaining costs. This provides a guide to the tools and protocols in Acts II and III.
 

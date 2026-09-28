@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 11: Groth16
@@ -66,7 +65,22 @@ $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
 This represents a **product** of exponents in the target group $G_T$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
 
-<StudyDiagram id="11-1" number="11-2" :en="true" />
+<span id="figure-11-1"></span>
+<span id="caption-11-1"></span>
+
+<div class="captioned-table" id="table-11-2" role="group" aria-labelledby="table-caption-11-2">
+
+<p class="table-caption" id="table-caption-11-2"><strong>Table 11-2：Move the QAP product into a target-group relation</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Desired relation | A(τ)B(τ) = C(τ) + H(τ)Z(τ) |
+| 2. Encode values in group elements | g₁^&#123;A(τ)&#125;, g₂^&#123;B(τ)&#125; |
+| 3. Use bilinearity to check the product | e(g₁^&#123;A(τ)&#125;, g₂^&#123;B(τ)&#125;) = e(g₁,g₂)^&#123;A(τ)B(τ)&#125; |
+
+</div>
+
+Conceptual sketch only. This relation alone gives neither Groth16 soundness nor zero-knowledge; the construction also needs circuit-specific keys, additional terms and randomization.
 
 ---
 
@@ -98,7 +112,23 @@ The elements $[\alpha]_1,[\beta]_2,[\gamma]_2,[\delta]_2$ in this equation are p
 
 The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]_1,[\beta]_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
 
-<StudyDiagram id="11-2" :en="true" number="11-1" />
+<span id="figure-11-2"></span>
+<span id="caption-11-2"></span>
+
+<div class="captioned-table" id="table-11-1" role="group" aria-labelledby="table-caption-11-1">
+
+<p class="table-caption" id="table-caption-11-1"><strong>Table 11-1：Roles of the terms in Groth16 verification</strong></p>
+
+| Term | Interpretation |
+| --- | --- |
+| e(A, B) | Pair two proof group elements |
+| e([α]₁, [β]₂) | Fixed term from the verification key |
+| e(IC, [γ]₂) | Bind the IC computed from public inputs |
+| e(C, [δ]₂) | Check consistency with the remaining proof term |
+
+</div>
+
+Verification: e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂). Here A,B,C are proof group elements, distinct from QAP polynomials. Constant pairing count does not remove public-input processing.
 
 ---
 
@@ -112,7 +142,22 @@ The construction depends on allowing use of public group elements while keeping 
 
 What must change when the circuit changes? Groth16’s keys contain information about its QAP, so a new circuit requires corresponding proving and verification keys. Shared preparation stages can exist, but a circuit-specific stage remains. Reducing that operational burden motivates the universal SRS studied with PLONK next time.
 
-<StudyDiagram id="11-3" number="11-3" :en="true" />
+<span id="figure-11-3"></span>
+<span id="caption-11-3"></span>
+
+<div class="captioned-table" id="table-11-3" role="group" aria-labelledby="table-caption-11-3">
+
+<p class="table-caption" id="table-caption-11-3"><strong>Table 11-3：Circuit-specific keys and secrets that must not remain</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Circuit and setup | Generate keys from the circuit QAP and secret randomness |
+| 2. Publish versus erase | Keep proving and verification keys. Erase the secret trapdoors. |
+| 3. When the circuit changes | Prepare corresponding circuit-specific keys again |
+
+</div>
+
+The toxic waste includes more than τ. MPC requires the stated honesty and erasure conditions. Reusable preparation does not remove Groth16’s circuit-specific phase.
 
 ### 4.3 The security basis: the generic bilinear group model
 

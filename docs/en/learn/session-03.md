@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 </script>
@@ -88,7 +87,22 @@ Two coefficients produce four symbols. Any two distinct points allow interpolati
 
 In general, an irreducible polynomial of degree $s$ constructs $q=p^s$ field elements. Ordinary RS evaluation uses $n\le q$ distinct points, or $n\le q-1$ if only nonzero elements are used. Field size and the degree bound of the polynomial being encoded are separate parameters.
 
-<StudyDiagram id="03-1" number="03-4" :en="true" />
+<span id="figure-03-1"></span>
+<span id="caption-03-1"></span>
+
+<div class="captioned-table" id="table-03-4" role="group" aria-labelledby="table-caption-03-4">
+
+<p class="table-caption" id="table-caption-03-4"><strong>Table 03-4：Arithmetic modulo 7: divide by multiplying an inverse</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Represent by remainders | 5 + 4 = 9 ≡ 2 mod 7 |
+| 2. Find a multiplier giving 1 | 3 × 5 = 15 ≡ 1 mod 7 → 3⁻¹ = 5 |
+| 3. Use the inverse for division | 2 ÷ 3 = 2 × 5 ≡ 3 mod 7 |
+
+</div>
+
+Zero has no inverse. Distinguish field elements from exponents in its multiplicative group.
 
 ---
 
@@ -165,6 +179,20 @@ $$f(X)=1\ell_0(X)+2\ell_1(X)+5\ell_2(X)=X^2+1.$$
 At each prescribed point exactly one basis is one. Toggle the weighted bases to compare the terms with their sum. Without the degree restriction, other polynomials can pass through the same three points.
 
 <PolynomialVisual kind="interpolation" :en="true" />
+
+
+
+<div class="captioned-table" id="table-03-1" role="group" aria-labelledby="table-caption-03-1">
+
+<p class="table-caption" id="table-caption-03-1"><strong>Table 03-1：Weighted basis and polynomial values at interpolation points</strong></p>
+
+| x | ℓ₀(x) | 2ℓ₁(x) | 5ℓ₂(x) | f(x) |
+| --- | --- | --- | --- | --- |
+| 0 | 1 | 0 | 0 | 1 |
+| 1 | 0 | 2 | 0 | 2 |
+| 2 | 0 | 0 | 5 | 5 |
+
+</div>
 
 Now read the same $X^2+1$ over $\mathbb{F}_7$: for example, $f(3)=10\equiv3\pmod7$. Coordinates no longer describe the real curve.
 
@@ -253,7 +281,34 @@ Compare $f(X)=X^2+1$ with $g(X)=4X-2$. Their difference is $h(X)=(X-1)(X-3)$. In
 
 <PolynomialVisual kind="testing" :en="true" />
 
-<StudyDiagram id="03-3" number="03-5" :en="true" />
+
+
+<div class="captioned-table" id="table-03-2" role="group" aria-labelledby="table-caption-03-2">
+
+<p class="table-caption" id="table-caption-03-2"><strong>Table 03-2：Candidate test points and values of the difference polynomial</strong></p>
+
+| x | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| h(x) | 3 | 0 | -1 | 0 | 3 | 8 | 15 |
+
+</div>
+
+<span id="figure-03-3"></span>
+<span id="caption-03-3"></span>
+
+<div class="captioned-table" id="table-03-5" role="group" aria-labelledby="table-caption-03-5">
+
+<p class="table-caption" id="table-caption-03-5"><strong>Table 03-5：A larger sample set lowers the false-acceptance bound</strong></p>
+
+| Condition | Upper bound on a false zero result |
+| --- | --- |
+| &#124;S&#124; = 7 | 28.57% |
+| &#124;S&#124; = 17 | 11.76% |
+| &#124;S&#124; = 31 | 6.45% |
+
+</div>
+
+Schwartz–Zippel bounds for a fixed nonzero polynomial of total degree d=2, with independent uniform coordinates. These are theoretical bounds, not measurements; the polynomial is fixed before sampling.
 
 ### 4.4 The complexity-theoretic significance
 
@@ -291,7 +346,9 @@ $$\Pr[h(r)=0]\le\min\left(1,\frac{d}{|S|}\right).$$
 
 A probability cannot exceed 1. When $d/|S|\ge1$, the lemma supplies no useful small-error guarantee.
 
-<CaptionedTable number="03-3" caption="Sampling sets and error probabilities for a quadratic polynomial" :en="true">
+<div class="captioned-table" id="table-03-3" role="group" aria-labelledby="table-caption-03-3">
+
+<p class="table-caption" id="table-caption-03-3"><strong>Table 03-3：Sampling sets and error probabilities for a quadratic polynomial</strong></p>
 
 | Sampling set $S\subseteq\mathbb{F}_{101}$ | $\lvert S\rvert$ | Roots in $S$ | Actual error probability | Degree-2 upper bound |
 | --- | --- | --- | --- | --- |
@@ -302,7 +359,7 @@ A probability cannot exceed 1. When $d/|S|\ge1$, the lemma supplies no useful sm
 | $\{0,1,\ldots,99\}$ | 100 | 2 | $1/50$ (2%) | $1/50$ |
 | $\mathbb{F}_{101}$ | 101 | 2 | $2/101$ (about 1.98%) | $2/101$ |
 
-</CaptionedTable>
+</div>
 
 Even two sets of size 4 can have different actual probabilities. **$d/|S|$ is not always the actual error probability.** With degree fixed, enlarging the set lowers the upper bound, but switching to an arbitrary different set need not monotonically lower the actual probability. A proof system cannot rely on knowing and avoiding the roots of a dishonest polynomial, so it uses a bound independent of their locations.
 

@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第13回:STARK
@@ -44,7 +43,23 @@ Groth16とKZG型PLONKでは，セットアップの秘密を適切に扱うこ�
 
 本講義では，AIR・FRI・Merkle木を組み合わせる代表的なSTARKを扱う．Merkle木は評価値の表への拘束性を，FRIは低次数多項式への近接性の検査を担う．この構成はKZGのような秘密のトラップドアを必要としない．ただし，透明性だけからAIR・FRIが唯一の選択として決まるわけではない．また，証明系全体の安全性はハッシュの衝突耐性だけでは説明できず，4.2節の条件も必要になる．
 
-<StudyDiagram id="13-1" number="13-2" />
+<span id="figure-13-1"></span>
+<span id="caption-13-1"></span>
+
+<div class="captioned-table" id="table-13-2" role="group" aria-labelledby="table-caption-13-2">
+
+<p class="table-caption" id="table-caption-13-2"><strong>表 13-2：透明性と，各部品が保証すること</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| Merkle木 | 開示値を，先に固定した表に結び付ける． |
+| FRI | 表が低次数多項式の評価に近いことを検査する． |
+
+</div>
+
+これらに制約・整合性の検査を組み合わせ，秘密のセットアップを使わず構成する
+
+AIR・FRI型STARKの代表例．透明性だけからAIRやFRIが唯一の選択として決まるわけではない．
 
 ---
 
@@ -80,7 +95,23 @@ Groth16とKZG型PLONKでは，セットアップの秘密を適切に扱うこ�
 
 ゼロ知識性を持たせる構成では，開示するトレース評価値等からウィットネスの情報が漏れないよう，次数上限や制約と整合するランダムなマスキングも必要になる．透明性やFRIの使用だけで，ゼロ知識性が自動的に得られるわけではない．
 
-<StudyDiagram id="13-2" number="13-3" />
+<span id="figure-13-2"></span>
+<span id="caption-13-2"></span>
+
+<div class="captioned-table" id="table-13-3" role="group" aria-labelledby="table-caption-13-3">
+
+<p class="table-caption" id="table-caption-13-3"><strong>表 13-3：STARK：固定してから，チャレンジを導出する</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 実行と符号化 | トレース → 補間 → 低次数拡張 → Merkleコミット |
+| 2. 制約をまとめる | トランスクリプトから係数を導出し，商・合成多項式を構成してコミット |
+| 3. FRIを構成する | 各表のコミット後に折り畳みチャレンジを導出 |
+| 4. まとめて検証する | 制約の関係・表の整合性・FRI・Merkle経路を検査 |
+
+</div>
+
+非対話型構成の概略．問い合わせは必要なコミットメントが固定された後に決める．ゼロ知識性には別途マスキング等が必要．
 
 ### 3.2 検証コストと証明サイズ
 
@@ -98,7 +129,22 @@ FRIの段階が少なければ，証明全体も同じ割合で小さくなる�
 
 一方，ここで扱うFRI型STARKはトラステッドセットアップを不要にする代わりに，評価値や認証経路の通信・検証を必要とする．**比較すべきなのは，特定の構成と条件におけるセットアップ・証明サイズ・検証コストの組合せ**である．「透明な証明は必ず大きくなる」という不可能性定理ではなく，Groth16をKZG系と分類することも正確ではない．
 
-<StudyDiagram id="13-3" number="13-1" />
+<span id="figure-13-3"></span>
+<span id="caption-13-3"></span>
+
+<div class="captioned-table" id="table-13-1" role="group" aria-labelledby="table-caption-13-1">
+
+<p class="table-caption" id="table-caption-13-1"><strong>表 13-1：証明サイズの比較では，数える対象を揃える</strong></p>
+
+| 方式 | 主な証明の要素 | 設計上の条件 |
+| --- | --- | --- |
+| Groth16 | 3個の群要素 | 回路固有のセットアップ |
+| KZG型PLONK | 定数個の群要素・評価値等 | 汎用SRS・Fiat–Shamir |
+| FRI型STARK | 評価値・FRI・Merkle認証経路 | 透明なセットアップ．全通信量を数える |
+
+</div>
+
+模式的な比較であり，実測値や速度ランキングではない．固定した安全性パラメータを前提とし，公開入力の処理コストを別途数える．
 
 ### 4.2 ポスト量子安全性
 

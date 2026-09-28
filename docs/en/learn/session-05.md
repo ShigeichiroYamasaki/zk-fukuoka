@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 5: Error-correcting codes and the information-theoretic perspective
@@ -74,7 +73,22 @@ This follows from the fact established in Session 3: a nonzero polynomial of deg
 
 For minimum distance $\delta$, changing at most $\lfloor(\delta-1)/2\rfloor$ positions around each codeword gives disjoint neighborhoods. This is why unique correction is possible. Reed–Solomon codes attain the Singleton bound for length $n$ and dimension $d$, making them MDS codes. Notice how distance determines the number of correctable errors.
 
-<StudyDiagram id="05-1" :en="true" number="05-1" />
+<span id="figure-05-1"></span>
+<span id="caption-05-1"></span>
+
+<div class="captioned-table" id="table-05-1" role="group" aria-labelledby="table-caption-05-1">
+
+<p class="table-caption" id="table-caption-05-1"><strong>Table 05-1：See RS distance in five evaluations</strong></p>
+
+| Evaluation x | 0 | 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- | --- |
+| f(x)=2x+1 | 1 | 3 | 5 | 0 | 2 |
+| g(x)=1 | 1 | 1 | 1 | 1 | 1 |
+| Match? | ✓ | × | × | × | × |
+
+</div>
+
+RS code over F₇ of degree &lt;2, evaluated at 0–4. With n=5 and d=2, minimum distance is 4 and one error is uniquely correctable. The two displayed codewords differ in four positions.
 
 ### 2.4 Parameters and distances in equations {#rs-parameters}
 
@@ -121,7 +135,21 @@ The **Shannon model** specifies a probabilistic channel; independent symbol erro
 
 A verifier cannot assume that a prover’s errors are independent random noise. The prover may choose positions and values that are likely to pass inspection. We therefore need worst-case properties, such as distance from codewords. Randomizing the verifier’s queries is different from assuming the errors themselves are random.
 
-<StudyDiagram id="05-2" number="05-2" :en="true" />
+<span id="figure-05-2"></span>
+<span id="caption-05-2"></span>
+
+<div class="captioned-table" id="table-05-2" role="group" aria-labelledby="table-caption-05-2">
+
+<p class="table-caption" id="table-caption-05-2"><strong>Table 05-2：Separate noise models from adversarial models</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Shannon perspective | Specify a probabilistic channel. Study rate and decoding failure probability. |
+| Hamming perspective | Allow worst-case error locations and values. Study distance and error correction. |
+
+</div>
+
+Verifier randomness randomizes checks on adversarial data; it does not assume cheating behaves like natural random noise.
 
 ### 3.3 Deriving the Hamming bound from ball volume
 
@@ -162,7 +190,23 @@ For Reed–Solomon codes, algorithms such as Guruswami–Sudan support list deco
 
 *We will not cover specific list-decoding algorithms today. The goal is to recognize the possibility of robust information recovery beyond unique decoding, and to understand that this idea supports later soundness analysis.*
 
-<StudyDiagram id="05-3" number="05-3" :en="true" />
+Received word, possibly corrupted
+
+<span id="figure-05-3"></span>
+<span id="caption-05-3"></span>
+
+<div class="captioned-table" id="table-05-3" role="group" aria-labelledby="table-caption-05-3">
+
+<p class="table-caption" id="table-caption-05-3"><strong>Table 05-3：Unique versus list decoding: what must be returned?</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Unique decoding | Within the guaranteed radius, identify one codeword. |
+| List decoding | Return a bounded list of codewords within a specified radius. |
+
+</div>
+
+Conceptual comparison. Allowing a list does not correct arbitrary corruption: radius and list-size conditions are required. FRI verification does not run a decoder at every query.
 
 ### 4.3 Candidate lists and the Johnson radius
 

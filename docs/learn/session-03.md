@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 import PolynomialVisual from "../.vitepress/theme/PolynomialVisual.vue";
 </script>
@@ -88,7 +87,22 @@ $$(f(0),f(1),f(\alpha),f(\alpha+1))=(1,0,1+\alpha,\alpha)$$
 
 一般に，次数 $s$ の既約多項式を使えば $q=p^s$ 個の元を持つ体を構成できる．通常のRS符号の相異なる評価点は $n\le q$ 個，非零元だけに限定する場合は $n\le q-1$ 個である．体の大きさ $q$ と，符号化する多項式の次数上限は別のパラメータである．
 
-<StudyDiagram id="03-1" number="03-4" />
+<span id="figure-03-1"></span>
+<span id="caption-03-1"></span>
+
+<div class="captioned-table" id="table-03-4" role="group" aria-labelledby="table-caption-03-4">
+
+<p class="table-caption" id="table-caption-03-4"><strong>表 03-4：法7の演算：逆元を掛けて割る</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 余りで表す | 5 + 4 = 9 ≡ 2 mod 7 |
+| 2. 積が1になる相手を探す | 3 × 5 = 15 ≡ 1 mod 7 → 3⁻¹ = 5 |
+| 3. 除算に使う | 2 ÷ 3 = 2 × 5 ≡ 3 mod 7 |
+
+</div>
+
+0には逆元がない．有限体の要素と，その乗法群の指数を区別する．
 
 ---
 
@@ -163,6 +177,20 @@ $$f(X)=1\ell_0(X)+2\ell_1(X)+5\ell_2(X)=X^2+1$$
 となる．各指定点では一つの基底だけが1になる．下のチェック欄で，重み付き基底を足すと放物線になる様子を見比べよう．次数制限を外せば，同じ3点を通る多項式は他にも作れる．
 
 <PolynomialVisual kind="interpolation" />
+
+
+
+<div class="captioned-table" id="table-03-1" role="group" aria-labelledby="table-caption-03-1">
+
+<p class="table-caption" id="table-caption-03-1"><strong>表 03-1：補間点における重み付き基底と多項式の値</strong></p>
+
+| x | ℓ₀(x) | 2ℓ₁(x) | 5ℓ₂(x) | f(x) |
+| --- | --- | --- | --- | --- |
+| 0 | 1 | 0 | 0 | 1 |
+| 1 | 0 | 2 | 0 | 2 |
+| 2 | 0 | 0 | 5 | 5 |
+
+</div>
 
 次は同じ $X^2+1$ を有限体 $\mathbb{F}_7$ 上で見る．例えば $f(3)=10\equiv3\pmod7$ となるので，実数の曲線とは座標の読み方が変わる．
 
@@ -251,7 +279,34 @@ $$\operatorname{Fold}_{\alpha}[f](x^2)
 
 <PolynomialVisual kind="testing" />
 
-<StudyDiagram id="03-3" number="03-5" />
+
+
+<div class="captioned-table" id="table-03-2" role="group" aria-labelledby="table-caption-03-2">
+
+<p class="table-caption" id="table-caption-03-2"><strong>表 03-2：検査候補点と差の多項式の値</strong></p>
+
+| x | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| h(x) | 3 | 0 | -1 | 0 | 3 | 8 | 15 |
+
+</div>
+
+<span id="figure-03-3"></span>
+<span id="caption-03-3"></span>
+
+<div class="captioned-table" id="table-03-5" role="group" aria-labelledby="table-caption-03-5">
+
+<p class="table-caption" id="table-caption-03-5"><strong>表 03-5：標本集合を大きくすると，誤受理の上界が下がる</strong></p>
+
+| 条件 | 誤って0と判定する確率の上界 |
+| --- | --- |
+| &#124;S&#124; = 7 | 28.57% |
+| &#124;S&#124; = 17 | 11.76% |
+| &#124;S&#124; = 31 | 6.45% |
+
+</div>
+
+全次数d=2の非零多項式に対するSchwartz–Zippelの上界．各座標を独立一様に選ぶ．実測値ではなく理論上界であり，多項式は点の選択前に固定する．
 
 ### 4.4 計算量理論的な意味づけ
 
@@ -289,7 +344,9 @@ $$\Pr[h(r)=0]\le\min\left(1,\frac{d}{|S|}\right)$$
 
 という**誤り確率の上界**である．確率は1を超えないので，$d/|S|\ge1$ では，有用な小ささを保証できない．
 
-<CaptionedTable number="03-3" caption="標本集合Sの選択と，二次多項式の誤り確率" >
+<div class="captioned-table" id="table-03-3" role="group" aria-labelledby="table-caption-03-3">
+
+<p class="table-caption" id="table-caption-03-3"><strong>表 03-3：標本集合Sの選択と，二次多項式の誤り確率</strong></p>
 
 | 標本集合 $S\subseteq\mathbb{F}_{101}$ | $\lvert S\rvert$ | $S$ 内の根の数 | 実際の誤り確率 | 次数2からの上界 |
 | --- | --- | --- | --- | --- |
@@ -300,7 +357,7 @@ $$\Pr[h(r)=0]\le\min\left(1,\frac{d}{|S|}\right)$$
 | $\{0,1,\ldots,99\}$ | 100 | 2 | $1/50$（2%） | $1/50$ |
 | $\mathbb{F}_{101}$ | 101 | 2 | $2/101$（約1.98%） | $2/101$ |
 
-</CaptionedTable>
+</div>
 
 同じ大きさ4の集合でも，根を含むかどうかで実際の確率は違う．**$d/|S|$ は，常に実際の確率に等しいわけではない**．次数上限を固定して $|S|$ を大きくすれば保証の上界は小さくなるが，任意の別の集合へ取り替えたとき，実際の確率まで必ず単調に下がるとは限らない．実際の証明系では，不正な多項式の根をあらかじめ知って避けることは期待できないため，根の位置によらない上界を使う．
 

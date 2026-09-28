@@ -35,6 +35,10 @@ for session in [f'{n:02}' for n in range(1,16)]+['01-illustrated']:
     for locale in ['', 'en/']:
         file=base/locale/'learn'/f'session-{session}.html'
         doc=Document(file.read_text()).root
+        source=(base.parents[1]/locale/'learn'/f'session-{session}.md').read_text()
+        markdown_tables=len(re.findall(r'^\|\s*:?-{3,}', source, re.M))
+        assert markdown_tables==len(list(doc.find('table'))), (file, 'every table must originate in Markdown')
+        assert '<CaptionedTable' not in source and '<table' not in source, (file, 'component or HTML table in lesson source')
         found=[]
         for kind in ['figure','table']:
             numbers=[]

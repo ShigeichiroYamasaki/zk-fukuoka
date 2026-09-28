@@ -9,9 +9,7 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 import SchnorrOverview from "../.vitepress/theme/SchnorrOverview.vue";
 </script>
 
@@ -61,7 +59,9 @@ import SchnorrOverview from "../.vitepress/theme/SchnorrOverview.vue";
 
 形式的な定義に進む前に，「何が公開され，何を秘密にしたいのか」を記号で整理しよう．第1回では，公開入力 $x$ とウィットネス $w$ を検証アルゴリズムに渡した．この二つが**正しい組になっているための条件**を表すのが，関係 $R$ である．
 
-<CaptionedTable number="02-1" caption="公開入力・ウィットネス・関係・言語の記号">
+<div class="captioned-table" id="table-02-1" role="group" aria-labelledby="table-caption-02-1">
+
+<p class="table-caption" id="table-caption-02-1"><strong>表 02-1：公開入力・ウィットネス・関係・言語の記号</strong></p>
 
 | 記号 | 意味 |
 | --- | --- |
@@ -71,7 +71,7 @@ import SchnorrOverview from "../.vitepress/theme/SchnorrOverview.vue";
 | $(x,w)\in R$ | $w$ が $x$ に対する有効なウィットネスであること |
 | $L$ | 有効なウィットネスが少なくとも一つ存在する入力 $x$ の集合 |
 
-</CaptionedTable>
+</div>
 
 ここでいう「関係」は，二つの対象の組について条件を定める**二項関係**である．入力とウィットネスを有限長の二進文字列として符号化すると，$R\subseteq\{0,1\}^*\times\{0,1\}^*$ と書ける．集合への所属 $(x,w)\in R$ と，その所属を検査する手続きは区別する．この検査の結果を，所属するとき $R(x,w)=1$，所属しないとき $R(x,w)=0$ と書くこともある．
 
@@ -136,7 +136,9 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n)$$
 
 **小さな例で，分布を比べる意味を確認しよう．** 以下は分布の説明のための架空の2ビットの記録であり，ゼロ知識プロトコルそのものの例ではない．
 
-<CaptionedTable number="02-2" caption="2ビットの記録に対する二つの確率分布">
+<div class="captioned-table" id="table-02-2" role="group" aria-labelledby="table-caption-02-2">
+
+<p class="table-caption" id="table-caption-02-2"><strong>表 02-2：2ビットの記録に対する二つの確率分布</strong></p>
 
 | 記録 $t$ | 実際の記録 $X$ の確率 | 仮のシミュレータの記録 $Y$ の確率 |
 | --- | --- | --- |
@@ -145,13 +147,31 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n)$$
 | $10$ | $1/4$ | $0$ |
 | $11$ | $1/4$ | $1/2$ |
 
-</CaptionedTable>
+</div>
 
 どちらも，各ビットを単独で見ると0と1が半々である．しかし，「2ビットが等しいとき1を返す」識別者なら，$\Pr[D(X)=1]=1/2$ と $\Pr[D(Y)=1]=1$ なので，差は $1/2$ になる．各ビットの分布が同じでも，**記録全体の同時分布**は異なる．この差が入力長を増やしても残るなら，計算量的な識別不可能性すら満たさない．ゼロ知識性でview全体を比較する理由がここにある．
 
 このように，識別不可能性の対象は，**固定した同じ公開入力に対する，実際のviewを表す確率変数 $X$ と，シミュレータの出力を表す確率変数 $Y$ の分布**である．健全性で不正な証明者の能力を制限することと，ゼロ知識性で識別者の能力を制限することは別の軸になる．Argumentだから計算量的ゼロ知識である，とは限らない．たとえば第11回のGroth16は，原論文で完全ゼロ知識性を示している．
 
-<StudyDiagram id="02-1" number="02-7" />
+固定するもの：V\*，有効な組 (x, w) ∈ R，補助入力 z<br>x や w をランダムに選んで平均するのではない．
+
+<span id="figure-02-1"></span>
+<span id="caption-02-1"></span>
+
+<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
+
+<p class="table-caption" id="table-caption-02-7"><strong>表 02-7：確率変数 X と Y：記録全体の分布を比較する</strong></p>
+
+| 項目 | 説明 | 式・条件 |
+| --- | --- | --- |
+| 実際の対話 → 確率変数 X | P は x, w を，V\* は x, z を使う．<br>乱数 r\_P と r\_V を独立に選ぶ．<br>X は V\* の view：公開入力・補助入力・自分の乱数・受信メッセージの記録全体． | X = (x, z, r\_V, m₁, …, m\_k) |
+| シミュレーション → 確率変数 Y | S は x, z と独自の乱数 r\_S を使う．<br>w は与えない．<br>Y は X と同じ形式で生成した記録．<br>同じ S で，すべての有効な w に対応する． | Y = S(x, z; r\_S) |
+
+</div>
+
+比べる量：各記録 t の出現確率 Pr[X = t] と Pr[Y = t]<br><br>完全ゼロ知識：すべての t で出現確率が一致<br>統計的ゼロ知識：統計距離 Δ(X, Y) ≤ negl(n)<br>計算量的ゼロ知識：任意の効率的な識別者 D について<br>&#124;Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]&#124; ≤ negl(n)
+
+本文と同じく n = &#124;x&#124;．確率は記録生成の乱数について取り，識別時は D の乱数も含める．受理・拒否だけでなく view 全体の分布を比較する．個々の実行で X と Y が同じ値になることは要求しない．
 
 ここで，**正直な検証者(honest verifier)** という用語を定義しておこう．これは，人柄ではなく，プロトコルで定めた手順に従う検証者を指す．例えば，チャレンジを指定された分布からランダムに選び，定められた検証式で受理・拒否を決める．ただし，手順に従いながら，得られたメッセージや自分の乱数を記録して分析することは考える．この検証者のviewをウィットネスなしでシミュレートできる性質を，**正直な検証者に対するゼロ知識性(HVZK)** と呼ぶ．チャレンジの選び方を変えるなど，手順から逸脱する検証者に対するゼロ知識性とは区別する．
 
@@ -164,6 +184,21 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n)$$
 次の説明では，後の4.1節で詳しく扱う**Schnorr識別プロトコル**を先取りする．これは，公開値に対応する秘密の指数を知っていることを，その指数を渡さずに示すプロトコルである．「証明者が最初のメッセージ(コミット)を送る → 検証者がランダムなチャレンジを送る → 証明者が応答する」という3段階で進む．このSchnorr型プロトコルでいう正直な検証者は，コミットを受け取った後，指定された集合からチャレンジを一様に選び，応答を所定の式で検査する検証者である．
 
 <SchnorrOverview />
+
+
+
+<div class="captioned-table" id="table-02-10" role="group" aria-labelledby="table-caption-02-10">
+
+<p class="table-caption" id="table-caption-02-10"><strong>表 02-10：実際の対話とシミュレーションでのメッセージ生成</strong></p>
+
+| 場面 | 生成順序 | 条件 |
+| --- | --- | --- |
+| 実際の対話 | t → c → s | チャレンジを受け取る前にコミットする． |
+| 正直な検証者の記録のシミュレーション | (c, s) → t | c と s を先に選び，t を逆算する．出力する記録の並びは (t, c, s)． |
+
+</div>
+
+記録を別の順序で生成できることと，実際の検証者に応答できることは別である．この図だけで悪意ある検証者に対するゼロ知識性を示したことにはならない．
 
 ウィットネスなしで対話を作れるなら，不正な証明者も同じことができるのではないか．この疑問では，シミュレータが出力する記録と，実際の検証者とのやり取りを区別する必要がある．たとえばSchnorr型プロトコルの，正直な検証者に対するシミュレーションでは，チャレンジと応答を先に選び，検証式に合うコミットを逆算できる．実際の証明者は，先にコミットしてから検証者のチャレンジを受け取る．この順序の違いがある．任意の悪意ある検証者に対するゼロ知識性は，この直感だけで示したことにはならない．
 
@@ -211,7 +246,9 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 と定める．抽出者の目的は，正しい組 $(x,w')\in R$ となる何らかの $w'$ を出すことである．証明者の内部に元々あった値と同じものを復元する，という要求ではない．
 
-<CaptionedTable number="02-3" caption="実際の対話と抽出実験の確率変数・出力">
+<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+
+<p class="table-caption" id="table-caption-02-3"><strong>表 02-3：実際の対話と抽出実験の確率変数・出力</strong></p>
 
 | 比較する点 | 実際の対話 | 抽出実験 |
 | --- | --- | --- |
@@ -220,11 +257,29 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 | 評価する確率 | 受理確率 $p_{P^*}(x)$ | 抽出成功確率 $e_{P^*}(x,T)$ |
 | 得られるもの | 受理または拒否 | 有効なウィットネスまたは $\bot$ |
 
-</CaptionedTable>
+</div>
 
 二つは別の実験なので，$p_{P^*}(x)=e_{P^*}(x,T)$ と仮定してはいけない．また，$e_{P^*}(x,T)$ は「一度受理された記録を盗聴すれば秘密が分かる確率」ではない．**受理させる能力から，適切なアクセスと計算時間のもとで抽出できることを導く**のが，知識の健全性の議論である．
 
-<StudyDiagram id="02-4" number="02-8" />
+固定：公開入力 x と，私的情報を含む証明者 P\* の戦略<br>P\* がウィットネスを持つことは，あらかじめ仮定しない．
+
+<span id="figure-02-4"></span>
+<span id="caption-02-4"></span>
+
+<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
+
+<p class="table-caption" id="table-caption-02-8"><strong>表 02-8：受理と抽出：異なる実験・異なる確率変数</strong></p>
+
+| 項目 | 説明 | 式・条件 |
+| --- | --- | --- |
+| 実際の対話：P\* ↔ V | P\* と V の乱数を選んで対話する．<br>V が出す結果：受理または拒否．<br>A\_x は判定の0・1変数． | p\_&#123;P\*&#125;(x) = Pr[A\_x = 1] |
+| 抽出実験：E ↔ P\* | E が検証者の役を実行し，P\* を呼び出す．<br>このモデルでは再実行・巻き戻しが可能．<br>E の出力 W：有効な w′ または ⊥．<br>B は (x, W) ∈ R なら1，失敗なら0． | W = E\_T^&#123;P\*&#125;(x); e\_&#123;P\*&#125;(x,T) = Pr[B = 1] |
+
+</div>
+
+知識の健全性：受理確率 p が知識誤差 κ を超えるとき，<br>差 p − κ と抽出成功確率・計算時間を結び付ける．<br>p と e は，同じ確率ではない．
+
+E は通常の対話の第三の参加者ではなく，安全性の証明で構成するアルゴリズム．巻き戻しでは乱数を共有するため，応答は一般に独立ではない．第2節の S は記録を出すが，E はウィットネスを出す．
 
 ### 3.4 知識誤差と，抽出に必要な計算時間
 
@@ -272,7 +327,9 @@ Schnorr識別プロトコルで，この違いを具体的に確認しよう．�
 
 公開のパラメータとして，素数位数 $q$ の巡回群 $G=\langle g\rangle$ と生成元 $g$ を共有する．巡回群とは，$g$ のべき乗によってすべての元を表せる群であり，位数 $q$ は元の個数である．以下では，群の演算を乗算で書く．
 
-<CaptionedTable number="02-4" caption="Schnorrの公開入力・ウィットネス・関係">
+<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
+
+<p class="table-caption" id="table-caption-02-4"><strong>表 02-4：Schnorrの公開入力・ウィットネス・関係</strong></p>
 
 | 記号 | 意味 | 誰が持つか |
 | --- | --- | --- |
@@ -280,7 +337,7 @@ Schnorr識別プロトコルで，この違いを具体的に確認しよう．�
 | $w\in\mathbb{Z}_q$ | $y=g^w$ を満たす秘密の指数．これがウィットネスである | 正直な証明者 |
 | $R_{\mathrm{DL}}$ | 公開入力と指数の対応が正しいかを検査する関係 | 定義・検査方法は公開 |
 
-</CaptionedTable>
+</div>
 
 ここで $G$ は，計算機上では群と演算を指定する記述として入力に含める．有効な群パラメータを共有し，$y$ の群への所属を確認した上で，関係を次のように定める．
 
@@ -357,7 +414,25 @@ $$
 
 **扱う関係の代数的構造が，検証式と抽出式を直接与えている．** この構造が一般の計算にも最初から備わっているか，という問いが次の4.2節につながる．
 
-<StudyDiagram id="02-2" number="02-9" />
+公開入力 x = (G, q, g, y) と秘密の指数 w の関係は y = gʷ．例：p = 23，q = 11，g = 2，y = 8，w = 3．
+
+<span id="figure-02-2"></span>
+<span id="caption-02-2"></span>
+
+<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
+
+<p class="table-caption" id="table-caption-02-9"><strong>表 02-9：Schnorr：言明・ウィットネスから検証と抽出へ</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 言明とウィットネス | 言明：公開値 y の離散対数を知っている．<br>ウィットネス：指数 w．関係 R\_DL：y = gʷ． |
+| 2. 二つの代数構造を結ぶ | 指数の加算 a + b（mod q）→ 群の乗算 gᵃgᵇ．<br>φ(a) = gᵃ，φ(a + b) = φ(a)φ(b)． |
+| 3. 証明者 P ↔ 検証者 V | P → V：t = gʳ ／ V → P：c ／ P → V：s = r + cw．<br>V は gˢ = tyᶜ を検査．例：r = 4，t = 16，c = 2，s = 10．両辺は 12（mod 23）． |
+| 4. 抽出者 E：同じ t の二つの受理式を割る | gˢ¹ = tyᶜ¹ と gˢ² = tyᶜ² → g⁽ˢ¹⁻ˢ²⁾ = y⁽ᶜ¹⁻ᶜ²⁾．<br>w′ = (s₁ − s₂)(c₁ − c₂)⁻¹ mod q → gʷ′ = y．<br>例：(c₁, s₁) = (2, 10)，(c₂, s₂) = (5, 8) → w′ = 3． |
+
+</div>
+
+指数 w, r, c, s の演算は mod q．この例の群の乗算は mod p．二つの受理記録は同じ t と異なる c を要する．小さい数は説明用であり，通常の対話で r を再利用しない．
 
 構成の参照先として，[RFC 8235 §2.2](https://www.rfc-editor.org/rfc/rfc8235.html#section-2.2)も読める．同文書は応答に減算を使う記法であり，ここで採用した加算の記法とは検証式の並べ方が異なる．
 
@@ -417,20 +492,24 @@ $$c=H(\text{方式を区別する情報},x,t)$$
 
 以上を踏まえて，方式を次のように配置できる．ここで「対話か非対話か」と「簡潔かどうか」は，同じ軸として扱わない．
 
-<CaptionedTable number="02-5" caption="対象となる関係と対話性・簡潔性の比較">
+<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
+
+<p class="table-caption" id="table-caption-02-5"><strong>表 02-5：対象となる関係と対話性・簡潔性の比較</strong></p>
 
 | 対象となる関係 | 対話型の例 | 非対話型の例 | 簡潔性を読む際の注意 |
 | --- | --- | --- | --- |
 | 代数的関係 | Schnorr | 適切なΣプロトコルへのFiat-Shamir変換 | 特定の関係に対して短い記録を作れても，Fiat-Shamir自体が証明を圧縮するわけではない |
 | 一般のNP関係 | 一般NP向けの対話型ZK構成 | Groth16 / PLONK / STARK | 非対話性とは別に，計算規模に対する証明サイズ・検証コストを評価する |
 
-</CaptionedTable>
+</div>
 
 これらの方式がすべて同じ手順で得られるわけではない．例えばGroth16はFiat-Shamir変換を経由せず，参照文字列を用いて非対話型として構成される．方式ごとの成り立ちは幕IIIで確認する．
 
 <span id="figure-02-3"></span>
 
-<CaptionedTable number="02-6" caption="表現力と効率性を分けて見る">
+<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
+
+<p class="table-caption" id="table-caption-02-6"><strong>表 02-6：表現力と効率性を分けて見る</strong></p>
 
 | 問い | 代数的関係：Schnorrの例 | 一般の計算 |
 | --- | --- | --- |
@@ -440,7 +519,7 @@ $$c=H(\text{方式を区別する情報},x,t)$$
 | 簡潔性の目的 | 関係を示す通信量・検証の群演算を抑える | 大きな計算に対して証明サイズ・検証負担を小さくする |
 | 別に確かめること | 対象の関係，検証者モデル，変換後の安全性 | 証明者コスト，公開入力の処理，セットアップ，安全性の仮定 |
 
-</CaptionedTable>
+</div>
 
 表現力を広げることと，証明・検証を効率化することは，別々の設計課題である．簡潔性，非対話性，ゼロ知識性を一つの「高性能」という言葉にまとめず，何が保証され，何が残るかを分けて読むことが，幕II・IIIの道具やプロトコルを理解する手がかりになる．
 

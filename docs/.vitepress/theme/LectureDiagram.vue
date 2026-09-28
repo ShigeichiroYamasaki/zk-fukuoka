@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from "vue";
 import GraphIsomorphism from "./GraphIsomorphism.vue";
 const props = defineProps({ kind: String, en: Boolean });
 const t = (ja, en) => props.en ? en : ja;
@@ -13,52 +12,9 @@ const titles = {
 };
 const numbers = {witness:1,interaction:2,graphs:3,motives:4,properties:5,models:6};
 
-const tables = {
- motives: {
-  number: '01-2',
-  headers: [['視点', 'Perspective'], ['確認したいこと', 'Question']],
-  rows: [
-   [['計算量理論', 'Complexity theory'], ['限られた検証者は，どこまで確認できるか？', 'What can a limited verifier check?']],
-   [['暗号学', 'Cryptography'], ['確認の過程で，何が相手に伝わるか？', 'What information does checking reveal?']]
-  ],
-  result: ['共通の枠組みは対話型証明系 (P, V)．メッセージを交換し，最後に受理・拒否を決める．', 'The shared framework is an interactive proof system (P, V): exchange messages, then accept or reject.'],
-  note: ['共通するのは記述の枠組み．完全性・健全性・ゼロ知識性は，それぞれ別に定義する．', 'The descriptive framework is shared. Completeness, soundness and zero-knowledge are defined separately.']
- },
- properties: {
-  number: '01-3',
-  headers: [['性質', 'Property'], ['対象となる場合', 'Case'], ['受理確率の条件', 'Acceptance condition']],
-  rows: [
-   [['完全性', 'Completeness'], ['x ∈ L：正しい言明と正直な証明者', 'x ∈ L: true statement and honest prover'], ['高い確率で受理：Pr[accept] ≥ 1 − negl', 'Accept with high probability: Pr[accept] ≥ 1 − negl']],
-   [['健全性', 'Soundness'], ['x ∉ L：誤った言明と任意の不正な証明者', 'x ∉ L: false statement and any dishonest prover'], ['受理確率はごく小さい：Pr[accept] ≤ negl', 'Negligible acceptance probability: Pr[accept] ≤ negl']]
-  ],
-  note: ['何でも受理する検証者は健全性を満たさず，何でも拒否する検証者は完全性を満たさない．二つを同時に要求する．', 'Accepting everything fails soundness; rejecting everything fails completeness. Both properties are required.']
- },
- models: {
-  number: '01-4',
-  headers: [['証明系', 'Proof system'], ['不正な証明者の能力', 'Dishonest prover’s power'], ['保証', 'Guarantee']],
-  rows: [
-   [['Proof', 'Proof'], ['計算能力に制限なし', 'No computational bound'], ['統計的健全性', 'Statistical soundness']],
-   [['Argument', 'Argument'], ['多項式時間に制限', 'Polynomial-time bounded'], ['計算量的健全性', 'Computational soundness']]
-  ],
-  result: ['SNARK / STARK の A は Argument を表す．', 'The A in SNARK / STARK stands for Argument.'],
-  note: ['どちらも検証者は効率的に動く．ここで比べているのは，不正な証明者に対する保証の範囲であり，ゼロ知識性の強さではない．', 'In both cases the verifier is efficient. The distinction concerns guarantees against dishonest provers, not the strength of zero-knowledge.']
- }
-};
-const table = computed(() => tables[props.kind]);
 </script>
 <template>
-  <div v-if="table" class="lecture-figure" role="group" :aria-labelledby="`diagram-${kind}`">
-    <div class="lecture-table-scroll" tabindex="0" :aria-label="t('横にスクロールできる表', 'Scrollable table')">
-      <table class="lecture-table">
-        <caption :id="`diagram-${kind}`"><span class="figure-number">{{ t('表', 'Table') }} {{ table.number }}</span><strong>{{ t(...titles[kind]) }}</strong></caption>
-        <thead><tr><th v-for="(header, i) in table.headers" :key="i" scope="col">{{ t(...header) }}</th></tr></thead>
-        <tbody><tr v-for="(row, i) in table.rows" :key="i"><template v-for="(cell, j) in row" :key="j"><th v-if="j === 0" scope="row">{{ t(...cell) }}</th><td v-else>{{ t(...cell) }}</td></template></tr></tbody>
-      </table>
-    </div>
-    <p v-if="table.result">{{ t(...table.result) }}</p>
-    <p class="note">{{ t(...table.note) }}</p>
-  </div>
-  <figure v-else class="lecture-figure" :aria-labelledby="`diagram-${kind}`">
+  <figure class="lecture-figure" :aria-labelledby="`diagram-${kind}`">
     <figcaption :id="`diagram-${kind}`"><span class="figure-number">{{ t('図', 'Figure') }} 01-{{ numbers[kind] }}</span><strong>{{ t(...titles[kind]) }}</strong></figcaption>
     <template v-if="kind === 'witness'">
       <div class="shared">{{ t('公開されている問題の入力 x', 'Public instance x') }}</div>

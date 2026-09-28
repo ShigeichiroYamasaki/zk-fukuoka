@@ -9,9 +9,7 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 import ArithmetizationOverview from "../.vitepress/theme/ArithmetizationOverview.vue";
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第4回:算術化の技法と計算量理論
@@ -153,7 +151,22 @@ $$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
 
 ここで $y=35$ は，検証したい言明の公開入力として固定している．$y$ も自由に選べるなら，この三つの行だけでは出力35を要求できない．制約系自体に定数35を埋め込む設計なら，追加の行 $(y-35)\cdot1=0$ を使える．また，この例が検査するのは有限体での等式である．整数の金額などを扱う際は，[入出金の例](./balance-arithmetization)のように範囲制約と剰余による回り込みも検討する．
 
-<StudyDiagram id="04-1" number="04-3" />
+<span id="figure-04-1"></span>
+<span id="caption-04-1"></span>
+
+<div class="captioned-table" id="table-04-3" role="group" aria-labelledby="table-caption-04-3">
+
+<p class="table-caption" id="table-caption-04-3"><strong>表 04-3：x³+x+5=35を，途中の値の制約へ分ける</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 二乗を作る | u = x × x → u = 9 |
+| 2. 三乗を作る | v = u × x → v = 27 |
+| 3. 出力を固定する | (v + x + 5) × 1 = 35 |
+
+</div>
+
+x=3の計算例．加算も出力条件も含めて制約を満たす必要がある．実際のR1CSでは各式を二つの線形結合の積の形へ書く．
 
 [入出金の具体例でR1CSへの変換を追う](./balance-arithmetization#r1cs)
 
@@ -191,7 +204,22 @@ $$\left(\sum_i z_i A_i(X)\right) \left(\sum_i z_i B_i(X)\right) - \left(\sum_i z
 
 変換の前後で，確認したい計算は変わっていない．変わったのは検査の形である．各制約点で差が0になることを，消失多項式で割り切れることにまとめた．商も含めた次数の制限と多項式の固定があれば，この関係をランダムな点で検査する方針を使える．式を一本にまとめることと，安全な証明系を完成させることは区別しておこう．
 
-<StudyDiagram id="04-2" number="04-4" />
+<span id="figure-04-2"></span>
+<span id="caption-04-2"></span>
+
+<div class="captioned-table" id="table-04-4" role="group" aria-labelledby="table-caption-04-4">
+
+<p class="table-caption" id="table-caption-04-4"><strong>表 04-4：R1CSからQAPへ：行の検査を割り切れ性へ</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. R1CSの行 | 各行jで A(z)ⱼ B(z)ⱼ = C(z)ⱼ |
+| 2. 評価点に対応づける | 相異なるrⱼで列をLagrange補間する |
+| 3. 一つの多項式関係へ | A(X)B(X) − C(X) = H(X)Z(X)<br>Z(X) = ∏ⱼ(X − rⱼ) |
+
+</div>
+
+割り切れ性の表現だけでは暗号学的な証明は完成しない．次数の制限と，評価値が固定された多項式に対応することの保証も必要になる．
 
 [入出金の具体例でQAPへの変換を追う](./balance-arithmetization#qap)
 
@@ -261,7 +289,23 @@ AIRでは次の2種類の制約を課す:
 
 二つの制約の役割を分けて読もう．遷移が正しくても，出発点や到達点が指定と違えば，求める計算を示したことにはならない．列を補間して多項式にすると，隣接する時刻の関係も，指定した時刻の値も，多項式の条件として扱える．第3回の補間が，ここでも表と多項式を結び付けている．
 
-<StudyDiagram id="04-3" number="04-1" />
+<span id="figure-04-3"></span>
+<span id="caption-04-3"></span>
+
+<div class="captioned-table" id="table-04-1" role="group" aria-labelledby="table-caption-04-1">
+
+<p class="table-caption" id="table-caption-04-1"><strong>表 04-1：AIR：時間を行にして，状態の変化を検査する</strong></p>
+
+| 時刻t | 状態sₜ | 確認する関係 |
+| --- | --- | --- |
+| 0 | 3 | 初期境界：s₀=3 |
+| 1 | 9 | 9 ≡ 3² mod 17 |
+| 2 | 13 | 13 ≡ 9² mod 17 |
+| 3 | 16 | 16 ≡ 13² mod 17／最終境界：s₃=16 |
+
+</div>
+
+F₁₇上でsₜ₊₁=sₜ²，初期値s₀=3を例にしたトレース．遷移制約は隣り合う行，境界制約は指定した行に課す．
 
 [入出金の具体例でAIRへの変換を追う](./balance-arithmetization#air)
 
@@ -273,7 +317,9 @@ R1CS/QAPとAIRは，同じ目的に対して，どこを計算の単位として
 
 今度は $K=\mathbb F_{17}$ で，初期値3を3回二乗する短いプログラムを考えよう．状態を $u_i$ とすれば，計算規則は $u_{i+1}=u_i^2$ であり，実行トレースは $3\to9\to13\to16$ となる．ここでは初期値3と最終値16を公開条件とする．
 
-<CaptionedTable number="04-2" caption="二乗を3回繰り返す計算の実行トレースと評価点">
+<div class="captioned-table" id="table-04-2" role="group" aria-labelledby="table-caption-04-2">
+
+<p class="table-caption" id="table-caption-04-2"><strong>表 04-2：二乗を3回繰り返す計算の実行トレースと評価点</strong></p>
 
 | 時刻 $i$ | 評価点 $\omega^i$ | 状態 $u_i$ | 次の状態との関係 |
 |---:|---:|---:|---|
@@ -282,7 +328,7 @@ R1CS/QAPとAIRは，同じ目的に対して，どこを計算の単位として
 | 2 | 16 | 13 | $13^2=16\pmod{17}$ |
 | 3 | 13 | 16 | 最終行なので遷移制約を課さない |
 
-</CaptionedTable>
+</div>
 
 $\omega=4$ は位数4で，評価領域 $D=\{1,4,16,13\}$ は乗法部分群になる．この選び方なら，時刻を一つ進める操作は，評価点を $X\mapsto\omega X$ と変えることで表せる．表の状態列を補間した次数4未満の多項式は
 

@@ -7,9 +7,7 @@ next: false
 ---
 
 <script setup>
-import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 15 (final): Directions for further development
@@ -50,7 +48,22 @@ A verifier that is fast on an ordinary machine may still be expensive inside an 
 
 One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve's base field matches the other's scalar field, and vice versa. This helps represent group operations in circuits, including recursion without pairings. A cycle is not defined merely as a pair that makes pairing operations efficient, and not every recursive construction requires one. See the [Nova paper](https://eprint.iacr.org/2021/370).
 
-<StudyDiagram id="15-1" number="15-3" :en="true" />
+<span id="figure-15-1"></span>
+<span id="caption-15-1"></span>
+
+<div class="captioned-table" id="table-15-3" role="group" aria-labelledby="table-caption-15-3">
+
+<p class="table-caption" id="table-caption-15-3"><strong>Table 15-3：Recursion: include verification of the previous proof in the next computation</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Previous result | State sᵢ and proof πᵢ of its history |
+| 2. Next statement to prove | Verify πᵢ and correctly execute sᵢ → sᵢ₊₁ |
+| 3. New result | Pass state sᵢ₊₁ and proof πᵢ₊₁ to the next step |
+
+</div>
+
+Schematic for a finite history up to each step. Bind the public state and step linkage correctly. Verifier-circuit efficiency also depends on group and field choices.
 
 ---
 
@@ -70,7 +83,22 @@ Folding alone does not produce a complete succinct zero-knowledge proof. Disting
 
 FRI from Session 6 also uses folding, but reduces polynomial degree for proximity testing; Nova aggregates constraint-satisfaction instances. The incremental-processing analogy does not make them the same protocol or give them the same soundness proof.
 
-<StudyDiagram id="15-2" number="15-4" :en="true" />
+<span id="figure-15-2"></span>
+<span id="caption-15-2"></span>
+
+<div class="captioned-table" id="table-15-4" role="group" aria-labelledby="table-caption-15-4">
+
+<p class="table-caption" id="table-caption-15-4"><strong>Table 15-4：Separate the roles of folding, IVC and compression</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Folding | Combine two relaxed-R1CS instances and update their witnesses |
+| 2. IVC | Ensure the linkage of steps and the accumulated relation |
+| 3. Compression | Turn the accumulated relation into a succinct proof for presentation |
+
+</div>
+
+Conceptual view motivated by Nova. Folding alone is not a succinct zero-knowledge proof. Its objects and security arguments differ from FRI degree reduction.
 
 ### 2.3 Where this approach helps
 
@@ -88,7 +116,23 @@ $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
 interactively, fixing one variable at a time, without the verifier evaluating every summand. Each variable needs a degree bound, and the verifier checks degrees and sum consistency round by round. The final random-point evaluation of $g$ must also be verified, either directly or through another appropriate mechanism; without that check, the claimed sum is not established. Sumcheck is also central to IP = PSPACE from Session 1.
 
-<StudyDiagram id="15-3" number="15-5" :en="true" />
+<span id="figure-15-3"></span>
+<span id="caption-15-3"></span>
+
+<div class="captioned-table" id="table-15-5" role="group" aria-labelledby="table-caption-15-5">
+
+<p class="table-caption" id="table-caption-15-5"><strong>Table 15-5：Sumcheck: reduce a sum claim to checking one evaluation</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Initial claim | T = ∑\_&#123;b₁,…,bₙ∈&#123;0,1&#125;&#125; g(b₁,…,bₙ) |
+| 2. Check a univariate polynomial | p₁(0)+p₁(1)=T → reduce to p₁(r₁) at random r₁ |
+| 3. Fix one variable per round | Repeat the check for the remaining sum |
+| 4. Check the final evaluation | Compute g(r₁,…,rₙ) independently or check it with an appropriate mechanism |
+
+</div>
+
+Check degree bounds and sum consistency each round, choosing the challenge after the message. The final evaluation check is essential. GKR uses such reductions between layers.
 
 ### 3.2 The GKR protocol
 
@@ -112,7 +156,9 @@ Session 10's “IOP design → implementation → non-interactivity” map helps
 
 Session 14 showed why efficiency cannot be reduced to one number. Read this session’s techniques the same way. Do they improve proof size, verification cost, or prover cost? Add composability? Leave setup or long-term security conditions unchanged? The following table maps techniques to these questions.
 
-<CaptionedTable number="15-1" caption="Primary improvements targeted by emerging techniques" :en="true">
+<div class="captioned-table" id="table-15-1" role="group" aria-labelledby="table-caption-15-1">
+
+<p class="table-caption" id="table-caption-15-1"><strong>Table 15-1：Primary improvements targeted by emerging techniques</strong></p>
 
 | Technique | Main dimension improved |
 | --- | --- |
@@ -120,7 +166,7 @@ Session 14 showed why efficiency cannot be reduced to one number. Read this sess
 | Folding schemes | Prover cost, particularly for sequential computation |
 | GKR/sumcheck | Prover cost, particularly for large parallel computations |
 
-</CaptionedTable>
+</div>
 
 Use the table as a set of questions for evaluating new schemes. Lower prover cost might come with greater communication or memory demands. Read improvements together with remaining conditions, including succinct verification and composability. The table does not say the entire field has moved to a single goal.
 
@@ -142,13 +188,31 @@ Use the table as a set of questions for evaluating new schemes. Lower prover cos
 
 EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not establish mainnet activation. [Hegotá proposal article](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
 
-<StudyDiagram id="15-4" number="15-6" :en="true" />
+<span id="figure-15-4"></span>
+<span id="caption-15-4"></span>
+
+<div class="captioned-table" id="table-15-6" role="group" aria-labelledby="table-caption-15-6">
+
+<p class="table-caption" id="table-caption-15-6"><strong>Table 15-6：Ethereum: distinguish L2 proofs from L1 execution proofs</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| L2 ZK rollup | L2 computation → validity proof → verification on Ethereum L1 |
+| L1 execution proof | Targets Ethereum block execution itself. EIP-8025 proposes distribution and verification of optional proofs. |
+
+</div>
+
+The “zk” name alone does not imply transaction privacy
+
+Visual summary of the lecture’s September 27, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation.
 
 ### 4.4 Connecting the application to the course's research map
 
 Return from the Ethereum example to the course’s questions. The following table connects application decisions to the tools studied. It does not claim that EIP-8025 selects a particular folding scheme or GKR construction.
 
-<CaptionedTable number="15-2" caption="Mapping Ethereum ZK EVM applications to course topics and evaluation criteria" :en="true">
+<div class="captioned-table" id="table-15-2" role="group" aria-labelledby="table-caption-15-2">
+
+<p class="table-caption" id="table-caption-15-2"><strong>Table 15-2：Mapping Ethereum ZK EVM applications to course topics and evaluation criteria</strong></p>
 
 | Application question | Course connection | Evaluation dimensions |
 | --- | --- | --- |
@@ -157,7 +221,7 @@ Return from the Ethereum example to the course’s questions. The following tabl
 | Can proofs of computation segments be combined efficiently? | Recursion and aggregation; folding where appropriate to the construction | Proof size, proving cost, bandwidth |
 | Can validation become cheaper through a safe transition? | Soundness (Sessions 1 and 14) and staged protocol adoption | Verification cost, security, operational reliability |
 
-</CaptionedTable>
+</div>
 
 Discussion prompts: “If a proof is small but slow to generate, how do L2 batching and L1 block validation differ?” and “What measurements and security evidence are needed before supplementary proofs become mandatory?” These questions connect theoretical efficiency to operational requirements.
 

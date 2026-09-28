@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 
 import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
@@ -63,7 +62,21 @@ $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
 この式は，コミット済みの多項式 $f$ について，$f(x)=y$ という言明を証明 $\pi$ で検査する手続きを表す．多項式全体を送り直さずに，必要な点の値を確かめられることが目的である．算術化で作った多項式を先に固定し，その後で検査点を選ぶ，という第3回の条件を実装する道具になる．
 
-<StudyDiagram id="08-1" number="08-3" />
+<span id="figure-08-1"></span>
+<span id="caption-08-1"></span>
+
+<div class="captioned-table" id="table-08-3" role="group" aria-labelledby="table-caption-08-3">
+
+<p class="table-caption" id="table-caption-08-3"><strong>表 08-3：拘束性と隠蔽性は，別々に必要になる</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| 拘束性：送った側への制約 | 同じコミットメントを，別の値にすり替えて開示できない． |
+| 隠蔽性：受け取る側への制約 | コミットメントから，隠された値を識別できない． |
+
+</div>
+
+拘束性を示しただけでは隠蔽性は得られない．多項式コミットメントでは，さらに点での評価の正しさを検証する機能を考える．
 
 ---
 
@@ -95,7 +108,22 @@ $$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
 ここでは前節の $g$ を $g_1\in G_1$ と書き直し，検証用SRSに $g_2,g_2^\tau\in G_2$ も含める．式を指数の関係として読むと，$f(\tau)-y=q(\tau)(\tau-x)$ を確認している．秘密点を公開せずに積の関係を扱うために，第7回のペアリングを使っているのである．
 
-<StudyDiagram id="08-2" number="08-4" />
+<span id="figure-08-2"></span>
+<span id="caption-08-2"></span>
+
+<div class="captioned-table" id="table-08-4" role="group" aria-labelledby="table-caption-08-4">
+
+<p class="table-caption" id="table-caption-08-4"><strong>表 08-4：KZG：割り切れ性をペアリングで検証する</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 多項式を固定する | C = g₁^&#123;f(τ)&#125; |
+| 2. f(x)=yの開示証明を作る | q(X) = (f(X)−y)/(X−x)，π = g₁^&#123;q(τ)&#125; |
+| 3. ペアリング等式を確認する | e(C·g₁^&#123;−y&#125;, g₂) = e(π, g₂^τ·g₂^&#123;−x&#125;) |
+
+</div>
+
+群を区別した表記．次数に対応するG₁のべきのSRSと，G₂のg₂・g₂^τを使う．基本形のKZGは隠蔽性を自動では与えない．
 
 ### 2.4 安全性の根拠
 
@@ -160,7 +188,9 @@ $$D=\{1,2,4,8,16,15,13,9\}$$
 
 上の値を固定する．開示したい点3は，この領域に含まれていない．以下は，表の認証・商の整合性・低次数検査の役割を分けて理解するための構成例である．実用の方式では，これらをまとめる方法や健全性パラメータも定める．
 
-<CaptionedTable number="08-2" caption="同じ多項式の評価表と，開示点3に対応する商の評価表（法17）">
+<div class="captioned-table" id="table-08-2" role="group" aria-labelledby="table-caption-08-2">
+
+<p class="table-caption" id="table-caption-08-2"><strong>表 08-2：同じ多項式の評価表と，開示点3に対応する商の評価表（法17）</strong></p>
 
 | 評価点 $t$ | $f(t)=t^2+2t+3$ | $q(t)=t+5$ |
 |---:|---:|---:|
@@ -173,7 +203,7 @@ $$D=\{1,2,4,8,16,15,13,9\}$$
 | 13 | 11 | 1 |
 | 9 | 0 | 14 |
 
-</CaptionedTable>
+</div>
 
 **表を固定する．** まず $f$ の8個の値をMerkle木にまとめ，ルート $R_f$ を送る．順序を固定し，各葉に位置と値を結び付ける．たとえば葉のハッシュを $h_i=\operatorname{Hash}(\text{leaf},i,f(t_i))$，内部ノードを $\operatorname{Hash}(\text{node},\text{left},\text{right})$ とする．タグと符号化は一意に区別できるものを使う．8葉の木で $t=2$ の値11を開示するなら，11と，ルートへ至る3段分の兄弟ハッシュを送る．検証者は左右の位置も使ってルートを再計算する．
 
@@ -211,7 +241,9 @@ $$f(X)-2-(X-3)\widetilde q(X)$$
 
 ## 4. KZGとFRIベースの比較
 
-<CaptionedTable number="08-1" caption="KZGとFRIベースの多項式コミットメントの比較">
+<div class="captioned-table" id="table-08-1" role="group" aria-labelledby="table-caption-08-1">
+
+<p class="table-caption" id="table-caption-08-1"><strong>表 08-1：KZGとFRIベースの多項式コミットメントの比較</strong></p>
 
 | | KZGコミットメント | FRIベースのコミットメント |
 |---|---|---|
@@ -220,7 +252,7 @@ $$f(X)-2-(X-3)\widetilde q(X)$$
 | 評価の正しさの根拠 | 次数上限に対応するSDH型仮定による評価拘束性 | 表への拘束性 + FRIの健全性 + 評価言明との整合性検査 |
 | 評価証明のサイズ | 固定した群で定数個の群要素 | 問い合わせ値とMerkle認証経路を含めて評価．代表的構成では多重対数的 |
 
-</CaptionedTable>
+</div>
 
 比較するときは，何を固定し，何を検査し，どの前提を使うかを順に確認しよう．FRIの折り畳み段階数と，認証経路や問い合わせ数を含む全証明のサイズは別に数える．非対話化と知識の抽出には，表の評価拘束性とは別の安全性条件が必要になる．幕IIIではKZGを使うPLONKとFRIを使う代表的なSTARKを比べる．Groth16はペアリングを使うが，KZGを部品として組み込む方式ではない．この違いも，構成を読む際に維持しておこう．
 

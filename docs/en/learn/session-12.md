@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 12: PLONK
@@ -73,7 +72,21 @@ $$F(X)=Z_H(X)T_{\mathrm{gate}}(X)$$
 
 for a quotient polynomial $T_{\mathrm{gate}}(X)$. The full protocol combines this with copy constraints and checks polynomial relations using degree bounds and commitments. **Separating fixed circuit preprocessing from each proof's witness** lets a universal SRS support proofs of a specified circuit. See the [PLONK paper](https://eprint.iacr.org/2019/953).
 
-<StudyDiagram id="12-1" :en="true" number="12-1" />
+<span id="figure-12-1"></span>
+<span id="caption-12-1"></span>
+
+<div class="captioned-table" id="table-12-1" role="group" aria-labelledby="table-caption-12-1">
+
+<p class="table-caption" id="table-caption-12-1"><strong>Table 12-1：Selectors choose the operation on the same columns</strong></p>
+
+| Gate | q\_L | q\_R | q\_O | q\_M | q\_C | Row relation |
+| --- | --- | --- | --- | --- | --- | --- |
+| Addition | 1 | 1 | −1 | 0 | 0 | a+b−c=0 |
+| Multiplication | 0 | 0 | −1 | 1 | 0 | ab−c=0 |
+
+</div>
+
+Basic-gate examples with the public-input term set to zero. The relation holds on gate rows, not necessarily at every field point. Public inputs and copy constraints must also be incorporated.
 
 ---
 
@@ -95,7 +108,22 @@ The left side encodes values with their original positions; the right side pairs
 
 PLONK uses a grand-product polynomial to handle the many factors, enforcing adjacent-row updates and boundary conditions. Checking only the final product would not suffice: the accumulation updates must also be constrained. See the [original permutation argument](https://eprint.iacr.org/2019/953) for the construction.
 
-<StudyDiagram id="12-2" number="12-2" :en="true" />
+<span id="figure-12-2"></span>
+<span id="caption-12-2"></span>
+
+<div class="captioned-table" id="table-12-2" role="group" aria-labelledby="table-caption-12-2">
+
+<p class="table-caption" id="table-caption-12-2"><strong>Table 12-2：Copy constraints must bind specific positions</strong></p>
+
+| Step / stage | Explanation |
+| --- | --- |
+| 1. Specify positions that must agree | p₁ = a₁, p₂ = b₃, p₃ = c₅ |
+| 2. Fix a permutation cycle | p₁ → p₂ → p₃ → p₁ |
+| 3. Compare products binding values to positions | Check products of vⱼ + β·idⱼ + γ and vⱼ + β·idσ(j) + γ |
+
+</div>
+
+Example with three positions assigned to one variable. Values alone form the same multiset after any permutation; position labels and a circuit-fixed permutation are essential.
 
 ### 3.3 The broader significance of copy constraints
 
@@ -127,7 +155,25 @@ Review where circuit-specific information is fixed, which relations are checked,
 - **Implementation:** KZG commitments (Session 8) enable efficient verification of these relations at evaluation points. The shared tool with Groth16 is pairings; Groth16 does not itself incorporate KZG. PLONKish derivatives can use FRI or other commitments, but changes require revisiting the protocol and security analysis. Distinguish their setup and performance properties from original PLONK.
 - **Non-interactivity:** The Fiat–Shamir transform (Session 9) makes the protocol non-interactive. Unlike Groth16, PLONK is first designed as an interactive IOP and then made non-interactive, following the Session 10 map more directly.
 
-<StudyDiagram id="12-3" number="12-3" :en="true" />
+Universal, updatable SRS with a fixed capacity
+
+<span id="figure-12-3"></span>
+<span id="caption-12-3"></span>
+
+<div class="captioned-table" id="table-12-3" role="group" aria-labelledby="table-caption-12-3">
+
+<p class="table-caption" id="table-caption-12-3"><strong>Table 12-3：Shared SRS versus circuit-specific information</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Circuit A | Preprocess selectors and wiring<br>Corresponding proving and verification keys |
+| Circuit B | Preprocess different selectors and wiring<br>Corresponding proving and verification keys |
+
+</div>
+
+Sharing the SRS does not remove binding to the circuit
+
+Universality is bounded, for example by degree. KZG-based PLONK uses both trusted setup and Fiat–Shamir. Custom-gate efficiency also depends on degree and column count.
 
 ---
 

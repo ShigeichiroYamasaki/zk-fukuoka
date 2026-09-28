@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第12回:PLONK
@@ -73,7 +72,21 @@ $$F(X)=Z_H(X)T_{\mathrm{gate}}(X)$$
 
 と表せる．実際のプロトコルではコピー制約等も組み合わせ，次数の制限とコミットメントに基づいて多項式関係を検証する．**回路を固定する前処理データと，各証明のウィットネスを分ける**ことが，汎用SRSを使いながら指定の回路を証明するための要点である．[PLONK原論文](https://eprint.iacr.org/2019/953)を参照．
 
-<StudyDiagram id="12-1" number="12-1" />
+<span id="figure-12-1"></span>
+<span id="caption-12-1"></span>
+
+<div class="captioned-table" id="table-12-1" role="group" aria-labelledby="table-caption-12-1">
+
+<p class="table-caption" id="table-caption-12-1"><strong>表 12-1：同じ列でも，セレクタが計算を選ぶ</strong></p>
+
+| ゲート | q\_L | q\_R | q\_O | q\_M | q\_C | 行の関係 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 加算 | 1 | 1 | −1 | 0 | 0 | a+b−c=0 |
+| 乗算 | 0 | 0 | −1 | 1 | 0 | ab−c=0 |
+
+</div>
+
+公開入力項を0とした基本ゲートの例．各行で条件を満たすのであり，多項式が体の全点で0という意味ではない．公開入力やコピー制約は別途組み込む．
 
 ---
 
@@ -95,7 +108,22 @@ $$\prod_j\bigl(v_j+\beta\,\mathrm{id}_j+\gamma\bigr)=\prod_j\bigl(v_j+\beta\,\ma
 
 多数の積を扱うため，PLONKはgrand product(累積積)の多項式を用い，隣接行の更新関係と境界条件を検証する．積の終点だけでなく，累積積の更新も正しく制約する必要がある．[原論文のpermutation argument](https://eprint.iacr.org/2019/953)で具体的な構成を確認できる．
 
-<StudyDiagram id="12-2" number="12-2" />
+<span id="figure-12-2"></span>
+<span id="caption-12-2"></span>
+
+<div class="captioned-table" id="table-12-2" role="group" aria-labelledby="table-caption-12-2">
+
+<p class="table-caption" id="table-caption-12-2"><strong>表 12-2：コピー制約は，「どの位置」を結び付けるかが重要</strong></p>
+
+| 手順・段階 | 説明 |
+| --- | --- |
+| 1. 同じ値が必要な位置を決める | p₁ = a₁，p₂ = b₃，p₃ = c₅ |
+| 2. 置換の巡回として固定 | p₁ → p₂ → p₃ → p₁ |
+| 3. 値と位置を混ぜた積を照合 | vⱼ + β·idⱼ + γ と vⱼ + β·idσ(j) + γ の積を検査 |
+
+</div>
+
+三つの位置を同じ変数に割り当てる例．値だけの多重集合は並べ替えても変わらないため，位置ラベルと回路で固定された置換を使う．
 
 ### 3.3 コピー制約が持つ一般的な意義
 
@@ -127,7 +155,25 @@ $$\prod_j\bigl(v_j+\beta\,\mathrm{id}_j+\gamma\bigr)=\prod_j\bigl(v_j+\beta\,\ma
 - **実装**:KZGコミットメント(第8回)を用いて，これらの多項式関係を評価点で効率的に検証可能にする．Groth16との共通点はペアリングを使うことであり，Groth16自体がKZGコミットメントを部品として使うわけではない．FRI等を使うPLONKishな派生構成もあるが，変更にはプロトコルと安全性の再検討が必要である．原論文のPLONKと，その派生方式のセットアップ・性能を区別する
 - **非対話化**:Fiat-Shamir変換(第9回)によって非対話化される．Groth16とは異なり，PLONKは対話型のIOPとしてまず設計され，その後Fiat-Shamirで非対話化するという，より第10回の見取り図に忠実な構成を取っている点も対比しておきたい
 
-<StudyDiagram id="12-3" number="12-3" />
+上限を定めた汎用・更新可能SRS
+
+<span id="figure-12-3"></span>
+<span id="caption-12-3"></span>
+
+<div class="captioned-table" id="table-12-3" role="group" aria-labelledby="table-caption-12-3">
+
+<p class="table-caption" id="table-caption-12-3"><strong>表 12-3：共有するSRSと，回路ごとに固定する情報</strong></p>
+
+| 項目 | 説明 |
+| --- | --- |
+| 回路A | セレクタ・配線を前処理<br>対応する証明鍵・検証鍵 |
+| 回路B | 別のセレクタ・配線を前処理<br>対応する証明鍵・検証鍵 |
+
+</div>
+
+SRSを共有しても，回路への拘束はなくならない
+
+汎用性には次数等の上限がある．KZG型PLONKではトラステッドセットアップとFiat–Shamirの両方を使う．カスタムゲートの効率は次数・列数等も含めて評価する．
 
 ---
 

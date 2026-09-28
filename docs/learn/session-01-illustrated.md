@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
 
 import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 </script>
@@ -48,7 +47,9 @@ import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 合成数とは 1より大きい整数のうち 1と自分自身以外の正の約数を持つ数である．
 ここで「7」という正の約数の情報を渡されれば，検証者は $1<7<91$ と $91=7\times13$ を確かめるだけで，言明が正しいと確認できる．この場合，確認したい入力が91，ウィットネスが7である．
 
-<CaptionedTable number="01-1" caption="合成数91の言明・ウィットネス・検証者の役割">
+<div class="captioned-table" id="table-01-1" role="group" aria-labelledby="table-caption-01-1">
+
+<p class="table-caption" id="table-caption-01-1"><strong>表 01-1：合成数91の言明・ウィットネス・検証者の役割</strong></p>
 
 | 役割             | この例での内容                                       |
 | ---------------- | ---------------------------------------------------- |
@@ -57,7 +58,7 @@ import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 | ウィットネス     | 1と91以外の約数である7                               |
 | 検証者が行う確認 | 7が1より大きく91より小さい整数であり，91を割り切るか |
 
-</CaptionedTable>
+</div>
 
 8を渡されても91を割り切れないので，この検査では受理されない．1は割り切るが，$1<w<91$ という条件を満たさないので受理されない．一方，13もウィットネスとして使える．**ウィットネスは言明そのものではなく，その言明を検査するための具体的な情報であり，一つに限らない．** この例はウィットネスの役割を示すためのものであり，7をそのまま渡すので，その値を秘匿する仕組みにはなっていない．ただし，この小さな例のように公開入力から容易に求められる情報まで，ゼロ知識性が隠すと要求するわけではない．ゼロ知識性の定義は次回扱う．
 
@@ -185,7 +186,22 @@ IPは，確率的多項式時間の検証者との対話型証明で判定でき
 
 まず，正しい言明を受け入れ，間違った言明を拒否するための条件を定める．その上で，検証者に余計な情報を与えないという条件を加える．この順序で考えると，それぞれの定義が何のために必要なのかを見失わずに済む．
 
-<LectureDiagram kind="motives" />
+<span id="diagram-motives"></span>
+
+<div class="captioned-table" id="table-01-2" role="group" aria-labelledby="table-caption-01-2">
+
+<p class="table-caption" id="table-caption-01-2"><strong>表 01-2：二つの問いから，同じ枠組みへ</strong></p>
+
+| 視点 | 確認したいこと |
+| --- | --- |
+| 計算量理論 | 限られた検証者は，どこまで確認できるか？ |
+| 暗号学 | 確認の過程で，何が相手に伝わるか？ |
+
+</div>
+
+共通の枠組みは対話型証明系 (P, V)．メッセージを交換し，最後に受理・拒否を決める．
+
+共通するのは記述の枠組み．完全性・健全性・ゼロ知識性は，それぞれ別に定義する．
 
 ---
 
@@ -215,7 +231,20 @@ NP検証者の定義でも，間違った言明に対して受理されるウィ
 
 完全性だけなら，何でも受理する検証者でも満たせる．健全性だけなら，何でも拒否する検証者でも満たせる．確認の手続きとして役立つためには，この二つを同時に満たす必要がある．
 
-<LectureDiagram kind="properties" />
+<span id="diagram-properties"></span>
+
+<div class="captioned-table" id="table-01-3" role="group" aria-labelledby="table-caption-01-3">
+
+<p class="table-caption" id="table-caption-01-3"><strong>表 01-3：完全性と健全性は，違う場合を扱う</strong></p>
+
+| 性質 | 対象となる場合 | 受理確率の条件 |
+| --- | --- | --- |
+| 完全性 | x ∈ L：正しい言明と正直な証明者 | 高い確率で受理：Pr[accept] ≥ 1 − negl |
+| 健全性 | x ∉ L：誤った言明と任意の不正な証明者 | 受理確率はごく小さい：Pr[accept] ≤ negl |
+
+</div>
+
+何でも受理する検証者は健全性を満たさず，何でも拒否する検証者は完全性を満たさない．二つを同時に要求する．
 
 ### 5.2 Proof vs Argument
 
@@ -228,7 +257,22 @@ Proofでは，相手の計算能力を制限しなくても健全性が成り立
 
 **SNARKとSTARKのAは，Argumentを表している．** 日常的には「証明」と呼んでいても，数学的な保証を読む際には，この区別が必要である．ある方式が安全だと説明されたら，何を計算できない相手に対して，どの仮定のもとで安全なのかを確認する．幕IIIで各プロトコルを比較するときにも，この見方を使う．
 
-<LectureDiagram kind="models" />
+<span id="diagram-models"></span>
+
+<div class="captioned-table" id="table-01-4" role="group" aria-labelledby="table-caption-01-4">
+
+<p class="table-caption" id="table-caption-01-4"><strong>表 01-4：不正な証明者に，どこまでの能力を認めるか</strong></p>
+
+| 証明系 | 不正な証明者の能力 | 保証 |
+| --- | --- | --- |
+| Proof | 計算能力に制限なし | 統計的健全性 |
+| Argument | 多項式時間に制限 | 計算量的健全性 |
+
+</div>
+
+SNARK / STARK の A は Argument を表す．
+
+どちらも検証者は効率的に動く．ここで比べているのは，不正な証明者に対する保証の範囲であり，ゼロ知識性の強さではない．
 
 ---
 

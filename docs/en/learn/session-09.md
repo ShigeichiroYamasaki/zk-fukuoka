@@ -9,7 +9,6 @@ next:
 ---
 
 <script setup>
-import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 9: The Fiat–Shamir transform and the merits and limits of ROM
@@ -62,7 +61,21 @@ The prover is not the only party computing this hash. The verifier recomputes th
 
 The prover can choose commitments and inspect their hashes, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
 
-<StudyDiagram id="09-1" number="09-2" :en="true" />
+<span id="figure-09-1"></span>
+<span id="caption-09-1"></span>
+
+<div class="captioned-table" id="table-09-2" role="group" aria-labelledby="table-caption-09-2">
+
+<p class="table-caption" id="table-caption-09-2"><strong>Table 09-2：Fiat–Shamir changes where challenges come from</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Interactive | P sends commitment t<br>V returns random c<br>P sends response s |
+| Non-interactive | P constructs t<br>c = H(context, x, t)<br>P sends (t,s); V recomputes c |
+
+</div>
+
+Conceptual overview. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the hash alone does not establish security.
 
 ---
 
@@ -76,7 +89,22 @@ To model how responses to inputs are determined, treat the hash as an ideal rand
 - Repeated queries on the same input always receive the same output, ensuring consistency.
 - All algorithms, including attackers, access $H$ only through queries and cannot inspect its internal representation.
 
-<StudyDiagram id="09-2" :en="true" number="09-1" />
+<span id="figure-09-2"></span>
+<span id="caption-09-2"></span>
+
+<div class="captioned-table" id="table-09-1" role="group" aria-labelledby="table-caption-09-1">
+
+<p class="table-caption" id="table-caption-09-1"><strong>Table 09-1：Random oracle: fresh input, random answer; repeated input, same answer</strong></p>
+
+| Query | Input | Answer | Action |
+| --- | --- | --- | --- |
+| 1 | a | 0110 | Choose uniformly and store |
+| 2 | b | 1011 | Choose a fresh answer and store |
+| 3 | a | 0110 | Return the stored answer |
+
+</div>
+
+Illustrative short outputs. Security analysis uses an appropriate output length and query bound. Different inputs can still receive the same answer.
 
 ### 3.2 The structure of a security proof in ROM
 
@@ -94,7 +122,23 @@ After proving security in ROM, ask exactly what was proved. The theorem concerns
 
 Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete hash instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
 
-<StudyDiagram id="09-3" number="09-3" :en="true" />
+<span id="figure-09-3"></span>
+<span id="caption-09-3"></span>
+
+<div class="captioned-table" id="table-09-3" role="group" aria-labelledby="table-caption-09-3">
+
+<p class="table-caption" id="table-caption-09-3"><strong>Table 09-3：Separate ideal-model proofs from implementation security</strong></p>
+
+| Item | Explanation |
+| --- | --- |
+| Claim in the ROM | Prove security while treating H as an ideal random oracle. |
+| Concrete implementation | Use a concrete function such as SHA-256 and assess protocol and implementation conditions. |
+
+</div>
+
+A ROM proof alone does not justify every concrete hash instantiation
+
+The CGH counterexample rules out a universal justification of this replacement; it does not show that every practical Fiat–Shamir construction is broken.
 
 ### 4.3 Why ROM is still widely used
 
