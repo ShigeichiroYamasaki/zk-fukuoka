@@ -87,17 +87,59 @@ In the next definition, $R$ and $L$ are fixed as part of the scheme and commonly
 
 ### 2.2 A formal definition
 
-Consider an interactive proof system $(P,V)$ for language $L$ and relation $R$. For every efficient verifier $V^*$, we require an efficient simulator $S$ that reproduces its view without the witness. The following is shorthand for this condition; $S$ may depend on the verifier. The left-hand side denotes the verifier’s view, including its randomness and received messages. A full definition also specifies security parameters and auxiliary inputs.
+Consider an interactive proof system $(P,V)$ with the relation $R$ and language $L$ introduced above. For every efficient verifier $V^*$, we require an efficient simulator $S$ that reproduces the verifier's information without the witness. Let us define the random variables to make clear which distributions are compared.
 
-$$\{\langle P(w), V^*\rangle(x)\}_{x \in L} \approx \{S(x)\}_{x \in L}.$$
+**Separate what is fixed from what is sampled.** Fix a valid pair $(x,w)\in R$, the verifier algorithm $V^*$, and auxiliary input $z$ that the verifier possesses before the interaction. Use an empty string for $z$ when no auxiliary input is considered. We do not sample and average over $x$ or $w$ here.
 
-The condition is required for every $(x,w)\in R$, without giving $w$ to the simulator. Depending on the definition, simulation runs in polynomial or expected polynomial time. Here, $\approx$ denotes indistinguishability. Depending on how strong a requirement it imposes, we obtain three levels:
+In a real interaction, independently sample the prover's random tape $r_P$ and the verifier's random tape $r_V$ according to their procedures. Once inputs and random tapes are fixed, the interaction is determined. Resampling the tapes makes the **verifier's complete record** a random variable:
 
-- **Perfect zero-knowledge:** the two distributions are identical.
-- **Statistical zero-knowledge:** their statistical distance is negligible.
-- **Computational zero-knowledge:** computationally bounded distinguishers cannot distinguish the distributions.
+$$X_{x,w,z}:=\operatorname{View}_{V^*}\bigl[P(x,w;r_P)\leftrightarrow V^*(x,z;r_V)\bigr].$$
 
-The comparison here is between distributions of the real view and simulator output. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
+Arguments after the semicolon specify an algorithm's random tape. The verifier's view can be encoded as
+
+$$X_{x,w,z}=(x,z,r_V,m_1,\ldots,m_k),$$
+
+where $m_1,\ldots,m_k$ are the messages it receives. Its outgoing messages and final decision can be reconstructed from this record and its algorithm. **The comparison concerns the whole view, not just a one-bit accept/reject decision.** The prover's random tape $r_P$ and witness $w$ are not themselves supplied as components of the view.
+
+The simulator uses its own random tape $r_S$ to output a record in the same format. Its output is another random variable:
+
+$$Y_{x,z}:=S(x,z;r_S).$$
+
+The simulator receives $x,z$ but not $w$. It may depend on $V^*$, but we cannot choose a different simulator for each witness. One simulator must satisfy the condition for all valid pairs $(x,w)$ and admissible auxiliary inputs $z$. Depending on the definition, simulation runs in polynomial or expected polynomial time.
+
+**A distribution assigns a probability to each possible record.** For a particular record $t$, we compare
+
+$$\Pr[X_{x,w,z}=t]\quad\text{and}\quad\Pr[Y_{x,z}=t].$$
+
+The probability on the left comes from the real interaction's randomness $r_P,r_V$; the probability on the right comes from the simulator's randomness $r_S$. We do not require two executions to produce the same record. We compare **the probabilities with which records are produced**.
+
+Below, abbreviate the variables as $X,Y$. We compare families of distributions as input length $n=|x|$ grows, with auxiliary-input length polynomially bounded in $n$. A nonnegative function $\mathrm{negl}(n)$ eventually becomes smaller than every inverse polynomial. Concrete cryptographic schemes may instead explicitly use a security parameter separate from input length.
+
+- **Perfect zero-knowledge:** for every record $t$, $\Pr[X=t]=\Pr[Y=t]$. The two random variables have identical distributions.
+- **Statistical zero-knowledge:** the statistical distance between the distributions is negligible. For discrete records, this distance is defined by
+
+$$\Delta(X,Y):=\frac12\sum_t\left|\Pr[X=t]-\Pr[Y=t]\right|\le\mathrm{negl}(n).$$
+
+  Equivalently, for every set of records $A$, the difference $|\Pr[X\in A]-\Pr[Y\in A]|$ is bounded by the same limit. Even a computationally unbounded distinguisher can gain negligible advantage from the difference.
+
+- **Computational zero-knowledge:** for every probabilistic polynomial-time distinguisher $D$, the following difference is negligible:
+
+$$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
+
+  The algorithm $D$ receives public and auxiliary inputs together with one record from either generation process, and returns 1 to indicate “I think this is a real interaction.” The probabilities include both record-generation randomness and $D$'s own randomness. The distributions need not be statistically close; rather, every efficient $D$ has negligible distinguishing advantage. For each $D$, the bound must hold across all valid inputs, witnesses, and admissible auxiliary inputs.
+
+**A small example clarifies what comparing distributions means.** These are hypothetical two-bit records, not a zero-knowledge protocol.
+
+| Record $t$ | Probability for real record $X$ | Probability for a candidate simulator's record $Y$ |
+| --- | --- | --- |
+| $00$ | $1/4$ | $1/2$ |
+| $01$ | $1/4$ | $0$ |
+| $10$ | $1/4$ | $0$ |
+| $11$ | $1/4$ | $1/2$ |
+
+Each individual bit is equally likely to be 0 or 1 under either distribution. However, a distinguisher returning 1 when the bits agree has $\Pr[D(X)=1]=1/2$ and $\Pr[D(Y)=1]=1$, giving advantage $1/2$. Identical marginal distributions do not imply an identical **joint distribution of the complete record**. If this gap persists as input length grows, even computational indistinguishability fails. This is why zero-knowledge compares the entire view.
+
+The objects being compared are therefore **the distributions of the real-view random variable $X$ and simulator-output random variable $Y$, for the same fixed public input**. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
 
 <StudyDiagram id="02-1" :en="true" />
 
