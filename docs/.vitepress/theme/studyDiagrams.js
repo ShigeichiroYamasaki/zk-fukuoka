@@ -4,38 +4,44 @@ export const diagrams = {
     "section": "2.2",
     "type": "compare",
     "title": [
-      "本物の対話と，ウィットネスなしの再現",
-      "Real interaction and simulation without a witness"
+      "確率変数 X と Y：記録全体の分布を比較する",
+      "Random variables X and Y: compare distributions of the whole record"
     ],
-    "note": [
-      "公開入力xは共通．比較するのは検証者のviewの分布であり，個々の実行記録の一致ではない．",
-      "Both use public input x. We compare distributions of verifier views, not equality of individual execution records."
+    "top": [
+      "固定するもの：V*，有効な組 (x, w) ∈ R，補助入力 z\nx や w をランダムに選んで平均するのではない．",
+      "Fix V*, a valid pair (x, w) ∈ R, and auxiliary input z.\nDo not sample and average over x or w."
     ],
     "nodes": [
       {
         "title": [
-          "実際の対話",
-          "Real interaction"
+          "実際の対話 → 確率変数 X",
+          "Real interaction → random variable X"
         ],
         "body": [
-          "Pはウィットネスwを使う．V*は受信内容・自分の乱数などを得る．",
-          "P uses witness w. V* obtains received messages, its randomness and other view components."
-        ]
+          "P は x, w を，V* は x, z を使う．\n乱数 r_P と r_V を独立に選ぶ．\nX は V* の view：公開入力・補助入力・自分の乱数・受信メッセージの記録全体．",
+          "P uses x, w; V* uses x, z.\nSample r_P and r_V independently.\nX is V*’s view: public and auxiliary inputs, its own randomness, and received messages."
+        ],
+        "formula": "X = (x, z, r_V, m₁, …, m_k)"
       },
       {
         "title": [
-          "シミュレーション",
-          "Simulation"
+          "シミュレーション → 確率変数 Y",
+          "Simulation → random variable Y"
         ],
         "body": [
-          "Sはwを使わず，V*のviewを再現する．",
-          "S reproduces V*’s view without using w."
-        ]
+          "S は x, z と独自の乱数 r_S を使う．\nw は与えない．\nY は X と同じ形式で生成した記録．\n同じ S で，すべての有効な w に対応する．",
+          "S uses x, z and its own randomness r_S.\nIt receives no w.\nY is a generated record in the same format as X.\nOne S must work for every valid w."
+        ],
+        "formula": "Y = S(x, z; r_S)"
       }
     ],
     "bottom": [
-      "同一分布 / 統計的に近い / 効率的には識別できない",
-      "Identical / statistically close / computationally indistinguishable"
+      "比べる量：各記録 t の出現確率 Pr[X = t] と Pr[Y = t]\n\n完全ゼロ知識：すべての t で出現確率が一致\n統計的ゼロ知識：統計距離 Δ(X, Y) ≤ negl(n)\n計算量的ゼロ知識：任意の効率的な識別者 D について\n|Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]| ≤ negl(n)",
+      "Compare each record’s probability: Pr[X = t] versus Pr[Y = t]\n\nPerfect ZK: equal probabilities for every t\nStatistical ZK: statistical distance Δ(X, Y) ≤ negl(n)\nComputational ZK: for every efficient distinguisher D,\n|Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]| ≤ negl(n)"
+    ],
+    "note": [
+      "本文と同じく n = |x|．確率は記録生成の乱数について取り，識別時は D の乱数も含める．受理・拒否だけでなく view 全体の分布を比較する．個々の実行で X と Y が同じ値になることは要求しない．",
+      "As in the text, n = |x|. Probabilities are over record-generation randomness, plus D’s randomness when distinguishing. Compare the entire view, not only acceptance. Individual executions need not produce equal records."
     ]
   },
   "02-2": {
