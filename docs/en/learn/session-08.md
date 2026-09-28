@@ -17,7 +17,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 8 in the syllabus](./#session-8) · [Exercises](../exercises/)
 
@@ -128,6 +128,10 @@ Typed-group notation: use the required G₁ powers in the SRS and g₂, g₂^τ 
 ### 2.4 Security foundations
 
 The binding property to check here concerns evaluation: opening one commitment at the same point to different values. KZG analyzes it under an SDH-type assumption corresponding to the degree bound. Knowledge extraction and hiding require separate treatment. The basic commitment shown so far is deterministic and is not inherently hiding; zero-knowledge requires appropriate randomization.
+
+::: tip Connection to PLONK: bind a polynomial, then open evaluations
+The original PLONK uses KZG. The prover commits to polynomials such as the wire columns, then opens evaluations requested by Fiat–Shamir challenges. Binding makes it hard to replace a polynomial later, while an evaluation proof lets the verifier check needed values without receiving the whole polynomial. See Session 7 for pairing-based opening verification and [Session 12](./session-12) for its use in PLONK. Basic KZG does not automatically provide zero knowledge.
+:::
 
 ### 2.5 Example: opening $f(3)=1$ with KZG {#kzg-worked-example}
 

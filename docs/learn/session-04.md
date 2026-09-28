@@ -16,7 +16,7 @@ import ArithmetizationOverview from "../.vitepress/theme/ArithmetizationOverview
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年9月28日
+最終更新日付：2026年9月29日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第4回](./#session-4) · [演習](../exercises/)
 
@@ -183,6 +183,10 @@ $$\mathcal A(X)=\sum_j z_jA_j(X)\quad\Longrightarrow\quad
 
 
 ---
+
+::: tip PLONKとの接続：ゲートと配線を別々に検査する
+R1CSは同じ変数を複数の制約で共有するため，その変数が同じ値であることが表現に含まれる．PLONKでは各行の入力を列 $a,b,c$ として多項式化するため，ゲートごとの計算が正しくても，ある行の出力を別の行の入力へ正しくコピーしたかは別途検査が必要になる．第12回では，セレクタ多項式によるゲート制約と，置換引数によるコピー制約を分けて読む．[第12回](./session-12)を参照．
+:::
 
 ## 4. QAP(Quadratic Arithmetic Program)
 

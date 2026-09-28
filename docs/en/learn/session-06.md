@@ -16,7 +16,7 @@ import { withBase } from "vitepress";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Exercises](../exercises/)
 
@@ -236,6 +236,12 @@ Even if a test can detect an invalid table, a miss probability of $1/2$ is too l
 ### 3.2 Parallel and sequential repetition
 
 Repeat a test with independent randomness and accept only if every run passes. With per-run error $\epsilon$, the target bound is $\epsilon^k$ after $k$ repetitions. But the relevant conditional bounds must be established. Parallel and sequential repetition may allow different adversarial strategies. Check soundness amplification separately from preservation of zero-knowledge.
+
+The value $\epsilon^k$ does not follow merely from writing the same test $k$ times. Conditions such as fresh, appropriate challenges and a conditional false-acceptance probability at most $\epsilon$ after every prior history are needed. By contrast, to combine the probability that any one of several checks fails, the union bound works without independence:
+
+$$\Pr\left[\bigcup_{i=1}^m E_i\right]\le\sum_{i=1}^m\Pr[E_i]$$
+
+Here $E_i$ is the event that check $i$ falsely accepts.
 
 <span id="figure-06-2"></span>
 <span id="caption-06-2"></span>

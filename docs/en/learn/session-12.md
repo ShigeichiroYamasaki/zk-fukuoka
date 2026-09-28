@@ -15,7 +15,7 @@ next:
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 12 in the syllabus](./#session-12) · [Exercises](../exercises/)
 
@@ -28,6 +28,31 @@ The three learning objectives are:
 1. Understand the motivation for universal setup (trusted setup independent of a particular circuit) and the arithmetization techniques that enable it.
 2. Understand why the permutation argument, a method for verifying copy constraints, was introduced.
 3. Understand how custom gates contribute to the expressiveness and efficiency of arithmetization.
+
+---
+
+## Mathematical prerequisites for reading PLONK
+
+Before following the equations, review the tools in this order. This session combines them into checks for gate and wiring constraints.
+
+<div class="captioned-table" id="table-12-prerequisites" role="group" aria-labelledby="table-caption-12-prerequisites">
+
+<p class="table-caption" id="table-caption-12-prerequisites"><strong>Table 12-0: Mathematical prerequisites for PLONK</strong></p>
+
+| Review | What to revisit | Role in PLONK |
+| --- | --- | --- |
+| [Session 1](./session-01#_5-a-formal-definition-of-interactive-proof-systems) | Completeness, soundness and probabilistic acceptance | Accept valid proofs and reject false constraint systems |
+| [Session 3](./session-03#_2-basics-of-finite-fields) | Finite fields, interpolation, roots and vanishing polynomials, Schwartz–Zippel | Interpolate row values and bound random-check error |
+| [Session 4](./session-04#_3-r1cs-rank-1-constraint-system) | Linear combinations, matrix form of R1CS and QAP | Represent constraints and understand how shared variables express wiring |
+| [Session 7](./session-07#pairing-math) | Scalar field and pairings | Algebraic tool for verifying KZG evaluation openings |
+| [Session 8](./session-08#_2-kzg-kate-commitments) | KZG commitments, openings and binding | Fix polynomials before opening selected evaluations |
+| [Session 9](./session-09#_2-the-fiat–shamir-transform) | Fiat–Shamir, transcripts and ROM | Derive non-interactive challenges from the interactive protocol |
+
+</div>
+
+In particular, copy constraints cannot be checked merely by observing that two value multisets match: the circuit's intended position mapping must be fixed and checked. Section 3 follows the position labels, permutation, random β and γ challenges, and grand product in sequence.
+
+When an implementation proves integer additions, balances or ranges, distinguish field equality from integer equality. Field values may agree only modulo the field modulus, so constrain value ranges or bit decompositions and check that intermediate arithmetic does not wrap around the modulus. The [deposit/withdrawal R1CS example](./balance-arithmetization) fixes amount ranges and makes the condition that the sum is below the modulus explicit.
 
 ---
 
@@ -128,6 +153,16 @@ Example with three positions assigned to one variable. Values alone form the sam
 ### 3.3 The broader significance of copy constraints
 
 This check concerns the correspondence between values in separate locations. Similar questions arise beyond circuit wiring whenever a value must be used consistently in several places. Understand permutation arguments through the consistency they establish, not only as a PLONK term.
+
+### 3.4 Budgeting the total error probability
+
+A proof may use several checks: gate constraints, copy constraints, and quotient-polynomial evaluations, for example. Let $E_i$ be the event that check $i$ falsely accepts, and let its applicable bound be $\epsilon_i$. The union bound gives
+
+$$\Pr\left[\bigcup_i E_i\right]\le\sum_i\epsilon_i$$
+
+This bound does not require independence. For example, if each of four checks is bounded by $10^{-6}$, the total is at most $4\times10^{-6}$. Each individual bound still has to satisfy its own assumptions. With Fiat–Shamir, in particular, verify that the analysis applies to challenges derived after the prior commitments are fixed.
+
+Repeating one check to obtain $\epsilon^k$ is a different argument. Fresh challenges and conditional false-acceptance bounds after prior results are needed; do not multiply probabilities without establishing the conditions. See [Session 6 on soundness amplification](./session-06#_3-general-principles-of-soundness-amplification).
 
 ---
 

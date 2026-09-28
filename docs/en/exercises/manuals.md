@@ -80,6 +80,8 @@ Reuse the computation and inputs. Keep PLONK outputs separate from Groth16 outpu
 
 Do not apply Groth16 phase-two contribution steps to PLONK. [gnark and Dusk PLONK](./#plonk) provide Go/Rust alternatives. Distinguish a Circom R1CS input route from directly writing PLONKish gates and copy constraints.
 
+In the exercise log, record how challenges are mapped into the field, the per-check false-acceptance bounds and total error bound, and range constraints on public values and witnesses. Check the protocol specification for bias-free challenge conversion; a failed test alone does not prove soundness. For circuits representing integers, verify range constraints that prevent wraparound modulo the field size.
+
 ### Session 13: STARK {#stark}
 
 Choose one implementation and start with a small official example.

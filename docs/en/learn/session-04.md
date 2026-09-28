@@ -16,7 +16,7 @@ import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverv
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Exercises](../exercises/)
 
@@ -183,6 +183,10 @@ Polynomial evaluations reproduce the entries of the matrix product. Doing the sa
 
 
 ---
+
+::: tip Connection to PLONK: gate constraints and wiring are checked separately
+R1CS reuses the same variable across constraints, so equality of those occurrences is built into the representation. PLONK interpolates each row's inputs as columns $a,b,c$. Even if every gate computes correctly, a separate check is needed to ensure that an output was copied to the intended input in another row. Session 12 separates selector-polynomial gate constraints from the permutation argument for copy constraints. See [Session 12](./session-12).
+:::
 
 ## 4. QAP: Quadratic Arithmetic Program
 

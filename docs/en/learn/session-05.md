@@ -15,7 +15,7 @@ next:
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 5 in the syllabus](./#session-5) · [Exercises](../exercises/)
 
@@ -32,6 +32,10 @@ There are three learning objectives:
 Today's material provides the foundation for low-degree testing and FRI in Session 6. It also introduces a somewhat different but important perspective within Act II: measuring the robustness of proofs in the language of information theory.
 
 ---
+
+::: tip Probability prerequisites
+Session 5 uses the basics of random variables, events and independence. A channel model describes symbol changes as random events with specified probabilities. By contrast, error correction measured by Hamming distance counts worst-case error positions without assuming a probability distribution. Before comparing Shannon capacity with the Hamming bound, review the distinction between these models in Section 3 and the entropy-based reading of capacity in Section 3.4.
+:::
 
 ## 1. Why do we need coding theory? — Motivation
 

@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Exercises](../exercises/)
 
@@ -103,6 +103,10 @@ This is a **multiplicative verification capability** unavailable from ordinary d
 </div>
 
 G₁ and G₂ use additive notation; G\_T uses multiplicative notation. This does not recover a or b: it enables checking relations between encoded values.
+
+::: tip Connection to PLONK: pairings support KZG openings
+The original PLONK uses KZG polynomial commitments. Pairings help verify evaluation openings of committed polynomials; PLONK's copy constraints themselves are checked with a permutation argument and grand product over the scalar field. Do not conflate this with pairings directly checking the circuit wiring. Read [Session 8 on KZG](./session-08) alongside [Session 12's overview](./session-12).
+:::
 
 ### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
 

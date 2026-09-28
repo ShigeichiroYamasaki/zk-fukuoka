@@ -17,7 +17,7 @@ import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations)
 
@@ -319,6 +319,10 @@ For this course, its crucial role is as **the theoretical foundation for polynom
 *(We will study concrete applications in the later sessions of Act II on FRI and PCPs/IOPs. Today we first establish why this technique supports soundness.)*
 
 ---
+
+::: tip Connection to PLONK: finite fields, interpolation and random checks
+PLONK places gate values at points in a finite-field domain $H$ and interpolates each column as a polynomial. This $H$ represents circuit rows; it is distinct in role from the set used to sample soundness challenges. For copy constraints, the prover commits to the witness columns first, then random challenges mix values with position labels. Session 12 bounds the chance of accidental equality for a false relation using polynomial degree. See [Session 12's gate constraints](./session-12#_2-2-the-basic-constraint) and [permutation argument](./session-12#_3-2-the-idea-behind-the-permutation-argument), keeping the evaluation domain distinct from challenge points.
+:::
 
 ## 5. Understanding the sampling set S and its error probability {#_5-exercises-concrete-examples-of-identity-testing}
 

@@ -15,7 +15,7 @@ next:
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Exercises](../exercises/)
 
@@ -77,7 +77,17 @@ The prover can choose commitments and inspect their hashes, so it is inaccurate 
 
 Conceptual overview. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the hash alone does not establish security.
 
+### 2.3 Mapping a hash output to a finite-field challenge
+
+An implementation must map the hash output to an element of the protocol's field $\mathbb F_p$. If a hash yields a uniform $k$-bit integer $u$ and the implementation simply uses $u\bmod p$, residues do not occur equally often when $2^k$ is not divisible by $p$. For example, mapping 3-bit values modulo 7 gives residues 0 and 1 two preimages each, while every other residue has one; the result is biased.
+
+For a small teaching implementation, rejection sampling—discarding candidates at least $p$ and advancing a hash counter to generate the next candidate—avoids this bias. Real protocols should use the specified hash-to-field method or a reduction with analyzed uniformity, and unambiguously bind the protocol identifier, round, public input and prior transcript into the hash input. Do not invent an ad hoc conversion; check the selected protocol's specification and implementation.
+
 ---
+
+::: tip Connection to PLONK: derive challenges from the transcript
+The original PLONK applies Fiat–Shamir to make its interactive polynomial checks non-interactive. Challenges such as $\beta,\gamma$ for the permutation argument are derived from a transcript containing prior commitments, including the wire polynomials. If the prover could choose those challenges before committing, it could tailor values to them; ordering and binding challenges to the transcript therefore matter. Security is analyzed under a model such as the ROM and its assumptions, not from hash one-wayness alone. See the check sequence in [Session 12](./session-12).
+:::
 
 ## 3. The Random Oracle Model (ROM)
 

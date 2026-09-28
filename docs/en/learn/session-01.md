@@ -17,7 +17,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1)
 
@@ -239,6 +239,10 @@ A verifier that accepts everything could satisfy completeness alone. A verifier 
 </div>
 
 Accepting everything fails soundness; rejecting everything fails completeness. Both properties are required.
+
+::: tip Connection to PLONK: completeness and soundness
+For PLONK, completeness means that a valid witness lets the verifier accept; soundness means that a dishonest prover cannot make an invalid witness or violated constraint pass. Session 12 checks gate and copy constraints using random challenges, so it evaluates the probability that a false constraint system passes by chance as a soundness error. See [Session 12 on PLONK](./session-12) for how these properties appear in concrete polynomial checks.
+:::
 
 ### 5.2 Proof vs argument
 

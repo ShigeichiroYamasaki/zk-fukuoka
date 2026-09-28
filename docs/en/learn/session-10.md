@@ -15,7 +15,7 @@ next:
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 28, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 10 in the syllabus](./#session-10) · [Exercises](../exercises/)
 
@@ -30,6 +30,10 @@ There are three learning objectives:
 3. Understand the IOP framework and organize the techniques learned so far within it.
 
 ---
+
+::: tip How to read the mathematics in this session
+In the PCP notation, $n$ is the input length, $O(\log n)$ is the number of random bits, and $O(1)$ is the number of queries to the proof. Random string $r$ selects the queried positions; reading the proof is counted as oracle queries at those positions. Completeness concerns acceptance of true statements, while soundness bounds acceptance of false statements. IOP extends this query-access model across multiple rounds. Recall probabilistic verification from Session 1 and polynomial identity testing from Session 3.
+:::
 
 ## 1. The PCP theorem: Statement and significance
 
