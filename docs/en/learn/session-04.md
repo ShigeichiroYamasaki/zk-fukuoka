@@ -90,19 +90,83 @@ $$(A \mathbf{z}) \circ (B \mathbf{z}) = (C \mathbf{z}).$$
 
 Read this equation row by row. Since $\circ$ is entrywise multiplication, each row requires that the product of two [linear combinations](./terms/linear-algebra) equal a third. Choosing the matrices specifies how the variables are combined for checking.
 
+**Specify the field and dimensions.** Let $K=\mathbb F_p$, let $N=1+n+m$ be the number of coordinates, and let $M$ be the number of constraints. The assignment $\mathbf z\in K^N$ is a column vector and $A,B,C\in K^{M\times N}$. All three matrix products therefore have $M$ entries. More precisely, the ordering above is written $(1,x_1,\dots,x_n,w_1,\dots,w_m)^T$.
+
+Write the rows as $a_i^T,b_i^T,c_i^T$, with coefficient column vectors in $K^N$. Define the dot product by
+
+$$\langle a_i,\mathbf z\rangle=a_i^T\mathbf z=\sum_{j=0}^{N-1}a_{ij}z_j.$$
+
+Each constraint is
+
+$$\langle a_i,\mathbf z\rangle\langle b_i,\mathbf z\rangle-\langle c_i,\mathbf z\rangle=0\qquad(1\le i\le M).$$
+
+This dot product is a sum of products over a finite field, not a measure of real-vector lengths or angles. Fixing $z_0=1$ lets us represent affine expressions such as $5+x+s$ by $(5,1,0,1,0)\mathbf z$. The constant coordinate must not be freely chosen.
+
+Each matrix multiplication is linear, but multiplying the resulting entries makes **R1CS a system of polynomial equations of degree at most two, not a system of linear equations**. Its solution set need not be a vector subspace, and Gaussian elimination alone does not generally solve it.
+
 ### 3.2 Why “rank-1”? A concrete example
 
 For $z_3=z_1\cdot z_2$, select $z_1$ and $z_2$ in the two input linear combinations and $z_3$ in the result. The quadratic part comes from an outer product of two coefficient vectors, explaining “Rank-1.” Addition and constant multiplication can be absorbed into linear combinations, but equalities for separately stored values and output conditions still need constraints where required.
 
 Also check the **circuit correspondence**. Multiplication gates fit this constraint form, while addition uses linear combinations. Boolean circuits represented over a field also need values constrained to zero or one. Translating input, intermediate, and output conditions as well as gate equations preserves the correspondence with circuit satisfiability.
 
+To see the outer-product explanation algebraically, write
+
+$$(a_i^T\mathbf z)(b_i^T\mathbf z)=\mathbf z^TQ_i\mathbf z,\qquad Q_i=a_i b_i^T.$$
+
+Column $j$ of $Q_i$ is $b_{ij}a_i$, a multiple of one vector. Thus $\operatorname{rank}Q_i\le1$, with equality when both vectors are nonzero. **Rank-1 refers to this factorized left-hand side of each constraint, not to the ranks of the entire matrices $A,B,C$.** The matrix $Q_i$ need not be symmetric. If the right-hand side is also absorbed into a quadratic form using the constant coordinate, that whole coefficient matrix need not have rank one.
+
+A linear equality $u+v=t$ fits as $(u+v)\cdot1=t$. A Boolean coordinate can be constrained by $b(b-1)=0$: since a field has no zero divisors, this is equivalent to $b\in\{0,1\}$.
+
 ### 3.3 A worked exercise
 
 Use the relation “I know $x$ satisfying $x^3+x+5=35$.” Rather than only substituting $x=3$, name intermediate values such as its square and cube, and write down which relationships must be checked. Include the final output condition of 35 to work through the full translation from computation to constraints.
 
+
+Work over $K=\mathbb F_{101}$ and set $t=x^2$, $s=tx$, and $y=s+x+5$. Take $y=35$ as the public input and $(x,t,s)$ as the witness. For readability, reorder the coordinates as $\mathbf z=(1,x,t,s,y)^T$. Coordinate order is a convention, but the proof system must fix which coordinates are public.
+
+$$
+A=\begin{pmatrix}0&1&0&0&0\\0&0&1&0&0\\5&1&0&1&0\end{pmatrix},\quad
+B=\begin{pmatrix}0&1&0&0&0\\0&1&0&0&0\\1&0&0&0&0\end{pmatrix},\quad
+C=\begin{pmatrix}0&0&1&0&0\\0&0&0&1&0\\0&0&0&0&1\end{pmatrix}.
+$$
+
+The three rows correspond to constraints and the five columns to coordinates. Multiplication gives
+
+$$A\mathbf z=\begin{pmatrix}x\\t\\5+x+s\end{pmatrix},\quad
+B\mathbf z=\begin{pmatrix}x\\x\\1\end{pmatrix},\quad
+C\mathbf z=\begin{pmatrix}t\\s\\y\end{pmatrix}.$$
+
+The rows encode $x\cdot x=t$, $t\cdot x=s$, and $(5+x+s)\cdot1=y$. For $\mathbf z=(1,3,9,27,35)^T$,
+
+$$\begin{pmatrix}3\\9\\35\end{pmatrix}\circ\begin{pmatrix}3\\3\\1\end{pmatrix}
+=\begin{pmatrix}9\\27\\35\end{pmatrix}=C\mathbf z.$$
+
+Changing only $t$ to 8 produces the residual
+
+$$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
+=\begin{pmatrix}1\\-3\\0\end{pmatrix}
+=\begin{pmatrix}1\\98\\0\end{pmatrix}\ne\mathbf0.$$
+
+This identifies which relationships fail when an intermediate value is changed.
+
+Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](./balance-arithmetization).
+
 <StudyDiagram id="04-1" :en="true" />
 
 [Follow the deposit/withdrawal example: R1CS](./balance-arithmetization#r1cs)
+
+### 3.4 Checking cost and the bridge to QAP {#r1cs-linear-algebra}
+
+Given the matrices and an assignment, compute three matrix products and $M$ products and differences to check whether the residual is zero. Dense matrices require $O(MN)$ field operations. Circuit matrices are often sparse because each gate references few variables. If the three matrices contain $s_0$ nonzero entries in total, sparse checking takes $O(s_0+M)$ field operations. This is assignment-checking cost, not witness-search cost or SNARK verification cost.
+
+QAP preserves the correspondence **rows are constraints, columns are variables**. Assign distinct points $r_i$ to rows and interpolate each column so that $A_j(r_i)=A_{ij}$. Then
+
+$$\mathcal A(X)=\sum_j z_jA_j(X)\quad\Longrightarrow\quad
+\mathcal A(r_i)=\sum_j A_{ij}z_j=(A\mathbf z)_i.$$
+
+Polynomial evaluations reproduce the entries of the matrix product. Doing the same for $B,C$ turns zero residuals into vanishing of $\mathcal A\mathcal B-\mathcal C$ at every constraint point. This is the bridge from linear-algebra notation to divisibility in a polynomial ring.
+
 
 ---
 
