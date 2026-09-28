@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverview.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -47,6 +48,10 @@ Programs include branches, loops, and comparisons. Schnorr’s verification equa
 Arithmetization expresses the computation from input to output as constraints that include intermediate values. The translation must make satisfying assignments correspond to valid executions. **The goal is not merely to write equations, but to check execution correctness through their satisfaction.** Conditions such as degree and value ranges must survive the translation.
 
 The three techniques we study today—R1CS, QAP, and AIR—are different implementations of the same translation: computation → polynomial constraints.
+
+The diagram first expresses the existence of a valid private input and execution, for fixed public input and output, as circuit satisfiability. It then translates the circuit conditions into finite-field constraints. Distinguish this Boolean-circuit reduction from arithmetization, and checking an assignment from finding one.
+
+<ArithmetizationOverview :en="true" />
 
 ---
 
