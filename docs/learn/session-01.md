@@ -10,7 +10,7 @@ next:
 
 <script setup>
 
-import MermaidLectureDiagram from "../.vitepress/theme/MermaidLectureDiagram.vue";
+import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 </script>
 
 # 第1回:証明とは何か — 対話型証明の背景と形式化
@@ -96,7 +96,7 @@ $$x \in L \iff \exists w\in\Sigma^*,\ |w| \le p(|x|),\ V(x, w) = 1$$
 
 ウィットネスを渡せば確認できるとしても，渡すことまで必要なのだろうか．また，検証者が質問してはいけない理由はあるのだろうか．正しさを確認するという目的と，そのために採用した方法を分けて考えると，この二つの前提を問い直せる．
 
-<MermaidLectureDiagram kind="witness" />
+<LectureDiagram kind="witness" />
 
 ### 1.2 問いを立てる
 
@@ -119,7 +119,7 @@ Merlinが強力だからといって，その答えを信用してよいわけ�
 
 このようなやり取りを認めると，検証できる言明の範囲は変わるだろうか．ただし，Arthur–Merlin型の公開コインのモデルと一般のIPを比較する際には，ラウンド数などの条件を区別する必要がある．次の結果は，多項式回のやり取りを認めたIPについてのものである．
 
-<MermaidLectureDiagram kind="interaction" />
+<LectureDiagram kind="interaction" />
 
 ### 2.2 IP = PSPACE(結果の提示)
 
@@ -164,7 +164,7 @@ IPは，確率的多項式時間の検証者との対話型証明で判定でき
 
 *(グラフ同型性の具体的な手続きは，次回，ゼロ知識性の定義とともに扱う．今日は，ウィットネスを渡すことと，言明を確認してもらうことを分けて考えるための例として押さえておこう．)*
 
-<MermaidLectureDiagram kind="graphs" />
+<LectureDiagram kind="graphs" />
 
 ### 3.3 この動機のまとめ
 
