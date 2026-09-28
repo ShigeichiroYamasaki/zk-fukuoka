@@ -36,28 +36,44 @@ We define zero-knowledge in the next session. Before that, we reconsider checkin
 
 ### 1.1 The NP verifier paradigm
 
-First, consider how to check whether a claim is true. Even when checking the claim directly is difficult, information supporting it may allow us to check it efficiently. We call this information a witness.
+First, consider how to check whether a statement is true. Even when checking the statement directly is difficult, information supporting it may allow us to check it efficiently. We call this information a witness.
 
-For example, consider the claim **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. If someone supplies the number 7, the verifier can check $1<7<91$ and $91=7\times13$. Here the input being checked is 91, and the witness is 7.
+For example, consider the statement **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. If someone supplies the number 7, the verifier can check $1<7<91$ and $91=7\times13$. Here the input being checked is 91, and the witness is 7.
 
 | Role | In this example |
 | --- | --- |
-| Claim | 91 is composite |
+| Statement | 91 is composite |
 | Public input | 91 |
 | Witness | The nontrivial divisor 7 |
 | Verification | Check that 7 is an integer strictly between 1 and 91 and divides 91 exactly |
 
-Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a claim, not the claim itself, and it need not be unique.** This small example illustrates the roles. Handing over 7 directly does not constitute a zero-knowledge proof hiding the witness.
+Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a statement, not the statement itself, and it need not be unique.** This example illustrates the role of a witness: handing over 7 does not conceal that value. However, zero-knowledge does not require hiding information easily computed from the public input, as in this small example. We define zero-knowledge next time.
 
-Before reading the formula, review **sets, elements, membership and formal languages**. Here $x\in L$ means that input x belongs to the set L of Yes instances. A language is a set of encoded inputs, not a natural language; $L\in\mathrm{NP}$ instead classifies the decision problem. See [Sets, membership and languages: reading x ∈ L](./terms/sets-and-languages) for examples and a step-by-step reading of the symbols.
+#### 1.1.1 Languages in computation theory
 
-The verifier definition of NP formalizes this idea. A language $L \in \mathrm{NP}$ is one for which there exists a polynomial-time verification algorithm $V$ satisfying
+Before reading the formula, review **sets, elements, membership, and languages $L$ in complexity theory**. A finite set of symbols is an alphabet $\Sigma$, and $\Sigma^*$ is the set of all finite strings over it. **A language is a set of strings $L\subseteq\Sigma^*$.** The language itself is a set, distinct from an algorithm deciding membership in it.
 
-$$x \in L \iff \exists w,\ |w| \le \mathrm{poly}(|x|),\ V(x, w) = 1$$
+The set of syntactically well-formed expressions is one example of a language. However, languages are not limited to syntax: the encodings of composite numbers or of satisfiable logical formulas also form languages. **Being well-formed and satisfying the condition expressed by a formula are different properties.** Our choice of what to include in $L$ specifies the decision problem.
 
-Here, $x$ is the input describing the problem, $w$ is the witness, and $V(x,w)=1$ means that the verifier accepts. The witness length is bounded by a polynomial in the input length.
+See [Sets, membership and languages: reading $x\in L$](./terms/sets-and-languages) for examples and a step-by-step reading of the symbols.
 
-Read this statement in both directions. If the claim is true, there is a witness that the verifier accepts. Conversely, if the claim is false, no witness meeting the length bound is accepted.
+#### 1.1.2 Truth of a statement and acceptance by an NP verifier
+
+A decision problem is represented by the language $L$ of encodings of its Yes instances. Read $x\in L$ as “input $x$ belongs to that set of Yes instances.” For example, if $L$ contains the encodings of composite numbers, the encoding of 91 belongs to $L$, whereas that of the prime 97 does not. Both are well-formed integers, so this problem is not simply a syntax check.
+
+When this course uses “statement $x$ is true” as shorthand, it means, more precisely, **the statement “$x\in L$” about input $x$ is true**. By contrast, $L\in\mathrm{NP}$ says that language $L$ belongs to the complexity class NP defined below. Distinguish membership of an individual input from classification of a decision problem.
+
+An NP verifier is an algorithm that takes an input $x$ and a witness $w$ and accepts or rejects. It is not an automatic method for deciding the truth of arbitrary propositions. For a specified language $L$, it connects Yes instances with the existence of accepted witnesses.
+
+#### 1.1.3 Definition of the NP verifier paradigm
+
+A language $L\subseteq\Sigma^*$ belongs to $\mathrm{NP}$ if there exist a **deterministic polynomial-time** verification algorithm $V$ and a polynomial $p$ such that, for every input $x$,
+
+$$x \in L \iff \exists w\in\Sigma^*,\ |w| \le p(|x|),\ V(x, w) = 1$$
+
+Here $x$ is the problem input, $w$ is a witness, and $V(x,w)=1$ means acceptance. The quantities $|x|$ and $|w|$ are lengths of encoded strings, not the numerical values of integers. The running time of $V$ is polynomial in its total input length; together with the witness bound $p(|x|)$, this makes verification polynomial in $|x|$.
+
+Read the equivalence in both directions. If the statement “$x\in L$” is true, an accepted witness exists. Taking the contrapositive of the reverse implication, if the statement is false, no witness meeting the length bound is accepted.
 
 Using this definition directly as a proving procedure means giving the witness to the verifier for inspection. Notice the choice this procedure makes about how information is communicated.
 
@@ -87,11 +103,11 @@ One question concerns what information to give the verifier. The other concerns 
 
 In 1985, Babai proposed interactive games in which the verifier uses randomness. The prover, Merlin, has no computational restriction; the verifier, Arthur, has limited computational resources.
 
-Merlin's power does not make its answers trustworthy. Arthur must check Merlin's claims within its own computational budget. Randomness and interaction provide tools for doing so.
+Merlin's power does not make its answers trustworthy. Arthur must check Merlin's statements within its own computational budget. Randomness and interaction provide tools for doing so.
 
 At this point, one might ask how sending a witness in pieces differs from sending it all at once. The important feature is not merely increasing the number of transmissions. The verifier issues random questions, and the prover responds to them.
 
-Does allowing such exchanges change which claims can be verified? When comparing Arthur–Merlin public-coin models with general IP, conditions such as the number of rounds must be distinguished. The next result concerns IP with polynomially many rounds.
+Does allowing such exchanges change which statements can be verified? When comparing Arthur–Merlin public-coin models with general IP, conditions such as the number of rounds must be distinguished. The next result concerns IP with polynomially many rounds.
 
 <LectureDiagram kind="interaction" :en="true" />
 
@@ -103,9 +119,9 @@ $$\mathrm{IP} = \mathrm{PSPACE}$$
 
 IP is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. PSPACE is the class decidable using polynomial workspace. NP $\subseteq$ PSPACE holds, but NP and PSPACE have not been proved distinct. Keep that open question separate from the theorem IP = PSPACE.
 
-**The distinction to notice is between solving a problem yourself and checking correctness with another party's help.** A verifier running in polynomial time can, through interaction, handle all of PSPACE. The point is not to trust the powerful party, but to construct a procedure unlikely to accept even when that party makes a false claim.
+**The distinction to notice is between solving a problem yourself and checking correctness with another party's help.** A verifier running in polynomial time can, through interaction, handle all of PSPACE. The point is not to trust the powerful party, but to construct a procedure unlikely to accept even when that party makes a false statement.
 
-*(We discuss sumcheck, a technique used in the proof, after assembling the polynomial tools in Act II. Today, rather than following the proof, we establish what this result makes possible.)*
+*(We discuss sumcheck, a technique used in the proof, in [Session 15](./session-15#_3-1-revisiting-the-sumcheck-protocol), after assembling the polynomial tools in Act II. Today, rather than following the proof, we establish what this result makes possible.)*
 
 ### 2.3 Summary of this motivation
 
@@ -117,7 +133,7 @@ From the perspective of complexity theory, the central question is how much a co
 
 ### 3.1 The Goldwasser–Micali–Rackoff problem setting (1985)
 
-Also in 1985, Goldwasser, Micali, and Rackoff studied what knowledge is conveyed through a proof. The concern is not only which claims can be verified, but how much information must be given to another party for verification. With authentication applications in mind, we can pose the question as follows:
+Also in 1985, Goldwasser, Micali, and Rackoff studied what knowledge is conveyed through a proof. The concern is not only which statements can be verified, but how much information must be given to another party for verification. With authentication applications in mind, we can pose the question as follows:
 
 > How can you convince someone that you know a secret without revealing it?
 
@@ -128,21 +144,21 @@ This question requires considering **the possibility that either the prover or t
 
 Interactive proofs in complexity theory already required protection against dishonest provers. Cryptography additionally considers whether a verifier might learn extra information from the exchange.
 
-“Being able to check that a claim is true” and “not needing to disclose a secret to do so” are different properties. “The claim is true” and “the prover knows its witness” must also be distinguished. Defining these separately, rather than treating them as one notion, is a task for the coming sessions.
+“Being able to check that a statement is true” and “not needing to disclose a secret to do so” are different properties. “The statement is true” and “the prover knows its witness” must also be distinguished. Defining these separately, rather than treating them as one notion, is a task for the coming sessions.
 
 ### 3.2 Building intuition with examples
 
 **Example 1: Password authentication.** What we want to check is that the other party knows a password. Receiving the password may enable that check, but it also gives the secret to the party performing the check. If sending the same hash value suffices for authentication, someone who obtains that value may be able to reuse it. Can we check knowledge without sending either the secret or a fixed value that substitutes for it? Here we examine the motivation; the requirements for an actual authentication scheme need separate consideration.
 
-**Example 2: Graph isomorphism.** Suppose there are two graphs $G_1, G_2$, and the prover knows an isomorphism $\pi$. Given this mapping, the verifier could inspect the correspondence between vertices and edges to check isomorphism. But if the claim to be checked is $G_1 \cong G_2$, is handing over the mapping itself necessary? We want to consider ways to establish isomorphism through interaction.
+**Example 2: Graph isomorphism.** Suppose there are two graphs $G_1, G_2$, and the prover knows an isomorphism $\pi$. Given this mapping, the verifier could inspect the correspondence between vertices and edges to check isomorphism. But if the statement to be checked is $G_1 \cong G_2$, is handing over the mapping itself necessary? We want to consider ways to establish isomorphism through interaction.
 
-*(We study the concrete procedure for graph isomorphism next time, together with the definition of zero-knowledge. Today, use it to distinguish giving someone a witness from having them check a claim.)*
+*(We study the concrete procedure for graph isomorphism next time, together with the definition of zero-knowledge. Today, use it to distinguish giving someone a witness from having them check a statement.)*
 
 <LectureDiagram kind="graphs" :en="true" />
 
 ### 3.3 Summary of this motivation
 
-From the cryptographic perspective, we want both to check a claim and to control what the other party learns in the process. This also requires a framework for describing exchanges between a prover and a verifier mathematically. Interactive proofs supply that framework, but interaction alone does not protect a secret.
+From the cryptographic perspective, we want both to check a statement and to control what the other party learns in the process. This also requires a framework for describing exchanges between a prover and a verifier mathematically. Interactive proofs supply that framework, but interaction alone does not protect a secret.
 
 ---
 
@@ -155,7 +171,7 @@ We have now examined two motivations for interactive proofs. The 1985 work of Ba
 
 In both settings, the verifier receives messages from the prover, asks questions as needed, and finally decides whether to accept or reject. We define this shared procedure as an **interactive proof system**.
 
-First, we specify conditions for accepting true claims and rejecting false ones. Then we add the requirement of not giving the verifier extra information. This order helps us keep track of why each definition is needed.
+First, we specify conditions for accepting true statements and rejecting false ones. Then we add the requirement of not giving the verifier extra information. This order helps us keep track of why each definition is needed.
 
 <LectureDiagram kind="motives" :en="true" />
 
@@ -169,19 +185,21 @@ Let us rewrite the preceding discussion as conditions a procedure must satisfy. 
 
 For a language $L$, consider a pair $(P,V)$ consisting of prover $P$ and verifier $V$. The prover has unrestricted computational power, while the verifier runs in probabilistic polynomial time. We write $\langle P,V\rangle(x)=1$ when the verifier accepts as the outcome of their exchange.
 
+The verifier must run in time polynomial in the input length against any prover, with polynomially bounded communication and number of rounds. The probabilities below are over the random choices of the verifier and, when randomized, the prover.
+
 Here, we state the two conditions in a form where error probabilities are negligible. $\mathrm{negl}(|x|)$ denotes a function that eventually becomes smaller than every inverse polynomial as the input length grows. IP can also be defined starting with constant error probabilities, which appropriate repetition can reduce.
 
-**Completeness:** If the claim is true and the honest prover follows the procedure, the verifier accepts with high probability. For $x \in L$, we require
+**Completeness:** If the statement is true and the honest prover follows the procedure, the verifier accepts with high probability. For $x \in L$, we require
 
 $$x \in L \implies \Pr[\langle P, V \rangle(x) = 1] \ge 1 - \mathrm{negl}(|x|)$$
 
-**Soundness:** If the claim is false, the probability that the verifier accepts is negligible, however the dishonest prover responds. For $x \notin L$, we require
+**Soundness:** If the statement is false, the probability that the verifier accepts is negligible, however the dishonest prover responds. For $x \notin L$, we require
 
 $$x \notin L \implies \forall P^*,\ \Pr[\langle P^*, V \rangle(x) = 1] \le \mathrm{negl}(|x|)$$
 
 Notice the universal quantification over all provers in the soundness condition. Examining only a party that follows the procedure honestly does not establish soundness. We must also consider a party that uses the preceding exchange to adapt its responses.
 
-The definition of NP already required that no witness be accepted for a false claim. Interactive proofs extend the object of this requirement from a fixed witness to a prover's strategy for responding throughout an exchange.
+The definition of NP already required that no witness be accepted for a false statement. Interactive proofs extend the object of this requirement from a fixed witness to a prover's strategy for responding throughout an exchange.
 
 A verifier that accepts everything could satisfy completeness alone. A verifier that rejects everything could satisfy soundness alone. A useful verification procedure must satisfy both.
 
