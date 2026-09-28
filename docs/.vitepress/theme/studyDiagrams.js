@@ -44,6 +44,50 @@ export const diagrams = {
       "As in the text, n = |x|. Probabilities are over record-generation randomness, plus D’s randomness when distinguishing. Compare the entire view, not only acceptance. Individual executions need not produce equal records."
     ]
   },
+  "02-4": {
+    "section": "3.3",
+    "type": "compare",
+    "title": [
+      "受理と抽出：異なる実験・異なる確率変数",
+      "Acceptance and extraction: different experiments and random variables"
+    ],
+    "top": [
+      "固定：公開入力 x と，私的情報を含む証明者 P* の戦略\nP* がウィットネスを持つことは，あらかじめ仮定しない．",
+      "Fix public input x and prover strategy P*, including its private information.\nDo not assume that P* starts with a witness."
+    ],
+    "nodes": [
+      {
+        "title": [
+          "実際の対話：P* ↔ V",
+          "Real interaction: P* ↔ V"
+        ],
+        "body": [
+          "P* と V の乱数を選んで対話する．\nV が出す結果：受理または拒否．\nA_x は判定の0・1変数．",
+          "Sample prover and verifier randomness and interact.\nV outputs accept or reject.\nA_x is the binary decision variable."
+        ],
+        "formula": "p_{P*}(x) = Pr[A_x = 1]"
+      },
+      {
+        "title": [
+          "抽出実験：E ↔ P*",
+          "Extraction experiment: E ↔ P*"
+        ],
+        "body": [
+          "E が検証者の役を実行し，P* を呼び出す．\nこのモデルでは再実行・巻き戻しが可能．\nE の出力 W：有効な w′ または ⊥．\nB は (x, W) ∈ R なら1，失敗なら0．",
+          "E emulates a verifier and invokes P*.\nThis model permits reruns and rewinding.\nOutput W: valid witness w′ or failure ⊥.\nB = 1 for (x, W) ∈ R; otherwise B = 0."
+        ],
+        "formula": "W = E_T^{P*}(x); e_{P*}(x,T) = Pr[B = 1]"
+      }
+    ],
+    "bottom": [
+      "知識の健全性：受理確率 p が知識誤差 κ を超えるとき，\n差 p − κ と抽出成功確率・計算時間を結び付ける．\np と e は，同じ確率ではない．",
+      "Knowledge soundness: when acceptance p exceeds knowledge error κ,\nrelate p − κ to extraction success and runtime.\np and e are not the same probability."
+    ],
+    "note": [
+      "E は通常の対話の第三の参加者ではなく，安全性の証明で構成するアルゴリズム．巻き戻しでは乱数を共有するため，応答は一般に独立ではない．第2節の S は記録を出すが，E はウィットネスを出す．",
+      "E is an algorithm in the security proof, not a third participant in normal interaction. Rewound responses share randomness and need not be independent. Section 2’s S outputs a record; E outputs a witness."
+    ]
+  },
   "02-2": {
     "section": "4.1",
     "type": "flow",

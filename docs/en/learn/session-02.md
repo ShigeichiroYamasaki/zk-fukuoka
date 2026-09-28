@@ -167,13 +167,82 @@ Soundness requires that false claims are unlikely to be accepted. But is a claim
 
 ### 3.2 The concept of an extractor
 
-**Knowledge soundness** formalizes this requirement. Intuitively:
+**Knowledge soundness** formalizes this requirement. We focus on **black-box extraction**, commonly used for classical interactive protocols: an extractor invokes a prover and examines its responses. It is not assumed to read the prover's secret directly.
 
-> If a prover $P^*$ can convince the verifier with high probability, an **extractor** $E$ with access to the inputs and outputs of $P^*$ can efficiently obtain an actual witness $w$ by observing—and, if necessary, rewinding—$P^*$.
+> If a prover $P^*$ makes verifier $V$ accept with probability above a specified threshold, an extractor $E$ with prescribed access to $P^*$ must be able to obtain a valid witness. Its success probability and running time must also be evaluated.
 
-Here, “knowing” does not describe the prover’s mental state. It is an operational condition: an extractor with the specified access can recover a witness. The definition must specify success probability, knowledge error, and extractor running time; one accepted execution is not unconditionally equivalent to knowledge.
+The potentially dishonest $P^*$ is not assumed to start with a witness as input. Here $V$ follows the protocol. This differs from Section 2, where we protected information against a potentially dishonest verifier $V^*$.
 
-*(Specific extraction techniques, especially rewinding and the forking lemma, will be discussed in Session 6 of Act II alongside soundness amplification.)*
+**The extractor is not a third participant in an ordinary execution.** It is an algorithm constructed in a security proof. Below, the access model allows restarting the prover or rewinding it to the same state with the same randomness and issuing another challenge. An actual verifier interacting with a remote party does not automatically have this access. Permissions depend on the scheme and definition; not all extractors use rewinding.
+
+### 3.3 Two experiments and their random variables
+
+**Fix public input $x$, the prover algorithm $P^*$, and its private auxiliary information.** The extractor need not receive that information; regard it as incorporated into $P^*$. Execution randomness still changes the outcome. Describe real interaction and extraction as separate experiments.
+
+**Experiment 1: real interaction between prover and verifier.** Independently sample their random tapes $\rho_P,\rho_V$ and run the interaction. Define the decision random variable
+
+$$A_x:=\mathbf{1}\{V\text{ accepts in its interaction with }P^*\}\in\{0,1\}.$$
+
+The indicator $\mathbf{1}\{\cdots\}$ equals 1 when the condition holds and 0 otherwise. The acceptance probability is
+
+$$p_{P^*}(x):=\Pr_{\rho_P,\rho_V}[A_x=1].$$
+
+This one-bit decision differs from random variable $X$ in Section 2, which represented the whole verifier view.
+
+**Experiment 2: the extractor runs the prover.** Extractor $E$ receives public input $x$ and invokes $P^*$ with the permitted access. It may emulate the verifier and choose queries or rewinds based on responses. With computational budget $T$, define its output random variable
+
+$$W_{x,T}:=E_T^{P^*}(x)\in\{0,1\}^*\cup\{\bot\}.$$
+
+The superscript $P^*$ denotes access to the prover, not exponentiation. The symbol $\bot$ means that no valid witness was obtained within the budget. Check candidate outputs against $R$ and return $\bot$ if invalid. The budget includes prover-invocation costs as specified by the chosen access model.
+
+Randomness in this experiment comes from $E$ and from the random tapes selected for its executions of $P^*$. Rewound branches reuse the prover's randomness, so **their responses need not be independent**. Define extraction's success indicator and probability by
+
+$$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(x,T):=\Pr[B_{x,T}=1].$$
+
+The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the exact value originally stored inside the prover.
+
+| Aspect | Real interaction | Extraction experiment |
+| --- | --- | --- |
+| Algorithms | $P^*$ and $V$ | $E$ invoking $P^*$ |
+| Random variables | Decision $A_x\in\{0,1\}$ | Output $W_{x,T}$ and success indicator $B_{x,T}$ |
+| Probability | Acceptance $p_{P^*}(x)$ | Extraction success $e_{P^*}(x,T)$ |
+| Result | Accept or reject | Valid witness or $\bot$ |
+
+These are separate experiments: do not assume $p_{P^*}(x)=e_{P^*}(x,T)$. Nor is $e_{P^*}(x,T)$ the probability of learning a secret by eavesdropping on one accepting transcript. Knowledge soundness connects **the ability to cause acceptance with extraction under specified access and computational resources**.
+
+<StudyDiagram id="02-4" :en="true" />
+
+### 3.4 Knowledge error and extraction time
+
+Should one lucky acceptance already count as knowledge? A **knowledge error $\kappa(x)$** supplies a threshold. When $p_{P^*}(x)>\kappa(x)$, relate the gap
+
+$$\delta(x):=p_{P^*}(x)-\kappa(x)>0$$
+
+to extraction time and success probability. The threshold is protocol- and definition-dependent; it is not a probability obtained by inspecting whether someone mentally “knows.”
+
+A representative formulation bounds the expected time to obtain a valid witness by an expression such as $\operatorname{poly}(|x|)/\delta(x)$. An inverse-polynomial gap supports efficient extraction; a merely positive gap need not yield polynomial time. Other formulations constrain the success probability of a time-bounded extractor. In either case, read **acceptance probability, knowledge error, extraction probability, and running time together**. See [Bellare–Goldreich's original paper](https://www.wisdom.weizmann.ac.il/~oded/pok.html) and their [follow-up on randomized provers](https://www.wisdom.weizmann.ac.il/~oded/COL/pok-note.pdf) for precise quantifiers and randomness models.
+
+**Preview rewinding through Schnorr.** In Section 4.1's notation, the public value is $y=g^w$ and the challenge $c\in\mathbb{Z}_q$ is uniform over $q$ choices. Guess one $c$, choose a response $s$, and set $t=g^s y^{-c}$: this permits answering that challenge without using a witness. The guessing probability $1/q$ gives the knowledge-error threshold for this protocol.
+
+The extractor rewinds to the state after sending the same commitment $t$ and seeks two accepting responses $s_1,s_2$ to different challenges $c_1,c_2$. If obtained, it computes
+
+$$w'=(s_1-s_2)(c_1-c_2)^{-1}\pmod q$$
+
+and checks $y=g^{w'}$. Obtaining both accepting responses is a probabilistic event: one acceptance does not guarantee a second.
+
+For example, fix the prover's randomness and post-commitment state so responses are deterministic. If exactly $k$ of the $q$ challenges are accepted in that state, a single acceptance has probability $k/q$. Sampling two independent uniform challenges from the same state gives two distinct accepting challenges with probability
+
+$$\frac{k(k-1)}{q^2}.$$
+
+It is zero for $k=1$, whereas $k\ge2$ allows an extractable pair. This calculation concerns one fixed state. A guarantee for general randomized provers also requires analyzing runtime and resampling initial states. This is why acceptance and extraction are treated with different random variables.
+
+### 3.5 How this differs from simulation
+
+Section 2's simulator $S$ generates a **verifier's record** without a witness. The extractor $E$ uses prescribed access to a prover capable of causing acceptance to generate a **valid witness**. Their outputs and available access differ.
+
+Zero-knowledge protects against extra information being learned in ordinary interaction. Extraction with additional rewinding access does not by itself contradict that guarantee. If an implementation allows the verifier to force randomness reuse or reset the prover, its security in that setting needs separate analysis.
+
+*(Session 6 develops rewinding and the forking lemma further.)*
 
 ---
 
