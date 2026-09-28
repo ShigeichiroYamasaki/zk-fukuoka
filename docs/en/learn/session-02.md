@@ -55,6 +55,36 @@ What should we compare the information obtained by the verifier against? We use 
 
 In other words, if an algorithm that generates a transcript—a simulator $S$—can output a distribution indistinguishable from a real interaction without access to the witness $w$, then the interaction is considered to give the verifier essentially no new information.
 
+#### 2.1.1 Before the definition: relation $R$ and statement $x$
+
+Before formalizing zero-knowledge, let us identify what is public and what we want to keep private. In Session 1, a verifier received a public input $x$ and a witness $w$. Relation $R$ specifies **which pairs of these values satisfy the required condition**.
+
+| Symbol | Meaning |
+| --- | --- |
+| $x$ | The public input shared by prover and verifier |
+| $w$ | A witness satisfying the condition for input $x$ |
+| $R$ | The set of pairs $(x,w)$ satisfying that condition |
+| $(x,w)\in R$ | The statement that $w$ is a valid witness for $x$ |
+| $L$ | The set of inputs $x$ with at least one valid witness |
+
+A relation here is a **binary relation**, specifying a condition on pairs of objects. Encoding inputs and witnesses as finite binary strings gives $R\subseteq\{0,1\}^*\times\{0,1\}^*$. Distinguish membership $(x,w)\in R$ from the procedure that checks it. We also sometimes write the result of this check as $R(x,w)=1$ for membership and $R(x,w)=0$ otherwise.
+
+For the NP relations used in this course, membership in $R$ is decidable in deterministic polynomial time, and valid witnesses satisfy $|w|\le p(|x|)$ for some polynomial $p$. The associated language is
+
+$$L=L_R:=\{x\mid \exists w,\ (x,w)\in R\}.$$
+
+Thus **$R$ specifies whether a particular pair satisfies the condition, whereas $L$ collects the inputs for which a suitable partner $w$ exists**. Under these conditions, $L\in\mathrm{NP}$.
+
+Return to the composite-number example from Session 1. Omitting the encoding of integers, define
+
+$$R_{\mathrm{comp}}=\{(n,d)\mid n,d\text{ are integers},\ 1<d<n,\ d\mid n\}.$$
+
+Here $d\mid n$ means that $d$ divides $n$ exactly. The pairs $(91,7)$ and $(91,13)$ belong to this relation, but $(91,8)$ does not. The corresponding language $L_{R_{\mathrm{comp}}}$ consists of encodings of composite numbers: 91 belongs, whereas the prime 97 does not. This small example illustrates the notation, not the difficulty of discovering a secret.
+
+“Statement $x$” is shorthand for **the statement “$x\in L$” about public input $x$: there exists a witness $w$ such that $(x,w)\in R$**. Section 3 distinguishes the truth of this statement from the responding prover's knowledge of such a witness.
+
+In the next definition, $R$ and $L$ are fixed as part of the scheme and commonly known. The real prover uses a valid witness $w$, whereas the simulator receives public input $x$ without $w$. Keep that distinction in mind when reading the formula. See also [Sets, membership and languages](./terms/sets-and-languages) and [NP relations in more detail](./terms/np-relations).
+
 ### 2.2 A formal definition
 
 Consider an interactive proof system $(P,V)$ for language $L$ and relation $R$. For every efficient verifier $V^*$, we require an efficient simulator $S$ that reproduces its view without the witness. The following is shorthand for this condition; $S$ may depend on the verifier. The left-hand side denotes the verifier’s view, including its randomness and received messages. A full definition also specifies security parameters and auxiliary inputs.
