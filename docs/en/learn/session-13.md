@@ -44,7 +44,7 @@ Trusted setup retains public information while requiring secret erasure. MPC dis
 
 We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does hash collision resistance alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
 
-<StudyDiagram id="13-1" :en="true" />
+<StudyDiagram id="13-1" number="13-2" :en="true" />
 
 ---
 
@@ -80,7 +80,7 @@ Connect the tools into a proving procedure. Pay particular attention to which ta
 
 For zero knowledge, random masking compatible with degree bounds and constraints must also prevent the opened trace evaluations and other messages from leaking witness information. Transparency and FRI do not automatically provide zero knowledge.
 
-<StudyDiagram id="13-2" :en="true" />
+<StudyDiagram id="13-2" number="13-3" :en="true" />
 
 ### 3.2 Verification cost and proof size
 

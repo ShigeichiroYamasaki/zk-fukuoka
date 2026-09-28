@@ -153,7 +153,7 @@ This identifies which relationships fail when an intermediate value is changed.
 
 Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](./balance-arithmetization).
 
-<StudyDiagram id="04-1" :en="true" />
+<StudyDiagram id="04-1" number="04-3" :en="true" />
 
 [Follow the deposit/withdrawal example: R1CS](./balance-arithmetization#r1cs)
 
@@ -191,7 +191,7 @@ Here, $Z(X)$ is the polynomial whose roots are the constraint evaluation points.
 
 The computation to be checked has not changed; the form of the check has. Vanishing at every constraint point becomes divisibility by a vanishing polynomial. With degree bounds, including on the quotient, and fixed polynomials, one can test this relation at a random point. Combining conditions into one equation is a step toward a proof system, not the entire security argument.
 
-<StudyDiagram id="04-2" :en="true" />
+<StudyDiagram id="04-2" number="04-4" :en="true" />
 
 [Follow the deposit/withdrawal example: QAP](./balance-arithmetization#qap)
 

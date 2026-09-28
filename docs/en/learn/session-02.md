@@ -151,7 +151,7 @@ Each individual bit is equally likely to be 0 or 1 under either distribution. Ho
 
 The objects being compared are therefore **the distributions of the real-view random variable $X$ and simulator-output random variable $Y$, for the same fixed public input**. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
 
-<StudyDiagram id="02-1" :en="true" />
+<StudyDiagram id="02-1" number="02-7" :en="true" />
 
 An **honest verifier** is a verifier that follows the prescribed protocol, not a judgment about someone’s character. It samples challenges from the specified distribution and applies the specified acceptance rule. We still allow it to record and analyze the messages and its own randomness. **Honest-verifier zero-knowledge (HVZK)** means that this verifier’s view can be simulated without the witness. This differs from zero-knowledge against verifiers that deviate from the protocol, for example by choosing challenges differently.
 
@@ -224,7 +224,7 @@ The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the 
 
 These are separate experiments: do not assume $p_{P^*}(x)=e_{P^*}(x,T)$. Nor is $e_{P^*}(x,T)$ the probability of learning a secret by eavesdropping on one accepting transcript. Knowledge soundness connects **the ability to cause acceptance with extraction under specified access and computational resources**.
 
-<StudyDiagram id="02-4" :en="true" />
+<StudyDiagram id="02-4" number="02-8" :en="true" />
 
 ### 3.4 Knowledge error and extraction time
 
@@ -357,7 +357,7 @@ In the numerical example, suppose we also obtain the accepting response $s_2=8$ 
 
 **The relation's algebraic structure directly supplies both the verification and extraction equations.** Whether arbitrary computations come with such a structure is the question leading into Section 4.2.
 
-<StudyDiagram id="02-2" :en="true" />
+<StudyDiagram id="02-2" number="02-9" :en="true" />
 
 For another description of the construction, see [RFC 8235 §2.2](https://www.rfc-editor.org/rfc/rfc8235.html#section-2.2). It uses subtraction in the response, so its verification equation is arranged differently from the additive-response convention used here.
 

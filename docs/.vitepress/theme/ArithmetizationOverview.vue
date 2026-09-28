@@ -61,7 +61,7 @@ const t = (ja, en) => props.en ? en : ja;
 <style scoped>
 .arith-overview{--ao-bg:#f3f7fc;--ao-card:#fff;--ao-ink:#172d48;--ao-line:#91a7bf;--ao-accent:#07685f;margin:32px 0;padding:24px;border:1px solid var(--ao-line);border-radius:18px;background:var(--ao-bg);color:var(--ao-ink);scroll-margin-top:100px}
 :global(.dark) .arith-overview{--ao-bg:#19283b;--ao-card:#22364d;--ao-ink:#f1f6fc;--ao-line:#6f849d;--ao-accent:#99ebd8}
-figcaption{display:flex;gap:12px;align-items:baseline;margin-bottom:20px}figcaption span{white-space:nowrap;font:700 12px monospace;color:var(--ao-accent)}
+figcaption{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;margin-bottom:20px}figcaption span{white-space:nowrap;font:700 16px/1.5 monospace;color:var(--ao-accent)}
 .ao-box{padding:16px;border:1px solid var(--ao-line);border-radius:10px;background:var(--ao-card)}.ao-box h3{margin:0 0 10px;border:0;font-size:16px;line-height:1.6}.ao-box p{font-size:14px;line-height:1.8;margin:8px 0}.ao-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ao-columns>div{border-left:3px solid var(--ao-accent);padding-left:12px}.ao-equation{padding:10px;background:var(--ao-bg);border-radius:6px;font-size:14px;overflow-wrap:anywhere;line-height:1.8}.ao-arrow{text-align:center;color:var(--ao-accent);font-size:25px}.ao-small{font-size:13px!important}.ao-circuit{overflow-x:auto}svg{width:100%;min-width:510px;display:block}.ao-wires{stroke:var(--ao-accent);stroke-width:2;fill:none}.ao-gate{stroke:var(--ao-accent);stroke-width:2;fill:var(--ao-bg)}.ao-label{fill:var(--ao-ink);font:14px system-ui,sans-serif}
 @media(max-width:600px){.arith-overview{padding:14px}.ao-box{padding:12px}.ao-columns{grid-template-columns:1fr}figcaption{font-size:15px}}
 </style>

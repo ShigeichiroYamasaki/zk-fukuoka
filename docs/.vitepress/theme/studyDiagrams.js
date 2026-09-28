@@ -529,7 +529,7 @@ export const diagrams = {
       "Unique versus list decoding: what must be returned?"
     ],
     "note": [
-      "概念図．候補リストを許すだけで任意の誤りを訂正できるわけではない．許容距離とリストサイズの条件が必要．FRIの検証者が毎回復号を実行するという意味でもない．",
+      "概念の整理．候補リストを許すだけで任意の誤りを訂正できるわけではない．許容距離とリストサイズの条件が必要．FRIの検証者が毎回復号を実行するという意味でもない．",
       "Conceptual comparison. Allowing a list does not correct arbitrary corruption: radius and list-size conditions are required. FRI verification does not run a decoder at every query."
     ],
     "top": [
@@ -567,7 +567,7 @@ export const diagrams = {
       "FRI: halve the degree bound at each step"
     ],
     "note": [
-      "乗法的FRIの模式図．各段階で表を固定してから新しいチャレンジを得る．近接性と折り畳みの一貫性を検査するのであって，表を半分捨てるだけではない．",
+      "乗法的FRIの手順．各段階で表を固定してから新しいチャレンジを得る．近接性と折り畳みの一貫性を検査するのであって，表を半分捨てるだけではない．",
       "Schematic multiplicative FRI. Fix each table before receiving its new challenge. Check proximity and folding consistency; this is not simply discarding half a table."
     ],
     "nodes": [
@@ -799,7 +799,7 @@ export const diagrams = {
       "Pairings expose a product in the exponent"
     ],
     "note": [
-      "G₁とG₂は加法表記，G_Tは乗法表記．aやbを復元する図ではなく，群で符号化された値の関係を検証する能力を示す．",
+      "G₁とG₂は加法表記，G_Tは乗法表記．aやbを復元する手順ではなく，群で符号化された値の関係を検証する能力を示す．",
       "G₁ and G₂ use additive notation; G_T uses multiplicative notation. This does not recover a or b: it enables checking relations between encoded values."
     ],
     "nodes": [
@@ -843,7 +843,7 @@ export const diagrams = {
       "A reduction turns an attacker into a solver"
     ],
     "note": [
-      "安全性は仮定・モデル・還元の損失とともに読む．DL，q-SDH，KEAを一列の単純な強弱ランキングにする図ではない．",
+      "安全性は仮定・モデル・還元の損失とともに読む．DL，q-SDH，KEAを一列の単純な強弱ランキングを示すものではない．",
       "Read security together with its assumption, model and reduction loss. DL, q-SDH and KEA are not a simple linear ranking."
     ],
     "nodes": [
@@ -985,8 +985,8 @@ export const diagrams = {
       "Fiat–Shamir changes where challenges come from"
     ],
     "note": [
-      "概念図．実装では公開入力・プロトコル識別子・それまでの記録などを曖昧さなく符号化する．ハッシュの一方向性だけで変換の安全性が証明されるわけではない．",
-      "Conceptual diagram. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the hash alone does not establish security."
+      "概念の整理．実装では公開入力・プロトコル識別子・それまでの記録などを曖昧さなく符号化する．ハッシュの一方向性だけで変換の安全性が証明されるわけではない．",
+      "Conceptual overview. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the hash alone does not establish security."
     ],
     "nodes": [
       {
@@ -1219,7 +1219,7 @@ export const diagrams = {
       "From abstract checks to a non-interactive cryptographic protocol"
     ],
     "note": [
-      "代表的な公開コインIOP／多項式IOPの構成図．各段階の安全性条件が必要．Groth16をこの変換列そのものとして扱わない（第11回）．",
+      "代表的な公開コインIOP／多項式IOPの構成手順．各段階の安全性条件が必要．Groth16をこの変換列そのものとして扱わない（第11回）．",
       "A representative public-coin IOP / polynomial-IOP construction. Each stage needs security conditions. Groth16 does not follow this exact compilation path (Session 11)."
     ],
     "nodes": [
@@ -1273,7 +1273,7 @@ export const diagrams = {
       "Move the QAP product into a target-group relation"
     ],
     "note": [
-      "発想を示す模式図．この式だけではGroth16の健全性もゼロ知識性も得られない．実際の構成は回路固有の鍵・追加項・乱数化を使う．",
+      "発想を整理した表．この式だけではGroth16の健全性もゼロ知識性も得られない．実際の構成は回路固有の鍵・追加項・乱数化を使う．",
       "Conceptual sketch only. This relation alone gives neither Groth16 soundness nor zero-knowledge; the construction also needs circuit-specific keys, additional terms and randomization."
     ],
     "nodes": [
@@ -1885,7 +1885,7 @@ export const diagrams = {
       "Recursion: include verification of the previous proof in the next computation"
     ],
     "note": [
-      "各時点までの有限の履歴を扱う模式図．公開状態とステップの連鎖を正しく結び付ける必要がある．検証回路の効率は群や体の選択にも依存する．",
+      "各時点までの有限の履歴を扱う手順．公開状態とステップの連鎖を正しく結び付ける必要がある．検証回路の効率は群や体の選択にも依存する．",
       "Schematic for a finite history up to each step. Bind the public state and step linkage correctly. Verifier-circuit efficiency also depends on group and field choices."
     ],
     "nodes": [
@@ -1929,7 +1929,7 @@ export const diagrams = {
       "Separate the roles of folding, IVC and compression"
     ],
     "note": [
-      "Novaを念頭に置いた概念図．foldingだけで簡潔なゼロ知識証明が完成するわけではない．FRIの次数縮小とは対象も安全性の議論も異なる．",
+      "Novaを念頭に置いた概念の整理．foldingだけで簡潔なゼロ知識証明が完成するわけではない．FRIの次数縮小とは対象も安全性の議論も異なる．",
       "Conceptual view motivated by Nova. Folding alone is not a succinct zero-knowledge proof. Its objects and security arguments differ from FRI degree reduction."
     ],
     "nodes": [
@@ -2027,7 +2027,7 @@ export const diagrams = {
       "Ethereum: distinguish L2 proofs from L1 execution proofs"
     ],
     "note": [
-      "本文の2026年9月27日時点の整理を図解．EIP-8025のDraft提案では証明は任意の補助チェックで，再実行を継続する．メインネットでの有効化を示す図ではない．",
+      "本文の2026年9月27日時点の整理を比較．EIP-8025のDraft提案では証明は任意の補助チェックで，再実行を継続する．メインネットでの有効化を示すものではない．",
       "Visual summary of the lecture’s September 27, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation."
     ],
     "nodes": [

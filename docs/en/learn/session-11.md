@@ -66,7 +66,7 @@ $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
 This represents a **product** of exponents in the target group $G_T$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
 
-<StudyDiagram id="11-1" :en="true" />
+<StudyDiagram id="11-1" number="11-2" :en="true" />
 
 ---
 
@@ -112,7 +112,7 @@ The construction depends on allowing use of public group elements while keeping 
 
 What must change when the circuit changes? Groth16’s keys contain information about its QAP, so a new circuit requires corresponding proving and verification keys. Shared preparation stages can exist, but a circuit-specific stage remains. Reducing that operational burden motivates the universal SRS studied with PLONK next time.
 
-<StudyDiagram id="11-3" :en="true" />
+<StudyDiagram id="11-3" number="11-3" :en="true" />
 
 ### 4.3 The security basis: the generic bilinear group model
 

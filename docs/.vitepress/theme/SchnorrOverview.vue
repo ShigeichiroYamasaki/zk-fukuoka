@@ -23,9 +23,15 @@ defineProps({ en: Boolean });
    </div>
   </div>
   <p class="note">{{ en ? 'Only t, c and s cross the arrows; the secret exponent is not sent. The equations are introduced in Section 4.1. Following the protocol still allows the verifier to record and analyze its view.' : '矢印で送るのは t，c，s であり，秘密の指数そのものは送らない．具体的な式は4.1節で導入する．正直な検証者も，自分が見た情報を記録して分析できる．' }}</p>
-  <div class="contrast">
-   <div><b>{{ en ? 'Real interaction' : '実際の対話' }}</b><p>t → c → s</p><small>{{ en ? 'Commit before receiving the challenge.' : 'チャレンジを受け取る前にコミットする．' }}</small></div>
-   <div><b>{{ en ? 'Honest-verifier simulation' : '正直な検証者の記録のシミュレーション' }}</b><p>(c, s) → t</p><small>{{ en ? 'Choose c and s first; derive t. Output the record in the order (t, c, s).' : 'c と s を先に選び，t を逆算する．出力する記録の並びは (t, c, s)．' }}</small></div>
+  <div class="sequence-scroll" tabindex="0" :aria-label="en ? 'Scrollable comparison table' : '横にスクロールできる比較表'">
+   <table class="schnorr-table">
+    <caption>{{ en ? 'Table 02-10: Message generation in the real interaction and simulation' : '表 02-10：実際の対話とシミュレーションでのメッセージ生成' }}</caption>
+    <thead><tr><th scope="col">{{ en ? 'Setting' : '場面' }}</th><th scope="col">{{ en ? 'Generation order' : '生成順序' }}</th><th scope="col">{{ en ? 'Condition' : '条件' }}</th></tr></thead>
+    <tbody>
+     <tr><th scope="row">{{ en ? 'Real interaction' : '実際の対話' }}</th><td>t → c → s</td><td>{{ en ? 'Commit before receiving the challenge.' : 'チャレンジを受け取る前にコミットする．' }}</td></tr>
+     <tr><th scope="row">{{ en ? 'Honest-verifier simulation' : '正直な検証者の記録のシミュレーション' }}</th><td>(c, s) → t</td><td>{{ en ? 'Choose c and s first; derive t. Output the record in the order (t, c, s).' : 'c と s を先に選び，t を逆算する．出力する記録の並びは (t, c, s)．' }}</td></tr>
+    </tbody>
+   </table>
   </div>
   <p class="note">{{ en ? 'Generating a record in this different order is not the same as responding to a live verifier. This illustration alone does not prove zero-knowledge against malicious verifiers.' : '記録を別の順序で生成できることと，実際の検証者に応答できることは別である．この図だけで悪意ある検証者に対するゼロ知識性を示したことにはならない．' }}</p>
  </figure>
@@ -34,4 +40,5 @@ defineProps({ en: Boolean });
 <style scoped>
 .schnorr-overview{margin:28px 0;padding:20px;border:1px solid var(--vp-c-divider);border-radius:16px;background:var(--vp-c-bg-soft);color:var(--vp-c-text-1)}
 figcaption{font-weight:700;font-size:1.1rem}.public{border-bottom:1px solid var(--vp-c-divider);padding-bottom:14px}.sequence-scroll{overflow-x:auto}.sequence{display:grid;grid-template-columns:1fr 150px 1fr;gap:12px;min-width:510px}.actor,.step{padding:12px;border:1px solid var(--vp-c-divider);border-radius:10px;line-height:1.65;background:var(--vp-c-bg)}.actor{font-weight:700}.actor small{display:block;font-weight:400;margin-top:5px}.verifier{border-left:3px solid var(--vp-c-brand-1)}.emphasized{background:var(--vp-c-brand-soft)}.time,.message{text-align:center;align-self:center}.message{font-size:.85rem}.message span{display:block;font-size:2.5rem;color:var(--vp-c-brand-1);line-height:1.3}.message small{display:block}.step{font-size:.9rem}.contrast{display:grid;grid-template-columns:1fr 1fr;gap:12px}.contrast>div{padding:14px;border:1px solid var(--vp-c-divider);border-radius:10px}.contrast b{font-size:.9rem}.contrast p{font-size:1.25rem;font-weight:700;margin:8px 0}.note{font-size:.9rem;line-height:1.8}.contrast small{line-height:1.7;display:block}@media(max-width:640px){.schnorr-overview{padding:14px}.contrast{grid-template-columns:1fr}}
+figcaption span{font-size:16px}.schnorr-table{display:table!important;width:100%;font-size:16px;line-height:1.7}.schnorr-table caption{text-align:left;font-weight:700;margin:16px 0;caption-side:top}.schnorr-table td:nth-child(2){white-space:nowrap}@media(max-width:640px){.schnorr-table{min-width:440px}}
 </style>

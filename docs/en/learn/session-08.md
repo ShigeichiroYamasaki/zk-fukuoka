@@ -63,7 +63,7 @@ $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
 This equation describes checking the claim $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
 
-<StudyDiagram id="08-1" :en="true" />
+<StudyDiagram id="08-1" number="08-3" :en="true" />
 
 ---
 
@@ -95,7 +95,7 @@ $$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
 Write the preceding generator $g$ as $g_1\in G_1$ and include $g_2,g_2^\tau\in G_2$ in the verifier parameters. Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point.
 
-<StudyDiagram id="08-2" :en="true" />
+<StudyDiagram id="08-2" number="08-4" :en="true" />
 
 ### 2.4 Security foundations
 

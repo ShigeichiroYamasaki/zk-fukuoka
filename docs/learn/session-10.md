@@ -60,7 +60,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 直感的には，PCP定理の証明の構成そのものが，「ある最適化問題(たとえばMAX-3SATなど)に対して，真の最適値と，それに近い値とを区別することがNP困難である」ということを示す構成に転用できる．これにより，「P≠NPのもとでは，問題と帰着で定まる近似率を保証する多項式時間アルゴリズムは存在しない」という**近似困難性(hardness of approximation)**の結果が，PCP定理から導かれることになった．
 
-<StudyDiagram id="10-2" />
+<StudyDiagram id="10-2" number="10-2" />
 
 ### 2.2 この事実が伝えること
 
@@ -95,7 +95,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 このように，多項式IOPを設計し，コミットメントで必要なアクセスを実装し，Fiat-Shamirで非対話化する，という組み立て方がある．ただし，任意のIOPを任意のコミットメントと組み合わせればよいわけではない．アクセスの種類や安全性条件を合わせる必要がある．また，第11回のGroth16はこの手順をそのまま使う方式ではなく，CRSモデルで直接構成される．見取り図の共通点と適用範囲を分けて使おう．
 
-<StudyDiagram id="10-3" />
+<StudyDiagram id="10-3" number="10-3" />
 
 ### 3.3 STARKとSNARKの違いをIOPの言葉で言い直す
 

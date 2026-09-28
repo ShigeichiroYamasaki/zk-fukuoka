@@ -88,7 +88,7 @@ $$(f(0),f(1),f(\alpha),f(\alpha+1))=(1,0,1+\alpha,\alpha)$$
 
 一般に，次数 $s$ の既約多項式を使えば $q=p^s$ 個の元を持つ体を構成できる．通常のRS符号の相異なる評価点は $n\le q$ 個，非零元だけに限定する場合は $n\le q-1$ 個である．体の大きさ $q$ と，符号化する多項式の次数上限は別のパラメータである．
 
-<StudyDiagram id="03-1" />
+<StudyDiagram id="03-1" number="03-4" />
 
 ---
 
@@ -251,7 +251,7 @@ $$\operatorname{Fold}_{\alpha}[f](x^2)
 
 <PolynomialVisual kind="testing" />
 
-<StudyDiagram id="03-3" />
+<StudyDiagram id="03-3" number="03-5" />
 
 ### 4.4 計算量理論的な意味づけ
 

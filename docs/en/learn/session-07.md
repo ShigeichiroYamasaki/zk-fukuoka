@@ -88,7 +88,7 @@ Read bilinearity as a verification tool. Given $aP$ and $bQ$, the pairing produc
 
 This is a **multiplicative verification capability** unavailable from ordinary discrete-log group operations alone, which provide additive structure in the exponents. Many SNARKs, including Groth16, use this property to verify polynomial multiplication relations in QAPs from Session 4. This connection will be crucial when studying Groth16 in Act III.
 
-<StudyDiagram id="07-2" :en="true" />
+<StudyDiagram id="07-2" number="07-2" :en="true" />
 
 ### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
 
@@ -220,7 +220,7 @@ Suppose an adversary can break the scheme. Can we use it to solve another proble
 
 If this construction is possible, then assuming $P$ is hard implies that breaking $\Pi$ is also hard. This is the basic form of a **reduction proof**.
 
-<StudyDiagram id="07-3" :en="true" />
+<StudyDiagram id="07-3" number="07-3" :en="true" />
 
 ### 4.2 Why this form matters
 

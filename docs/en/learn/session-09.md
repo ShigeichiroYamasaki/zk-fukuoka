@@ -62,7 +62,7 @@ The prover is not the only party computing this hash. The verifier recomputes th
 
 The prover can choose commitments and inspect their hashes, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
 
-<StudyDiagram id="09-1" :en="true" />
+<StudyDiagram id="09-1" number="09-2" :en="true" />
 
 ---
 
@@ -94,7 +94,7 @@ After proving security in ROM, ask exactly what was proved. The theorem concerns
 
 Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete hash instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
 
-<StudyDiagram id="09-3" :en="true" />
+<StudyDiagram id="09-3" number="09-3" :en="true" />
 
 ### 4.3 Why ROM is still widely used
 

@@ -95,7 +95,7 @@ The left side encodes values with their original positions; the right side pairs
 
 PLONK uses a grand-product polynomial to handle the many factors, enforcing adjacent-row updates and boundary conditions. Checking only the final product would not suffice: the accumulation updates must also be constrained. See the [original permutation argument](https://eprint.iacr.org/2019/953) for the construction.
 
-<StudyDiagram id="12-2" :en="true" />
+<StudyDiagram id="12-2" number="12-2" :en="true" />
 
 ### 3.3 The broader significance of copy constraints
 
@@ -127,7 +127,7 @@ Review where circuit-specific information is fixed, which relations are checked,
 - **Implementation:** KZG commitments (Session 8) enable efficient verification of these relations at evaluation points. The shared tool with Groth16 is pairings; Groth16 does not itself incorporate KZG. PLONKish derivatives can use FRI or other commitments, but changes require revisiting the protocol and security analysis. Distinguish their setup and performance properties from original PLONK.
 - **Non-interactivity:** The Fiat–Shamir transform (Session 9) makes the protocol non-interactive. Unlike Groth16, PLONK is first designed as an interactive IOP and then made non-interactive, following the Session 10 map more directly.
 
-<StudyDiagram id="12-3" :en="true" />
+<StudyDiagram id="12-3" number="12-3" :en="true" />
 
 ---
 

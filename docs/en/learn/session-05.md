@@ -121,7 +121,7 @@ The **Shannon model** specifies a probabilistic channel; independent symbol erro
 
 A verifier cannot assume that a prover’s errors are independent random noise. The prover may choose positions and values that are likely to pass inspection. We therefore need worst-case properties, such as distance from codewords. Randomizing the verifier’s queries is different from assuming the errors themselves are random.
 
-<StudyDiagram id="05-2" :en="true" />
+<StudyDiagram id="05-2" number="05-2" :en="true" />
 
 ### 3.3 Deriving the Hamming bound from ball volume
 
@@ -162,7 +162,7 @@ For Reed–Solomon codes, algorithms such as Guruswami–Sudan support list deco
 
 *We will not cover specific list-decoding algorithms today. The goal is to recognize the possibility of robust information recovery beyond unique decoding, and to understand that this idea supports later soundness analysis.*
 
-<StudyDiagram id="05-3" :en="true" />
+<StudyDiagram id="05-3" number="05-3" :en="true" />
 
 ### 4.3 Candidate lists and the Johnson radius
 

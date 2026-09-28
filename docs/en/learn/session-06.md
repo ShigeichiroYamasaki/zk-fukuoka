@@ -127,7 +127,7 @@ The protocol has two main phases:
 
 One query path checks a constant number of values per stage, giving roughly $O(\log d)$ values as the stages shrink. The number of paths needed depends on the target soundness error. A Merkle-tree implementation also requires authentication-path verification. Count queried values separately from proof size and total verification work.
 
-<StudyDiagram id="06-1" :en="true" />
+<StudyDiagram id="06-1" number="06-4" :en="true" />
 
 ### 2.3 Why the claim is approximate
 
@@ -218,7 +218,7 @@ Even if a test can detect an invalid table, a miss probability of $1/2$ is too l
 
 Repeat a test with independent randomness and accept only if every run passes. With per-run error $\epsilon$, the target bound is $\epsilon^k$ after $k$ repetitions. But the relevant conditional bounds must be established. Parallel and sequential repetition may allow different adversarial strategies. Check soundness amplification separately from preservation of zero-knowledge.
 
-<StudyDiagram id="06-2" :en="true" />
+<StudyDiagram id="06-2" number="06-5" :en="true" />
 
 ---
 
@@ -238,7 +238,7 @@ The **forking lemma** of Pointcheval and Stern (1996) formalizes the rewinding i
 
 This is intuition for schemes meeting the lemma’s conditions, not a theorem extracting information from every non-interactive protocol. In Fiat–Shamir-type signatures studied in Session 9, the probability of a successful fork depends on factors including oracle queries and the adversary’s success probability.
 
-<StudyDiagram id="06-3" :en="true" />
+<StudyDiagram id="06-3" number="06-6" :en="true" />
 
 ### 4.3 Why these techniques matter
 

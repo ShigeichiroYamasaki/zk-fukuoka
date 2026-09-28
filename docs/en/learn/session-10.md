@@ -60,7 +60,7 @@ How can checking a few proof locations relate to optimization? Read the verifier
 
 Intuitively, constructions used in the theorem can be turned into reductions showing that distinguishing optimization instances with different optimum values—for example, instances of MAX-3SAT—is NP-hard. This yields **hardness-of-approximation** results: unless P = NP, polynomial-time algorithms cannot guarantee approximation beyond certain ratios.
 
-<StudyDiagram id="10-2" :en="true" />
+<StudyDiagram id="10-2" number="10-2" :en="true" />
 
 ### 2.2 What this connection tells us
 
@@ -95,7 +95,7 @@ For each tool, identify what it represents, what it fixes, and what it checks. T
 
 One approach designs a polynomial IOP, implements the required access using commitments, and applies Fiat–Shamir. This does not allow arbitrary IOPs and commitments to be combined without checking access types and security conditions. Groth16 in Session 11 is instead constructed directly in the CRS model. Use the map while respecting its scope.
 
-<StudyDiagram id="10-3" :en="true" />
+<StudyDiagram id="10-3" number="10-3" :en="true" />
 
 ### 3.3 Restating the SNARK/STARK comparison
 

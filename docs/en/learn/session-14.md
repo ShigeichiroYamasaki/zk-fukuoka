@@ -138,7 +138,7 @@ Imagine choosing a scheme for each situation below. Give more than its name: exp
 
 If groups reach different conclusions, compare their premises first. One may prioritize verification cost, another setup or long-term security. Asking which changed condition would change the decision is a practical way to understand the tradeoffs.
 
-<StudyDiagram id="14-3" :en="true" />
+<StudyDiagram id="14-3" number="14-6" :en="true" />
 
 ---
 

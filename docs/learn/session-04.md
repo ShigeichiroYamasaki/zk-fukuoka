@@ -153,7 +153,7 @@ $$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
 
 ここで $y=35$ は，検証したい言明の公開入力として固定している．$y$ も自由に選べるなら，この三つの行だけでは出力35を要求できない．制約系自体に定数35を埋め込む設計なら，追加の行 $(y-35)\cdot1=0$ を使える．また，この例が検査するのは有限体での等式である．整数の金額などを扱う際は，[入出金の例](./balance-arithmetization)のように範囲制約と剰余による回り込みも検討する．
 
-<StudyDiagram id="04-1" />
+<StudyDiagram id="04-1" number="04-3" />
 
 [入出金の具体例でR1CSへの変換を追う](./balance-arithmetization#r1cs)
 
@@ -191,7 +191,7 @@ $$\left(\sum_i z_i A_i(X)\right) \left(\sum_i z_i B_i(X)\right) - \left(\sum_i z
 
 変換の前後で，確認したい計算は変わっていない．変わったのは検査の形である．各制約点で差が0になることを，消失多項式で割り切れることにまとめた．商も含めた次数の制限と多項式の固定があれば，この関係をランダムな点で検査する方針を使える．式を一本にまとめることと，安全な証明系を完成させることは区別しておこう．
 
-<StudyDiagram id="04-2" />
+<StudyDiagram id="04-2" number="04-4" />
 
 [入出金の具体例でQAPへの変換を追う](./balance-arithmetization#qap)
 

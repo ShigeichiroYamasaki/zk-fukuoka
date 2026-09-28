@@ -88,7 +88,7 @@ Two coefficients produce four symbols. Any two distinct points allow interpolati
 
 In general, an irreducible polynomial of degree $s$ constructs $q=p^s$ field elements. Ordinary RS evaluation uses $n\le q$ distinct points, or $n\le q-1$ if only nonzero elements are used. Field size and the degree bound of the polynomial being encoded are separate parameters.
 
-<StudyDiagram id="03-1" :en="true" />
+<StudyDiagram id="03-1" number="03-4" :en="true" />
 
 ---
 
@@ -253,7 +253,7 @@ Compare $f(X)=X^2+1$ with $g(X)=4X-2$. Their difference is $h(X)=(X-1)(X-3)$. In
 
 <PolynomialVisual kind="testing" :en="true" />
 
-<StudyDiagram id="03-3" :en="true" />
+<StudyDiagram id="03-3" number="03-5" :en="true" />
 
 ### 4.4 The complexity-theoretic significance
 

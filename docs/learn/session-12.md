@@ -95,7 +95,7 @@ $$\prod_j\bigl(v_j+\beta\,\mathrm{id}_j+\gamma\bigr)=\prod_j\bigl(v_j+\beta\,\ma
 
 多数の積を扱うため，PLONKはgrand product(累積積)の多項式を用い，隣接行の更新関係と境界条件を検証する．積の終点だけでなく，累積積の更新も正しく制約する必要がある．[原論文のpermutation argument](https://eprint.iacr.org/2019/953)で具体的な構成を確認できる．
 
-<StudyDiagram id="12-2" />
+<StudyDiagram id="12-2" number="12-2" />
 
 ### 3.3 コピー制約が持つ一般的な意義
 
@@ -127,7 +127,7 @@ $$\prod_j\bigl(v_j+\beta\,\mathrm{id}_j+\gamma\bigr)=\prod_j\bigl(v_j+\beta\,\ma
 - **実装**:KZGコミットメント(第8回)を用いて，これらの多項式関係を評価点で効率的に検証可能にする．Groth16との共通点はペアリングを使うことであり，Groth16自体がKZGコミットメントを部品として使うわけではない．FRI等を使うPLONKishな派生構成もあるが，変更にはプロトコルと安全性の再検討が必要である．原論文のPLONKと，その派生方式のセットアップ・性能を区別する
 - **非対話化**:Fiat-Shamir変換(第9回)によって非対話化される．Groth16とは異なり，PLONKは対話型のIOPとしてまず設計され，その後Fiat-Shamirで非対話化するという，より第10回の見取り図に忠実な構成を取っている点も対比しておきたい
 
-<StudyDiagram id="12-3" />
+<StudyDiagram id="12-3" number="12-3" />
 
 ---
 

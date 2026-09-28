@@ -55,5 +55,5 @@ for session in [f'{n:02}' for n in range(1,16)]+['01-illustrated']:
         if locale=='' and session!='01-illustrated':
             totals=[a+len(b) for a,b in zip(totals,found)]
     assert ids[0]==ids[1], (session,'locale numbering mismatch')
-assert totals==[45,31], totals
+assert totals==[11,66], totals
 print(f'15 bilingual lessons: {totals[0]} figures and {totals[1]} tables per locale have unique numbered captions; illustrated Session 1 also checked.')
