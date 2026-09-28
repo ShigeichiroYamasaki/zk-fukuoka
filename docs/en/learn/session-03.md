@@ -212,6 +212,43 @@ A domain chosen for fast polynomial evaluation need not be the same set used to 
 
 First choose a degree bound $d$ and acceptable error $\varepsilon$, then select the field, sampling set, and number of independent tests. Finally check that the polynomial is fixed before sampling, sampling is uniform, and evaluations are authentic. With these points understood, vary the sets in Table 03-3 and calculate both the bound and the actual probability as an exercise.
 
+### 5.6 Measuring complexity: query count is not running time
+
+Let $h=f-g$ have $n$ variables and total degree at most $d\ge1$. Write $m=|S|>d$ and let $k$ be the number of independent tests. Each test samples $n$ coordinates and evaluates $h$ once; it does not enumerate the $m^n$ points of $S^n$.
+
+In the **field-operation model**, count each field addition or multiplication as one operation. If one evaluation costs $C_{\mathrm{eval}}$ operations, $k$ tests cost $O(kC_{\mathrm{eval}})$ field operations. The representation matters:
+
+- **A univariate coefficient list:** Horner's rule, $a_0+X(a_1+X(\cdots+Xa_d))$, evaluates a degree-$d$ polynomial in $O(d)$ field operations, giving $O(kd)$ for the tests. Direct coefficient comparison also takes $O(d)$ operations when the lists are already available; random testing is not automatically faster.
+- **An arithmetic circuit:** With $L$ addition, subtraction, and multiplication gates, evaluating every gate once costs $O(L)$ field operations, or $O(kL)$ for $k$ points. The benefit is avoiding expansion of a compact multivariate expression into a potentially enormous list of monomials.
+- **Oracle access to values:** There are $k$ queries. This does not include the cost of computing the values or authenticating values supplied by a prover. Polynomial commitments introduce additional costs that must be counted separately.
+
+For **bit complexity**, an element of $\mathbb{F}_q$ requires $\Theta(\log_2 q)$ bits. If $A(q)$ bounds the bit cost of a field operation, evaluation costs $O(kC_{\mathrm{eval}}A(q))$, plus sampling and point-generation costs. Enlarging the field can increase this cost even if the operation count is unchanged. For example, represent $\mathbb{F}_{p^t}$ modulo a fixed irreducible polynomial. Ordinary coefficient multiplication and reduction use $O(t^2)$ base-field operations per extension-field multiplication. This count excludes constructing the field or finding its defining irreducible polynomial.
+
+### 5.7 Trading randomness against error
+
+Assume the elements of $S$ can be generated efficiently. If $m=2^b$, sampling one coordinate uniformly uses exactly $b$ independent random bits, so $k$ tests in $n$ variables use $knb$ bits. For general $m$, generate a $\lceil\log_2 m\rceil$-bit integer and reject it if it is at least $m$. This uses an expected $O(\log m)$ bits per coordinate. Simply reducing a random integer modulo $m$ can introduce bias. If $S$ is supplied as an explicit list, reading and storing that list also has a cost.
+
+For target error $2^{-\lambda}$ and $m>d$, it suffices that
+
+$$\left(\frac{d}{m}\right)^k\le 2^{-\lambda},\qquad k\ge\left\lceil\frac{\lambda}{\log_2(m/d)}\right\rceil.$$
+
+Choose the smallest power-of-two set size with $m\ge2d$. Then $k=\lambda$ tests suffice, using $O(\lambda L)$ field operations for circuit evaluation and $O(\lambda n\log(d+1))$ random bits. Alternatively, one test suffices with $m\ge d2^\lambda$. If points are generated from indices, there is no need to store or enumerate this enormous set: randomness costs only $O(n(\log(d+1)+\lambda))$ bits. However, the field must contain enough distinct elements, and evaluation must take place in that field.
+
+For the quadratic example in Section 5.3, compare two ways to reach error at most $2^{-40}$:
+
+- Use 16 points in $\mathbb{F}_{101}$. Fourteen evaluations give the bound $2^{-42}$ and use $14\times4=56$ random bits in one variable.
+- Use $2^{41}$ points for a single evaluation. The bound is $2/2^{41}=2^{-40}$ and sampling uses 41 random bits. This set cannot fit in $\mathbb{F}_{101}$. Since $101^7>2^{41}$, for example, an injective mapping from indices into $\mathbb{F}_{101^7}$ supplies enough points, at the cost of extension-field arithmetic and element generation.
+
+The first approach evaluates repeatedly in a small field; the second evaluates once in a larger field. Saving 15 random bits does not by itself make the second faster. Compare evaluation count, bit cost per field operation, and field preparation together. These are error bounds for this test alone, not security guarantees for an entire proof system.
+
+### 5.8 Locating the algorithm in complexity theory
+
+For the decision problem “Is $h$ identically zero?”, a Yes instance is always accepted. Only a No instance can be accepted incorrectly, with probability bounded by, say, $1/2$. A **randomized polynomial-time decision algorithm** with this error direction defines **coRP**, a class contained in BPP. Reversing the question to “Is $h$ nonzero?” gives the RP direction. This classification assumes that field arithmetic, sampling, and the required field representation or construction can all be handled in polynomial time in the input length. For example, a sufficiently large field and an efficiently generated power-of-two sampling set avoid the variable running time of rejection sampling.
+
+Polynomial time is measured against the **input description length**, not just the polynomial's degree. A circuit with $L$ binary multiplication gates can reach degree $2^L$ through repeated squaring. But the point representation needed for $m\ge2d$ uses only $O(\log d)$ bits, which is $O(L)$ when $d\le2^L$. Evaluating the circuit directly over a suitable finite field avoids reading the expanded coefficient list. Conversely, a small query count alone does not imply polynomial running time for a black box without an efficient evaluation procedure.
+
+Schwartz–Zippel bounds the error. A complexity claim must also specify **the input representation, operations, randomness, and number of repetitions**. See Anup Rao's lecture notes in the references for arithmetic-circuit PIT.
+
 ---
 
 ## Recap and next session
@@ -231,6 +268,8 @@ In Session 4, we begin concrete arithmetization techniques: R1CS, QAP, and AIR, 
 - Schwartz, “[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html),” JACM, 1980. — bibliography and publisher link hosted by ACM SIGMOD
 - Zippel, “[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73),” EUROSAM, 1979. — Springer publication page
 - Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7 (the algorithmic context of polynomial identity testing). — publisher’s book information
+
+- Anup Rao, "[Lecture 15: Error reduction, Schwartz-Zippel, Polynomial identity testing](https://homes.cs.washington.edu/~anuprao/pubs/cse431sp24/lecture15.pdf)," CSE 431, 2024 — lecture notes on arithmetic-circuit PIT and randomized complexity.
 
 ## Suggested classroom questions
 
