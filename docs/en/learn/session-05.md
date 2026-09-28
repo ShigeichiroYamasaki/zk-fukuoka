@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 28, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 5 in the syllabus](./#session-5) · [Exercises](../exercises/)
 
@@ -50,6 +50,10 @@ Communication adds redundancy so that the original message can be recovered afte
 
 ## 2. Reed–Solomon codes
 
+::: tip Mathematical prerequisites
+Construct coefficient and evaluation fields in [Session 3: finite fields from irreducible polynomials](./session-03#extension-field-coding). For division, remainders, and roots, review [polynomial ring basics](./session-03#_3-1-definitions-and-basic-operations).
+:::
+
 ### 2.1 Definition
 
 Consider the encoding that maps every polynomial of degree less than $d$, from $\{f \in \mathbb{F}[X] : \deg f < d\}$, to its vector of values on an evaluation set $D = \{x_1, \dots, x_n\} \subseteq \mathbb{F}$, with $n > d$:
@@ -72,6 +76,35 @@ For minimum distance $\delta$, changing at most $\lfloor(\delta-1)/2\rfloor$ pos
 
 <StudyDiagram id="05-1" :en="true" number="05-1" />
 
+### 2.4 Parameters and distances in equations {#rs-parameters}
+
+Let $K=\mathbb F_q$ and $1\le d<n\le q$. Here $d$ is the **number of coefficients, or code dimension**, not the actual degree. Read a message $(a_0,\ldots,a_{d-1})\in K^d$ as $f(X)=\sum_{i=0}^{d-1}a_iX^i$ and evaluate at $n$ ordered, distinct points:
+
+$$\mathcal C=\operatorname{RS}_{K,D,d}=\{(f(x_1),\ldots,f(x_n)):\deg f<d\}\subseteq K^n.$$
+
+Evaluation is linear and, by the root bound with $n\ge d$, injective. Thus $|\mathcal C|=q^d$. The **rate** is $R=\log_q|\mathcal C|/n=d/n$, with $n-d$ redundant symbols. Message and codeword information amounts are $d\log_2q$ and $n\log_2q$ bits respectively; fixed-length implementations may require rounding or other encoding overhead.
+
+For words $u,v\in K^n$, define **Hamming distance** and **relative distance**:
+
+$$d_H(u,v)=|\{i:u_i\ne v_i\}|,\qquad \Delta(u,v)=d_H(u,v)/n.$$
+
+A changed symbol counts as one regardless of how many of its bits change. Our $\delta=n-d+1$ counts positions; relative minimum distance is $\delta/n$.
+
+Distinct $f,g$ differ by a nonzero polynomial of degree at most $d-1$, so they agree at at most $d-1$ evaluation points. Distance is at least $n-d+1$. Equality is attained by comparing zero with $h(X)=\prod_{j=1}^{d-1}(X-x_j)$, whose roots are exactly those $d-1$ domain points. For $d=1$, use the empty product 1. This proves the exact distance, not just a lower bound.
+
+For the Singleton bound, delete any $\delta-1$ coordinates. Distinct codewords remain distinct, leaving length $n-\delta+1$. Hence $q^d\le q^{n-\delta+1}$ and $\delta\le n-d+1$. RS attains this upper bound and is therefore MDS.
+
+### 2.5 Errors, erasures, and uniqueness
+
+If a received word $r$ is within $t$ errors of two codewords $c,c'$, the triangle inequality gives $d_H(c,c')\le2t$. Thus $2t<\delta$ ensures at most one candidate, yielding $t\le\lfloor(\delta-1)/2\rfloor$.
+
+An **erasure** has a known missing location, unlike an error whose location and value are unknown. Any $d$ surviving RS evaluations allow interpolation, so $n-d$ erasures are recoverable. With $t$ errors and $e$ erasures, the unique-decoding guarantee is
+
+$$2t+e<\delta\quad\Longleftrightarrow\quad 2t+e\le n-d.$$
+
+Uniqueness is a mathematical property; finding the answer efficiently is a separate algorithmic question. Section 5 gives a concrete decoding calculation.
+
+
 ---
 
 ## 3. The information-theoretic perspective: Shannon and Hamming bounds
@@ -90,6 +123,31 @@ A verifier cannot assume that a prover’s errors are independent random noise. 
 
 <StudyDiagram id="05-2" :en="true" />
 
+### 3.3 Deriving the Hamming bound from ball volume
+
+The number of words obtained by changing at most $t$ symbols of a length-$n$ word is
+
+$$V_q(n,t)=\sum_{i=0}^{t}\binom ni(q-1)^i.$$
+
+Choose $i$ positions and one of $q-1$ different values at each. If $2t<\delta$, the balls around codewords are disjoint and must fit within $q^n$ words:
+
+$$|\mathcal C|V_q(n,t)\le q^n,\qquad R\le1-\frac1n\log_q V_q(n,t).$$
+
+This is a necessary bound, not an achievability guarantee. For a $[7,3,5]_7$ RS code, $t=2$ gives $V_7(7,2)=1+7\cdot6+21\cdot36=799$ and $7^3\cdot799=274057\le7^7=823543$. Attaining Singleton does not imply attaining Hamming with equality.
+
+### 3.4 Reading Shannon capacity through entropy
+
+Specify the channel: a memoryless **$q$-ary symmetric channel** preserves its input with probability $1-\eta$ and otherwise selects uniformly from the other $q-1$ symbols. For $0\le\eta\le1-1/q$, capacity in $q$-ary symbols per channel use is
+
+$$C_q=1-h_q(\eta),\qquad h_q(\eta)=\eta\log_q(q-1)-\eta\log_q\eta-(1-\eta)\log_q(1-\eta),$$
+
+with $0\log0=0$. In bits it is $(1-h_q(\eta))\log_2q$: intuitively, one symbol's information minus uncertainty introduced by noise.
+
+For the binary symmetric channel, $h_2(\eta)=-\eta\log_2\eta-(1-\eta)\log_2(1-\eta)$. At $\eta=0.1$, capacity is approximately 0.531 bits per use. Below capacity, codes exist with decoding error tending to zero as blocklength grows. This does not promise zero error at finite length, automatic capacity achievement by RS, or an efficient decoder.
+
+Entropy also appears in Hamming: for fixed $q$ and $t/n\to\tau$ with $0<\tau<1-1/q$, $\frac1n\log_qV_q(n,t)\to h_q(\tau)$. But Hamming bounds correction of **every error pattern of weight at most $t$**, whereas Shannon measures error under a **specified probabilistic channel**. Similar formulas describe different guarantees.
+
+
 ---
 
 ## 4. List decoding: An advanced perspective
@@ -106,6 +164,19 @@ For Reed–Solomon codes, algorithms such as Guruswami–Sudan support list deco
 
 <StudyDiagram id="05-3" :en="true" />
 
+### 4.3 Candidate lists and the Johnson radius
+
+Define the radius-$t$ list for a received word $r$ by
+
+$$\mathcal L_t(r)=\{f\in K[X]:\deg f<d,\ d_H(\operatorname{ev}_D(f),r)\le t\}.$$
+
+Within the unique-decoding radius it has at most one candidate. Beyond that, we need both inclusion of the transmitted candidate and control of list size.
+
+A Johnson-type radius for RS is $J=n-\sqrt{n(d-1)}$. Guruswami–Sudan decoding handles a range strictly inside this radius. Boundary and runtime details depend on parameters, so use $t<J$ here and retain a gap from the boundary in asymptotic claims. Its relative version is $1-\sqrt{(d-1)/n}$, approaching $1-\sqrt R$ for fixed rate $R=d/n$ as $n$ grows.
+
+For $n=7,d=3$, unique decoding guarantees two errors, while $J=7-\sqrt{14}\approx3.258$ includes a list-decoding radius of three errors. Coding information alone need not identify which candidate was sent. Nor can this radius be substituted directly for FRI soundness error: folding and query analysis are additional requirements.
+
+
 ---
 
 ## 5. Exercises: Minimum distance and parameter design
@@ -115,6 +186,31 @@ Use the formulas to investigate what changes when evaluation points are added. B
 - Given concrete values of $n$ and $d$, calculate minimum distance and error-correcting capability.
 - Discuss how choosing smaller or larger evaluation sets $D$ within the finite field changes the trade-off between the code rate $d/n$ and error-correcting capability.
 - Ask why making $n$ too large worsens efficiency, particularly the prover's computational cost, as preparation for the design choices in FRI.
+
+### 5.1 Recovering a polynomial from two corrupted symbols
+
+Take $K=\mathbb F_7$, $D=(0,1,2,3,4,5,6)$, and $d=3$. Message $(1,2,1)$ represents $f(X)=1+2X+X^2$, whose codeword is
+
+$$c=(1,4,2,2,4,1,0).$$
+
+Rate is $3/7$, minimum distance is 5, and we can uniquely correct two errors or recover four erasures. Suppose values at points 1 and 4 are corrupted, producing $r=(1,5,2,2,6,1,0)$. Their locations are unknown to the receiver.
+
+The Berlekamp–Welch approach solves simultaneously for an error-locator polynomial $E$ and $Q=Ef$. Assume at most two errors, set $E=X^2+e_1X+e_0$, and require $\deg Q\le4$. At all evaluation points impose
+
+$$Q(x_i)=r_iE(x_i).$$
+
+The two unknown coefficients of $E$ and five of $Q$ give seven unknowns in seven **linear equations**, since $r_i$ are known. For this example the solution is
+
+$$E=(X-1)(X-4)=X^2+2X+4,\qquad Q=X^4+4X^3+2X^2+3X+4.$$
+
+At corrupted points both $E$ and $Q$ vanish; elsewhere $r_i=f(x_i)$. Dividing $Q$ by $E$ leaves zero remainder and recovers $f=X^2+2X+1$. Finally re-evaluate and check disagreement with the received word in at most two positions. This uses both field division on coefficients and polynomial division with remainder.
+
+### 5.2 Complexity and the distinction from FRI testing
+
+Straightforward Horner evaluation at every point encodes in $O(nd)$ field operations. Solving the generalized decoding equations by ordinary elimination gives an upper bound of $O(n^3)$ field operations when $d+2t\le n$; this is not a claim of optimal decoding complexity. Field-operation bit costs are additional. FFT/NTT acceleration requires suitable evaluation-domain structure.
+
+FRI aims to test proximity to a low-degree code using few queries, rather than read the entire table and decode the message. Define $\Delta(r,\mathcal C)=\min_{c\in\mathcal C}d_H(r,c)/n$. For a particular fixed codeword $c$ differing in $\rho n$ positions, $s$ independent uniform position tests all agree with probability $(1-\rho)^s$. But **the nearest codeword is unknown, so this comparison is not automatically available**. The additional machinery is the subject of the next session.
+
 
 ---
 
@@ -136,6 +232,9 @@ In Session 6, we will study FRI as a concrete technique for low-degree testing. 
 - MacWilliams and Sloane, [*The Theory of Error-Correcting Codes*](https://neilsloane.com/doc/ms77.html) — a standard coding-theory textbook; author's book information and errata.
 - Guruswami and Sudan, [“Improved Decoding of Reed-Solomon and Algebraic-Geometric Codes,” 1999](https://www.cs.cmu.edu/~venkatg/pubs/papers.html) — foundations of RS list decoding; the author's publication list links the full version in PostScript format. [Public PDF of the conference version](https://people.csail.mit.edu/madhu/papers/1998/gs.pdf).
 - Shannon, [“A Mathematical Theory of Communication,” 1948](https://www.cs.yale.edu/homes/yry/readings/general/shannon1948.pdf) — the original paper underlying the Shannon limit; public PDF hosted by Yale University.
+
+- Venkatesan Guruswami, [Introduction to Coding Theory — course notes](https://www.cs.cmu.edu/~venkatg/teaching/codingtheory/) — distance, bounds, and RS decoding.
+- [RS list decoding lecture notes](https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/RS-list-decoding.pdf) — Johnson radius and list decoding.
 
 ## Suggested discussion questions
 

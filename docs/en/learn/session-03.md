@@ -62,6 +62,32 @@ An irreducible polynomial over $\mathbb{F}_p$ defines an extension field $\mathb
 
 The nonzero elements $\mathbb{F}_p^*$ form a cyclic group of order $p-1$. Powers of a generator give structured evaluation points. A desired power-of-two subgroup requires its order to divide $p-1$. This condition matters when using NTTs to accelerate evaluation and interpolation.
 
+### 2.4 Building finite-field symbols from an irreducible polynomial {#extension-field-coding}
+
+Session 5 uses a finite-field element as one data **symbol**. The relevant construction is a finite extension obtained modulo an irreducible polynomial, not the rational-function field $K(X)$.
+
+Over $\mathbb F_2$, choose $m(T)=T^3+T+1$. Both 0 and 1 give value 1, so it has no root. A reducible cubic has a linear factor; hence $m$ is irreducible. Set
+
+$$K=\mathbb F_2[T]/(T^3+T+1)=\mathbb F_8,\qquad \alpha=[T].$$
+
+Every element has a unique representation $a_0+a_1\alpha+a_2\alpha^2$ with $a_i\in\{0,1\}$. There are $2^3=8$ elements, so a symbol uses three bits. Reduce higher powers using $\alpha^3=\alpha+1$.
+
+- Addition is coefficientwise modulo 2, or bitwise XOR: $(1+\alpha)+(\alpha+\alpha^2)=1+\alpha^2$.
+- Multiply by expansion followed by reduction modulo $m$: $\alpha^2(\alpha+1)=1+\alpha+\alpha^2$.
+- Compute inverses with extended Euclid. For nonzero $a(T)$ of degree less than 3, irreducibility gives $\gcd(a,m)=1$, hence $ua+vm=1$. The residue class $[u]$ is the inverse of $[a]$. For example, $\alpha(\alpha^2+1)=1$.
+
+This is not the integer ring $\mathbb Z/8\mathbb Z$, where $2\cdot4=0$ and 2 has no inverse. The characteristic of $\mathbb F_8$ is 2, so $1+1=0$.
+
+Now form a polynomial $f(X)=b_0+b_1X+\cdots$ in a **separate indeterminate $X$**, with coefficients and evaluation points in $K$. It belongs to $K[X]$. Do not reduce powers of $X$ modulo $T^3+T+1$. After substituting $X=\alpha$, however, value computations do use $\alpha^3=\alpha+1$.
+
+For $f(X)=1+X$ and the ordered domain $D=(0,1,\alpha,\alpha+1)$,
+
+$$(f(0),f(1),f(\alpha),f(\alpha+1))=(1,0,1+\alpha,\alpha).$$
+
+Two coefficients produce four symbols. Any two distinct points allow interpolation of a degree-at-most-one polynomial because their difference is nonzero and therefore invertible. For example, the difference between $\alpha$ and $\alpha+1$ is 1. This is a codeword of a $[4,2,3]_8$ RS code; [Session 5](./session-05#rs-parameters) explains the notation and distance.
+
+In general, an irreducible polynomial of degree $s$ constructs $q=p^s$ field elements. Ordinary RS evaluation uses $n\le q$ distinct points, or $n\le q-1$ if only nonzero elements are used. Field size and the degree bound of the polynomial being encoded are separate parameters.
+
 <StudyDiagram id="03-1" :en="true" />
 
 ---
