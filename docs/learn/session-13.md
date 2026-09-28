@@ -119,6 +119,69 @@ FRIの段階が少なければ，証明全体も同じ割合で小さくなる�
 
 固定した安全性・符号パラメータのもとでは，代表的な構成はトレース長に対して多重対数的な証明サイズ・検証コストを目指す．具体的な値は，問い合わせ回数，ハッシュ長，折り畳み方式，集約・圧縮の有無等に依存する．公開入力の読み取り等のコストも別途考慮する．KB単位の数値を比較する際は，回路・入力・実装・安全性パラメータを明示する．
 
+### 3.3 概算値を組み立てる簡易モデル
+
+実装と安全性条件を指定せずに「STARKの証明は何KB」と一つの数値で答えることはできない．ここでは，どの項目が通信量と検証作業に効くかを見るための，単純化した学習用モデルを使う．トレース長を $n$，評価領域の拡大率を $b$，問い合わせ数を $q$，Merkleハッシュ長を $H$ バイト，基礎体要素の幅を $B$ バイト，拡大体要素の幅を $E$ バイト，トレース幅を $w$，合成多項式の列数を $c$ とする．$N=nb$ を拡大評価領域の大きさ，終端表の大きさを $T$ とすれば，二分折り畳み段数は $r=\log_2(N/T)$ である．
+
+概算する通信量は，問い合わせごとの評価値，独立に数えたMerkle認証経路，終端表，およびルートの合計である:
+
+$$S \approx q(2wB+cE+2rE)+qH\left(3\log_2N+\sum_{j=1}^{r}(\log_2N-j)\right)+TE+(3+r)H.$$
+
+第2項は，表ごとのMerkle兄弟ハッシュ数にハッシュ長を掛けた通信量である．このモデルでは経路の共通部分を圧縮せず，実プロトコル固有の開示，メタデータ，ゼロ知識マスキング，経路圧縮なども含めない．したがって，これは特定実装の予測器ではない．安全性を保証する問い合わせ数を導くものでもない．FRIの通信分析と，個別プロトコルの最適化を区別する考え方については，[非対話型FRIの具体的安全性分析](https://eprint.iacr.org/2024/1161)も参照．
+
+例として $b=8,w=8,c=1,B=8,E=16,H=32,T=256,q=30$ と置いたモデル値を示す．KiBは1024バイトで計算した．Merkleハッシュ数と折り畳み検査数は**検証時間ではなく作業量の数え上げ**であり，実時間にはCPU，ハッシュ実装，並列化等が影響する．
+
+<div class="captioned-table" id="table-13-4" role="group" aria-labelledby="table-caption-13-4">
+
+<p class="table-caption" id="table-caption-13-4"><strong>表 13-4：単純化したSTARK通信・検証作業モデルの例</strong></p>
+
+| トレース長 $n$ | FRI段数 $r$ | 証明通信量 (KiB) | 認証用ハッシュ数 | 折り畳み検査数 |
+| ---: | ---: | ---: | ---: | ---: |
+| $2^{10}$ | 5 | 96.6 | 2,670 | 150 |
+| $2^{14}$ | 9 | 166.1 | 4,770 | 270 |
+| $2^{16}$ | 11 | 206.5 | 6,000 | 330 |
+| $2^{18}$ | 13 | 250.6 | 7,350 | 390 |
+| $2^{24}$ | 19 | 405.5 | 12,120 | 570 |
+
+</div>
+
+問い合わせ回数などを変えた全データは[概算モデルのCSV](/data/stark-cost/model.csv)で確認できる．算定条件・式・スクリプトは[モデルの説明](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/data/stark-cost/README.md)と[算定スクリプト](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/scripts/stark-cost-model.py)に掲載．
+
+<figure id="figure-13-4" aria-labelledby="caption-13-4">
+<figcaption id="caption-13-4"><strong>図 13-4：単純化したモデルにおける，トレース長・問い合わせ数と証明通信量</strong></figcaption>
+<img src="/figures/stark-size-model.svg" alt="問い合わせ回数別に示した，トレース長と単純化モデルの証明通信量．これは実測値ではない．">
+</figure>
+
+<figure id="figure-13-5" aria-labelledby="caption-13-5">
+<figcaption id="caption-13-5"><strong>図 13-5：問い合わせ30回でのMerkle認証ハッシュ数とFRI折り畳み検査数</strong></figcaption>
+<img src="/figures/stark-verifier-model.svg" alt="問い合わせ30回のモデルについて，トレース長に対するMerkle認証ハッシュ数とFRI折り畳み検査数を示す．時間ではなく作業量の数え上げ．">
+</figure>
+
+### 3.4 公開された実装ベンチマークの例
+
+モデル値とは別に，実装文書が公開している計測例を参照する．次のデータはWinterfellのREADMEに掲載されたLamport+署名検証の過去の例で，22列のトレース，資料記載の123-bit security，Intel Core i9-9980KH 2.4GHz・32GB・8コア環境である．この表はZK Fukuokaで再計測したものではない．READMEには測定時期や全パラメータ，時間計測境界の完全な記録がなく，特定のワークロード・歴史的な参考値として読む．現在の実装間の順位や，一般の回路に対する見積もりには使えない．
+
+<div class="captioned-table" id="table-13-5" role="group" aria-labelledby="table-caption-13-5">
+
+<p class="table-caption" id="table-caption-13-5"><strong>表 13-5：Winterfellが公開するLamport+検証の歴史的な計測例</strong></p>
+
+| 署名数 | 証明サイズ (KB，原資料表記) | 検証時間 (ms) |
+| ---: | ---: | ---: |
+| 64 | 110 | 4.4 |
+| 128 | 121 | 4.4 |
+| 256 | 132 | 4.5 |
+| 512 | 139 | 4.9 |
+| 1,024 | 152 | 5.9 |
+
+</div>
+
+<figure id="figure-13-6" aria-labelledby="caption-13-6">
+<figcaption id="caption-13-6"><strong>図 13-6：Winterfell公開資料の過去のLamport+検証例</strong></figcaption>
+<img src="/figures/stark-winterfell-published.svg" alt="Winterfell公開資料の過去のLamport+検証例について，署名数と証明サイズ・検証時間を示す．">
+</figure>
+
+出典は[Winterfell READMEのPerformance節（固定したGitHubコミット）](https://github.com/facebook/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance)．データを[CSV](/data/stark-cost/winterfell-lamport.csv)でも公開する．証明サイズのKB表記は原資料のままとし，KiBへ読み替えていない．この例はモデルの前提を実測で裏付けるものではなく，特定の計算・実装・環境で証明サイズと検証時間を一緒に報告する形式の例である．
+
 ---
 
 ## 4. 透明性とその他の性質のトレードオフ

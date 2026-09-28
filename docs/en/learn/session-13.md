@@ -119,6 +119,69 @@ Does fewer FRI stages mean proportionally smaller proofs? Besides values opened 
 
 With fixed security and coding parameters, representative constructions target polylogarithmic proof size and verification cost in trace length. Concrete costs depend on query counts, hash lengths, folding choices, aggregation, and compression. Public-input reading and processing must also be accounted for. Size comparisons in kilobytes need specified circuits, inputs, implementations, and security parameters.
 
+### 3.3 A simple model for constructing an estimate
+
+There is no single answer to “How many kilobytes is a STARK proof?” without specifying the implementation and security conditions. The following deliberately simplified teaching model helps identify which terms affect communication and verifier work. Let $n$ be trace length, $b$ the evaluation-domain blowup, $q$ the number of queries, $H$ the Merkle digest width in bytes, $B$ and $E$ the base- and extension-field element widths, $w$ the trace width, and $c$ the number of composition columns. Set $N=nb$ and let $T$ be the terminal-table size. Binary folding takes $r=\log_2(N/T)$ rounds.
+
+The estimated payload adds queried field elements, independently counted Merkle authentication paths, the terminal table, and roots:
+
+$$S \approx q(2wB+cE+2rE)+qH\left(3\log_2N+\sum_{j=1}^{r}(\log_2N-j)\right)+TE+(3+r)H.$$
+
+The second term is the number of Merkle sibling digests across the tables, multiplied by digest width. This model does not compress shared path segments and omits protocol-specific openings, metadata, zero-knowledge masking, and path-compression optimizations. It is therefore not a predictor for a particular implementation, nor does it derive a security-sound query count. For FRI communication analysis and the distinction from protocol-specific optimizations, see [concrete security analysis of non-interactive FRI](https://eprint.iacr.org/2024/1161).
+
+For an example, set $b=8,w=8,c=1,B=8,E=16,H=32,T=256,q=30$. KiB means 1024 bytes. Merkle digest counts and folding checks below are **operation counts, not verifier time**; elapsed time depends on the CPU, hash implementation, parallelization, and other factors.
+
+<div class="captioned-table" id="table-13-4" role="group" aria-labelledby="table-caption-13-4">
+
+<p class="table-caption" id="table-caption-13-4"><strong>Table 13-4: Example from a simplified STARK payload and verifier-work model</strong></p>
+
+| Trace length $n$ | FRI rounds $r$ | Proof payload (KiB) | Authentication digests | Fold checks |
+| ---: | ---: | ---: | ---: | ---: |
+| $2^{10}$ | 5 | 96.6 | 2,670 | 150 |
+| $2^{14}$ | 9 | 166.1 | 4,770 | 270 |
+| $2^{16}$ | 11 | 206.5 | 6,000 | 330 |
+| $2^{18}$ | 13 | 250.6 | 7,350 | 390 |
+| $2^{24}$ | 19 | 405.5 | 12,120 | 570 |
+
+</div>
+
+The [model CSV](/data/stark-cost/model.csv) contains additional query counts. The assumptions, formula, and code are in the [model notes](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/data/stark-cost/README.md) and [accounting script](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/scripts/stark-cost-model.py).
+
+<figure id="figure-13-4" aria-labelledby="caption-13-4">
+<figcaption id="caption-13-4"><strong>Figure 13-4: Trace length, query count, and proof payload in a simplified model</strong></figcaption>
+<img src="/figures/stark-size-model.svg" alt="Simplified model of proof payload versus trace length, with separate lines for query counts; these are not measurements.">
+</figure>
+
+<figure id="figure-13-5" aria-labelledby="caption-13-5">
+<figcaption id="caption-13-5"><strong>Figure 13-5: Merkle authentication digests and FRI fold checks for 30 queries</strong></figcaption>
+<img src="/figures/stark-verifier-model.svg" alt="For 30 queries, the model's Merkle authentication digest counts and FRI fold checks versus trace length; these are work counts, not time.">
+</figure>
+
+### 3.4 Example of a published implementation benchmark
+
+Separately from the model, consider a benchmark published in Winterfell's README. It reports historical Lamport+ signature-verification results for a 22-column trace, source-labeled 123-bit security, on an Intel Core i9-9980KH at 2.4 GHz with 32 GB RAM and eight cores. ZK Fukuoka did not rerun these measurements. The README does not fully document the measurement date, all parameters, or timing boundaries, so treat these as historical reference values for a specific workload, not a current ranking or an estimate for arbitrary circuits.
+
+<div class="captioned-table" id="table-13-5" role="group" aria-labelledby="table-caption-13-5">
+
+<p class="table-caption" id="table-caption-13-5"><strong>Table 13-5: Historical Lamport+ verification benchmark published by Winterfell</strong></p>
+
+| Signatures | Proof size (KB, as reported) | Verification time (ms) |
+| ---: | ---: | ---: |
+| 64 | 110 | 4.4 |
+| 128 | 121 | 4.4 |
+| 256 | 132 | 4.5 |
+| 512 | 139 | 4.9 |
+| 1,024 | 152 | 5.9 |
+
+</div>
+
+<figure id="figure-13-6" aria-labelledby="caption-13-6">
+<figcaption id="caption-13-6"><strong>Figure 13-6: Historical Winterfell Lamport+ verification example</strong></figcaption>
+<img src="/figures/stark-winterfell-published.svg" alt="Published historical Winterfell Lamport+ example: signature count, proof size, and verification time.">
+</figure>
+
+Source: [Winterfell README Performance section at a pinned GitHub commit](https://github.com/facebook/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance). The [CSV](/data/stark-cost/winterfell-lamport.csv) preserves the data. KB is retained as reported and not converted to KiB. This benchmark does not empirically validate the model assumptions; it illustrates how proof size and verifier time can be reported together for a specified computation, implementation, and environment.
+
 ---
 
 ## 4. Tradeoffs with transparency
