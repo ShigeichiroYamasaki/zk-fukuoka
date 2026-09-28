@@ -22,87 +22,13 @@ const t = (ja, english) => (en.value ? english : ja);
 </script>
 <template>
   <main class="zk-home">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">
-          <span class="status-dot"></span> FUKUOKA, JAPAN
-          <span class="eyebrow-divider">/</span>
-          {{ t("設立準備中", "IN FORMATION") }}
-        </div>
-        <h1 v-if="!en">
-          ZK Fukuoka<br /><span class="hero-subtitle"
-            >ゼロ知識証明技術者になろう</span
-          >
-        </h1>
-        <h1 v-else>
-          ZK Fukuoka<br /><span class="hero-subtitle"
-            >Become a zero-knowledge engineer.</span
-          >
-        </h1>
-        <p class="hero-description">
-          {{
-            t(
-              "福岡から、ゼロ知識証明のつくり手へ。数学をひもとき、コードを書き、仲間と試す。ZK Fukuoka は、次の一歩をいっしょにつくる技術者コミュニティです。",
-              "From Fukuoka to the frontiers of zero-knowledge. Explore the math, write the code, and experiment with peers. A community for the next generation of ZK builders.",
-            )
-          }}
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#lesson-materials"
-            >{{ t("授業資料を見る", "Browse lecture materials") }}
-            <span>↗</span></a
-          ><a class="text-link" :href="link('learn/session-01.html')"
-            >{{ t("第1回の資料を読む", "Read Session 1") }} <span>→</span></a
-          >
-        </div>
-        <div class="hero-note">
-          <span>⌘</span>
-          {{
-            t(
-              "好奇心を持って、手を動かそう。",
-              "Bring your curiosity. Make something real.",
-            )
-          }}
-        </div>
-      </div>
-      <div
-        class="proof-art"
-        role="img"
-        :aria-label="
-          t(
-            '福岡の街を背景に、秘密を明かさず証明するイメージ図',
-            'An illustration of proving a claim without revealing a secret, above the Fukuoka skyline',
-          )
-        "
-      >
-        <div class="art-top">
-          <span>PROOF OF CURIOSITY</span><span>01 / ZK</span>
-        </div>
-        <div class="orbit orbit-one"></div>
-        <div class="orbit orbit-two"></div>
-        <span class="float-tag tag-one"
-          >{{ t("秘密は、秘密のまま。", "Your secret stays yours.")
-          }}<br /><small>Keep the secret. Share the proof.</small></span
-        >
-        <div class="proof-cube">
-          <span class="cube-bracket">[</span
-          ><span class="cube-zk">ZK<span class="cube-star">✳</span></span
-          ><span class="cube-bracket">]</span>
-        </div>
-        <div class="proof-chip">
-          <span>✓</span> PROOF VERIFIED <small>CONCEPT</small>
-        </div>
-        <svg class="skyline" viewBox="0 0 520 145" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-width="1.4">
-            <path
-              d="M0 127h520M25 127V90h34v37m11 0V71h44v56m12 0V96h28v31m14 0V77h23v50m14 0V55h39v72m19 0V83h33v44m79 0V94h39v33m10 0V67h37v60m14 0V85h33v42M322 127l10-97 10 97M327 76h10m-7-29h5m-3-17V7m-9 86h18m-21 19h24M80 83h6m10 0h6m-22 13h6m10 0h6m115-30h6m10 0h6m-22 16h6m10 0h6M424 80h6m10 0h6m-22 15h6m10 0h6"
-            />
-            <path d="M150 127q30-22 60 0m238 0q29-35 59 0" />
-          </g>
-        </svg>
-        <div class="art-bottom">
-          <span>33.5902° N · 130.4017° E</span><span>HELLO, FUKUOKA ↗</span>
-        </div>
+    <section class="share-hero">
+      <h1 class="sr-only">{{ t('ZK Fukuoka ゼロ知識証明技術者になろう', 'ZK Fukuoka — Become a zero-knowledge engineer.') }}</h1>
+      <img class="share-hero-image" :src="withBase('/social/zk-fukuoka-' + (en ? 'en' : 'ja') + '.png')" width="1200" height="630" fetchpriority="high" :alt="t('ZK Fukuoka．ゼロ知識証明技術者になろう．福岡で数学を学び，コードを書き，仲間とつくる．全15回の授業資料・演習・ZK rollup・ZKML．', 'ZK Fukuoka. Become a zero-knowledge engineer. Learn the math, write the code, and build together in Fukuoka. 15 lectures, exercises, ZK rollup and ZKML.')" />
+      <div class="hero-actions share-hero-actions">
+        <a class="button primary" href="#lesson-materials">{{ t('授業資料を見る', 'Browse lecture materials') }} ↗</a>
+        <a class="text-link" :href="link('learn/session-01.html')">{{ t('第1回の資料を読む', 'Read Session 1') }} →</a>
+        <a class="text-link share-download" :href="withBase('/social/zk-fukuoka-' + (en ? 'en' : 'ja') + '.png')" download>{{ t('案内用画像を保存', 'Download share image') }} ↓</a>
       </div>
     </section>
     <div class="manifesto-strip">

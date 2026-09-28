@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+ <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#6a92a4" stroke-opacity=".12"/></pattern></defs>
+ <rect width="1200" height="630" fill="#101c30"/><rect x="760" width="440" height="630" fill="url(#grid)"/>
+ <circle cx="966" cy="290" r="162" fill="none" stroke="#7ce6d0" stroke-opacity=".28"/>
+ <ellipse cx="966" cy="290" rx="202" ry="90" transform="rotate(-32 966 290)" fill="none" stroke="#c6f56c" stroke-opacity=".45"/>
+ <g font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, sans-serif">
+ <circle cx="69" cy="73" r="6" fill="#c6f56c"/><text x="89" y="80" font-size="19" letter-spacing="3" fill="#c6f56c">FUKUOKA, JAPAN / ZK COMMUNITY</text>
+ <text x="62" y="213" font-size="96" font-weight="800" letter-spacing="-3" fill="#ffffff">ZK Fukuoka</text>
+ <text x="66" y="309" font-size="52" font-weight="700" fill="#c6f56c">ゼロ知識証明</text>
+ <text x="66" y="383" font-size="52" font-weight="700" fill="#c6f56c">技術者になろう</text>
+ <text x="68" y="456" font-size="22" fill="#d4e2ef">数学を学び，コードを書き，仲間とつくる．</text>
+ <text x="966" y="326" text-anchor="middle" font-size="96" font-weight="800" fill="#7ce6d0">[ ZK ]</text>
+ <text x="836" y="396" font-size="15" letter-spacing="2" fill="#d4e2ef">KEEP THE SECRET.</text><text x="836" y="420" font-size="15" letter-spacing="2" fill="#d4e2ef">SHARE THE PROOF.</text>
+ <path d="M785 511H1142M807 511V474H840V511M855 511V452H891V511M908 511V472H936V511M974 511L988 435L1002 511M988 435V411M1021 511V461H1057V511M1070 511V478H1100V511M1110 511V455H1142V511" fill="none" stroke="#7ce6d0" stroke-width="2" opacity=".6"/>
+ <path d="M64 535H1136" stroke="#496071"/>
+ <text x="68" y="576" font-size="18" fill="#e8eff7">全15回の授業資料  /  演習  /  ZK rollup・ZKML</text>
+ <text x="68" y="604" font-size="15" fill="#9cb2c7">shigeichiroyamasaki.github.io/zk-fukuoka/</text>
+ </g></svg>
