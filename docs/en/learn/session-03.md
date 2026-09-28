@@ -74,6 +74,48 @@ $\mathbb{F}_p[X]$ is the ring of univariate polynomials with finite-field coeffi
 
 $$f(X) = q(X) g(X) + r(X), \qquad \deg r < \deg g.$$
 
+#### The coefficient field and the polynomial ring
+
+Write $K$ for the coefficient field, either a prime field $\mathbb F_p$ or an extension $\mathbb F_{p^k}$. The ring $K[X]$ consists of finite expressions
+
+$$f(X)=a_0+a_1X+\cdots+a_dX^d,\qquad a_i\in K.$$
+
+Here $X$ is an **indeterminate**, not yet assigned a value and not the private input itself. Equality means equality of every coefficient. Add matching coefficients; multiply by distributing and collecting terms of equal degree. For example, in $\mathbb F_7[X]$,
+
+$$(X+3)(X+5)=X^2+8X+15=X^2+X+1.$$
+
+Reduce coefficients modulo 7, not powers of $X$. The highest nonzero coefficient determines the degree; a nonzero constant has degree zero. Treat the zero polynomial separately, or use the convention $\deg0=-\infty$.
+
+A **ring** supports addition, subtraction, and multiplication without requiring every nonzero element to have an inverse. Nonzero constants from $K$ remain invertible in $K[X]$, but $1/X$ is not a polynomial. For nonzero polynomials,
+
+$$\deg(fg)=\deg f+\deg g.$$
+
+Thus a positive-degree polynomial cannot multiply another polynomial to give 1. Products of nonzero polynomials are also nonzero: the ring has **no zero divisors**.
+
+#### Distinguishing an extension field built from polynomials
+
+Section 2.2 constructs an extension using a degree-$k$ irreducible polynomial $m(T)$:
+
+$$K=\mathbb F_p[T]/(m(T)).$$
+
+This quotient identifies expressions with the same remainder modulo $m(T)$; representatives have degree less than $k$. Irreducibility makes the quotient a field, so every nonzero element is invertible. In $\mathbb F_2[T]/(T^2+T+1)$, write $\alpha=[T]$. Then $\alpha^2=\alpha+1$ and $\alpha(\alpha+1)=1$.
+
+Polynomials to be tested belong to **$K[X]$ with a separate indeterminate $X$**. For $\alpha X^2+X+1$, use $\alpha^2=\alpha+1$ in coefficient arithmetic, but never replace $X^2$ with $X+1$. Reducing modulo $m(T)$ to construct coefficients and handling polynomials in $X$ serve different purposes.
+
+#### Division with remainder does not require a polynomial inverse
+
+For $g\ne0$, there are unique $q,r\in K[X]$ with
+
+$$f=qg+r,\qquad r=0\ \text{or}\ \deg r<\deg g.$$
+
+Cancel the leading term by dividing leading coefficients in the field and subtracting the resulting multiple of $g$. Each step lowers the remaining degree, so the procedure terminates. The field property supplies **coefficient division**, not an inverse of $g$ in the polynomial ring.
+
+Exactly when the remainder is zero, write $g\mid f$: there exists a polynomial $q$ with $f=qg$. For example, in $\mathbb F_7[X]$,
+
+$$X^2+1=(X-1)(X+1)+2.$$
+
+The quotient is $X+1$ and the remainder is 2, so divisibility fails. This differs from merely writing the fraction $(X^2+1)/(X-1)$.
+
 ### 3.2 The basic theorem on the number of roots
 
 The following fundamental fact holds for polynomials over a field:
@@ -101,6 +143,35 @@ At each prescribed point exactly one basis is one. Toggle the weighted bases to 
 Now read the same $X^2+1$ over $\mathbb{F}_7$: for example, $f(3)=10\equiv3\pmod7$. Coordinates no longer describe the real curve.
 
 <StudyDiagram id="03-2" :en="true" />
+
+### 3.4 Roots, vanishing polynomials, and QAP divisibility {#qap-polynomial-prerequisites}
+
+**Translate roots into divisibility** to connect to QAP. Division of $f$ by $X-a$ leaves a constant remainder $r$. Substituting $X=a$ gives $r=f(a)$, hence the factor theorem:
+
+$$f(a)=0\quad\Longleftrightarrow\quad (X-a)\mid f(X).$$
+
+For distinct $a_1,\ldots,a_m$, the factors $X-a_j$ are pairwise coprime: no nonconstant factor is shared. Vanishing at every point is therefore equivalent to divisibility by their product:
+
+$$D=\{a_1,\ldots,a_m\},\qquad Z_D(X)=\prod_{j=1}^{m}(X-a_j)$$
+
+$$\forall a\in D:\ F(a)=0\quad\Longleftrightarrow\quad Z_D\mid F\quad\Longleftrightarrow\quad \exists H\in K[X]:F=HZ_D.$$
+
+Call $Z_D$ the **vanishing polynomial**. Distinctness matters: listing point 1 twice does not make $F(1)=0$ imply $(X-1)^2\mid F$. A domain of $m$ distinct points also requires at least $m$ elements in the coefficient field.
+
+For $K=\mathbb F_7$ and $D=\{1,2\}$,
+
+$$Z_D=(X-1)(X-2)=X^2+4X+2$$
+
+$$F=X^3+6=(X+3)(X^2+4X+2)=(X+3)Z_D.$$
+
+Thus $F(1)=F(2)=0$, the quotient is $H=X+3$, and the remainder is zero. In contrast, $G=F+1=X^3$ satisfies $G=(X+3)Z_D+1$: its remainder is 1 and $G(1)=G(2)=1$. Satisfying conditions at every point and having zero remainder express the same information.
+
+In Session 4, constraint row $j$ corresponds to $a_j$, and $A,B,C$ incorporate the assignment. With $F=AB-C$, row conditions $A(a_j)B(a_j)=C(a_j)$ are exactly $F(a_j)=0$. Their combined form is $AB-C=HZ_D$. **The requirement is the existence of a polynomial $H$.** If rational functions in $K(X)$ were allowed, one could always write $H=F/Z_D$ for nonzero $Z_D$, which does not distinguish satisfying assignments.
+
+Two distinctions matter. First, $F\equiv0\pmod{Z_D}$ means zero remainder, not that $F$ is the zero polynomial; $F=X^3+6$ above is nonzero. For $m\ge2$, $Z_D$ factors into linear terms and $K[X]/(Z_D)$ is not a field. This quotient serves a different purpose from constructing a coefficient field using an irreducible polynomial. Second, control degrees. With ordinary interpolation, $\deg A,\deg B,\deg C<m$ and $m\ge2$. A nonzero $F$ has degree at most $2m-2$, so if divisible, its quotient satisfies $\deg H\le m-2$. When $F=0$, take $H=0$. These bounds apply to this interpolation form; modifications such as blinding require revised bounds.
+
+A later random-point test checks whether $F-HZ_D$ is zero for fixed, degree-bounded $F,H$. It must not allow the quotient value to be chosen after seeing the point. Reuse this correspondence in [Session 4's QAP construction](./session-04#_4-1-from-r1cs-to-qap) and the [interpolation and divisibility guide](./terms/polynomials).
+
 
 ---
 
@@ -270,6 +341,8 @@ In Session 4, we begin concrete arithmetization techniques: R1CS, QAP, and AIR, 
 - Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7 (the algorithmic context of polynomial identity testing). — publisher’s book information
 
 - Anup Rao, "[Lecture 15: Error reduction, Schwartz-Zippel, Polynomial identity testing](https://homes.cs.washington.edu/~anuprao/pubs/cse431sp24/lecture15.pdf)," CSE 431, 2024 — lecture notes on arithmetic-circuit PIT and randomized complexity.
+
+- [SageMath: Quotients of Univariate Polynomial Rings](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_quotient_ring.html) — polynomial rings and quotient constructions.
 
 ## Suggested classroom questions
 

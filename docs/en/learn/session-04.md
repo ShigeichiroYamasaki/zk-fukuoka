@@ -110,6 +110,10 @@ Use the relation “I know $x$ satisfying $x^3+x+5=35$.” Rather than only subs
 
 ### 4.1 From R1CS to QAP
 
+::: tip Prerequisites for QAP
+Review division with remainder, the factor theorem, vanishing polynomials, and quotient degree bounds in [Session 3, Section 3.4](./session-03#qap-polynomial-prerequisites). Start at Section 3.1 for the distinction between a field and a polynomial ring.
+:::
+
 R1CS represents constraints as matrix rows. Now assign distinct evaluation points to the rows and represent each column by a polynomial. Moving to QAP means reading the same constraints as polynomial evaluations. This is where Session 3’s [Lagrange interpolation](./terms/polynomials) is needed.
 
 Specifically, use Lagrange interpolation from Session 3 to turn each column of the R1CS matrices $A, B, C$ into polynomials $A_i(X), B_i(X), C_i(X)$. Then express simultaneous satisfaction of all R1CS constraints through [polynomial divisibility](./terms/polynomials):
