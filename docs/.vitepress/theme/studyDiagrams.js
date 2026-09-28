@@ -146,73 +146,7 @@ export const diagrams = {
       "Exponent arithmetic (w, r, c, s) is modulo q; group multiplication in this example is modulo p. Extraction requires the same t and distinct c. These small values are illustrative; never reuse r in normal interactions."
     ]
   },
-  "02-3": {
-    "section": "5",
-    "type": "matrix",
-    "title": [
-      "表現力と効率性を分けて見る",
-      "Separate expressiveness from efficiency"
-    ],
-    "note": [
-      "非対話性と簡潔性は別の要求．Fiat–Shamirだけで一般計算の証明が短くなるわけではない．",
-      "Non-interactivity and succinctness are separate requirements. Fiat–Shamir alone does not make general-computation proofs short."
-    ],
-    "headers": [
-      [
-        "問い",
-        "Question"
-      ],
-      [
-        "代数的関係",
-        "Algebraic relation"
-      ],
-      [
-        "一般の計算",
-        "General computation"
-      ]
-    ],
-    "rows": [
-      [
-        [
-          "何を表すか",
-          "What is represented?"
-        ],
-        "y = gʷ",
-        [
-          "プログラムを満たす入力・実行記録",
-          "Input and execution satisfying a program"
-        ]
-      ],
-      [
-        [
-          "検査の道具",
-          "Checking tools"
-        ],
-        [
-          "群の関係式",
-          "Group relations"
-        ],
-        [
-          "算術化・多項式制約",
-          "Arithmetization and polynomial constraints"
-        ]
-      ],
-      [
-        [
-          "追加の効率性要求",
-          "Additional efficiency goals"
-        ],
-        [
-          "やり取り・群演算の削減",
-          "Reduce interaction and group operations"
-        ],
-        [
-          "計算全体より小さい証明・検証負担",
-          "Proofs and verification smaller than the full computation"
-        ]
-      ]
-    ]
-  },
+
   "03-1": {
     "section": "2.3",
     "type": "flow",

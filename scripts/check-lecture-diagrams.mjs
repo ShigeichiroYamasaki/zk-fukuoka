@@ -34,8 +34,8 @@ for(const [id,d] of Object.entries(diagrams)){
  }
  if(d.type==='matrix')for(const row of d.rows)assert.equal(row.length,d.headers.length,id);
 }
-assert.equal(Object.keys(diagrams).length,44);
-console.log('44 bilingual diagram definitions: coverage, RS distance, finite-field points, curve, trace, bounds and extraction verified.');
+assert.equal(Object.keys(diagrams).length,43);
+console.log('43 bilingual diagram definitions: coverage, RS distance, finite-field points, curve, trace, bounds and extraction verified.');
 
 // Session 3: real interpolation and exact Schwartz-Zippel example counts.
 const { basis, quadratic, difference, gridZeros } = await import('../docs/.vitepress/theme/polynomialExamples.js');
