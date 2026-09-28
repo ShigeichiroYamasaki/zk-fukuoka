@@ -1,4 +1,5 @@
 <script setup>
+import GraphIsomorphism from "./GraphIsomorphism.vue";
 const props = defineProps({ kind: String, en: Boolean });
 const t = (ja, en) => props.en ? en : ja;
 const titles = {
@@ -27,13 +28,7 @@ const numbers = {witness:1,interaction:2,graphs:3,motives:4,properties:5,models:
       <p class="note">{{ t('公開コイン型のやり取りを模式化．最初の発言者やラウンド数は方式による．対話するだけでゼロ知識になるわけではない．', 'A schematic public-coin exchange. The first speaker and round count depend on the protocol. Interaction alone does not imply zero-knowledge.') }}</p>
     </template>
     <template v-else-if="kind === 'graphs'">
-      <svg viewBox="0 0 620 220" role="img" :aria-label="t('G1はA-B-C-Dの道．G2は3-1-4-2の道．同型写像はAを3，Bを1，Cを4，Dを2へ対応づける．','G1 is the path A-B-C-D. G2 is the path 3-1-4-2. The isomorphism maps A to 3, B to 1, C to 4 and D to 2.')">
-        <g class="edges"><path d="M55 75L180 75L180 165L55 165"/><path d="M385 165L450 65L505 165L570 65"/></g>
-        <g class="vertices"><circle cx="55" cy="75" r="21"/><circle cx="180" cy="75" r="21"/><circle cx="180" cy="165" r="21"/><circle cx="55" cy="165" r="21"/><circle cx="385" cy="165" r="21"/><circle cx="450" cy="65" r="21"/><circle cx="505" cy="165" r="21"/><circle cx="570" cy="65" r="21"/></g>
-        <g class="labels" text-anchor="middle"><text x="118" y="25">G₁</text><text x="478" y="25">G₂</text><text x="55" y="82">A</text><text x="180" y="82">B</text><text x="180" y="172">C</text><text x="55" y="172">D</text><text x="385" y="172">3</text><text x="450" y="72">1</text><text x="505" y="172">4</text><text x="570" y="72">2</text><text x="300" y="110">≅</text></g>
-      </svg>
-      <div class="shared">π : A → 3 · B → 1 · C → 4 · D → 2</div>
-      <p class="note">{{ t('辺 AB・BC・CD は，それぞれ 3–1・1–4・4–2 に対応する．ここでは説明のため写像 π を表示した．問いは，この写像を渡さず同型性を納得させられるか，である．', 'Edges AB, BC and CD map to 3–1, 1–4 and 4–2. The mapping π is displayed here for illustration. The question is whether isomorphism can be established without handing over this mapping.') }}</p>
+      <GraphIsomorphism :en="en" />
     </template>
     <template v-else-if="kind === 'motives'">
       <div class="pair"><div class="node"><b>{{ t('計算量理論の問い', 'Complexity-theoretic question') }}</b><span>{{ t('限られた検証者は，どこまで確認できるか？', 'What can a limited verifier check?') }}</span></div><div class="node teal"><b>{{ t('暗号学の問い', 'Cryptographic question') }}</b><span>{{ t('確認の過程で，何が相手に伝わるか？', 'What information does checking reveal?') }}</span></div></div>

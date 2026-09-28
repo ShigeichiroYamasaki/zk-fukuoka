@@ -50,3 +50,13 @@ for(let x=0;x<7;x++)for(let y=0;y<7;y++)if(gridZeros(x,y))zeros++;
 assert.equal(zeros,13);
 assert.ok(zeros/49<=2/7);
 console.log('Session 3: interpolation identities and 2/7, 13/49 zero counts verified.');
+
+// Check the displayed isomorphism on every pair, including non-edges.
+const { mapping, edges, rightEdges } = await import('../docs/.vitepress/theme/graphExample.js');
+assert.equal(new Set(mapping).size,6);
+assert.equal(edges.length,8);
+assert.equal(rightEdges.length,8);
+const hasEdge=(es,a,b)=>es.some(([u,v])=>(u===a && v===b)||(u===b && v===a));
+for(let a=0;a<6;a++)for(let b=a+1;b<6;b++)assert.equal(hasEdge(edges,a,b),hasEdge(rightEdges,mapping[a],mapping[b]));
+assert.equal(edges.filter(e=>e.includes(2)).length,4);
+console.log('Session 1 graph: bijection preserves all 15 vertex-pair adjacency relations.');
