@@ -1086,7 +1086,7 @@ export const diagrams = {
     "nodes": [
       {
         "title": [
-          "ROMでの主張",
+          "ROMでの言明",
           "Claim in the ROM"
         ],
         "body": [
@@ -1193,7 +1193,7 @@ export const diagrams = {
           "YES case"
         ],
         "body": [
-          "正しい主張には，多くの検査を満たす証明がある．",
+          "正しい言明には，多くの検査を満たす証明がある．",
           "A true instance has a proof satisfying many tests."
         ]
       },
@@ -1203,7 +1203,7 @@ export const diagrams = {
           "NO case"
         ],
         "body": [
-          "誤った主張では，どの証明にも一定割合の失敗が残る．",
+          "誤った言明では，どの証明にも一定割合の失敗が残る．",
           "For a false instance, every proof fails a nontrivial fraction of tests."
         ]
       }
@@ -1743,7 +1743,7 @@ export const diagrams = {
           "Soundness"
         ],
         [
-          "誤った主張を誰が，どの確率で通せるか",
+          "誤った言明を誰が，どの確率で通せるか",
           "Who can make a false statement accept, and with what probability?"
         ]
       ],
@@ -1975,13 +1975,13 @@ export const diagrams = {
       "Sumcheck: reduce a sum claim to checking one evaluation"
     ],
     "note": [
-      "各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ．最後の評価の確認は省けない．GKRでは層ごとの主張の縮約にこの考え方を使う．",
+      "各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ．最後の評価の確認は省けない．GKRでは層ごとの言明の縮約にこの考え方を使う．",
       "Check degree bounds and sum consistency each round, choosing the challenge after the message. The final evaluation check is essential. GKR uses such reductions between layers."
     ],
     "nodes": [
       {
         "title": [
-          "最初の主張",
+          "最初の言明",
           "Initial claim"
         ],
         "body": [
