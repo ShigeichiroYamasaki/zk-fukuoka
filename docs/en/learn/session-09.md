@@ -108,6 +108,63 @@ Does the counterexample make ROM analysis useless? There is value in analyzing a
 
 When reading a scheme, trace where it uses a random oracle and what that assumption establishes. Instead of stopping at “there is a security proof,” distinguish the model, assumptions, and implementation. We will use this reading method for PLONK and STARKs.
 
+### 4.5 The IP perspective: losing the enforced order of interaction {#rom-interaction-limits}
+
+Recall interactive proofs from Session 1. Soundness says that for a false statement $x\notin L$, every cheating prover has bounded acceptance probability in an experiment including verifier randomness:
+
+$$\forall x\notin L,\ \forall P^*,\qquad
+\Pr_{\rho_V}[\langle P^*,V\rangle(x)=1]\le\epsilon.$$
+
+Include prover randomness if needed. IP soundness does not restrict the prover's computational power. In a public-coin execution, the verifier samples a fresh challenge **after** receiving message $a$. Conditional on the past transcript, its new coins remain fresh. The prover must respond and cannot rewrite that execution's past when the challenge is inconvenient.
+
+With Fiat–Shamir, the prover computes $c=H(x,a)$ and can try many candidates before submitting a favorable one. The challenge conditioned on the finally selected $a$ need not be independent and uniform. Even in ROM, fresh oracle responses are uniform, but **the transcript selected for submission** need not be an unbiased sample. Interactive and non-interactive soundness are different probability experiments.
+
+For intuition, suppose each fixed candidate has at most a $2^{-k}$ fraction of favorable challenges. Across $Q_H$ fresh oracle trials, a union bound gives at most $\min(1,Q_H2^{-k})$ for any favorable trial. With $k=20$ and roughly a million trials, this bound is no longer small. This is an illustration of search cost, not a universal soundness theorem for arbitrary protocols.
+
+An unbounded prover cannot be restricted by computational search cost. Thus information-theoretic proof soundness does not automatically survive the transformation. Fiat–Shamir constructions typically analyze argument soundness against efficient adversaries, accounting for time and oracle queries.
+
+### 4.6 Public-coin protocols are not the same starting point as arbitrary IP
+
+Fiat–Shamir directly replaces public random challenges. General IP verifiers may keep private randomness and reveal only functions of it. Replacing that randomness with publicly recomputable hashes changes what the prover knows.
+
+Goldwasser–Sipser showed a [transformation from private-coin to public-coin interactive proofs](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf). This transforms the protocol; it does not authorize replacing the original messages by hashes unchanged. Zero-knowledge, knowledge extraction, round complexity, and subsequent Fiat–Shamir soundness each require their own conditions.
+
+Likewise, $\mathrm{IP}=\mathrm{PSPACE}$ does not imply safe, short non-interactive proofs for arbitrary PSPACE computations via Fiat–Shamir. It characterizes expressiveness with interaction and randomness. Succinctness, efficient proving, zero-knowledge, and secure non-interactive compilation are separate requirements.
+
+### 4.7 Does the simulator have more power than the implementation? {#rom-simulation-limits}
+
+Recall Schnorr's acceptance equation $g^z=aY^c$ for $Y=g^w$. Without knowing $w$, choose $c,z$ first and set $a=g^zY^{-c}$ to obtain an accepting transcript. This is the honest-verifier simulation idea. **Creating an accepting transcript differs from answering a challenge chosen after sending $a$.** This concerns knowledge of a witness, not merely language soundness for group membership.
+
+After Fiat–Shamir, the transcript must additionally satisfy $c=H(x,a)$. In a programmable ROM, a simulator may arrange this by setting an as-yet-undefined oracle response. The proof must account for prior queries, consistency, and the difference from a real random-oracle distribution. This does not give a real prover permission to overwrite SHA-256 outputs.
+
+Forking an adversary with changed oracle answers is instead an operation inside a knowledge-extraction reduction. It has a different purpose from zero-knowledge simulation. Neither is an implementation API for changing a hash function.
+
+Research on [definitions of zero-knowledge in ROM](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf) distinguishes these oracle-access and programming powers. Simulator existence does not imply that a real third party can produce accepting proofs under the same fixed public hash.
+
+### 4.8 The barrier to non-interactive zero-knowledge without setup or oracles {#plain-model-nizk}
+
+Consider a single-message non-interactive zero-knowledge system in the **plain model**, without a CRS, random oracle, prior key distribution, or similar resource. Under the usual definitions, languages admitting such systems lie in BPP. [Goldreich–Oren](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf) study conditions making interaction necessary for nontrivial zero-knowledge.
+
+Here is the intuition, using a formulation with a simulator $S$ that runs in polynomial time on all inputs. On input $x$, generate $\pi\leftarrow S(x)$ without a witness, then run the ordinary verifier $V(x,\pi)$.
+
+- If $x\in L$, simulated and real proofs are indistinguishable. The efficient verifier is itself a distinguisher, so completeness implies high acceptance probability.
+- If $x\notin L$, the simulator is just an efficient algorithm producing a proof. Soundness bounds its acceptance probability.
+
+This decides membership in randomized polynomial time without a witness. For interactive protocols, a simulated transcript is not a live execution with a verifier choosing fresh coins, so the same argument does not apply directly.
+
+ROM and CRS models change the simulator's resources: a programmable oracle, or a simulated reference string with trapdoor information. That is not the same experiment as a prover operating in a fixed real environment without these powers, so the BPP reasoning does not carry over unchanged.
+
+Groth16's avoidance of ROM therefore does not mean it achieves non-interactive zero-knowledge without additional setup: it uses a CRS. **Standard model and plain model are not synonyms.** A construction can avoid ideal random oracles while assuming a CRS.
+
+### 4.9 One-wayness and collision resistance do not close the gap
+
+A concrete hash has a finite public description, such as code and a public key. An adversary may exploit that description. A random oracle is accessed through queries, without such a short usable implementation description. One-wayness or collision resistance alone may not exclude attacks exploiting particular input/output correlations.
+
+Beyond CGH, Goldwasser–Kalai give [secure three-round public-coin identification schemes whose Fiat–Shamir signatures are insecure for every efficient function-ensemble instantiation](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html). This does not say every Fiat–Shamir scheme is broken, nor that the same counterexample applies to all information-theoretically sound IPs. Keep the scheme class and security property in view.
+
+The central question is which resources and assumptions replace the unpredictability and order enforced by interaction. For PLONK and STARK, specify the starting public-coin protocol, adversary's oracle access, simulator's powers, and setup conditions before assessing soundness, knowledge soundness, and zero-knowledge separately.
+
+
 ---
 
 ## Summary and next session
@@ -130,8 +187,13 @@ Session 10 concludes Act II with the PCP theorem and the IOP framework. We will 
 - Canetti, Goldreich, and Halevi, [“The Random Oracle Methodology, Revisited,” JACM 2004](https://eprint.iacr.org/1998/011) — counterexamples demonstrating limitations of ROM; public IACR ePrint version with PDF, initially released in 1998.
 - Pointcheval and Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003) — a developed formulation of the forking lemma; publisher's page. Revisit [Session 6](./session-06).
 
+- Goldwasser, Sipser, [“Private Coins versus Public Coins in Interactive Proof Systems,” STOC 1986](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf)
+- Goldreich, Oren, [“Definitions and Properties of Zero-Knowledge Proof Systems,” Journal of Cryptology 1994](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf)
+- Goldwasser, Kalai, [“On the (In)security of the Fiat-Shamir Paradigm,” 2003](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html)
+- Wee, [“Zero Knowledge in the Random Oracle Model, Revisited,” ASIACRYPT 2009](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf)
+
 ## Suggested discussion questions
 
 - Before introducing Fiat–Shamir, ask how randomness might be obtained without an online verifier, helping motivate the use of hashing.
 - When presenting CGH, discuss the difference between a mathematical proof and security in a concrete implementation.
-- Have students debate the trade-off between pursuing security proofs without ROM and prioritizing practical efficiency.
+- Ask students which resources—ROM, a CRS, or interaction—a design uses, and which assumptions support its security and efficiency.

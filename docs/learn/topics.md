@@ -132,6 +132,7 @@
 | FRIベースの多項式コミットメント・KZGとの比較 | [第8回 §3.2](./session-08#_3-2-構成の概略) / [第8回 §4](./session-08#_4-kzgとfriベースの比較) |
 | Fiat-Shamir変換・トランスクリプト・チャレンジ | [第9回 §2.1](./session-09#_2-1-基本アイデア) / [第9回 §2.2](./session-09#_2-2-なぜこれで安全なのか-直感) |
 | Random Oracle Model（ROM）・理想化されたハッシュ | [第9回 §3.1](./session-09#_3-1-モデルの定義) / [第9回 §3.2](./session-09#_3-2-romでの安全性証明の骨格) |
+| IPの順序・公開コイン・ROMのシミュレーション・プレーンモデルの限界 | [対話の役割](./session-09#rom-interaction-limits) / [シミュレータの権限](./session-09#rom-simulation-limits) / [非対話型ZKの限界](./session-09#plain-model-nizk) |
 | ROMの限界・Canetti–Goldreich–Haleviの反例 | [第9回 §4.1](./session-09#_4-1-romはあくまでヒューリスティックである) / [第9回 §4.2](./session-09#_4-2-理論的な反例) / [第9回 §4.3](./session-09#_4-3-それでもromが広く使われる理由) |
 
 ## セットアップ・透明性・ゼロ知識性の実現 {#setup}

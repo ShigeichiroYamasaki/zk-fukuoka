@@ -132,6 +132,7 @@ Updated: September 27, 2026
 | FRI-based polynomial commitments and comparison with KZG | [Session 8 §3.2](./session-08#_3-2-construction-outline) / [Session 8 §4](./session-08#_4-comparing-kzg-and-fri-based-commitments) |
 | The Fiat–Shamir transform, transcripts and challenges | [Session 9 §2.1](./session-09#_2-1-the-basic-idea) / [Session 9 §2.2](./session-09#_2-2-security-intuition) |
 | The Random Oracle Model (ROM) and idealized hashing | [Session 9 §3.1](./session-09#_3-1-definition-of-the-model) / [Session 9 §3.2](./session-09#_3-2-the-structure-of-a-security-proof-in-rom) |
+| IP ordering, public coins, ROM simulation and plain-model limits | [Role of interaction](./session-09#rom-interaction-limits) / [Simulator powers](./session-09#rom-simulation-limits) / [Plain-model NIZK](./session-09#plain-model-nizk) |
 | ROM limitations and the Canetti–Goldreich–Halevi counterexample | [Session 9 §4.1](./session-09#_4-1-instantiating-rom-remains-a-heuristic) / [Session 9 §4.2](./session-09#_4-2-theoretical-counterexamples) / [Session 9 §4.3](./session-09#_4-3-why-rom-is-still-widely-used) |
 
 ## Setup, transparency & implementing zero-knowledge {#setup}
