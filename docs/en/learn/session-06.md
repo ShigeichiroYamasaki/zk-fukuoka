@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -40,9 +41,61 @@ Suppose the prover supplies an evaluation table $f:D\to\mathbb{F}$. We want to a
 
 ### 1.2 Why is it difficult?
 
-As we saw in Session 5, evaluation representations of polynomials of degree less than $d$ are exactly the codewords of a Reed–Solomon code. Low-degree testing can therefore be viewed as **proximity testing**: deciding whether the supplied function approximately belongs to the RS code.
+The difficulty is that **we have no polynomial expression, only limited access to a table, yet want to check global consistency with one low-degree polynomial**. If coefficients were available, we could inspect the highest nonzero coefficient. Here they are unknown. Write $f:D\to K$ for the table and $g\in K[X]$ for a candidate polynomial.
 
-Reading $f$ at every point would allow us to decide membership, but would require as many queries as there are evaluation points, contradicting the goal of succinctness. We want to decide correctly with high probability using few queries.
+#### ① Interpolating a few points does not validate the remaining table
+
+Take $K=\mathbb F_7$, $D=\{0,1,2,3,4,5,6\}$, and degree bound $d=2$: the target is degree at most one. Compare three tables, with all arithmetic modulo 7.
+
+<CaptionedTable number="06-1" caption="A degree-at-most-one table, a one-entry corruption, and a table far from every degree-at-most-one polynomial" :en="true">
+
+| Point $x$ | Valid table $g(x)=1+2x$ | One-entry change $f_{\mathrm{near}}$ | Quadratic table $f_{\mathrm{far}}(x)=x^2$ |
+| --- | --- | --- | --- |
+| 0 | 1 | 1 | 0 |
+| 1 | 3 | 3 | 1 |
+| 2 | 5 | 5 | 4 |
+| 3 | 0 | 0 | 2 |
+| 4 | 2 | 2 | 2 |
+| 5 | 4 | 4 | 4 |
+| 6 | 6 | 0 | 1 |
+
+</CaptionedTable>
+
+Querying $f_{\mathrm{near}}$ at 0 and 1 returns 1 and 3, uniquely determining $g(X)=1+2X$. But this only determines **the line through the observed points**, not whether the remaining table lies on it. At point 6 the table returns 0 whereas $g(6)=6$. No alternative line repairs this: $g$ is already the unique line through the first two points.
+
+The relative distance to the degree-at-most-one RS code $\mathcal C$ is $\Delta(f_{\mathrm{near}},\mathcal C)=1/7$. Failing exact membership differs from being far from every low-degree polynomial.
+
+#### ② Even a far table fits a line on every pair of points
+
+For $f_{\mathrm{far}}$, points 0 and 1 fit $g_1(X)=X$, but at 2 it predicts 2 rather than the table's 4. Points 4 and 5 instead fit $g_2(X)=2X+1$. **A line for each sampled pair need not be one line for the whole table.**
+
+For every degree-at-most-one $g$, $X^2-g(X)$ is a nonzero quadratic with at most two roots. Thus agreement occurs at at most two points and disagreement at at least five. The line $g_1=X$ agrees at exactly two, so the distance is exactly $5/7$. This far table nevertheless has a valid line explaining any two observed entries.
+
+In this small example, three distinct queries suffice to reject $f_{\mathrm{far}}$. The point is not that testing is impossible, but that **the number of points needed by the direct approach grows with the degree bound**.
+
+#### ③ In general, up to d observations cannot demonstrate inconsistency
+
+By [Lagrange interpolation in Session 3](./session-03#_3-3-lagrange-interpolation), any values at $d$ distinct points determine a polynomial of degree less than $d$. A test querying only the original table and always accepting valid tables therefore **cannot establish invalidity from at most $d$ observations**: the unobserved entries can be completed into a valid codeword consistent with the transcript. This remains true for adaptive queries chosen from earlier answers.
+
+For example, with $n=2^{20}=1048576$ points and $d=2^{18}=262144$, interpolating a candidate already reads over 260,000 entries; the field must supply at least $n$ distinct points. Further work is needed to check the remaining entries. This is expensive when the goal is a short proof and few queries. The argument concerns **queries to the original table without auxiliary proof data**; it is not a lower bound against systems such as FRI that receive additional tables.
+
+#### ④ Reject far tables rather than decide exact equality
+
+Reliably detecting a single changed entry is also expensive. Even with a known correct comparison table, if one of $n$ positions differs, $q$ uniformly sampled distinct positions hit it with probability $q/n$. For $f_{\mathrm{near}}$ above, two queries hit the changed position with probability only $2/7$. This assumes the correct comparison table is known; interpolating an unknown candidate alone does not give the same detection power.
+
+Instead, choose a distance threshold $\rho$ and aim to reject tables with
+
+$$\Delta(f,\mathcal C)=\min_{\deg g<d}\frac{|\{x\in D:f(x)\ne g(x)\}|}{|D|}\ge\rho$$
+
+except with small soundness error. For $\rho=1/3$, $f_{\mathrm{far}}$ at distance $5/7$ falls under this rejection guarantee, while $f_{\mathrm{near}}$ at distance $1/7$ does not. The latter need not always be accepted either. **Accept valid codewords, reject sufficiently far tables with high probability, and make no conclusion about the intermediate region from this guarantee alone.**
+
+#### ⑤ Schwartz–Zippel and commitments are not enough by themselves
+
+Schwartz–Zippel bounds random zeros of a fixed difference polynomial with a known degree bound. Here we are trying to establish the low-degree premise itself. Every table on $n$ distinct points has an interpolant of degree less than $n$, but this need not satisfy the target bound $d$. We cannot simply assume a low-degree error bound.
+
+A Merkle commitment fixes a table before queries, preventing answers from being changed to suit the queries. But it can also commit to $f_{\mathrm{far}}$. **Binding a table and establishing low degree are separate guarantees.**
+
+FRI uses more than isolated entries of the original table: the prover supplies successive folding tables in response to random challenges. The verifier checks relations between neighboring tables and the final small table. This auxiliary proof avoids directly interpolating $d$ points at the original large degree. Proximity analysis explains why far tables are unlikely to pass these checks. Next, first examine how folding works for an honest polynomial.
 
 ---
 
