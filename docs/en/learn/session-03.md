@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 </script>
@@ -113,14 +114,14 @@ Suppose we want to check whether $f(X)$ and $g(X)$ are the same polynomial. Comp
 
 ### 4.2 Statement of the lemma: the multivariate version
 
-> **Schwartz–Zippel lemma:** Let $f(X_1, \dots, X_n) \in \mathbb{F}[X_1, \dots, X_n]$ be a polynomial that is not identically zero, with total degree $d$. If the values of the variables are chosen independently at random from a finite set $S \subseteq \mathbb{F}$, then
+> **Schwartz–Zippel lemma:** Let $f(X_1, \dots, X_n) \in \mathbb{F}[X_1, \dots, X_n]$ be a polynomial that is not identically zero, with total degree $d$. If the values of the variables are chosen independently and uniformly from a nonempty finite set $S \subseteq \mathbb{F}$, then
 > $$\Pr[f(r_1, \dots, r_n) = 0] \le \frac{d}{|S|}.$$
 
 For one variable, $n=1$, this is exactly the fact from Section 3.2 that a polynomial has at most $d$ roots. The multivariate version extends it inductively. Sketch the proof in class by induction on $n$.
 
 ### 4.3 What the lemma tells us
 
-To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider extension fields or repetition.
+To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider an extension field. Independent repetition also helps when the one-test miss probability is below 1.
 
 What becomes small here is the number of points checked. Computing an evaluation is not automatically cheap. The argument also fails if polynomials can be chosen after seeing the test point. A proof system must fix them first and authenticate the required evaluations.
 
@@ -140,13 +141,76 @@ For this course, its crucial role is as **the theoretical foundation for polynom
 
 ---
 
-## 5. Exercises: concrete examples of identity testing
+## 5. Understanding the sampling set S and its error probability {#_5-exercises-concrete-examples-of-identity-testing}
 
-Use the lemma to design a test. Once the polynomial degree and sampling set are chosen, what error bound follows? Work through the following examples to connect the formula to that decision.
+Before turning to exercises, work through what changes when we vary the sampling set $S$. The coefficient field $\mathbb{F}$ and the set $S$ of candidate test points have different roles.
 
-- Test whether two polynomials are equal using only evaluation at a random point. Choose expressions whose equality could be checked by expansion, but for which expansion is tedious.
-- Calculate how the error probability changes as $|S|$ varies.
-- Briefly discuss why one might deliberately sample from a small subset $S$ instead of the entire finite field, including considerations of field characteristic and implementation efficiency.
+### 5.1 S is the set of candidate test points
+
+$S$ is a nonempty finite subset of $\mathbb{F}$. It may be the whole field or just some elements; it need not itself be a field or subgroup. For one variable, choose uniform $r\in S$. For multiple variables, choose each coordinate independently and uniformly from $S$. Fix both $S$ and the polynomial before sampling.
+
+For example, in $\mathbb{F}_{101}$ we may choose $S=\{0,1,\ldots,9\}$. Polynomial arithmetic remains **modulo 101**, not modulo 10. The field contains only 101 distinct elements: listing integers from 0 through 201 does not create 202 distinct test points, because values repeat modulo 101.
+
+### 5.2 How does a larger set change the bound?
+
+Compare Section 4's $f(X)=X^2+1$ and $g(X)=4X-2$, now over $\mathbb{F}_{101}$. Their difference is
+
+$$h(X)=f(X)-g(X)=(X-1)(X-3).$$
+
+It has degree 2 and exactly two roots, 1 and 3. The test incorrectly reports equality precisely when $r$ hits a root. Its **actual error probability** is therefore
+
+$$\Pr[h(r)=0]=\frac{|S\cap\{1,3\}|}{|S|}.$$
+
+Without knowing the roots, a degree bound $d$ gives the **error upper bound**
+
+$$\Pr[h(r)=0]\le\min\left(1,\frac{d}{|S|}\right).$$
+
+A probability cannot exceed 1. When $d/|S|\ge1$, the lemma supplies no useful small-error guarantee.
+
+<CaptionedTable number="03-3" caption="Sampling sets and error probabilities for a quadratic polynomial" :en="true">
+
+| Sampling set $S\subseteq\mathbb{F}_{101}$ | $\lvert S\rvert$ | Roots in $S$ | Actual error probability | Degree-2 upper bound |
+| --- | --- | --- | --- | --- |
+| $\{1,3\}$ | 2 | 2 | $1$ (100%) | $1$ |
+| $\{0,1,2,3\}$ | 4 | 2 | $1/2$ (50%) | $1/2$ |
+| $\{4,5,6,7\}$ | 4 | 0 | $0$ | $1/2$ |
+| $\{0,1,\ldots,9\}$ | 10 | 2 | $1/5$ (20%) | $1/5$ |
+| $\{0,1,\ldots,99\}$ | 100 | 2 | $1/50$ (2%) | $1/50$ |
+| $\mathbb{F}_{101}$ | 101 | 2 | $2/101$ (about 1.98%) | $2/101$ |
+
+</CaptionedTable>
+
+Even two sets of size 4 can have different actual probabilities. **$d/|S|$ is not always the actual error probability.** With degree fixed, enlarging the set lowers the upper bound, but switching to an arbitrary different set need not monotonically lower the actual probability. A proof system cannot rely on knowing and avoiding the roots of a dishonest polynomial, so it uses a bound independent of their locations.
+
+### 5.3 Required set size and repeated tests
+
+To guarantee one-test error at most $\varepsilon$, it suffices that
+
+$$|S|\ge\frac{d}{\varepsilon}.$$
+
+For $d=2$ and a target of 1%, this requires at least 200 distinct candidates. The field $\mathbb{F}_{101}$ cannot supply them.
+
+An alternative is to **test the same fixed polynomial at fresh independent points**. Report inequality if any evaluation is nonzero; report equality only if every evaluation is zero. If one-test error is bounded by $\rho<1$, the probability of missing the difference in all $k$ tests is at most $\rho^k$.
+
+For $S=\{0,1,\ldots,15\}\subset\mathbb{F}_{101}$ and $d=2$, the bound is $1/8$ for one test, $1/64$ (about 1.56%) for two, $1/512$ (about 0.195%) for three, and $2^{-42}$ for fourteen. Re-evaluating the same point does not help. The polynomial must not be changed between tests. This argument concerns testing a fixed polynomial; Session 6 separately examines conditions for repetition of interactive proofs more generally.
+
+### 5.4 Repetition cannot always compensate for a small field
+
+With $S=\{1,3\}$ in Table 03-3, every test misses the difference, however often it is repeated. Sampling the entire field need not fix the problem either. The formal polynomial
+
+$$u(X)=X^{101}-X$$
+
+over $\mathbb{F}_{101}$ is nonzero, yet $u(a)=0$ for every element of that field. Its degree is 101 and the set size is 101, giving the uninformative bound 1. **Equality of formal polynomials differs from equality of their values on a finite set.**
+
+One solution is to embed the coefficients naturally into an extension field of the same characteristic and use more candidate points. The field $\mathbb{F}_{101^2}$ has 10201 elements. Testing $u$ over that field gives upper bound $101/10201=1/101$; for the earlier quadratic the bound is $2/10201$. The polynomial remains fixed before sampling. Extension-field arithmetic has implementation and computational costs, so choose the sampling space together with the number of repetitions.
+
+### 5.5 Why use a subset rather than the whole field?
+
+The lemma does not require $S$ to be closed under addition or multiplication. Subject to the required error bound, choose a set that is easy to sample uniformly or compatible with other checks. For instance, a set of $2^b$ distinct elements in a sufficiently large prime field admits a one-to-one correspondence with uniform $b$-bit strings. But shrinking the set worsens $d/|S|$, so sampling convenience alone is insufficient justification.
+
+A domain chosen for fast polynomial evaluation need not be the same set used to sample soundness challenges. For example, let $Z_D(X)=\prod_{a\in D}(X-a)$ vanish on a constraint domain $D$. Even if two polynomials differ by a nonzero multiple $Z_D(X)H(X)$, sampling only inside $D$ cannot detect that difference. Keep these roles separate when reading the QAP identities in Session 4.
+
+First choose a degree bound $d$ and acceptable error $\varepsilon$, then select the field, sampling set, and number of independent tests. Finally check that the polynomial is fixed before sampling, sampling is uniform, and evaluations are authentic. With these points understood, vary the sets in Table 03-3 and calculate both the bound and the actual probability as an exercise.
 
 ---
 
