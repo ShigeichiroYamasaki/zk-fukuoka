@@ -59,6 +59,7 @@
 | 算術化・計算から制約への翻訳 | [第4回 §1](./session-04#_1-算術化とは何か-—-動機の再確認) / [第4回 §3.2](./session-04#_3-2-なぜ「rank-1」なのか、具体例) / [詳しい説明](./terms/constraints) |
 | R1CS・公開入力・中間変数・制約の具体例 | [第4回 §3.1](./session-04#_3-1-定義) / [第4回 §3.3](./session-04#_3-3-演習的な具体例) / [詳しい説明](./terms/linear-algebra) |
 | 内積・外積・階数1・R1CSの検査計算量 | [第4回：線形代数とQAPへの橋渡し](./session-04#r1cs-linear-algebra) |
+| QAPの補間・商と次数上限／AIRの遷移・境界の商 | [QAPの計算例](./session-04#qap-worked-math) / [AIRの計算例](./session-04#air-worked-math) |
 | QAP・消失多項式・割り切れ性 | [第4回 §4.1](./session-04#_4-1-r1csからqapへ) / [第11回 §1](./session-11#_1-出発点の確認-qapの検証すべき式) / [詳しい説明](./terms/polynomials) |
 | AIR・実行トレース・遷移制約・境界制約 | [第4回 §5.1](./session-04#_5-1-r1cs-qapとの発想の違い) / [第4回 §5.2](./session-04#_5-2-遷移制約と境界制約) / [第13回 §2](./session-13#_2-airによる算術化の再確認) / [詳しい説明](./terms/execution-traces) |
 | PLONKish算術化・セレクタ・公開入力の制約 | [第12回 §2.1](./session-12#_2-1-qapとの発想の違い) / [第12回 §2.2](./session-12#_2-2-具体的な制約の形) |

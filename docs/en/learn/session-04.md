@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverview.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
@@ -194,6 +195,53 @@ The computation to be checked has not changed; the form of the check has. Vanish
 
 [Follow the deposit/withdrawal example: QAP](./balance-arithmetization#qap)
 
+### 4.3 Computing interpolation and divisibility {#qap-worked-math}
+
+Keep the matrices from Section 3, work over $K=\mathbb F_{101}$, and assign the three constraints points $r_1=1,r_2=2,r_3=3$. All identities below are in $K[X]$. The Lagrange basis is
+
+$$L_1(X)=\frac{(X-2)(X-3)}2,\quad L_2(X)=-(X-1)(X-3),\quad L_3(X)=\frac{(X-1)(X-2)}2.$$
+
+Here $L_i(r_k)$ equals 1 for $i=k$ and 0 otherwise, and $1/2$ is the field element 51. Interpolate each column as
+
+$$A_j(X)=\sum_{i=1}^3 A_{ij}L_i(X),$$
+
+and likewise for $B,C$. Column 0 of $A$ is $(0,0,5)^T$, so $A_0=5L_3$; column 1 is $(1,0,1)^T$, so $A_1=L_1+L_3$. **Column interpolation uses circuit coefficients; the witness-dependent linear combination comes afterward.**
+
+For the valid assignment $\mathbf z=(1,3,9,27,35)^T$, the matrix products are $(3,9,35)^T$, $(3,3,1)^T$, and $(9,27,35)^T$. Thus
+
+$$\begin{aligned}
+\mathcal A(X)&=\sum_{j=0}^4z_jA_j(X)=3L_1+9L_2+35L_3=10X^2+77X+17,\\
+\mathcal B(X)&=3L_1+3L_2+L_3=100X^2+3X+1,\\
+\mathcal C(X)&=9L_1+27L_2+35L_3=96X^2+33X+82.
+\end{aligned}$$
+
+With vanishing polynomial
+
+$$Z(X)=(X-1)(X-2)(X-3)=X^3+95X^2+11X+95,$$
+
+multiplication and division give
+
+$$\mathcal A(X)\mathcal B(X)-\mathcal C(X)=(91X+95)Z(X).$$
+
+The quotient is $H(X)=91X+95$, with zero remainder. This expresses simultaneous satisfaction of all three rows.
+
+Why is this equivalent? Write $P=\mathcal A\mathcal B-\mathcal C$. Its value $P(r_i)$ equals the residual of R1CS row $i$. If every residual vanishes, the factor theorem gives $(X-r_i)\mid P$. Distinct points make these factors relatively prime, so their product $Z$ divides $P$. Conversely, divisibility implies zero residual at every constraint point.
+
+For the invalid assignment $(1,3,8,27,35)^T$, we instead obtain $P(1)=1$ and $P(2)=98$. No polynomial $H$ can satisfy the identity. Writing a rational function $P/Z$ is not the same as polynomial divisibility.
+
+### 4.4 Degree bounds and probabilistic checking {#qap-degree-bounds}
+
+For $M\ge2$ constraints, all interpolated columns and $\mathcal A,\mathcal B,\mathcal C$ have degree at most $M-1$. Therefore $\deg P\le2M-2$ and $\deg Z=M$. A nonzero quotient has degree at most $M-2$. The zero polynomial is also permitted. Our $M=3$ example accordingly has a linear quotient.
+
+For an incorrect candidate $H$ respecting this degree bound,
+
+$$E(X)=\mathcal A(X)\mathcal B(X)-\mathcal C(X)-H(X)Z(X)$$
+
+is a nonzero polynomial of degree at most $2M-2$. Fix the polynomials before choosing uniform $r$ from a finite nonempty $S\subseteq K$. Then the chance of a false match $E(r)=0$ is at most $\min(1,(2M-2)/|S|)$. In our example, $S=\mathbb F_{101}$ gives the upper bound $4/101$.
+
+This explains identity testing, not full SNARK security. The construction must also bind evaluations to fixed polynomials derived from the same assignment, enforce public inputs, and guarantee degree bounds. Groth16 incorporates the random-evaluation idea through a secret evaluation point, an SRS, and pairings.
+
+
 ---
 
 ## 5. AIR: Algebraic Intermediate Representation
@@ -218,6 +266,67 @@ Separate the roles of the two constraints. Correct transitions do not establish 
 ### 5.3 Understanding AIR through comparison with R1CS/QAP
 
 R1CS/QAP and AIR pursue the same goal but choose different units of computation. The former emphasizes variables and gates; the latter emphasizes states and transitions. In Act III, compare Groth16’s QAP, PLONK’s own gate and copy constraints, and representative AIR-based STARKs. Do not classify PLONK itself as an R1CS/QAP construction.
+
+### 5.4 A worked trace-to-polynomial example {#air-worked-math}
+
+Over $K=\mathbb F_{17}$, start at 3 and square three times. The rule $u_{i+1}=u_i^2$ produces $3\to9\to13\to16$. Take initial value 3 and final value 16 as public conditions.
+
+<CaptionedTable number="04-2" caption="Trace and evaluation points for three successive squarings" :en="true">
+
+| Time $i$ | Point $\omega^i$ | State $u_i$ | Next-state relation |
+|---:|---:|---:|---|
+| 0 | 1 | 3 | $3^2=9$ |
+| 1 | 4 | 9 | $9^2=13\pmod{17}$ |
+| 2 | 16 | 13 | $13^2=16\pmod{17}$ |
+| 3 | 13 | 16 | No transition constraint on the final row |
+
+</CaptionedTable>
+
+The element $\omega=4$ has order four, so $D=\{1,4,16,13\}$ is a multiplicative subgroup. Advancing time corresponds to replacing the evaluation point $X$ by $\omega X$. Interpolating the state column gives
+
+$$T(X)=16X^3+2X^2+13X+6,$$
+
+with $T(1)=3$, $T(4)=9$, $T(16)=13$, and $T(13)=16$. The variable represents evaluation points assigned to times, not time itself.
+
+Define the transition numerator
+
+$$N_{\mathrm{tr}}(X)=T(4X)-T(X)^2.$$
+
+It must vanish at the first three points, $1,4,16$. Their vanishing polynomial is
+
+$$Z_{\mathrm{tr}}(X)=(X-1)(X-4)(X-16)=X^3+13X^2+16X+4.$$
+
+A valid trace satisfies $Z_{\mathrm{tr}}\mid N_{\mathrm{tr}}$. Here direct computation gives
+
+$$N_{\mathrm{tr}}(X)=(16X^3+4X+1)Z_{\mathrm{tr}}(X),$$
+
+so the transition quotient is $Q_{\mathrm{tr}}=16X^3+4X+1$.
+
+**Excluding the final row is essential.** Since $4\cdot13=1\pmod{17}$, enforcing the same constraint there would impose a wraparound transition back to the initial state, which the program never requested. Indeed, $N_{\mathrm{tr}}(13)=3-16^2=2\ne0$. This is why we use only the constrained points, rather than dividing by the full-domain vanishing polynomial $X^4-1$.
+
+### 5.5 Boundary conditions, degree bounds, and FRI {#air-quotients}
+
+The factor theorem also expresses the boundary conditions as polynomial quotients:
+
+$$Q_{\mathrm{in}}(X)=\frac{T(X)-3}{X-1}=16X^2+X+14,\qquad
+Q_{\mathrm{out}}(X)=\frac{T(X)-16}{X-13}=16X^2+6X+6.$$
+
+Each numerator vanishes at its boundary point. Transition constraints alone would allow executions starting from other values, so boundary conditions are needed as well.
+
+For a length-$n$ trace with $n\ge2$, interpolate $T$ with degree below $n$. For squaring transitions on the first $n-1$ rows, $\deg N_{\mathrm{tr}}\le2(n-1)$ and $\deg Z_{\mathrm{tr}}=n-1$. Valid transition quotients have degree at most $n-1$, while single-point boundary quotients have degree at most $n-2$. Our $n=4$ example gives bounds 3 and 2.
+
+For multiple columns, interpolate each as $T_j$ and substitute $T_j(X)$ and $T_j(\omega X)$ into multivariate transition constraints. Addition or conditional transitions have different equations; quotient degree bounds must be calculated from their constraint degrees.
+
+STARK constructions combine such quotients using random coefficients. In this example,
+
+$$Q_{\mathrm{comp}}=\rho_{\mathrm{tr}}Q_{\mathrm{tr}}+\rho_{\mathrm{in}}Q_{\mathrm{in}}+\rho_{\mathrm{out}}Q_{\mathrm{out}}$$
+
+has degree at most three. Merely supplying a low-degree table does not establish that it was derived from the original trace. Fix trace commitments before choosing coefficients, check trace-to-quotient consistency at evaluation points, and combine these checks with degree/proximity tests. This connects to FRI in Session 6 and STARK in Session 13.
+
+When evaluating quotients by division, use a domain avoiding the denominator's roots; do not compute $0/0$ at constraint points. Also, every table on $n$ distinct points has an interpolant of degree below $n$. **Testing degree only on the original trace domain is therefore insufficient.** Low-degree extension to a larger domain and consistency with constraints are essential.
+
+Keep the costs separate. For fixed trace width and a constant number of field operations per row, checking all rows directly costs $O(n)$ field operations. Straightforward interpolation costs $O(n^2)$ per column; suitable multiplicative subgroups and fast transforms allow $O(n\log n)$. These are trace-processing costs, not FRI query counts or total STARK verification costs. This small example includes no mechanism for hiding secret values.
+
 
 ---
 
