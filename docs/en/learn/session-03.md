@@ -56,7 +56,7 @@ For a prime $p$, $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ is a field. In addition
 
 ### 2.2 A brief mention of extension fields
 
-An irreducible polynomial over $\mathbb{F}_p$ defines an extension field $\mathbb{F}_{p^k}$. Extensions are useful when balancing the size of a sampling space with efficient machine arithmetic. Distinguish extensions of prime fields from extensions in characteristic two. We defer the construction; for now, learn to ask which field an FRI or AIR construction uses.
+An irreducible polynomial over $\mathbb{F}_p$ defines an extension field $\mathbb{F}_{p^k}$. Extensions are useful when balancing the size of a sampling space with efficient machine arithmetic. Distinguish extensions of prime fields from extensions in characteristic two. [Section 3.1](#_3-1-definitions-and-basic-operations) gives a concrete construction and distinguishes it from a polynomial ring. When reading FRI or AIR, identify the fields used for coefficients and evaluation points.
 
 ### 2.3 The structure of the multiplicative group
 
