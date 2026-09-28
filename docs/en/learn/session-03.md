@@ -199,6 +199,33 @@ Two distinctions matter. First, $F\equiv0\pmod{Z_D}$ means zero remainder, not t
 A later random-point test checks whether $F-HZ_D$ is zero for fixed, degree-bounded $F,H$. It must not allow the quotient value to be chosen after seeing the point. Reuse this correspondence in [Session 4's QAP construction](./session-04#_4-1-from-r1cs-to-qap) and the [interpolation and divisibility guide](./terms/polynomials).
 
 
+### 3.5 Even–odd decomposition and evaluation-table folding for FRI {#fri-polynomial-folding}
+
+In $K[X]$, separate coefficients by the parity of their exponents. For example,
+
+$$f(X)=3+2X+5X^2+X^3=(3+5X^2)+X(2+X^2).$$
+
+Writing $Y=X^2$ gives $f_{\mathrm{even}}(Y)=3+5Y$ and $f_{\mathrm{odd}}(Y)=2+Y$. Generally, $\deg f<2m$ implies that both parts have degree below $m$. This decomposition is unique. It is not reduction modulo $X^2$: the higher-degree information is retained in the new variable $Y$.
+
+Can we do this using only evaluations, without knowing the coefficients? If the characteristic is not 2 and $x\ne0$, then
+
+$$f_{\mathrm{even}}(x^2)=\frac{f(x)+f(-x)}2,\qquad
+f_{\mathrm{odd}}(x^2)=\frac{f(x)-f(-x)}{2x}.$$
+
+Division uses inverses in the coefficient field $K$. For a challenge $\alpha\in K$, define
+
+$$\operatorname{Fold}_{\alpha}[f](x^2)
+=\frac{f(x)+f(-x)}2+\alpha\frac{f(x)-f(-x)}{2x}.$$
+
+For a low-degree input polynomial, this is the evaluation table of $f_{\mathrm{even}}(Y)+\alpha f_{\mathrm{odd}}(Y)$, with half the degree bound. Replacing $x$ by $-x$ gives the same value.
+
+Choose a domain $D$ excluding zero and closed under negation. Squaring maps each pair $\{x,-x\}$ to one point, so $D'=\{x^2:x\in D\}$ has half as many elements. The order-eight multiplicative subgroup $\{1,2,4,8,16,15,13,9\}$ of $\mathbb F_{17}$ squares to $\{1,4,16,13\}$ and then to $\{1,16\}$.
+
+**Being able to fold a table does not establish that the original table has low degree.** The formula also works on arbitrary tables. FRI fixes each table before choosing a random challenge, then checks consistency between layers and the final degree condition. See the [worked example in Session 6](./session-06.md#fri-worked-example).
+
+The field $\mathbb F_8$ in [Section 2.4](#extension-field-coding) has characteristic 2, where $x=-x$ and $2=0$, so these divisions are unavailable. This discussion concerns multiplicative folding in odd characteristic; characteristic-two constructions require a different treatment, using additive evaluation domains.
+
+
 ---
 
 ## 4. The Schwartz–Zippel lemma

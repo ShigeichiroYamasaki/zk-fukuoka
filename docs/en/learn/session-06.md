@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import { withBase } from "vitepress";
 import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
@@ -133,6 +134,77 @@ One query path checks a constant number of values per stage, giving roughly $O(\
 FRI bounds the probability of accepting a table that is far from every permitted low-degree polynomial, using the Hamming distance introduced in Session 5. One accepting execution does not establish closeness with certainty. Quantifying this closeness involves list-decoding parameters, including Johnson-type bounds. Soundness error depends on a precise analysis of coding-theoretic parameters, and practical choices such as the number of folding rounds and queries are based on that analysis.
 
 *The detailed formulas are beyond this lecture. The key structure to understand is the trade-off between verification cost and soundness error, whose precise form is quantified using coding theory.*
+
+### 2.4 Worked example: folding eight evaluations twice {#fri-worked-example}
+
+Work in $\mathbb F_{17}$ with degree bound 4: every numerical operation below is modulo 17. The [even–odd decomposition from Session 3](./session-03.md#fri-polynomial-folding) lets us check folds using evaluations alone. We show coefficients here for teaching purposes; the verifier does not need them.
+
+$$f_0(X)=3+2X+5X^2+X^3,\qquad D_0=\{1,2,4,8,16,15,13,9\}.$$
+
+The prover first commits to the evaluation table of $f_0$ with a Merkle tree. Suppose the verifier's subsequent random challenge is $\alpha_0=3$. Then
+
+$$f_1(Y)=(3+5Y)+3(2+Y)=9+8Y.$$
+
+For the pair $x=2$ and $-x=15$, the values are $f_0(2)=1$ and $f_0(15)=11$. Thus
+
+$$\frac{1+11}{2}=6,\qquad \frac{1-11}{2\cdot2}=6,\qquad f_1(4)=6+3\cdot6=7\pmod{17}.$$
+
+Here $4^{-1}=13$, so $(1-11)/4=(-10)\cdot13=6$. These are field inverses, not rounded real-number divisions. Applying the same operation to all four pairs gives:
+
+<CaptionedTable number="06-2" caption="First fold: eight evaluations become four, with challenge 3" :en="true">
+
+| $x$ | $-x$ | $Y=x^2$ | $f_0(x)$ | $f_0(-x)$ | $f_1(Y)$ |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 16 | 1 | 11 | 5 | 0 |
+| 2 | 15 | 4 | 1 | 11 | 7 |
+| 4 | 13 | 16 | 2 | 11 | 1 |
+| 8 | 9 | 13 | 1 | 16 | 11 |
+
+</CaptionedTable>
+
+The prover next commits to the table of $f_1$, before receiving the next challenge. Suppose $\alpha_1=5$. Since $f_1(Y)=9+Y\cdot8$,
+
+$$f_2(Z)=9+5\cdot8=15\pmod{17}.$$
+
+Here $Z=Y^2$. Subscripts identify layers, not derivatives.
+
+<CaptionedTable number="06-3" caption="Second fold: four evaluations become two, with challenge 5" :en="true">
+
+| $Y$ | $-Y$ | $Z=Y^2$ | $f_1(Y)$ | $f_1(-Y)$ | $f_2(Z)$ |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 16 | 1 | 0 | 1 | 15 |
+| 4 | 13 | 16 | 7 | 11 | 15 |
+
+</CaptionedTable>
+
+Table lengths shrink as $8\to4\to2$, and degree bounds as “below 4, below 2, below 1.” The prover supplies the final constant 15, fixing it before query positions are chosen.
+
+### 2.5 What does the verifier read? {#fri-query-example}
+
+The full tables above are for teaching. Reading them all would not yield succinct verification. For an initial query $x=2$, one path checks:
+
+1. Read $f_0(2)=1$ and $f_0(15)=11$; check that their fold, 7, equals $f_1(4)$.
+2. Read the next pair $f_1(4)=7$ and $f_1(13)=11$. Their even and odd parts are $(7+11)/2=9$ and $(7-11)/8=8$. Check that $9+5\cdot8=15$ matches the final constant.
+3. Verify Merkle authentication paths against the appropriate committed roots for every opened value.
+
+Changing just $f_1(4)$ to 8 would fail this path's first check. Passing one path does not establish correctness of the whole table. The number of paths depends on the proximity threshold and target soundness error.
+
+For a supplied table of length $N$, folding processes $N+N/2+N/4+\cdots<2N$ entries, using $O(N)$ field operations. Preprocessing such as low-degree extension is counted separately. A verifier path reads a constant number of values per layer and uses $O(\ell)$ field operations for $\ell$ layers. Straightforward individual Merkle paths also involve $O(\ell\log N)$ hash values per path. This tiny example is not a practical security or proof-size estimate.
+
+### 2.6 Invalid tables and the role of random challenges
+
+The invalid polynomial $h_0(X)=f_0(X)+X^4$ violates the degree bound but can still be folded. With the same challenges,
+
+$$h_1(Y)=9+8Y+Y^2,\qquad h_2(Z)=15+Z.$$
+
+At the final domain $\{1,16\}$, the values are 16 and 14, not a constant. Faithful folds fail the final degree condition; pretending the result is constant introduces an inconsistency that queries can detect.
+
+Could we fix the first challenge to 3 in advance? Consider $\widetilde h_0(X)=f_0(X)+(X-3)X^4$. The added part has even and odd components $-3Y^2$ and $Y^2$, so it folds to $(\alpha_0-3)Y^2$. **If the prover knows that $\alpha_0=3$ before choosing the table, the invalid addition disappears.** For this particular table fixed before a uniform challenge in $\mathbb F_{17}$, cancellation has probability $1/17$. This is the cancellation probability for one example, not the soundness error of the entire FRI protocol.
+
+This explains why tables must be fixed before unpredictable challenges, and why the final degree condition and inter-layer consistency are both needed. The soundness theorem addresses arbitrary tables far from the code and adversarial strategies, not just these examples. FRI and Merkle commitments alone also do not establish zero-knowledge.
+
+<a :href="withBase('/examples/fri_folding.py')" download>Download the Python arithmetic example</a> and run `python3 fri_folding.py` to check both tables and the invalid examples. No extra libraries are required. This is an arithmetic teaching example, not a proof-system implementation with Merkle trees and cryptographic randomness.
+
 
 ---
 
