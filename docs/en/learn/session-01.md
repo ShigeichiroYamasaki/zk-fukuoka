@@ -10,7 +10,7 @@ next:
 
 <script setup>
 
-import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
+import MermaidLectureDiagram from "../../.vitepress/theme/MermaidLectureDiagram.vue";
 </script>
 
 # Session 1: What is a proof? — Background and formalization of interactive proofs
@@ -93,7 +93,7 @@ Here, “a single reading” means inspecting a received witness without sending
 
 Giving the witness allows verification, but is giving it necessary? Is there a reason the verifier should not ask questions? Separating the goal of checking correctness from the chosen method lets us question these two assumptions.
 
-<LectureDiagram kind="witness" :en="true" />
+<MermaidLectureDiagram kind="witness" :en="true" />
 
 ### 1.2 Asking the questions
 
@@ -116,7 +116,7 @@ At this point, one might ask how sending a witness in pieces differs from sendin
 
 Does allowing such exchanges change which statements can be verified? When comparing Arthur–Merlin public-coin models with general IP, conditions such as the number of rounds must be distinguished. The next result concerns IP with polynomially many rounds.
 
-<LectureDiagram kind="interaction" :en="true" />
+<MermaidLectureDiagram kind="interaction" :en="true" />
 
 ### 2.2 IP = PSPACE (presenting the result)
 
@@ -161,7 +161,7 @@ Interactive proofs in complexity theory already required protection against dish
 
 *(We study the concrete procedure for graph isomorphism next time, together with the definition of zero-knowledge. Today, use it to distinguish giving someone a witness from having them check a statement.)*
 
-<LectureDiagram kind="graphs" :en="true" />
+<MermaidLectureDiagram kind="graphs" :en="true" />
 
 ### 3.3 Summary of this motivation
 
