@@ -101,6 +101,37 @@ Write the preceding generator $g$ as $g_1\in G_1$ and include $g_2,g_2^\tau\in G
 
 The binding property to check here concerns evaluation: opening one commitment at the same point to different values. KZG analyzes it under an SDH-type assumption corresponding to the degree bound. Knowledge extraction and hiding require separate treatment. The basic commitment shown so far is deterministic and is not inherently hiding; zero-knowledge requires appropriate randomization.
 
+### 2.5 Example: opening $f(3)=1$ with KZG {#kzg-worked-example}
+
+Over $\mathbb F_{17}$, commit to the degree-at-most-two polynomial
+
+$$f(X)=X^2+2X+3.$$
+
+Later, open its value at $x=3$: $f(3)=18=1\pmod{17}$. This small-field example illustrates arithmetic; order-17 groups are not cryptographically secure.
+
+**Commit.** Using Session 7's additive notation $[a]_1=aP$ and $[b]_2=bQ$, the SRS supplies $[1]_1,[\tau]_1,[\tau^2]_1$ and verification elements $[1]_2,[\tau]_2$. Compute
+
+$$C=[\tau^2]_1+2[\tau]_1+3[1]_1=[f(\tau)]_1$$
+
+and send $C$ first. The numerical value of $\tau$ is not needed.
+
+**Produce the opening.** For $x=3,y=1$, the quotient is
+
+$$q(X)=\frac{f(X)-1}{X-3}=X+5,$$
+
+because $(X-3)(X+5)=X^2+2X-15=f(X)-1$ modulo 17. Send value 1 and proof $\pi=[\tau]_1+5[1]_1=[q(\tau)]_1$, rather than all polynomial coefficients.
+
+**Verify.** Using the public commitment, point, value, proof, and SRS, check
+
+$$e(C-[1]_1,[1]_2)\overset{?}=e(\pi,[\tau]_2-3[1]_2).$$
+
+The exponents on the two sides are $f(\tau)-1$ and $q(\tau)(\tau-3)$: this is the quotient identity encoded through a pairing.
+
+For a numerical check only, suppose the setup internally used $\tau=5$. Then $C=[4]_1$, $\pi=[10]_1$, and both sides equal $[3]_T$, since $10(5-3)=20=3\pmod{17}$. Keeping the same proof but changing the claimed value to 2 makes the left side $[2]_T$, which fails. **A real setup does not publish $\tau$.** Revealing 5 here is only for arithmetic illustration; evaluation binding cannot be expected against someone who knows the secret point.
+
+The commitment is one $G_1$ element and the single-point opening proof is also one $G_1$ element. This example includes no hiding randomization. Review [Session 7's group and scalar notation](./session-07#pairing-math) to distinguish the objects being transmitted.
+
+
 ---
 
 ## 3. FRI-based polynomial commitments
@@ -120,6 +151,61 @@ A Merkle path establishes membership of a value in the fixed table. FRI separate
 ### 3.3 Security foundations
 
 Hash collision resistance prevents changing the committed table; FRI soundness rejects tables far from low degree. The combined evaluation protocol must be analyzed as a whole. Non-interactive versions also introduce Fiat–Shamir and an oracle model. Assessing quantum resistance requires examining the transformed protocol, not merely the hash choice.
+
+### 3.4 Checking the same $f(3)=1$ using tables and a quotient {#fri-pcs-worked-example}
+
+Use the same $f(X)=X^2+2X+3\in\mathbb F_{17}[X]$, but no secret point. Instead, fix evaluations on the public domain
+
+$$D=\{1,2,4,8,16,15,13,9\}.$$
+
+The opening point 3 lies outside this domain. This example separates table authentication, quotient consistency, and low-degree testing; a practical scheme also specifies their composition and soundness parameters.
+
+<CaptionedTable number="08-2" caption="Polynomial and opening-quotient evaluations, modulo 17" :en="true">
+
+| Point $t$ | $f(t)=t^2+2t+3$ | $q(t)=t+5$ |
+|---:|---:|---:|
+| 1 | 6 | 6 |
+| 2 | 11 | 7 |
+| 4 | 10 | 9 |
+| 8 | 15 | 13 |
+| 16 | 2 | 4 |
+| 15 | 3 | 3 |
+| 13 | 11 | 1 |
+| 9 | 0 | 14 |
+
+</CaptionedTable>
+
+**Fix the table.** Build a Merkle tree of the eight $f$ values and send its root $R_f$. Fix the order and bind each leaf to its position, for example with $h_i=\operatorname{Hash}(\text{leaf},i,f(t_i))$ and internal nodes $\operatorname{Hash}(\text{node},\text{left},\text{right})$, using distinct tags and unambiguous encodings. To open value 11 at $t=2$ in this eight-leaf tree, send 11 and three sibling hashes. The verifier reconstructs the root using the left/right positions.
+
+This establishes membership of value 11 at position $t=2$ in the fixed table. **There is no leaf for point 3, so a Merkle path alone cannot prove $f(3)=1$.**
+
+**Link the out-of-domain claim through a quotient.** Use the same $q(X)=(f(X)-1)/(X-3)=X+5$ as in KZG and fix its table with root $R_q$. Fix the tables before choosing random query locations. At $t=2$, authenticate $f(2)=11,q(2)=7$ and check
+
+$$f(2)-1=10,\qquad (2-3)q(2)=-7=10\pmod{17}.$$
+
+The general check is $f(t)-y=(t-x)q(t)$. Since $3\notin D$, constructing quotient values by division never encounters a zero denominator.
+
+**Check low-degree proximity with FRI.** Authentication and the quotient equality are insufficient: $(f(t)-y)/(t-3)$ can be computed for any table. Also link the bounds $\deg f\le2$ and $\deg q\le1$ to low-degree proximity and consistency checks. Here we illustrate one fold of the quotient.
+
+The even and odd parts of $q(X)=5+X$ are 5 and 1. If the challenge selected after fixing the table is $\alpha=4$, the folded polynomial is the constant $q_1(Y)=9$. The pair $2,-2=15$ checks this using evaluations alone:
+
+$$\frac{q(2)+q(15)}2+4\frac{q(2)-q(15)}{2\cdot2}
+=\frac{7+3}2+4\frac{7-3}4=5+4=9.$$
+
+The folded table is all 9 on $D^2=\{1,4,16,13\}$. The verifier also checks quotient-table authentication, fold consistency, and the final constant condition. This illustrates one path, not certainty from a single query. [Session 6's worked FRI example](./session-06#fri-worked-example) explains repetitions and challenge ordering.
+
+### 3.5 Where a false value causes a problem
+
+Suppose the prover claims $f(3)=2$ and computes $\widetilde q(t)=(f(t)-2)/(t-3)$ at all eight points. Local quotient equations pass, but this table cannot be the evaluations of a degree-at-most-one polynomial. Otherwise,
+
+$$f(X)-2-(X-3)\widetilde q(X)$$
+
+would have degree at most two and eight roots, hence be identically zero. Yet at $X=3$ it equals $f(3)-2=-1\ne0$, a contradiction. This explains **why degree conditions must accompany the quotient identity**.
+
+This argument concerns polynomials agreeing at all domain points. FRI tests proximity probabilistically; bounding false acceptance requires analyzing distance, query counts, and evaluation consistency together.
+
+The transmitted objects include the initial root $R_f$, the claimed value 1, and quotient/FRI commitments, query values, and authentication paths. Displaying the full tables above is a teaching aid. KZG encodes the quotient relation with group elements and pairings; this approach combines authenticated tables with low-degree testing. Neither basic example includes a hiding mechanism, and opened values are revealed to the recipient.
+
 
 ---
 

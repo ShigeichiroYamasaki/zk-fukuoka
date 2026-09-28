@@ -126,6 +126,7 @@ Updated: September 27, 2026
 | Commitments, binding and hiding | [Session 8 §1.2](./session-08#_1-2-formal-components) / [Session 8 §1.3](./session-08#_1-3-binding) / [Session 8 §1.4](./session-08#_1-4-hiding) |
 | Polynomial commitments and evaluation openings | [Session 8 §1.5](./session-08#_1-5-extending-to-polynomial-commitments) |
 | KZG commitments, quotient polynomials and pairing verification | [Session 8 §2.2](./session-08#_2-2-commitment) / [Session 8 §2.3](./session-08#_2-3-opening-and-verification-the-role-of-pairings) |
+| KZG and FRI-based openings for the same polynomial | [KZG example](./session-08#kzg-worked-example) / [FRI-based example](./session-08#fri-pcs-worked-example) |
 | KZG evaluation binding versus hiding | [Session 8 §2.4](./session-08#_2-4-security-foundations) |
 | Merkle trees, authentication paths and collision resistance | [Session 8 §3.2](./session-08#_3-2-construction-outline) / [Session 8 §3.3](./session-08#_3-3-security-foundations) |
 | FRI-based polynomial commitments and comparison with KZG | [Session 8 §3.2](./session-08#_3-2-construction-outline) / [Session 8 §4](./session-08#_4-comparing-kzg-and-fri-based-commitments) |
