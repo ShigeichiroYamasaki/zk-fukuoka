@@ -252,22 +252,96 @@ This is the second half of today's lecture and the closing topic of Act I as a w
 
 ### 4.1 Simple witnesses: proofs built on structure
 
-Use Schnorr identification to make the distinction concrete. Let $g$ generate a cyclic group of prime order $q$, and let the prover know the exponent $w\in\mathbb{Z}_q$ satisfying $y=g^w$. Even when the group is a subgroup of a finite field’s multiplicative group, distinguish group elements from exponents. The following exponent arithmetic is modulo $q$. The protocol proceeds as follows:
+Use Schnorr identification to make the distinction concrete. First fix what the public statement is and what the prover claims to know.
 
-1. Prover: choose a random $r$ and send the commitment $t = g^r$.
-2. Verifier: sample a uniform challenge $c\in\mathbb{Z}_q$ and send it.
-3. Prover: send the response $s = r + cw$.
-4. Verifier: check that $g^s = t \cdot y^c$.
+**Separate the statement from its witness**
 
-The verification equation $g^s=t\cdot y^c$ follows from the homomorphism $g^{r+cw}=g^r\cdot(g^w)^c$. Distinguish why that identity holds from knowing the secret. For extraction, take accepting responses $s_1,s_2$ to different challenges $c_1\ne c_2$ with **the same initial commitment**. Subtracting cancels the common randomness and gives:
+The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
 
-$$w = \frac{s_1 - s_2}{c_1 - c_2}.$$
+| Symbol | Meaning | Who has it? |
+| --- | --- | --- |
+| $x=(G,q,g,y)$ | Public input representing the statement; $y\in G$ acts as a public key | Both prover and verifier |
+| $w\in\mathbb{Z}_q$ | A secret exponent satisfying $y=g^w$: the witness | The honest prover |
+| $R_{\mathrm{DL}}$ | The relation checking that the public input and exponent match | Its definition and checking procedure are public |
 
-Read division as multiplication by an inverse in $\mathbb{Z}_q$. The challenge difference is nonzero, so the exponent $w$ can be recovered. Extraction from distinct accepting responses sharing the first message is called special soundness.
+In an implementation, $G$ is represented by a description of the group and its operations. With valid shared group parameters and membership of $y$ checked, define
 
-**The algebraic structure of the relation becomes the structure of the protocol itself.** As the mathematical object changes—discrete logarithms, quadratic residues, and so on—we can design a tailored protocol for each case.
+$$
+(x,w)\in R_{\mathrm{DL}}
+\quad\Longleftrightarrow\quad
+x=(G,q,g,y),\quad w\in\mathbb{Z}_q,\quad y=g^w.
+$$
+
+This instantiates Section 2's relation $R$ as the discrete-logarithm relation $R_{\mathrm{DL}}$. When the group parameters are fixed, the public input may be written simply as $y$. The claim is: **“For this public value $y$, I know an exponent $w$ such that $y=g^w$.”** The prover does not send $w$. Every $y\in G$ has such an exponent, so checking existence alone does not establish knowledge. Section 3's extractor formalizes precisely this distinction.
+
+**Group elements and exponents live in different algebraic structures**
+
+The exponents $w,r,c,s$ lie in $\mathbb{Z}_q$, with addition and multiplication modulo $q$. Since $q$ is prime, this is also a finite field, in which every nonzero element has an inverse. In contrast, $y$ and the commitment $t$ are elements of $G$. If $G$ is a subgroup of the multiplicative group of $\mathbb{F}_p$, **group multiplication is modulo $p$, while exponent arithmetic is modulo $q$**.
+
+The map connecting these structures is $\varphi:\mathbb{Z}_q\to G$, $\varphi(a)=g^a$. It satisfies
+
+$$
+\varphi(a+b)=\varphi(a)\varphi(b),\qquad
+\varphi(ca)=\varphi(a)^c.
+$$
+
+This **group homomorphism** translates addition of exponents into multiplication of group elements. Because $g$ has order $q$, $g^a=g^b$ implies $a=b\pmod q$. The inverse map exists mathematically, but in a cryptographic group recovering $w$ efficiently from $g^w$ is assumed difficult. An invertible mathematical structure does not imply an efficient inversion algorithm.
+
+**Use this structure to verify without sending the witness**
+
+1. Prover: choose fresh uniform $r\in\mathbb{Z}_q$ and send the commitment $t=g^r$.
+2. Verifier: send a uniform challenge $c\in\mathbb{Z}_q$.
+3. Prover: send the response $s=r+cw\pmod q$.
+4. Verifier: check valid group-element and exponent inputs, and check $g^s=t\cdot y^c$.
+
+For an honest prover, the verification equation follows from
+
+$$
+g^s=g^{r+cw}=g^r(g^w)^c=t\cdot y^c.
+$$
+
+The verifier uses only public $g,y$, received $t,s$, and its own challenge $c$, without needing $w$ or $r$. This identity explains completeness; a single acceptance does not by itself guarantee knowledge.
+
+**Work through small numbers**
+
+For illustration, take $p=23$, $q=11$, and $g=2$. In power order, the 11 elements of $G=\langle2\rangle\subset\mathbb{F}_{23}^{*}$ are $1,2,4,8,16,9,18,13,3,6,12$. This tiny group is searchable exhaustively and unsuitable for real cryptography.
+
+With witness $w=3$, the public value is $y=2^3\bmod23=8$. Randomness $r=4$ gives commitment $t=16$. For challenge $c=2$, the response is $s=4+2\cdot3=10\pmod{11}$. The verifier obtains
+
+$$
+2^{10}\bmod23=12,\qquad
+16\cdot8^2\bmod23=12.
+$$
+
+The two sides agree. The secret input $w=3$ satisfies the relation, whereas $r=4$ is fresh randomness for this execution. Both are exponents, but their roles differ.
+
+**Extract an exponent satisfying the same relation from two accepting records**
+
+For a malicious prover, do not assume that its responses were honestly computed as $s=r+cw$. Nevertheless, if responses to distinct challenges $c_1\ne c_2$ are both accepted with **the same initial commitment $t$**, dividing the verification equations gives
+
+$$
+\frac{g^{s_1}}{g^{s_2}}
+=\frac{t y^{c_1}}{t y^{c_2}}
+\quad\Longrightarrow\quad
+g^{s_1-s_2}=y^{c_1-c_2}.
+$$
+
+The nonzero difference $c_1-c_2$ has an inverse in $\mathbb{Z}_q$. Raising both sides to that inverse yields
+
+$$
+w'=(s_1-s_2)(c_1-c_2)^{-1}\pmod q,
+\qquad g^{w'}=y.
+$$
+
+Thus the extracted $w'$ is a **witness satisfying the original relation $(x,w')\in R_{\mathrm{DL}}$**. Group division cancels the common commitment, and inversion in the exponent field solves for a witness. This is special soundness.
+
+In the numerical example, suppose we also obtain the accepting response $s_2=8$ to challenge $c_2=5$ for the same $t=16$. Since $c_1-c_2=8\pmod{11}$ has inverse 7, extraction gives $w'=(10-8)\cdot7=3\pmod{11}$. This describes Section 3's rewinding experiment, not a procedure for reusing randomness in ordinary interactions.
+
+**The relation's algebraic structure directly supplies both the verification and extraction equations.** Whether arbitrary computations come with such a structure is the question leading into Section 4.2.
 
 <StudyDiagram id="02-2" :en="true" />
+
+For another description of the construction, see [RFC 8235 §2.2](https://www.rfc-editor.org/rfc/rfc8235.html#section-2.2). It uses subtraction in the response, so its verification equation is arranged differently from the additive-response convention used here.
 
 ### 4.2 General witnesses: when that structure is absent
 

@@ -92,44 +92,58 @@ export const diagrams = {
     "section": "4.1",
     "type": "flow",
     "title": [
-      "Schnorr：同じコミットから二つの応答へ",
-      "Schnorr: two responses to one commitment"
+      "Schnorr：言明・ウィットネスから検証と抽出へ",
+      "Schnorr: from statement and witness to verification and extraction"
     ],
-    "note": [
-      "素数位数qの群を想定し，指数の計算はmod q．同じtに対する異なるチャレンジが必要であり，一つの記録だけからの抽出を示す図ではない．",
-      "Use a prime-order group of order q; exponent arithmetic is modulo q. Extraction needs distinct challenges for the same t, not just one transcript."
+    "lead": [
+      "公開入力 x = (G, q, g, y) と秘密の指数 w の関係は y = gʷ．例：p = 23，q = 11，g = 2，y = 8，w = 3．",
+      "Public input x = (G, q, g, y) and secret exponent w satisfy y = gʷ. Example: p = 23, q = 11, g = 2, y = 8, w = 3."
     ],
     "nodes": [
       {
         "title": [
-          "コミットを固定",
-          "Fix the commitment"
+          "言明とウィットネス",
+          "Statement and witness"
         ],
         "body": [
-          "y = gʷ，t = gʳ",
-          "y = gʷ, t = gʳ"
+          "言明：公開値 y の離散対数を知っている．\nウィットネス：指数 w．関係 R_DL：y = gʷ．",
+          "Claim: know the discrete logarithm of public y.\nWitness: exponent w. Relation R_DL: y = gʷ."
         ]
       },
       {
         "title": [
-          "異なるチャレンジで受理される記録",
-          "Accepting transcripts with distinct challenges"
+          "二つの代数構造を結ぶ",
+          "Connect two algebraic structures"
         ],
         "body": [
-          "s₁ = r + c₁w，s₂ = r + c₂w，c₁ ≠ c₂",
-          "s₁ = r + c₁w, s₂ = r + c₂w, c₁ ≠ c₂"
+          "指数の加算 a + b（mod q）→ 群の乗算 gᵃgᵇ．\nφ(a) = gᵃ，φ(a + b) = φ(a)φ(b)．",
+          "Exponent addition a + b (mod q) → group multiplication gᵃgᵇ.\nφ(a) = gᵃ; φ(a + b) = φ(a)φ(b)."
         ]
       },
       {
         "title": [
-          "差を取ってrを消す",
-          "Subtract to eliminate r"
+          "証明者 P ↔ 検証者 V",
+          "Prover P ↔ verifier V"
         ],
         "body": [
-          "w = (s₁ − s₂) · (c₁ − c₂)⁻¹ mod q",
-          "w = (s₁ − s₂) · (c₁ − c₂)⁻¹ mod q"
+          "P → V：t = gʳ ／ V → P：c ／ P → V：s = r + cw．\nV は gˢ = tyᶜ を検査．例：r = 4，t = 16，c = 2，s = 10．両辺は 12（mod 23）．",
+          "P → V: t = gʳ / V → P: c / P → V: s = r + cw.\nV checks gˢ = tyᶜ. Example: r = 4, t = 16, c = 2, s = 10. Both sides are 12 (mod 23)."
+        ]
+      },
+      {
+        "title": [
+          "抽出者 E：同じ t の二つの受理式を割る",
+          "Extractor E: divide two accepting equations for the same t"
+        ],
+        "body": [
+          "gˢ¹ = tyᶜ¹ と gˢ² = tyᶜ² → g⁽ˢ¹⁻ˢ²⁾ = y⁽ᶜ¹⁻ᶜ²⁾．\nw′ = (s₁ − s₂)(c₁ − c₂)⁻¹ mod q → gʷ′ = y．\n例：(c₁, s₁) = (2, 10)，(c₂, s₂) = (5, 8) → w′ = 3．",
+          "gˢ¹ = tyᶜ¹ and gˢ² = tyᶜ² → g⁽ˢ¹⁻ˢ²⁾ = y⁽ᶜ¹⁻ᶜ²⁾.\nw′ = (s₁ − s₂)(c₁ − c₂)⁻¹ mod q → gʷ′ = y.\nExample: (c₁, s₁) = (2, 10), (c₂, s₂) = (5, 8) → w′ = 3."
         ]
       }
+    ],
+    "note": [
+      "指数 w, r, c, s の演算は mod q．この例の群の乗算は mod p．二つの受理記録は同じ t と異なる c を要する．小さい数は説明用であり，通常の対話で r を再利用しない．",
+      "Exponent arithmetic (w, r, c, s) is modulo q; group multiplication in this example is modulo p. Extraction requires the same t and distinct c. These small values are illustrative; never reuse r in normal interactions."
     ]
   },
   "02-3": {
