@@ -7,6 +7,8 @@ next: false
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
+
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -110,11 +112,15 @@ Session 10's “IOP design → implementation → non-interactivity” map helps
 
 Session 14 showed why efficiency cannot be reduced to one number. Read this session’s techniques the same way. Do they improve proof size, verification cost, or prover cost? Add composability? Leave setup or long-term security conditions unchanged? The following table maps techniques to these questions.
 
+<CaptionedTable number="15-1" caption="Primary improvements targeted by emerging techniques" :en="true">
+
 | Technique | Main dimension improved |
 | --- | --- |
 | Recursive proofs | Proof composability: adding a new capability |
 | Folding schemes | Prover cost, particularly for sequential computation |
 | GKR/sumcheck | Prover cost, particularly for large parallel computations |
+
+</CaptionedTable>
 
 Use the table as a set of questions for evaluating new schemes. Lower prover cost might come with greater communication or memory demands. Read improvements together with remaining conditions, including succinct verification and composability. The table does not say the entire field has moved to a single goal.
 
@@ -142,12 +148,16 @@ EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not est
 
 Return from the Ethereum example to the course’s questions. The following table connects application decisions to the tools studied. It does not claim that EIP-8025 selects a particular folding scheme or GKR construction.
 
+<CaptionedTable number="15-2" caption="Mapping Ethereum ZK EVM applications to course topics and evaluation criteria" :en="true">
+
 | Application question | Course connection | Evaluation dimensions |
 | --- | --- | --- |
 | Does the proof capture every required EVM execution rule? | Arithmetization (Session 4) and general computation | Expressiveness, compatibility, implementation correctness |
 | Can proofs arrive within the required time? | GKR/sumcheck, parallelization, prover cost | Average and worst-case latency, memory and hardware cost |
 | Can proofs of computation segments be combined efficiently? | Recursion and aggregation; folding where appropriate to the construction | Proof size, proving cost, bandwidth |
 | Can validation become cheaper through a safe transition? | Soundness (Sessions 1 and 14) and staged protocol adoption | Verification cost, security, operational reliability |
+
+</CaptionedTable>
 
 Discussion prompts: “If a proof is small but slow to generate, how do L2 batching and L1 block validation differ?” and “What measurements and security evidence are needed before supplementary proofs become mandatory?” These questions connect theoretical efficiency to operational requirements.
 

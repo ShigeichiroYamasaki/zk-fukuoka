@@ -96,7 +96,7 @@ The elements $[\alpha]_1,[\beta]_2,[\gamma]_2,[\delta]_2$ in this equation are p
 
 The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]_1,[\beta]_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
 
-<StudyDiagram id="11-2" :en="true" />
+<StudyDiagram id="11-2" :en="true" number="11-1" />
 
 ---
 

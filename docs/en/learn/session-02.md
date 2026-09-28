@@ -9,6 +9,8 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
+
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
 </script>
@@ -59,6 +61,8 @@ In other words, if an algorithm that generates a transcript—a simulator $S$—
 
 Before formalizing zero-knowledge, let us identify what is public and what we want to keep private. In Session 1, a verifier received a public input $x$ and a witness $w$. Relation $R$ specifies **which pairs of these values satisfy the required condition**.
 
+<CaptionedTable number="02-1" caption="Notation for public input, witness, relation and language" :en="true">
+
 | Symbol | Meaning |
 | --- | --- |
 | $x$ | The public input shared by prover and verifier |
@@ -66,6 +70,8 @@ Before formalizing zero-knowledge, let us identify what is public and what we wa
 | $R$ | The set of pairs $(x,w)$ satisfying that condition |
 | $(x,w)\in R$ | The statement that $w$ is a valid witness for $x$ |
 | $L$ | The set of inputs $x$ with at least one valid witness |
+
+</CaptionedTable>
 
 A relation here is a **binary relation**, specifying a condition on pairs of objects. Encoding inputs and witnesses as finite binary strings gives $R\subseteq\{0,1\}^*\times\{0,1\}^*$. Distinguish membership $(x,w)\in R$ from the procedure that checks it. We also sometimes write the result of this check as $R(x,w)=1$ for membership and $R(x,w)=0$ otherwise.
 
@@ -130,12 +136,16 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
 
 **A small example clarifies what comparing distributions means.** These are hypothetical two-bit records, not a zero-knowledge protocol.
 
+<CaptionedTable number="02-2" caption="Two probability distributions over two-bit records" :en="true">
+
 | Record $t$ | Probability for real record $X$ | Probability for a candidate simulator's record $Y$ |
 | --- | --- | --- |
 | $00$ | $1/4$ | $1/2$ |
 | $01$ | $1/4$ | $0$ |
 | $10$ | $1/4$ | $0$ |
 | $11$ | $1/4$ | $1/2$ |
+
+</CaptionedTable>
 
 Each individual bit is equally likely to be 0 or 1 under either distribution. However, a distinguisher returning 1 when the bits agree has $\Pr[D(X)=1]=1/2$ and $\Pr[D(Y)=1]=1$, giving advantage $1/2$. Identical marginal distributions do not imply an identical **joint distribution of the complete record**. If this gap persists as input length grows, even computational indistinguishability fails. This is why zero-knowledge compares the entire view.
 
@@ -201,12 +211,16 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the exact value originally stored inside the prover.
 
+<CaptionedTable number="02-3" caption="Random variables and outputs in interaction and extraction" :en="true">
+
 | Aspect | Real interaction | Extraction experiment |
 | --- | --- | --- |
 | Algorithms | $P^*$ and $V$ | $E$ invoking $P^*$ |
 | Random variables | Decision $A_x\in\{0,1\}$ | Output $W_{x,T}$ and success indicator $B_{x,T}$ |
 | Probability | Acceptance $p_{P^*}(x)$ | Extraction success $e_{P^*}(x,T)$ |
 | Result | Accept or reject | Valid witness or $\bot$ |
+
+</CaptionedTable>
 
 These are separate experiments: do not assume $p_{P^*}(x)=e_{P^*}(x,T)$. Nor is $e_{P^*}(x,T)$ the probability of learning a secret by eavesdropping on one accepting transcript. Knowledge soundness connects **the ability to cause acceptance with extraction under specified access and computational resources**.
 
@@ -258,11 +272,15 @@ Use Schnorr identification to make the distinction concrete. First fix what the 
 
 The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
 
+<CaptionedTable number="02-4" caption="Schnorr public input, witness and relation" :en="true">
+
 | Symbol | Meaning | Who has it? |
 | --- | --- | --- |
 | $x=(G,q,g,y)$ | Public input representing the statement; $y\in G$ acts as a public key | Both prover and verifier |
 | $w\in\mathbb{Z}_q$ | A secret exponent satisfying $y=g^w$: the witness | The honest prover |
 | $R_{\mathrm{DL}}$ | The relation checking that the public input and exponent match | Its definition and checking procedure are public |
+
+</CaptionedTable>
 
 In an implementation, $G$ is represented by a description of the group and its operations. With valid shared group parameters and membership of $y$ checked, define
 
@@ -399,16 +417,20 @@ Typical analyses use the **random oracle model (ROM)**, treating the hash as an 
 
 With these distinctions in place, the landscape can be organized as follows. Interactive versus non-interactive is not the same distinction as succinct versus non-succinct.
 
+<CaptionedTable number="02-5" caption="Relations, interaction and succinctness" :en="true">
+
 | Relation | Interactive examples | Non-interactive examples | Reading succinctness |
 | --- | --- | --- | --- |
 | Algebraic relations | Schnorr | Fiat–Shamir applied to suitable Sigma protocols | Short transcripts for a particular relation do not mean that Fiat–Shamir compresses proofs |
 | General NP relations | Interactive ZK constructions for general NP | Groth16 / PLONK / STARK | Assess proof size and verification cost relative to computation size separately from non-interactivity |
 
+</CaptionedTable>
+
 These constructions do not all follow the same route. For example, Groth16 is constructed non-interactively using a reference string, without applying Fiat–Shamir. Act III examines each construction's route.
 
 <span id="figure-02-3"></span>
 
-**Table 02-3: Separate expressiveness from efficiency**
+<CaptionedTable number="02-6" caption="Separate expressiveness from efficiency" :en="true">
 
 | Question | Algebraic relation: the Schnorr example | General computation |
 | --- | --- | --- |
@@ -417,6 +439,8 @@ These constructions do not all follow the same route. For example, Groth16 is co
 | Purpose of non-interactivity | Remove the verifier round trip and allow later verification | The same purpose, with a construction-dependent route |
 | Purpose of succinctness | Limit communication and verification group operations for the relation | Keep proof size and verification work small relative to a large computation |
 | What must be checked separately? | The relation, verifier model, and security after transformation | Prover cost, public-input processing, setup, and security assumptions |
+
+</CaptionedTable>
 
 Increasing expressiveness and improving proof efficiency are separate design tasks. Rather than treating succinctness, non-interactivity, and zero-knowledge as a single notion of performance, distinguish the guarantees and remaining costs. This provides a guide to the tools and protocols in Acts II and III.
 

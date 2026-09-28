@@ -9,6 +9,8 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
+
 import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 </script>
 
@@ -43,12 +45,16 @@ First, consider how to check whether a statement is true. Even when checking the
 
 For example, consider the statement **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. If someone supplies the number 7, the verifier can check $1<7<91$ and $91=7\times13$. Here the input being checked is 91, and the witness is 7.
 
+<CaptionedTable number="01-1" caption="Statement, witness and verifier roles for the composite number 91" :en="true">
+
 | Role | In this example |
 | --- | --- |
 | Statement | 91 is composite |
 | Public input | 91 |
 | Witness | The nontrivial divisor 7 |
 | Verification | Check that 7 is an integer strictly between 1 and 91 and divides 91 exactly |
+
+</CaptionedTable>
 
 Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a statement, not the statement itself, and it need not be unique.** This example illustrates the role of a witness: handing over 7 does not conceal that value. However, zero-knowledge does not require hiding information easily computed from the public input, as in this small example. We define zero-knowledge next time.
 

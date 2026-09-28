@@ -9,6 +9,8 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
+
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -123,12 +125,16 @@ Hash collision resistance prevents changing the committed table; FRI soundness r
 
 ## 4. Comparing KZG and FRI-based commitments
 
+<CaptionedTable number="08-1" caption="Comparing KZG and FRI-based polynomial commitments" :en="true">
+
 | | KZG commitments | FRI-based commitments |
 |---|---|---|
 | Underlying tool | Pairings (Session 7) | Low-degree testing / FRI (Session 6) |
 | Trusted setup | Required to generate the SRS | Not required; transparent |
 | Evaluation correctness | Evaluation binding under a degree-appropriate SDH assumption | Table binding + FRI soundness + consistency with the evaluation claim |
 | Evaluation-proof size | Constant number of group elements for a fixed group | Count queried values and Merkle paths; polylogarithmic in representative constructions |
+
+</CaptionedTable>
 
 Compare what is fixed, what is checked, and which assumptions are used. Folding depth is distinct from total proof size including authentication paths and queries. Non-interactivity and knowledge extraction require additional security conditions beyond evaluation binding. Act III compares KZG-based PLONK with representative FRI-based STARKs. Groth16 uses pairings but does not incorporate KZG as a component; preserve that distinction when reading the constructions.
 

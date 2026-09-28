@@ -76,7 +76,7 @@ To model how responses to inputs are determined, treat the hash as an ideal rand
 - Repeated queries on the same input always receive the same output, ensuring consistency.
 - All algorithms, including attackers, access $H$ only through queries and cannot inspect its internal representation.
 
-<StudyDiagram id="09-2" :en="true" />
+<StudyDiagram id="09-2" :en="true" number="09-1" />
 
 ### 3.2 The structure of a security proof in ROM
 

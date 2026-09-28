@@ -70,7 +70,7 @@ This follows from the fact established in Session 3: a nonzero polynomial of deg
 
 For minimum distance $\delta$, changing at most $\lfloor(\delta-1)/2\rfloor$ positions around each codeword gives disjoint neighborhoods. This is why unique correction is possible. Reed–Solomon codes attain the Singleton bound for length $n$ and dimension $d$, making them MDS codes. Notice how distance determines the number of correctable errors.
 
-<StudyDiagram id="05-1" :en="true" />
+<StudyDiagram id="05-1" :en="true" number="05-1" />
 
 ---
 

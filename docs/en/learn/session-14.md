@@ -9,6 +9,8 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
+
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -44,11 +46,15 @@ First consider an honest prover following the procedure with a valid witness. Al
 
 Next consider an adversary trying to establish a false claim. Groth16, PLONK, and STARKs are arguments, providing guarantees against computationally bounded adversaries—the distinction in Session 1, Section 5.2. That classification alone does not identify their security premises. Use the table to separate the bases of each guarantee.
 
+<CaptionedTable number="14-1" caption="Assumptions and components supporting protocol soundness" :en="true">
+
 | Protocol | Main premises and components for reading its security analysis |
 | --- | --- |
 | Groth16 | Given correctly generated CRS parameters, the original paper proves knowledge soundness in the generic bilinear group model, not simply by reduction to q-SDH |
 | KZG-based PLONK | Polynomial-IOP soundness, commitment security of KZG, and Fiat–Shamir analysis in the ROM; knowledge soundness also requires the applicable extraction conditions |
 | AIR/FRI-based STARK | AIR constraint/consistency checks, FRI soundness, hash collision resistance for Merkle binding, and Fiat–Shamir analysis in the ROM |
+
+</CaptionedTable>
 
 This table guides the reading of security proofs; listing assumptions and models does not itself prove security. See the [Groth16 paper](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf) and [Sessions 11](./session-11), [12](./session-12), and [13](./session-13) for the constructions.
 
@@ -68,13 +74,15 @@ In Session 2, two accepting Schnorr transcripts sharing the first commitment but
 
 Groth16's generic-group analysis, PLONK's polynomial-commitment construction, and STARK's coding-theoretic construction cannot all be described as generalizations of rewinding or the forking lemma. Identify what is extracted, which access the extractor has, and which assumptions it uses.
 
-<StudyDiagram id="14-1" :en="true" />
+<StudyDiagram id="14-1" :en="true" number="14-2" />
 
 ---
 
 ## 2. Revisiting Act II: a cross-protocol map
 
 Now shift from properties to tools. Even the same finite fields and polynomials can serve different checks. In the table below, go beyond naming a tool: explain which proving or verification operation each entry represents.
+
+<CaptionedTable number="14-3" caption="How Act II tools map to each protocol" :en="true">
 
 | Tool (session) | Groth16 | PLONK | STARK |
 | --- | --- | --- | --- |
@@ -87,9 +95,11 @@ Now shift from properties to tools. Even the same finite fields and polynomials 
 | Fiat–Shamir and ROM (9) | Not used: directly non-interactive in the CRS model | Used | Used |
 | PCP/IOP (10) | Theoretical background | Explicit IOP design framework | Explicit IOP design framework |
 
+</CaptionedTable>
+
 Sharing tools does not make entire constructions equivalent. Groth16 and KZG-based PLONK both use pairings, but Groth16 does not incorporate KZG openings. In a STARK, Merkle trees fix tables while FRI checks low-degree proximity. Read across and down the table to check these different roles.
 
-<StudyDiagram id="14-2" :en="true" />
+<StudyDiagram id="14-2" :en="true" number="14-4" />
 
 ---
 
@@ -99,6 +109,8 @@ All three systems can handle general NP relations. Does that make them interchan
 
 Fix groups and security parameters when considering scaling with circuit or trace size. Account separately for public-input processing.
 
+<CaptionedTable number="14-5" caption="Comparing Groth16, KZG-based PLONK and AIR/FRI-based STARK" :en="true">
+
 | Property | Groth16 | KZG-based PLONK | AIR/FRI-based STARK |
 | --- | --- | --- | --- |
 | Proof size | Three group elements | Constant numbers of group and field elements | Includes queried values and Merkle paths; polylogarithmic in representative constructions |
@@ -106,6 +118,8 @@ Fix groups and security parameters when considering scaling with circuit or trac
 | Setup | Circuit-specific keys and trusted setup | Universal, updatable SRS plus circuit-specific public preprocessing | No secret trapdoor required |
 | Post-quantum security | Not secure against sufficiently large quantum computers | Not secure against sufficiently large quantum computers | Requires suitable hashes, parameters, and security analysis in a quantum model |
 | Assessing prover cost | Measure QAP processing, group operations, and related work | Measure polynomial processing, commitments, and related work | Measure trace processing, low-degree extension, hashing, FRI, and related work |
+
+</CaptionedTable>
 
 STARK costs depend on query counts and authentication paths, not just FRI rounds. Prover speed depends on circuits, trace width, implementation, hardware, memory, and security parameters; this table establishes no universal speed ranking. Hashing alone does not establish post-quantum security of a non-interactive STARK (Session 13, Section 4.2).
 

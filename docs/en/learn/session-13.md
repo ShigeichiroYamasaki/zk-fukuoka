@@ -98,7 +98,7 @@ Align the fixed parameters before comparing systems. With groups and security pa
 
 The FRI-based STARKs studied here avoid trusted setup while incurring communication and verification costs for evaluations and authentication paths. **Compare setup, proof size, and verification cost for specified constructions and conditions.** This is not an impossibility theorem saying that transparent proofs must be larger, and Groth16 should not be classified as a KZG-based construction.
 
-<StudyDiagram id="13-3" :en="true" />
+<StudyDiagram id="13-3" :en="true" number="13-1" />
 
 ### 4.2 Post-quantum security
 

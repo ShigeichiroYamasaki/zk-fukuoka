@@ -138,7 +138,7 @@ AIR imposes two types of constraints:
 
 Separate the roles of the two constraints. Correct transitions do not establish the intended computation if the starting or ending state is wrong. Interpolating columns turns both relations between adjacent times and values at specified times into polynomial conditions. Session 3’s interpolation again connects tables to polynomials.
 
-<StudyDiagram id="04-3" :en="true" />
+<StudyDiagram id="04-3" :en="true" number="04-1" />
 
 [Follow the deposit/withdrawal example: AIR](./balance-arithmetization#air)
 

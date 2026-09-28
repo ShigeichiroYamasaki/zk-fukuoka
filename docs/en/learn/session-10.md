@@ -82,7 +82,7 @@ A useful comparison is:
 - IP: Multiple rounds of interaction, with messages read in full.
 - IOP: Multiple rounds of interaction, with oracle access to prover messages.
 
-<StudyDiagram id="10-1" :en="true" />
+<StudyDiagram id="10-1" :en="true" number="10-1" />
 
 ### 3.2 Revisiting earlier techniques in the language of IOPs
 

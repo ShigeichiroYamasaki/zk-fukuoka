@@ -14,7 +14,7 @@ const numbers = {witness:1,interaction:2,graphs:3,motives:4,properties:5,models:
 </script>
 <template>
   <figure class="lecture-figure" :aria-labelledby="`diagram-${kind}`">
-    <figcaption :id="`diagram-${kind}`"><span class="figure-number">{{ t('図', 'FIG') }} {{ numbers[kind] }}</span><strong>{{ t(...titles[kind]) }}</strong></figcaption>
+    <figcaption :id="`diagram-${kind}`"><span class="figure-number">{{ t('図', 'Figure') }} 01-{{ numbers[kind] }}</span><strong>{{ t(...titles[kind]) }}</strong></figcaption>
     <template v-if="kind === 'witness'">
       <div class="shared">{{ t('公開されている問題の入力 x', 'Public instance x') }}</div>
       <div class="flow"><div class="node"><b>{{ t('証明者 P', 'Prover P') }}</b><span>{{ t('ウィットネス w を用意', 'Provides a witness w') }}</span></div><div class="arrow"><span>w</span>→</div><div class="node teal"><b>{{ t('検証者 V', 'Verifier V') }}</b><span>{{ t('V(x, w) を計算', 'Computes V(x, w)') }}</span></div></div>

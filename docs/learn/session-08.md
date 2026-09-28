@@ -9,6 +9,8 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../.vitepress/theme/CaptionedTable.vue";
+
 import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -123,12 +125,16 @@ Merkle経路が示すのは，その値が固定された表に含まれるこ�
 
 ## 4. KZGとFRIベースの比較
 
+<CaptionedTable number="08-1" caption="KZGとFRIベースの多項式コミットメントの比較">
+
 | | KZGコミットメント | FRIベースのコミットメント |
 |---|---|---|
 | 基盤となる道具 | ペアリング(第7回) | Low-Degree Testing / FRI(第6回) |
 | トラステッドセットアップ | 必要(SRSの生成) | 不要(transparent) |
 | 評価の正しさの根拠 | 次数上限に対応するSDH型仮定による評価拘束性 | 表への拘束性 + FRIの健全性 + 評価言明との整合性検査 |
 | 評価証明のサイズ | 固定した群で定数個の群要素 | 問い合わせ値とMerkle認証経路を含めて評価．代表的構成では多重対数的 |
+
+</CaptionedTable>
 
 比較するときは，何を固定し，何を検査し，どの前提を使うかを順に確認しよう．FRIの折り畳み段階数と，認証経路や問い合わせ数を含む全証明のサイズは別に数える．非対話化と知識の抽出には，表の評価拘束性とは別の安全性条件が必要になる．幕IIIではKZGを使うPLONKとFRIを使う代表的なSTARKを比べる．Groth16はペアリングを使うが，KZGを部品として組み込む方式ではない．この違いも，構成を読む際に維持しておこう．
 

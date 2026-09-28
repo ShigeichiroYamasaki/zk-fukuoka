@@ -4,7 +4,7 @@ defineProps({ en: Boolean });
 
 <template>
  <figure class="schnorr-overview" aria-labelledby="schnorr-overview-title">
-  <figcaption id="schnorr-overview-title">{{ en ? 'Schnorr identification: who sends what, and when?' : 'Schnorr識別プロトコル：誰が，何を，いつ送るか' }}</figcaption>
+  <figcaption id="schnorr-overview-title"><span>{{ en ? 'Figure' : '図' }} 02-5： </span>{{ en ? 'Schnorr identification: who sends what, and when?' : 'Schnorr識別プロトコル：誰が，何を，いつ送るか' }}</figcaption>
   <p class="public">{{ en ? 'Public: a value corresponding to the secret exponent. Only the prover knows the secret exponent (witness).' : '公開：秘密の指数に対応する値．秘密の指数（ウィットネス）は証明者だけが知っている．' }}</p>
   <div class="sequence-scroll" tabindex="0" :aria-label="en ? 'Scrollable protocol sequence' : '横にスクロールできる手順図'">
    <div class="sequence">

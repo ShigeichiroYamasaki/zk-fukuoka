@@ -82,7 +82,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 という位置づけで整理すると理解しやすい．
 
-<StudyDiagram id="10-1" />
+<StudyDiagram id="10-1" number="10-1" />
 
 ### 3.2 これまで学んだ技法をIOPの言葉で振り返る
 

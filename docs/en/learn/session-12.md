@@ -73,7 +73,7 @@ $$F(X)=Z_H(X)T_{\mathrm{gate}}(X)$$
 
 for a quotient polynomial $T_{\mathrm{gate}}(X)$. The full protocol combines this with copy constraints and checks polynomial relations using degree bounds and commitments. **Separating fixed circuit preprocessing from each proof's witness** lets a universal SRS support proofs of a specified circuit. See the [PLONK paper](https://eprint.iacr.org/2019/953).
 
-<StudyDiagram id="12-1" :en="true" />
+<StudyDiagram id="12-1" :en="true" number="12-1" />
 
 ---
 
