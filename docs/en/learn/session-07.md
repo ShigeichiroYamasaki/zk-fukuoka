@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import CaptionedTable from "../../.vitepress/theme/CaptionedTable.vue";
 import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
@@ -88,6 +89,101 @@ Read bilinearity as a verification tool. Given $aP$ and $bQ$, the pairing produc
 This is a **multiplicative verification capability** unavailable from ordinary discrete-log group operations alone, which provide additive structure in the exponents. Many SNARKs, including Groth16, use this property to verify polynomial multiplication relations in QAPs from Session 4. This connection will be crucial when studying Groth16 in Act III.
 
 <StudyDiagram id="07-2" :en="true" />
+
+### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
+
+The field containing point coordinates need not equal the field of scalars. Keep $\mathbb F_p$ as the coordinate field, and now assume the common group order $q$ is prime. Scalars belong to $\mathbb F_q$: since $qP=O$, scalar multiplication depends only on the scalar modulo $q$. **Groth16's R1CS and QAP coefficients live in this scalar field.** Do not confuse $q$ with the coordinate modulus $p$.
+
+For generators $P\in G_1$ and $Q\in G_2$, write
+
+$$[a]_1=aP,\qquad[b]_2=bQ,\qquad g_T=e(P,Q),\qquad[c]_T=g_T^c.$$
+
+We use additive notation for the source groups and multiplicative notation for the target. Session 11's notation $[a]_1=g^a$ describes the same structure multiplicatively.
+
+<CaptionedTable number="07-1" caption="Pairing types and their corresponding scalar operations" :en="true">
+
+| Object | Notation and operation | Scalar interpretation |
+|---|---|---|
+| $G_1$ | $[a]_1+[b]_1=[a+b]_1$ | Addition |
+| $G_2$ | $k[a]_2=[ka]_2$ | Multiplication by known $k\in\mathbb F_q$ |
+| $G_T$ | $[a]_T[b]_T=[a+b]_T$ | Addition of exponents |
+| Pairing | $e([a]_1,[b]_2)=[ab]_T$ | Multiplication of two scalars |
+
+</CaptionedTable>
+
+For practical asymmetric pairings, a $G_1$ element cannot simply be supplied in a $G_2$ input position. $G_2$ uses an extension-field curve or a twist representation; $G_T$ is an order-$q$ subgroup of $\mathbb F_{p^k}^*$. The embedding degree $k$ is the smallest positive integer satisfying $q\mid(p^k-1)$.
+
+### 2.5 What bilinearity can check {#pairing-product-check}
+
+Separating the two arguments gives
+
+$$e(U+V,Q)=e(U,Q)e(V,Q),\qquad e(P,S+T)=e(P,S)e(P,T).$$
+
+Applying these identities to scalar multiplication yields $e(aP,bQ)=g_T^{ab}$. Non-degeneracy and prime order imply that $g_T$ has order $q$, hence
+
+$$e([a]_1,[b]_2)=e([c]_1,[1]_2)\quad\Longleftrightarrow\quad ab=c\text{ in }\mathbb F_q.$$
+
+Checking the left side does not require recovering the scalars. In an abstract order-101 example, $a=7,b=9,c=63$ gives $[63]_T$ on both sides; $c=64$ fails. This illustrates exponent arithmetic, not a concrete secure elliptic-curve construction.
+
+Likewise,
+
+$$e([a]_1,[b]_2)=e([c]_1,[1]_2)e([h]_1,[z]_2)\quad\Longleftrightarrow\quad ab=c+hz.$$
+
+This helps read [Session 4's QAP relation](./session-04#qap-worked-math), $\mathcal A(\tau)\mathcal B(\tau)=\mathcal C(\tau)+H(\tau)Z(\tau)$. It is not a claim that Groth16 sends these four evaluations directly.
+
+Pairing output lies in $G_T$ and cannot simply be fed back into the pairing to multiply by another unknown scalar. Encoding a value as a point also does not automatically hide it: if $a\in\{0,1\}$, compare $[a]_1$ with $O$ and $P$. Discrete-log hardness and zero-knowledge are distinct properties.
+
+### 2.6 Evaluating at a secret point using group elements {#encoded-polynomial-evaluation}
+
+For $f(X)=\sum_{j=0}^d f_jX^j$, an SRS containing $[1]_1,[\tau]_1,\dots,[\tau^d]_1$ enables
+
+$$\sum_{j=0}^d f_j[\tau^j]_1=[f(\tau)]_1.$$
+
+This is a **multi-scalar multiplication (MSM)**: known coefficients multiply points, and the results are added. It is analogous to Session 4's dot product, with encoded values replacing scalars. Neither $\tau$ nor the numerical value $f(\tau)$ needs to be known.
+
+Groth16's proving key additionally contains circuit-dependent combinations and encodings involving $1/\delta$. Using a supplied point $[u/\delta]_1$ does not mean the prover numerically divides by an unknown $\delta$. The available key elements determine which computations can be performed.
+
+### 2.7 Reading Groth16's verification equation as a scalar identity {#groth16-pairing-derivation}
+
+As preparation for Session 11, check why a correctly generated proof satisfies verification. The following rewrites the [original Groth construction](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf) in our QAP notation.
+
+Let $z_0=1,z_1,\dots,z_m$ be an assignment. Public indices $I$ include 0; private indices $J$ form the complementary set. For column polynomials $A_j,B_j,C_j$, define explanatory scalars
+
+$$U=\sum_jz_jA_j(\tau),\quad V=\sum_jz_jB_j(\tau),\quad W=\sum_jz_jC_j(\tau).$$
+
+A valid assignment satisfies $UV=W+H(\tau)Z(\tau)$. Define
+
+$$S_I=\sum_{j\in I}z_j(\beta A_j(\tau)+\alpha B_j(\tau)+C_j(\tau)),$$
+$$S_J=\sum_{j\in J}z_j(\beta A_j(\tau)+\alpha B_j(\tau)+C_j(\tau)),$$
+
+so $S_I+S_J=\beta U+\alpha V+W$. For nonzero $\gamma,\delta$ and fresh proof randomness $r,s\in\mathbb F_q$, set
+
+$$a=\alpha+U+r\delta,\qquad b=\beta+V+s\delta,$$
+$$c=\frac{S_J+H(\tau)Z(\tau)}{\delta}+sa+rb-rs\delta.$$
+
+The proof contains $\pi_A=[a]_1,\pi_B=[b]_2,\pi_C=[c]_1$, not the numerical scalars. They are computed through proving-key linear combinations. The construction provides the key elements needed to encode the $rb$ term in $G_1$; it does not convert $\pi_B$ from $G_2$ to $G_1$.
+
+Using verification-key points $K_j=[(\beta A_j(\tau)+\alpha B_j(\tau)+C_j(\tau))/\gamma]_1$, compute
+
+$$\mathrm{IC}=\sum_{j\in I}z_jK_j=[S_I/\gamma]_1.$$
+
+Expansion gives
+
+$$\begin{aligned}
+ab&=\alpha\beta+\beta U+\alpha V+UV+s\delta(\alpha+U)+r\delta(\beta+V)+rs\delta^2\\
+&=\alpha\beta+S_I+S_J+H(\tau)Z(\tau)+s\delta(\alpha+U)+r\delta(\beta+V)+rs\delta^2\\
+&=\alpha\beta+S_I+\delta c.
+\end{aligned}$$
+
+The first step expands the product; the second substitutes the QAP identity; the third uses the definition of $c$. Both $sa$ and $rb$ contain $rs\delta$, so one copy must be subtracted. Bilinearity translates this scalar identity into
+
+$$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\,
+ e(\mathrm{IC},[\gamma]_2)\,e(\pi_C,[\delta]_2).$$
+
+**The verifier compares target-group elements without recovering secret scalars.** This calculation establishes completeness for correctly generated proofs. Knowledge soundness and zero-knowledge require separate arguments, discussed with the original paper's model in Session 11. Implementations must also validate inputs, including curve and subgroup membership.
+
+Public-input MSM work depends on the number of public inputs, while the proof has three group elements and the number of pairings is constant. Groth16 does not check every circuit multiplication with a separate pairing.
+
 
 ---
 

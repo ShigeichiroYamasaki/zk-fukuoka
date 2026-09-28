@@ -113,6 +113,7 @@ Updated: September 27, 2026
 | Elliptic curves, the point at infinity and group structure | [Session 7 §1.1](./session-07#_1-1-definition) / [Session 7 §1.2](./session-07#_1-2-group-structure) |
 | Discrete logarithms (DL) and why elliptic curves are used | [Session 7 §1.3](./session-07#_1-3-why-use-elliptic-curves) / [Session 7 §3.2](./session-07#_3-2-the-discrete-logarithm-dl-assumption) |
 | Bilinear pairings, non-degeneracy and checking multiplication | [Session 7 §2.1](./session-07#_2-1-definition) / [Session 7 §2.3](./session-07#_2-3-the-new-capability-provided-by-pairings) / [Session 11 §2.3](./session-11#_2-3-the-pairing-based-solution) |
+| Coordinate/scalar fields, MSM and the Groth16 verification identity | [Groups and fields](./session-07#pairing-math) / [Derivation](./session-07#groth16-pairing-derivation) |
 | Pairing-friendly curves, BN254 and BLS12-381 | [Session 7 §2.2](./session-07#_2-2-pairing-friendly-curves) |
 | q-SDH and knowledge-of-exponent assumptions (KEA) | [Session 7 §3.3](./session-07#_3-3-moving-to-stronger-assumptions) / [Session 7 §3.4](./session-07#_3-4-what-the-distinction-between-standard-and-non-standard-assumptions-means) |
 | Reductions; distinguishing assumptions and security models | [Session 7 §4.1](./session-07#_4-1-the-basic-idea) / [Session 7 §4.2](./session-07#_4-2-why-this-form-matters) / [Session 14 §1.2](./session-14#_1-2-soundness-proof-or-argument) |

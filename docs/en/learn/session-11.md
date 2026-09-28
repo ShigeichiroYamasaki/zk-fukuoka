@@ -82,6 +82,8 @@ The trapdoor components help enforce consistency of the QAP assignment and bind 
 
 The prover computes the quotient polynomial from a satisfying assignment and combines proving-key group elements. The result is a three-element proof $\pi=(\pi_A,\pi_B,\pi_C)\in G_1\times G_2\times G_1$. Distinguish the QAP polynomials $A(X),B(X),C(X)$ from these proof elements. Fresh per-proof randomness $r,s$ provides blinding. The original paper establishes perfect zero-knowledge for this construction.
 
+[Session 7: deriving the Groth16 pairing equation](./session-07#groth16-pairing-derivation) explains group types, public-input terms, and proof randomness algebraically.
+
 ### 3.3 Verification
 
 Write $[a]_1=g^a\in G_1$ and $[a]_2=h^a\in G_2$ to distinguish secret scalars from public group elements. For public inputs $x_1,\dots,x_\ell$ and verification-key elements $K_0,\dots,K_\ell\in G_1$, compute
