@@ -14,7 +14,7 @@ Updated: September 29, 2026
 
 ## Logic and proofs
 
-[Sets, membership and languages](./terms/sets-and-languages) · [Session 1](./session-01) · [Session 2](./session-02)
+[Logic and proofs: a tutorial for reading ZK](./proofs-tutorial) · [Sets, membership and languages](./terms/sets-and-languages) · [Session 1](./session-01) · [Session 2](./session-02)
 
 ## Probability
 

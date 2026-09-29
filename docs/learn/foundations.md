@@ -14,7 +14,7 @@
 
 ## 論理と証明
 
-[集合・所属記号・言語](./terms/sets-and-languages) · [第1回](./session-01) · [第2回](./session-02)
+[論理と証明：ZKを読むためのチュートリアル](./proofs-tutorial) · [集合・所属記号・言語](./terms/sets-and-languages) · [第1回](./session-01) · [第2回](./session-02)
 
 ## 確率論
 
