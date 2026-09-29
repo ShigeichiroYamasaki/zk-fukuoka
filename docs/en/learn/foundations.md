@@ -26,7 +26,7 @@ Updated: September 29, 2026
 
 ## Coding theory
 
-[Session 5: Reed–Solomon codes and distance](./session-05) · [Session 6: low-degree testing and FRI](./session-06)
+[Coding theory: foundations for learning ZK](./coding-theory-tutorial) · [Session 5: Reed–Solomon codes and distance](./session-05) · [Session 6: low-degree testing and FRI](./session-06)
 
 ## Cryptographic security
 

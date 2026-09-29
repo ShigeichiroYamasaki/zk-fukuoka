@@ -26,7 +26,7 @@
 
 ## 符号理論
 
-[第5回：Reed–Solomon符号と距離](./session-05) · [第6回：Low-Degree TestingとFRI](./session-06)
+[符号理論：ZKを学ぶための基礎チュートリアル](./coding-theory-tutorial) · [第5回：Reed–Solomon符号と距離](./session-05) · [第6回：Low-Degree TestingとFRI](./session-06)
 
 ## 暗号学の安全性
 
