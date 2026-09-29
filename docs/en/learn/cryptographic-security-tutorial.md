@@ -1,0 +1,109 @@
+# Cryptographic security: foundations for reading ZK
+
+Author: Shigeichiro Yamasaki  
+Created: September 29, 2026  
+Last updated: September 29, 2026
+
+Cryptographic security is not established by an impression that a scheme “looks secure.” We first define **what is protected, what an attacker can do, and how likely a failure may be**. This tutorial introduces the security parameter, probabilistic polynomial-time adversaries, security games, computational assumptions, and reduction proofs, then connects them to properties of zero-knowledge proofs and polynomial commitments.
+
+The explanations and examples are original to this site. For systematic study, see Jonathan Katz and Yehuda Lindell’s [*Introduction to Modern Cryptography* (authors’ course page)](https://www.cs.umd.edu/~jkatz/imc.html). The book treats modern cryptography from a computer-science perspective through definitions, assumptions, and rigorous security proofs. This tutorial does not reproduce or adapt its text; it presents course-relevant concepts in original explanations.
+
+## 1. Define the security claim
+
+When discussing a cryptographic scheme’s security, make at least the following explicit:
+
+1. **Target:** What kind of scheme is it—a signature, encryption scheme, commitment, or proof protocol?
+2. **Attacker’s goal:** What should the attacker achieve—learn a secret, forge a signature, change a commitment after the fact, or make a false statement be accepted?
+3. **Attacker’s capabilities:** Which inputs or oracles can it access, and what information does it know?
+4. **Success condition:** Which output counts as a successful attack?
+5. **Resources and probability:** How are running time and query counts bounded, and how is success probability measured?
+
+A formal experiment describing these rules is often called a **security game**. The attacker’s success probability is defined over the random choices made during the game, including its own coins. Without a defined winning condition, a security claim cannot be assessed.
+
+## 2. Security parameters and efficient attackers
+
+Write the security parameter as $\lambda$. It represents a scalable size of the scheme—such as key length or group order—that can be increased to strengthen security. Cryptography typically considers a **probabilistic polynomial-time (PPT) adversary**, whose running time is bounded by a polynomial in $\lambda$. “Probabilistic” means the adversary may use randomness; “polynomial time” models a restricted and scalable amount of computation.
+
+A function $\epsilon(\lambda)$ is **negligible** if, for every positive integer $c$, we have $\epsilon(\lambda)<1/\lambda^c$ for all sufficiently large $\lambda$. Conceptually, as the security parameter grows, the success probability shrinks faster than every inverse polynomial. This does not claim that the probability is exactly zero at finite parameters.
+
+Thus, a claim that scheme $\Pi$ is secure is usually read as: “For the specified attack goal, every PPT adversary has at most negligible success probability.” Security is relative to a goal and an attacker model; it is not a standalone adjective.
+
+## 3. Computational assumptions and reductions
+
+Security often relies on a **computational assumption** that a particular problem is hard for PPT algorithms. For example, the discrete-logarithm assumption says it is hard to recover exponent $x$ from a group generator $g$ and $g^x$. An assumption is not an established mathematical theorem; it is a premise adopted for specified groups and parameters.
+
+The basic form of a **reduction proof** is:
+
+> If an efficient adversary $\mathcal A$ could break the scheme, then we could use it as a component to build an efficient algorithm $\mathcal B$ that solves the assumed-hard problem.
+
+Therefore, under the assumption that the hard problem cannot be solved efficiently, the reduction implies that breaking the scheme is also difficult within the reduction’s scope. To assess a reduction, examine not only the strength of its assumption but also how much $\mathcal B$’s running time or success probability degrades relative to $\mathcal A$ (the reduction loss). The conclusion is conditional on the assumption; it is not an unconditional proof of security.
+
+## 4. How to read a distinguishing game
+
+A simple security game gives an attacker information generated from one of two candidates, chosen by a random bit, and asks it to identify which candidate was used. Choose a uniform secret bit $b\in\{0,1\}$ and give the attacker information determined by $b$. If the attacker guesses $b$ with probability exceeding $1/2$ by a non-negligible amount, it can distinguish the candidates.
+
+This format makes a property precise in terms of “what is visible” and “which two worlds are being compared.” Commitment hiding is related to being unable to distinguish commitments to different messages; zero-knowledge is related to being unable to distinguish a real transcript from one generated by a simulator.
+
+## 5. Binding and hiding of commitments
+
+A commitment is a way to fix a value now and reveal it later. Its security is divided into at least two distinct properties:
+
+- **Binding:** It should not be possible to open one commitment validly as two different values.
+- **Hiding:** Seeing the commitment should not reveal useful information for identifying the committed value.
+
+These properties are defined by separate attack games. Their strengths can vary by scheme; for example, a scheme may provide computational hiding rather than perfect hiding. Neither property follows automatically from the other, so check the construction and its assumptions.
+
+A polynomial commitment lets a prover commit to a polynomial $f$ and later verify whether a claimed value $y$ at a point $x$ satisfies $f(x)=y$. In KZG, binding is related to algebraic hardness assumptions and setup; in FRI/Merkle-based schemes, it is related to hash-function properties and the soundness of low-degree testing. The security basis depends on the construction, even when both are called commitments.
+
+## 6. Read the three ZK properties as security definitions
+
+For public input $u$ and relation $R(u,w)$, a prover demonstrates knowledge of a witness $w$ satisfying the condition. Three representative properties of protocol $\Pi$ are:
+
+| Property | What it guarantees | Question to ask |
+| --- | --- | --- |
+| Completeness | A prover with a valid witness is accepted with high probability | Can an honest prover be wrongly rejected? |
+| Soundness | If no witness makes the statement true, acceptance probability is small | Can a dishonest prover get a false statement accepted? |
+| Zero-knowledge | The verifier’s view reveals no witness information | Can a simulator reproduce the interaction without the witness? |
+
+These properties impose separate conditions; one does not automatically imply the other two. In particular, completeness says “a correct proof passes,” while soundness addresses whether a false statement can pass. Zero-knowledge limits information leakage, not the truth of the statement itself.
+
+A protocol claiming **knowledge soundness** requires more than preventing false statements from being accepted: it requires that a witness can be extracted from an accepting prover. The definition specifies a model in which an extractor runs the prover and may control or rewind randomness or challenges when needed.
+
+## 7. Assumption strength and model boundaries
+
+When reading a security proof, list the assumptions and models it uses. A computational assumption such as discrete logarithm, a stronger structured assumption such as q-SDH, a knowledge assumption, and an idealized model such as the Random Oracle Model (ROM) are different kinds of foundations. Do not collapse them into a generic label like “cryptographically secure”; identify the actual premise of the proof.
+
+ROM treats a hash function as an ideal random function. A proof in ROM is not itself a proof about the concrete hash function used in an implementation. Distinguish a ROM security result from the security analysis of the hash function selected for deployment. Session 9 examines the benefits and limits of this model in the Fiat–Shamir transform.
+
+## 8. A checklist for this course
+
+When reading a protocol or security proof, ask:
+
+1. What is protected, and what counts as a successful attack?
+2. Which inputs, randomness, and oracles can the adversary access?
+3. Over which random choices is success measured, and how does it depend on $\lambda$?
+4. Which hardness assumption, setup, or idealized model does security rely on?
+5. Which attacker is reduced to which hard problem, and what is the reduction loss?
+6. Which property is being proved: completeness, soundness, knowledge soundness, or zero-knowledge?
+
+## Exercises
+
+**Exercise 1.** A scheme is shown to accept a prover with a valid input with high probability. Does this also prove that false inputs are not accepted?
+
+**Answer.** No. The claim is completeness. Soundness, which bounds acceptance of false statements, must be proved separately.
+
+**Exercise 2.** Which attacks do binding and hiding prevent, respectively?
+
+**Answer.** Binding prevents opening one commitment as different values. Hiding prevents identifying the committed value from the commitment. These are different attacks and are evaluated separately.
+
+**Exercise 3.** Why is a reduction proof not an unconditional proof that a scheme is secure?
+
+**Answer.** Its conclusion is conditional on a computational assumption that the reduction’s target problem cannot be solved efficiently.
+
+## Continue learning
+
+- [Session 7: Elliptic curves and pairings](./session-07): discrete logarithms, q-SDH, and reductions
+- [Session 8: Polynomial commitments and cryptographic commitment theory](./session-08): binding, hiding, and the foundations of KZG/FRI schemes
+- [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): benefits and limits of ROM-based security proofs
+- [Sessions 11–14: Security of Groth16, PLONK, and STARK](./sessions#act-iii): compare assumptions, setup, and protocol-specific claims
+- Further reading: [*Introduction to Modern Cryptography*, Jonathan Katz and Yehuda Lindell (authors’ page)](https://www.cs.umd.edu/~jkatz/imc.html) · [Third-edition page (Yehuda Lindell)](https://yehudalindell.com/introduction-to-modern-cryptography-3rd-edition/)

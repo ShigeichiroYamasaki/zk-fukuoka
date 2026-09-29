@@ -30,4 +30,4 @@
 
 ## 暗号学の安全性
 
-[第7回：困難性仮定と還元](./session-07) · [第8回：拘束性と隠蔽性](./session-08) · [第9回：Fiat–ShamirとROM](./session-09) · [第11〜14回：方式ごとの安全性](./sessions#act-iii)
+[暗号学の安全性：ZKを読むための基礎チュートリアル](./cryptographic-security-tutorial) · [第7回：困難性仮定と還元](./session-07) · [第8回：拘束性と隠蔽性](./session-08) · [第9回：Fiat–ShamirとROM](./session-09) · [第11〜14回：方式ごとの安全性](./sessions#act-iii)

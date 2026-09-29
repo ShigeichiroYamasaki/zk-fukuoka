@@ -30,4 +30,4 @@ Updated: September 29, 2026
 
 ## Cryptographic security
 
-[Session 7: hardness assumptions and reductions](./session-07) · [Session 8: binding and hiding](./session-08) · [Session 9: Fiat–Shamir and ROM](./session-09) · [Sessions 11–14: protocol security](./sessions#act-iii)
+[Cryptographic security: foundations for reading ZK](./cryptographic-security-tutorial) · [Session 7: hardness assumptions and reductions](./session-07) · [Session 8: binding and hiding](./session-08) · [Session 9: Fiat–Shamir and ROM](./session-09) · [Sessions 11–14: protocol security](./sessions#act-iii)
