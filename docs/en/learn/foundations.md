@@ -10,6 +10,8 @@ Updated: September 27, 2026
 
 [Session 1 prerequisites: sets, membership and languages (x ∈ L)](./terms/sets-and-languages)
 
+[Supplement: a minimal guide to languages and computation theory following Hopcroft and Ullman](./computation-theory)
+
 ## Where to start {#start}
 
 1. **Before Session 1:** review algebraic expressions, sets, functions, logic and elementary probability. Try the [self-check](#check) and start with unfamiliar items.
