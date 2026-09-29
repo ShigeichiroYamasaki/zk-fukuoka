@@ -1,8 +1,8 @@
 # Prerequisites and supplementary resources for beginners
 
-You do not need to master all of mathematics and cryptography before starting. Read Sessions 1–2 for the motivation, then return here when notation or terminology becomes an obstacle. These are suggested preparation targets for this course.
+You do not need to master all of mathematics and cryptography before starting. This page organizes prerequisites by subject and links to in-site explanations first. The language and computation theory route is now available as a self-contained site resource; external books are optional references, not required reading.
 
-Updated: September 27, 2026
+Updated: September 29, 2026
 
 [Syllabus](./) · [Sessions](./sessions) · [Topic index](./topics) · [Exercises, tools and manuals](../exercises/)
 
@@ -12,30 +12,24 @@ Updated: September 27, 2026
 
 [Supplement: a minimal guide to languages and computation theory following Hopcroft and Ullman](./computation-theory)
 
-## Where to start {#start}
+## Learning routes by subject {#start}
 
-1. **Before Session 1:** review algebraic expressions, sets, functions, logic and elementary probability. Try the [self-check](#check) and start with unfamiliar items.
-2. **Around Sessions 3–4:** review modular arithmetic, inverses, polynomials, vectors and matrices. Begin with the [finite-field exercise](#finite-field).
-3. **Alongside Sessions 5–10:** fill gaps in probability, codes, groups, hashes and computational complexity. Formal definitions and their applications to proof systems are introduced in the lectures.
-4. **Before Sessions 11–15:** use the [topic index](./topics) to revisit QAP, AIR, FRI, pairings, commitments and Fiat–Shamir rather than starting another textbook from scratch.
+Use each route in this order: read the in-site explanation, try a short self-check, then continue to the relevant lecture. The first route, language and computation theory, has definitions, examples, a textbook reading guide, and sample answers on this site. Other subjects will be developed in the same format.
 
-Elliptic curves, pairings and the PCP theorem are course topics, not entry requirements. Blockchain and Ethereum background can be added when you reach the applications in Session 15. A programming environment is needed for implementation exercises, not to begin reading the lectures.
-
-## Preparation targets {#prerequisites}
-
-Check whether you can explain or calculate the following, rather than simply recognizing the names.
-
-| Area | What to check | Relevant sessions | Support |
+| Subject | Start with these in-site resources | Readiness goal | Relevant sessions |
 | --- | --- | --- | --- |
-| Expressions and notation | Substitute values; read powers, logarithms and summation notation; distinguish variables and constants | [1](./session-01), [3](./session-03) | [Self-check](#check), [mathematics](#math-resources) |
-| Sets, functions and logic | Explain membership, mappings, “for all,” “there exists,” and an implication versus its converse | [1](./session-01), [2](./session-02) | [Logic and proofs](#math-resources) |
-| Probability | Read sample spaces, independence and conditional probability; calculate simple error probabilities | [1](./session-01), [3](./session-03), [6](./session-06), [9](./session-09) | [Discrete probability](#math-resources) |
-| Integers and remainders | Understand primes, gcds and congruences; calculate modulo 7, including division by nonzero elements | [3](./session-03), [7](./session-07) | [Finite-field exercise](#finite-field), [number theory](#algebra-resources) |
-| Polynomials | Distinguish degree, roots, coefficients and evaluations; expand and evaluate small examples | [3](./session-03)–[6](./session-06), [8](./session-08) | [Self-check](#check), [algebra](#algebra-resources) |
-| Linear algebra | Compute a dot product and a matrix–vector product; check dimensions | [4](./session-04), [12](./session-12) | [Linear algebra](#linear-resources) |
-| Algorithms and complexity | Explain inputs, outputs, loops, input size and the difference between O(n) and O(n²) | [1](./session-01), [4](./session-04), [10](./session-10), [15](./session-15) | [Bridge to proof systems](#proof-resources) |
-| Coding and cryptography vocabulary | Distinguish bit strings and distance, hashing and encryption, public and secret information | [5](./session-05)–[9](./session-09) | [Codes and cryptography](#crypto-resources) |
-| Implementation skills | Run a small program with variables, functions, arrays and branches; know where files and commands are located | Before implementation exercises | [Programming and Git](#practice-resources) |
+| **1. Language and computation theory** | [Minimal guide](./computation-theory), [sets, membership and languages](./terms/sets-and-languages) | Explain languages $L$ and inputs $x$, relations $R(x,w)$ and witnesses, finite automata and Turing machines, P/NP/PSPACE, and reductions | [1](./session-01), [4](./session-04), [10](./session-10) |
+| **2. Logic, proofs and probability** | [Self-check](#check), [Session 1 language guide](./terms/sets-and-languages), [probability resources](#math-resources) | Use quantifiers and counterexamples, and calculate simple independent-trial and error probabilities | [1](./session-01), [3](./session-03), [6](./session-06), [9](./session-09) |
+| **3. Integers, finite fields and polynomials** | [Modulo-7 exercise](#finite-field), [number theory and algebra resources](#algebra-resources) | Calculate remainders and inverses; distinguish polynomial degree, roots and evaluations | [3](./session-03)–[8](./session-08) |
+| **4. Vectors and matrices** | [Linear algebra resources](#linear-resources), [Session 4 term guide](./terms/) | Multiply matrices and vectors and check dimensions | [4](./session-04), [12](./session-12) |
+| **5. Codes, cryptography and security** | [Codes and cryptography resources](#crypto-resources), [Sessions 5–9](./sessions) | Distinguish Hamming distance, hashes, public and secret data, and security assumptions | [5](./session-05)–[9](./session-09) |
+| **6. Implementation and exercise setup** | [Programming and Git resources](#practice-resources), [operation manuals](../exercises/manuals) | Run a small program and locate files and commands | Before implementation exercises |
+
+Elliptic curves, pairings and the PCP theorem are course topics, not entry requirements. Blockchain and Ethereum background can be added when you reach the applications in Session 15. You only need to set up a programming environment when you begin implementation exercises.
+
+## Prerequisite self-check {#prerequisites}
+
+After reading the relevant subject guide, check whether you can explain or calculate the following rather than simply recognizing the terms.
 
 ## Supplementary resources: choose what to read
 
