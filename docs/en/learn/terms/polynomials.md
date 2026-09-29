@@ -2,18 +2,11 @@
 outline: [2, 3]
 ---
 
-<script setup>
-import TermDiagram from "../../../.vitepress/theme/TermDiagram.vue";
-</script>
-
 # Interpolation, vanishing polynomials and divisibility
 
 [Session 4](../session-04) · [Term guide](./) · [Prerequisites](../foundations)
 
-Updated: September 29, 2026
-
-
-<TermDiagram kind="polynomials" en />
+Updated: September 28, 2026
 
 For the underlying algebra, start with [polynomial ring basics in Session 3](../session-03#_3-1-definitions-and-basic-operations), then read [roots, vanishing polynomials, and QAP divisibility](../session-03#qap-polynomial-prerequisites).
 

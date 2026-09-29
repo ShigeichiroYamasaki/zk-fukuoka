@@ -2,18 +2,11 @@
 outline: [2, 3]
 ---
 
-<script setup>
-import TermDiagram from "../../.vitepress/theme/TermDiagram.vue";
-</script>
-
 # 多項式時間帰着・NP完全・Cook–Levin定理
 
 [第4回へ戻る](../session-04) · [用語ガイド](./) · [前提知識と補助教材](../foundations)
 
-更新日：2026年9月29日
-
-
-<TermDiagram kind="reductions" />
+更新日：2026年9月27日
 
 ## 帰着は問題の翻訳である
 

@@ -2,18 +2,11 @@
 outline: [2, 3]
 ---
 
-<script setup>
-import TermDiagram from "../../../.vitepress/theme/TermDiagram.vue";
-</script>
-
 # Polynomial-time reductions, NP-completeness and Cook–Levin
 
 [Session 4](../session-04) · [Term guide](./) · [Prerequisites](../foundations)
 
-Updated: September 29, 2026
-
-
-<TermDiagram kind="reductions" en />
+Updated: September 27, 2026
 
 ## A reduction translates problems
 

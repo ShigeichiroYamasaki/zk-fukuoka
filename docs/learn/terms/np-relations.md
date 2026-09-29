@@ -2,18 +2,11 @@
 outline: [2, 3]
 ---
 
-<script setup>
-import TermDiagram from "../../.vitepress/theme/TermDiagram.vue";
-</script>
-
 # NP関係・公開入力・ウィットネス
 
 [第4回へ戻る](../session-04) · [用語ガイド](./) · [前提知識と補助教材](../foundations)
 
-更新日：2026年9月29日
-
-
-<TermDiagram kind="np" />
+更新日：2026年9月27日
 
 ## まず「何を確かめるか」を決める
 

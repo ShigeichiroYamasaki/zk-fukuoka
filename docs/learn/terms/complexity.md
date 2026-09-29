@@ -2,18 +2,11 @@
 outline: [2, 3]
 ---
 
-<script setup>
-import TermDiagram from "../../.vitepress/theme/TermDiagram.vue";
-</script>
-
 # 多項式時間・回路サイズと深さ・PとNC
 
 [第4回へ戻る](../session-04) · [用語ガイド](./) · [前提知識と補助教材](../foundations)
 
-更新日：2026年9月29日
-
-
-<TermDiagram kind="complexity" />
+更新日：2026年9月27日
 
 ## 入力サイズとは何か
 
