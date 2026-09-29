@@ -18,7 +18,7 @@
 
 ## 確率論
 
-[第3回：Schwartz–Zippel補題](./session-03) · [第5回：確率的誤りモデル](./session-05) · [第6回：健全性増幅](./session-06) · [第9回：Random Oracle Model](./session-09)
+[確率論：ZKを学ぶための基礎チュートリアル](./probability-tutorial) · [第3回：Schwartz–Zippel補題](./session-03) · [第5回：確率的誤りモデル](./session-05) · [第6回：健全性増幅](./session-06) · [第9回：Random Oracle Model](./session-09)
 
 ## ベクトルと行列
 

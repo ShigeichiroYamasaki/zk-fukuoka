@@ -18,7 +18,7 @@ Updated: September 29, 2026
 
 ## Probability
 
-[Session 3: Schwartz–Zippel lemma](./session-03) · [Session 5: probabilistic error models](./session-05) · [Session 6: soundness amplification](./session-06) · [Session 9: Random Oracle Model](./session-09)
+[Probability: foundations for learning ZK](./probability-tutorial) · [Session 3: Schwartz–Zippel lemma](./session-03) · [Session 5: probabilistic error models](./session-05) · [Session 6: soundness amplification](./session-06) · [Session 9: Random Oracle Model](./session-09)
 
 ## Vectors and matrices
 
