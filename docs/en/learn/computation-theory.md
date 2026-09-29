@@ -2,9 +2,9 @@
 outline: [2, 3]
 ---
 
-# A Minimal Guide to Languages and Computation Theory
+# Language and Computation Theory
 
-This page introduces the language and computation theory needed for ZK Fukuoka, following the concepts and progression of J. E. Hopcroft, R. Motwani, and J. D. Ullman’s *Introduction to Automata Theory, Languages, and Computation*. It is an original, course-focused explanation, not a reproduction of the textbook.
+This page organizes the language and computation theory needed for ZK Fukuoka through core terms, examples, and self-checks. Topics include formal languages, automata, Turing machines, complexity, and reductions.
 
 Updated: September 29, 2026
 
@@ -100,22 +100,7 @@ Arithmetization replaces the input, intermediate values, and output of a circuit
 | Interactive proofs and IP = PSPACE | Understand how interaction changes verification power | [1](./session-01), [10](./session-10) |
 | Arithmetization of circuits and traces | Turn computational correctness into finite-field constraints | [4](./session-04), [13](./session-13) |
 
-## 7. A minimal reading route through the textbook
-
-Chapter numbering varies by edition, so use topic names as well. The publisher’s Japanese second-edition translation is divided into Volumes I and II. Its contents place formal proofs, finite automata, regular languages, and context-free languages in Volume I, and Turing machines, undecidability, P/NP, and PSPACE in Volume II.
-
-| Goal | Topics to look for in the book | Where they appear here |
-| --- | --- | --- |
-| Get comfortable with proofs and language notation | Volume I, Chapter 1: formal proofs, definitions, examples and induction | [Languages and witnesses](#np-relations) |
-| Understand finite state | Volume I, Chapters 2–3: finite automata, regular expressions and regular languages | [Finite automata](#finite-automata) |
-| Compare grammars and memory models | Volume I, Chapters 5–6: context-free grammars and pushdown automata | [Grammars and stacks](#grammars-stacks) (overview only) |
-| Study computability and complexity | Volume II, Chapters 8–11: Turing machines, undecidability, P and NP, PSPACE | [Decidability and complexity](#_4-decidability-and-computational-complexity), [reductions](#_5-reductions-bringing-problems-to-circuit-satisfiability) |
-
-**Priority:** Start with proof techniques and induction in Volume I, Chapter 1, then the basic Turing-machine and P/NP chapters in Volume II. Use finite automata and context-free languages to understand the landscape of models; return for detailed properties and exercises only when needed. Review PSPACE and reductions alongside Sessions 1, 4 and 10.
-
-Bibliographic information: see the publisher’s official pages for [Volume I](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003) and [Volume II](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003). The second-edition Japanese translation lists Hopcroft, Motwani and Ullman as authors.
-
-## 8. Check your understanding
+## 7. Check your understanding
 
 1. For $\Sigma=\{0,1\}$, give an element of $\Sigma^*$ and explain how it differs from a language $L$.
 2. Identify the input, membership condition, and witness for CircuitSAT.
@@ -133,6 +118,5 @@ Bibliographic information: see the publisher’s official pages for [Volume I](h
 
 ## References
 
-- J. E. Hopcroft, R. Motwani, and J. D. Ullman, [*Automata, Languages, and Computation I* (Japanese second-edition translation)](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003), Saiensu-Sha, 2003.
-- J. E. Hopcroft, R. Motwani, and J. D. Ullman, [*Automata, Languages, and Computation II* (Japanese second-edition translation)](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003), Saiensu-Sha, 2003.
+- J. E. Hopcroft, R. Motwani, and J. D. Ullman, [Automata, Languages, and Computation I](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003) and [II](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003) (Japanese second-edition translation), Saiensu-Sha, 2003.
 - [Session 1: What Is a Proof?](./session-01) · [Session 4: Arithmetization and Complexity](./session-04) · [Session 10: PCP and IOP](./session-10)

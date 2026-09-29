@@ -19,7 +19,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 Created: September 24, 2026<br>
 Last updated: September 29, 2026
 
-[Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1) · [Supplement: minimal guide to languages and computation theory](./computation-theory)
+[Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1) · [Language and computation theory prerequisites](./computation-theory)
 
 ## Context and learning objectives
 
