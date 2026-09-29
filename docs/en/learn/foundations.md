@@ -22,7 +22,7 @@ Updated: September 29, 2026
 
 ## Vectors and matrices
 
-[Linear combinations, dot products, matrices and rank 1](./terms/linear-algebra) · [Session 4: R1CS](./session-04#_3-r1cs-rank-1-constraint-system)
+[Vectors and matrices: linear algebra for ZK arithmetization](./linear-algebra-tutorial) · [Linear combinations, dot products, matrices and rank 1](./terms/linear-algebra) · [Session 4: R1CS](./session-04#_3-r1cs-rank-1-constraint-system)
 
 ## Coding theory
 
