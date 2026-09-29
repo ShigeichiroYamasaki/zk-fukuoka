@@ -47,6 +47,8 @@ Can a long proof be checked without reading it all? Simply sampling a few arbitr
 
 The two quantities specify the verifier’s random bits and proof-bit queries. Every NP language admits polynomial-length proofs checkable with logarithmically many random bits and constantly many queries, satisfying completeness and constant soundness error. Reducing that error further incurs additional checking costs.
 
+**Notation varies across sources.** On this page, the first argument of $\mathrm{PCP}[r(n),q(n)]$ counts random bits, and the second counts queries to the proof. Some sources omit the $O(\cdot)$ notation, or count queried proof symbols rather than bits when the proof alphabet is not binary. Sources that expose completeness and soundness parameters may write, for example, $\mathrm{PCP}_{c,s}[r,q]$; check the subscript order in each source. The theorem above is the standard form with completeness on true statements and constant soundness error on false statements, while $O(\log n)$ and $O(1)$ are asymptotic bounds. When reading a paper, check which quantities its symbols denote.
+
 ### 1.3 What makes this surprising?
 
 Session 1’s definition of NP did not require every witness bit to be read. The PCP theorem gives a more specific guarantee: every NP language admits a proof representation checkable with few queries. Reading less and revealing no secret are different properties, so zero-knowledge does not follow automatically.

@@ -14,7 +14,7 @@ next: false
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 27, 2026
+Last updated: September 29, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 15 in the syllabus](./#session-15) · [Exercises](../exercises/)
 
@@ -26,7 +26,7 @@ The three learning objectives are:
 
 1. Understand the new capabilities enabled by recursive SNARKs, and why they extend the efficiency axis.
 2. Understand which practical problems of recursive proofs are addressed by folding schemes such as Nova.
-3. Understand how GKR/sumcheck-based approaches relate to the IOP framework from Session 10 and open a new optimization axis: prover cost.
+3. Understand how GKR/sumcheck-based approaches relate to the IOP framework from Session 10 and which metrics they may improve, subject to the assumptions of each construction.
 
 ---
 
@@ -138,9 +138,9 @@ Check degree bounds and sum consistency each round, choosing the challenge after
 
 GKR verifies claims about circuit outputs by reducing them to claims about preceding layers, using sumcheck for the reduction. Unlike directly checking R1CS or AIR constraints, it exploits layered circuit structure. Understand the 2008 Goldwasser–Kalai–Rothblum protocol through this connection between its goal and tool.
 
-### 3.3 Why these approaches are receiving renewed attention
+### 3.3 Read GKR/sumcheck as one direction for cost optimization
 
-Where does the time go when proving a large circuit? GKR and sumcheck allow designs exploiting layered structure and multilinear representations to reduce prover work. For machine-learning inference, ask which repeated operations and structures the design can use.
+Where does the time go when proving a large circuit? GKR- and sumcheck-based systems can exploit layered structure and multilinear representations to distribute work between prover and verifier. A central benefit of the original GKR protocol is efficient verification relative to circuit depth; this does not mean that GKR generally minimizes prover cost. Prover improvements depend on the circuit, representation, commitments, and implementation. For machine-learning inference, ask which parallel structure is used and which work falls to the prover or verifier. See the [GKR paper overview](https://www.microsoft.com/en-us/research/publication/delegating-computation-interactive-proofs-muggles/), which distinguishes verifier efficiency from polynomial-time prover work.
 
 This establishes no universal ranking over KZG-based systems. Sumcheck and KZG are not components at the same level: a sumcheck-based proof system may also use polynomial commitments. Compare complete systems with aligned circuit structures, commitments, memory budgets, and security parameters. See [Thaler's textbook](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html).
 
@@ -164,7 +164,7 @@ Session 14 showed why efficiency cannot be reduced to one number. Read this sess
 | --- | --- |
 | Recursive proofs | Proof composability: adding a new capability |
 | Folding schemes | Prover cost, particularly for sequential computation |
-| GKR/sumcheck | Prover cost, particularly for large parallel computations |
+| GKR/sumcheck | Verification or prover-cost optimization using circuit layers and parallel structure, depending on the construction |
 
 </div>
 
@@ -176,7 +176,7 @@ Use the table as a set of questions for evaluating new schemes. Lower prover cos
 
 ### 4.2 Recent directions: interoperability and security alongside speed
 
-**Information checked on September 27, 2026.** This is a snapshot of research and proposals based on primary sources. Roadmap objectives, EIP proposals, and mainnet activation are different stages.
+**Information checked on September 29, 2026.** This is a snapshot of research and proposals based on primary sources. Roadmap objectives, EIP proposals, and mainnet activation are different stages. EIP status may change, so check the official page when using this material.
 
 - **A common zkVM foundation:** Proving EVM execution programs inside general-purpose zkVMs requires compatible guest interfaces. The February 16, 2026 zkVM Standards v0 release defines RV64IM + Zicclsm and C interfaces for precompiles and IO. Guests still need recompilation and relinking; this is not universal binary portability. [EF standards announcement](https://zkevm.ethereum.foundation/blog/zkevm-standards-v0-release)
 - **Evaluating security alongside speed:** Average proving time is insufficient; difficult blocks matter too. EF's May 2026 rollout article discusses worst-case proving, while a separate article examines the scope and assumptions of formal verification. Benchmarks and a “formally verified” label cannot establish security of the entire stack. [Rollout and worst-case challenges](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota), [formal-verification scope](https://zkevm.ethereum.foundation/blog/sp1-fv)
@@ -184,7 +184,7 @@ Use the table as a set of questions for evaluating new schemes. Lower prover cos
 
 ### 4.3 EIP-8025: Optional Execution Proofs {#eip-8025}
 
-[EIP-8025](https://eips.ethereum.org/EIPS/eip-8025) is **Draft** at the review date. It proposes opt-in execution-proof distribution and verification over the consensus-layer P2P network. **Current specifications retain payload re-execution: proofs are supplementary checks.** Mandatory proofs and removing re-execution belong to a later EIP. This proposal adds no proving rewards. See its [Consensus Layer section](https://eips.ethereum.org/EIPS/eip-8025#consensus-layer).
+[EIP-8025](https://eips.ethereum.org/EIPS/eip-8025) is **Draft** on the official page checked on September 29, 2026. It proposes opt-in execution-proof distribution and verification over the consensus-layer P2P network. **Current specifications retain payload re-execution: proofs are supplementary checks.** Mandatory proofs and removing re-execution belong to a later EIP. This proposal adds no proving rewards. See its [Consensus Layer section](https://eips.ethereum.org/EIPS/eip-8025#consensus-layer).
 
 EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not establish mainnet activation. [Hegotá proposal article](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
 
@@ -204,7 +204,7 @@ EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not est
 
 The “zk” name alone does not imply transaction privacy
 
-Visual summary of the lecture’s September 27, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation.
+Visual summary of the lecture’s September 29, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation.
 
 ### 4.4 Connecting the application to the course's research map
 
