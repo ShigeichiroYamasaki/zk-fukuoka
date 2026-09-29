@@ -2,11 +2,18 @@
 outline: [2, 3]
 ---
 
+<script setup>
+import TermDiagram from "../../.vitepress/theme/TermDiagram.vue";
+</script>
+
 # 補間・消失多項式・割り切れ性
 
 [第4回へ戻る](../session-04) · [用語ガイド](./) · [前提知識と補助教材](../foundations)
 
-更新日：2026年9月28日
+更新日：2026年9月29日
+
+
+<TermDiagram kind="polynomials" />
 
 多項式環そのものから確認したい場合は，[第3回の多項式環の基礎](../session-03#_3-1-定義と基本操作)から読み，[根・消失多項式・QAPの割り切れ性](../session-03#qap-polynomial-prerequisites)へ進んでください．
 

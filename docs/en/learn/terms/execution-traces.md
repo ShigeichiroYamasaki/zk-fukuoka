@@ -2,11 +2,18 @@
 outline: [2, 3]
 ---
 
+<script setup>
+import TermDiagram from "../../../.vitepress/theme/TermDiagram.vue";
+</script>
+
 # Execution traces, states, transitions and boundaries
 
 [Session 4](../session-04) · [Term guide](./) · [Prerequisites](../foundations)
 
-Updated: September 27, 2026
+Updated: September 29, 2026
+
+
+<TermDiagram kind="trace" en />
 
 ## Record the intermediate states
 

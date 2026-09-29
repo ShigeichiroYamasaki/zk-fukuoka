@@ -2,11 +2,18 @@
 outline: [2, 3]
 ---
 
+<script setup>
+import TermDiagram from "../../../.vitepress/theme/TermDiagram.vue";
+</script>
+
 # NP relations, public inputs and witnesses
 
 [Session 4](../session-04) · [Term guide](./) · [Prerequisites](../foundations)
 
-Updated: September 27, 2026
+Updated: September 29, 2026
+
+
+<TermDiagram kind="np" en />
 
 ## Begin with the claim
 

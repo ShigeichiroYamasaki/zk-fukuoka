@@ -2,11 +2,18 @@
 outline: [2, 3]
 ---
 
+<script setup>
+import TermDiagram from "../../.vitepress/theme/TermDiagram.vue";
+</script>
+
 # 制約・割当・充足可能性
 
 [第4回へ戻る](../session-04) · [用語ガイド](./) · [前提知識と補助教材](../foundations)
 
-更新日：2026年9月27日
+更新日：2026年9月29日
+
+
+<TermDiagram kind="constraints" />
 
 ## 「計算せよ」から「関係を満たせ」へ
 
