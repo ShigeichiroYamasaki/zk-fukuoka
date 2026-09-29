@@ -10,7 +10,7 @@ Updated: September 29, 2026
 
 ## Finite fields and polynomials
 
-[Session 3](./session-03) · [Polynomial terms and operations](./terms/polynomials) · [QAP: Combining R1CS constraints into a polynomial](./qap) · [Session 4: Arithmetization](./session-04)
+[Finite fields and polynomials: a compact tutorial for ZK](./finite-fields-tutorial) · [Session 3](./session-03) · [Polynomial terms and operations](./terms/polynomials) · [QAP: Combining R1CS constraints into a polynomial](./qap) · [Session 4: Arithmetization](./session-04)
 
 ## Logic and proofs
 

@@ -10,7 +10,7 @@
 
 ## 有限体と多項式
 
-[第3回](./session-03) · [多項式の用語と演算](./terms/polynomials) · [QAP：R1CSの制約を多項式にまとめる](./qap) · [第4回：算術化](./session-04)
+[有限体と多項式：ZKを学ぶための最小チュートリアル](./finite-fields-tutorial) · [第3回](./session-03) · [多項式の用語と演算](./terms/polynomials) · [QAP：R1CSの制約を多項式にまとめる](./qap) · [第4回：算術化](./session-04)
 
 ## 論理と証明
 
