@@ -134,6 +134,6 @@ Record the example URL/version, commands, public sample inputs, results and inte
 
 ## Review mathematical operations {#math}
 
-Enter `GF(7)(3)^(-1)` in [SageMathCell](https://sagecell.sagemath.org/) and press **Evaluate**. Compare the result, `5`, with the [finite-field exercise](../learn/foundations#finite-field).
+Enter `GF(7)(3)^(-1)` in [SageMathCell](https://sagecell.sagemath.org/) and press **Evaluate**. Compare the result, `5`, with the [finite-field tutorial](../learn/finite-fields-tutorial).
 
 [SageMath tutorial](https://doc.sagemath.org/html/en/tutorial/) · [Installation](https://doc.sagemath.org/html/en/installation/) · [Prerequisites and supplementary resources](../learn/foundations)

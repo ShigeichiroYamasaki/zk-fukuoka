@@ -91,7 +91,7 @@ where $q_i=\Pr_{z\sim P_i}[D(z)=1]$. Thus the error in the estimated gap is at m
 
 Such an experiment asks whether a particular distinguisher detects a difference with the available samples. Failing to detect one does not prove that the distributions are equal or computationally indistinguishable to every efficient distinguisher. The latter requires a theoretical security proof that accounts for the security parameter, sample budget, and computational resources.
 
-Zero-knowledge requires that, for a fixed public input, a distinguisher cannot tell the probability distribution of the real interaction’s view from the probability distribution output by a simulator. Session 2 develops the perfect, statistical, and computational versions in detail; see its [formal definition and tables](./session-02#_2-2-formal-definition).
+Zero-knowledge requires that, for a fixed public input, a distinguisher cannot tell the probability distribution of the real interaction’s view from the probability distribution output by a simulator. Session 2 develops the perfect, statistical, and computational versions in detail; see its [formal definition and tables](./session-02#_2-2-a-formal-definition).
 
 In protocol analysis, distinguish “the verifier’s random challenge $R$,” “the adversary’s random coins $A$,” and “the acceptance indicator $Y$.” If we encode acceptance as $Y=1$ and rejection as $Y=0$, the soundness error can, for example, be expressed as the conditional probability
 

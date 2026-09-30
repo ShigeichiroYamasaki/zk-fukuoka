@@ -63,7 +63,7 @@ The [STARK manual](./manuals#stark) guides normal execution, changed-public-outp
 | Tool | Purpose | Instructions |
 | --- | --- | --- |
 | Selected proof implementation and logs | Record proof size, proving/verification time and acceptance/rejection | [Conditions and recording fields](./manuals#comparison) |
-| [Python](https://www.python.org/) or your usual spreadsheet | Store measurements in CSV or similar and aggregate repeated runs under matching conditions | [Programming resources](../learn/foundations#practice-resources) |
+| [Python](https://www.python.org/) or your usual spreadsheet | Store measurements in CSV or similar and aggregate repeated runs under matching conditions | [Programming resources](https://docs.python.org/3/tutorial/) |
 | [Git](https://git-scm.com/) | Record code, settings, versions and reproduction steps | [Save and share results](./manuals#git) |
 
 Record serialization formats and security settings. Distinguish JSON from binary sizes and setup from proving time. Measurements of different computations or conditions do not establish a ranking of proof systems.
@@ -88,7 +88,7 @@ Use these to revisit Act II or check small calculations in Session 15.
 | [SageMathCell](https://sagecell.sagemath.org/) | Try finite-field, polynomial and matrix calculations | Browser; no local installation | [SageMath basics](./manuals#math) |
 | [SageMath](https://www.sagemath.org/) | Save computations and investigate fields, polynomials and linear algebra | Local installation or an online environment | [Tutorial](https://doc.sagemath.org/html/en/tutorial/), [installation](https://doc.sagemath.org/html/en/installation/) |
 
-Start by comparing results with the [modulo-7 exercise](../learn/foundations#finite-field).
+Start by comparing results with the [modulo-7 calculations](../learn/finite-fields-tutorial).
 
 ## Match versions and materials {#versions}
 

@@ -71,4 +71,4 @@ In Session 1, completeness concerns $x\in L$ and soundness concerns $x\notin L$.
 
 </details>
 
-See also the [supplementary resources on sets, functions and logic](../foundations#math-resources).
+See also the [supplementary resources on sets, functions and logic](../computation-theory).

@@ -63,7 +63,7 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 | ツール | 用途 | 操作案内 |
 | --- | --- | --- |
 | 選んだ証明実装とそのログ | 証明サイズ，生成時間，検証時間，受理・拒否を記録する | [比較条件と記録項目](./manuals#comparison) |
-| [Python](https://www.python.org/) または普段使っている表計算ソフト | 測定値をCSV等にまとめ，同じ条件の反復結果を集計する | [Python入門などの補助教材](../learn/foundations#practice-resources) |
+| [Python](https://www.python.org/) または普段使っている表計算ソフト | 測定値をCSV等にまとめ，同じ条件の反復結果を集計する | [Python入門などの補助教材](https://docs.python.org/3/tutorial/) |
 | [Git](https://git-scm.com/) | ソース・設定・使用版・再実行手順を記録する | [結果の保存・共有](./manuals#git) |
 
 ツールの出力形式や安全性設定を記録し，JSONとバイナリのサイズ，セットアップ時間と証明生成時間を混同しないようにします．異なる計算・条件の測定値は，方式の優劣を示す比較には使えません．
@@ -88,7 +88,7 @@ SageMathやPythonで総和を計算するだけでは，GKRやゼロ知識証明
 | [SageMathCell](https://sagecell.sagemath.org/) | 有限体・多項式・行列の計算を入力して試す | ブラウザー．ローカル導入不要 | [SageMathの基本操作](./manuals#math) |
 | [SageMath](https://www.sagemath.org/) | 計算を保存し，有限体・多項式・線形代数を継続して調べる | ローカル導入，またはオンライン環境 | [公式チュートリアル](https://doc.sagemath.org/html/en/tutorial/)，[導入](https://doc.sagemath.org/html/en/installation/) |
 
-まずは[法7の手計算](../learn/foundations#finite-field)と結果を比べてみましょう．
+まずは[法7の計算例](../learn/finite-fields-tutorial)と結果を比べてみましょう．
 
 ## 利用する版と教材の選び方 {#versions}
 

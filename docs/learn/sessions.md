@@ -20,12 +20,12 @@
 - [第9回:Fiat-Shamir変換とROMの功罪](./session-09)
 - [第10回:PCP定理とIOPの枠組み — 計算量理論的総括](./session-10)
 
-## 幕III · 統合
+## 幕III · 統合 {#act-iii}
 
 - [第11回:Groth16](./session-11)
 - [第12回:PLONK](./session-12)
 - [第13回:STARK](./session-13)
 - [第14回:統合的視点 — 幕I〜IIIの往還](./session-14)
-- [第15回:発展の方向性](./session-15)
+- [第15回(最終回):発展の方向性](./session-15)
 
-[補助教材 · 有限体の導入演習](./foundations)
+[前提知識 · 有限体と多項式](./finite-fields-tutorial)

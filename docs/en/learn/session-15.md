@@ -138,7 +138,7 @@ Check degree bounds and sum consistency each round, choosing the challenge after
 
 GKR verifies claims about circuit outputs by reducing them to claims about preceding layers, using sumcheck for the reduction. Unlike directly checking R1CS or AIR constraints, it exploits layered circuit structure. Understand the 2008 Goldwasser–Kalai–Rothblum protocol through this connection between its goal and tool.
 
-### 3.3 Read GKR/sumcheck as one direction for cost optimization
+### 3.3 Read GKR/sumcheck as one direction for cost optimization {#gkr-cost}
 
 Where does the time go when proving a large circuit? GKR- and sumcheck-based systems can exploit layered structure and multilinear representations to distribute work between prover and verifier. A central benefit of the original GKR protocol is efficient verification relative to circuit depth; this does not mean that GKR generally minimizes prover cost. Prover improvements depend on the circuit, representation, commitments, and implementation. For machine-learning inference, ask which parallel structure is used and which work falls to the prover or verifier. See the [GKR paper overview](https://www.microsoft.com/en-us/research/publication/delegating-computation-interactive-proofs-muggles/), which distinguishes verifier efficiency from polynomial-time prover work.
 

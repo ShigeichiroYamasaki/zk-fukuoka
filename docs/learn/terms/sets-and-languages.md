@@ -71,4 +71,4 @@ $\iff$ は「必要十分」，$\exists$ は「存在する」と読む．$w$ �
 
 </details>
 
-[補助教材の「集合・関数・論理」関連リンク](../foundations#math-resources)も参照してほしい．
+[補助教材の「集合・関数・論理」関連リンク](../computation-theory)も参照してほしい．

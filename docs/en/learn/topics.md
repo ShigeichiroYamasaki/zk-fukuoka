@@ -62,7 +62,7 @@ Updated: September 27, 2026
 | Copy constraints, permutation arguments and position labels | [Session 12 §3.1](./session-12#_3-1-why-it-is-needed-consistent-wiring) / [Session 12 §3.2](./session-12#_3-2-the-idea-behind-the-permutation-argument) |
 | Custom gates; trade-offs in constraint degree and column count | [Session 12 §4.1](./session-12#_4-1-motivation-making-common-patterns-more-efficient) / [Session 12 §4.2](./session-12#_4-2-expressiveness-and-efficiency) |
 
-[Supplement · Finite-field calculations](./foundations#finite-field)
+[Supplement · Finite-field calculations](./finite-fields-tutorial)
 
 ## Complexity theory, PCPs & IOPs {#complexity}
 
@@ -164,7 +164,7 @@ Updated: September 27, 2026
 | Folding schemes, Nova and relaxed R1CS | [Session 15 §2.1](./session-15#_2-1-practical-challenges-of-recursive-proofs) / [Session 15 §2.2](./session-15#_2-2-the-idea-folding-the-relations-to-be-verified) |
 | Incrementally verifiable computation (IVC); folding versus compression | [Session 15 §2.2](./session-15#_2-2-the-idea-folding-the-relations-to-be-verified) / [Session 15 §2.3](./session-15#_2-3-where-this-approach-helps) |
 | Sumcheck, sums of multivariate polynomials and the final evaluation check | [Session 15 §3.1](./session-15#_3-1-revisiting-the-sumcheck-protocol) |
-| GKR, layered circuits and prover costs | [Session 15 §3.2](./session-15#_3-2-the-gkr-protocol) / [Session 15 §3.3](./session-15#_3-3-why-these-approaches-are-receiving-renewed-attention) / [Session 15 §3.4](./session-15#_3-4-position-within-the-iop-framework) |
+| GKR, layered circuits and prover costs | [Session 15 §3.2](./session-15#_3-2-the-gkr-protocol) / [Session 15 §3.3](./session-15#gkr-cost) / [Session 15 §3.4](./session-15#_3-4-position-within-the-iop-framework) |
 | Research through expressiveness, efficiency and composability | [Session 15 §4](./session-15#_4-a-research-map-expanding-the-two-axis-matrix) |
 
 ## Ethereum, zkEVMs & execution proofs {#ethereum}

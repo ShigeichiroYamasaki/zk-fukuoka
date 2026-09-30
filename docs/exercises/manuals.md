@@ -134,6 +134,6 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 
 ## 数学の操作を復習する {#math}
 
-法7の逆元から復習する場合は，[SageMathCell](https://sagecell.sagemath.org/)に`GF(7)(3)^(-1)`を入力し，**Evaluate**を押します．結果の`5`を[有限体の導入演習](../learn/foundations#finite-field)の手計算と比べてください．
+法7の逆元から復習する場合は，[SageMathCell](https://sagecell.sagemath.org/)に`GF(7)(3)^(-1)`を入力し，**Evaluate**を押します．結果の`5`を[有限体のチュートリアル](../learn/finite-fields-tutorial)の手計算と比べてください．
 
 [SageMath公式チュートリアル](https://doc.sagemath.org/html/en/tutorial/) · [導入ガイド](https://doc.sagemath.org/html/en/installation/) · [日本語の前提知識・補助教材](../learn/foundations)
