@@ -6,9 +6,6 @@ Updated: September 27, 2026
 
 [New to the subject? Start with prerequisites and supplementary resources.](./foundations)
 
-[Session 4 prerequisite terms: eight worked explanations](./terms/)
-
-[Worked arithmetization example: balance deposits and withdrawals](../exercises/session-04)
 
 [Browse by session](./sessions) · [Read the syllabus](./) · [Exercises and tools](../exercises/)
 
@@ -27,7 +24,6 @@ Updated: September 27, 2026
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
 [Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
-
 
 ## Proof foundations & security definitions {#proofs}
 
