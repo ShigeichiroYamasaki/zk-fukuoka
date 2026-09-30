@@ -26,7 +26,7 @@ import ArithmetizationOverview from "../.vitepress/theme/ArithmetizationOverview
 NP関係，回路，制約などは[第4回の用語ガイド](./terms/)から詳しく読めます．8つの説明ページに具体例と確認問題を用意しました．本文中の用語からも該当ページへ移動できます．
 :::
 
-[具体例：入金と出金の一致をR1CS・QAP・AIRへ変換する](./balance-arithmetization) — 行列，多項式，実行トレースを数値で追い，Pythonでも再現できます．
+[具体例：入金と出金の一致をR1CS・QAP・AIRへ変換する](../exercises/session-04#program) — 行列，多項式，実行トレースを数値で追い，Pythonでも再現できます．
 
 ## 本講義の位置づけと到達目標
 
@@ -151,7 +151,7 @@ $$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
 
 となる．途中の計算値を誤魔化すと，どの関係が崩れたかを行ごとに確認できる．
 
-ここで $y=35$ は，検証したい言明の公開入力として固定している．$y$ も自由に選べるなら，この三つの行だけでは出力35を要求できない．制約系自体に定数35を埋め込む設計なら，追加の行 $(y-35)\cdot1=0$ を使える．また，この例が検査するのは有限体での等式である．整数の金額などを扱う際は，[入出金の例](./balance-arithmetization)のように範囲制約と剰余による回り込みも検討する．
+ここで $y=35$ は，検証したい言明の公開入力として固定している．$y$ も自由に選べるなら，この三つの行だけでは出力35を要求できない．制約系自体に定数35を埋め込む設計なら，追加の行 $(y-35)\cdot1=0$ を使える．また，この例が検査するのは有限体での等式である．整数の金額などを扱う際は，[入出金の例](../exercises/session-04#program)のように範囲制約と剰余による回り込みも検討する．
 
 <span id="figure-04-1"></span>
 <span id="caption-04-1"></span>
@@ -170,7 +170,7 @@ $$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
 
 x=3の計算例．加算も出力条件も含めて制約を満たす必要がある．実際のR1CSでは各式を二つの線形結合の積の形へ書く．
 
-[入出金の具体例でR1CSへの変換を追う](./balance-arithmetization#r1cs)
+[入出金の具体例でR1CSへの変換を追う](../exercises/session-04#r1cs)
 
 ### 3.4 検査の計算量とQAPへの橋渡し {#r1cs-linear-algebra}
 
@@ -227,7 +227,7 @@ $$\left(\sum_i z_i A_i(X)\right) \left(\sum_i z_i B_i(X)\right) - \left(\sum_i z
 
 割り切れ性の表現だけでは暗号学的な証明は完成しない．次数の制限と，評価値が固定された多項式に対応することの保証も必要になる．
 
-[入出金の具体例でQAPへの変換を追う](./balance-arithmetization#qap)
+[入出金の具体例でQAPへの変換を追う](../exercises/session-04#qap)
 
 ### 4.3 補間から割り切れ性までを計算する {#qap-worked-math}
 
@@ -313,7 +313,7 @@ AIRでは次の2種類の制約を課す:
 
 F₁₇上でsₜ₊₁=sₜ²，初期値s₀=3を例にしたトレース．遷移制約は隣り合う行，境界制約は指定した行に課す．
 
-[入出金の具体例でAIRへの変換を追う](./balance-arithmetization#air)
+[入出金の具体例でAIRへの変換を追う](../exercises/session-04#air)
 
 ### 5.3 R1CS/QAPとの比較で捉える
 

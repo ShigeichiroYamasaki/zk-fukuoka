@@ -28,7 +28,6 @@ Each page provides calculation, comparison, or implementation tasks tied to a le
 | 14 | [Comparing protocols](./session-14) | Completeness, soundness, zero knowledge, design axes |
 | 15 | [Recursion, folding, and research directions](./session-15) | Folding, sumcheck, Ethereum application |
 
-[Before Act III: work through R1CS/QAP and AIR with a small balance program](../learn/balance-arithmetization#run) — Python arithmetic exercise for Session 4.
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 

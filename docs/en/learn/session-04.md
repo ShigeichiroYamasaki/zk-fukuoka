@@ -26,7 +26,7 @@ Preparation: [program meaning](./program-semantics)—read computation as inputs
 New to NP relations, circuits or constraints? Open the [Session 4 term guide](./terms/). Each of its eight explanations includes a worked example and a self-check. Links in the lecture also lead directly to the relevant page.
 :::
 
-[Worked example: balanced deposits and withdrawals → R1CS, QAP and AIR](./balance-arithmetization) — matrices, interpolated polynomials, traces and a runnable Python example.
+[Worked example: balanced deposits and withdrawals → R1CS, QAP and AIR](../exercises/session-04#program) — matrices, interpolated polynomials, traces and a runnable Python example.
 
 ## Context and learning objectives
 
@@ -151,7 +151,7 @@ $$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
 
 This identifies which relationships fail when an intermediate value is changed.
 
-Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](./balance-arithmetization).
+Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](../exercises/session-04#program).
 
 <span id="figure-04-1"></span>
 <span id="caption-04-1"></span>
@@ -170,7 +170,7 @@ Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen,
 
 Worked example with x=3. Addition and the output condition must also hold. Each relation is written as a product of linear combinations in R1CS.
 
-[Follow the deposit/withdrawal example: R1CS](./balance-arithmetization#r1cs)
+[Follow the deposit/withdrawal example: R1CS](../exercises/session-04#r1cs)
 
 ### 3.4 Checking cost and the bridge to QAP {#r1cs-linear-algebra}
 
@@ -227,7 +227,7 @@ The computation to be checked has not changed; the form of the check has. Vanish
 
 Divisibility alone is not a cryptographic proof. Degree bounds and guarantees tying evaluations to fixed polynomials are also needed.
 
-[Follow the deposit/withdrawal example: QAP](./balance-arithmetization#qap)
+[Follow the deposit/withdrawal example: QAP](../exercises/session-04#qap)
 
 ### 4.3 Computing interpolation and divisibility {#qap-worked-math}
 
@@ -311,7 +311,7 @@ Separate the roles of the two constraints. Correct transitions do not establish 
 
 Example trace over F₁₇ with sₜ₊₁=sₜ² and s₀=3. Transition constraints link adjacent rows; boundary constraints apply to specified rows.
 
-[Follow the deposit/withdrawal example: AIR](./balance-arithmetization#air)
+[Follow the deposit/withdrawal example: AIR](../exercises/session-04#air)
 
 ### 5.3 Understanding AIR through comparison with R1CS/QAP
 

@@ -8,7 +8,7 @@ outline: [2, 3]
 
 更新日：2026年9月27日
 
-[講義一覧](../learn/sessions) · [入出金の算術化](../learn/balance-arithmetization) · [演習](../exercises/)
+[講義一覧](../learn/sessions) · [入出金の算術化](../exercises/session-04#program) · [演習](../exercises/)
 
 ::: info 教材の到達点と現在の配布物
 このページ群は，実装仕様・開発手順・合格条件を揃えた応用編です．配布するコードは，残高台帳・Merkle木のPython参照モデルと，送金の算術部分を扱うCircom入門回路です．署名とMerkle検証を統合したrollup回路，L1ブリッジ，運営者停止時の退出は，各章で実装する課題です．完成したrollupやテストネットへのデプロイ済みシステムとして提供するものではありません．

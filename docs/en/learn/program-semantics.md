@@ -37,7 +37,7 @@ Arithmetization introduces variables for intermediate values and arranges that o
 - If the program executes correctly, the corresponding assignment satisfies the constraints (completeness).
 - If an assignment satisfies the constraints, it represents a valid execution of the program (soundness).
 
-To ensure the second direction, do not omit required input, output, range, or branch conditions. When integers are represented in a finite field, range constraints may also be needed to prevent wraparound modulo the field size. The [deposit and withdrawal arithmetization example](./balance-arithmetization) illustrates this.
+To ensure the second direction, do not omit required input, output, range, or branch conditions. When integers are represented in a finite field, range constraints may also be needed to prevent wraparound modulo the field size. The [deposit and withdrawal arithmetization example](../exercises/session-04#private) illustrates this.
 
 ## Check your preparation
 

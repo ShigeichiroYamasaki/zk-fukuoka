@@ -52,7 +52,7 @@ Before following the equations, review the tools in this order. This session com
 
 In particular, copy constraints cannot be checked merely by observing that two value multisets match: the circuit's intended position mapping must be fixed and checked. Section 3 follows the position labels, permutation, random β and γ challenges, and grand product in sequence.
 
-When an implementation proves integer additions, balances or ranges, distinguish field equality from integer equality. Field values may agree only modulo the field modulus, so constrain value ranges or bit decompositions and check that intermediate arithmetic does not wrap around the modulus. The [deposit/withdrawal R1CS example](./balance-arithmetization) fixes amount ranges and makes the condition that the sum is below the modulus explicit.
+When an implementation proves integer additions, balances or ranges, distinguish field equality from integer equality. Field values may agree only modulo the field modulus, so constrain value ranges or bit decompositions and check that intermediate arithmetic does not wrap around the modulus. The [deposit/withdrawal R1CS example](../exercises/session-04#private) fixes amount ranges and makes the condition that the sum is below the modulus explicit.
 
 ---
 

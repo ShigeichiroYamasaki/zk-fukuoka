@@ -28,7 +28,6 @@ outline: [2, 3]
 | 14 | [プロトコルを横断比較する](./session-14) | 完全性・健全性・ゼロ知識性と設計軸 |
 | 15 | [再帰・folding・応用の研究地図](./session-15) | folding，sumcheck，Ethereum応用 |
 
-[幕IIIの前に：入出金のプログラムでR1CS/QAPとAIRを確認する](../learn/balance-arithmetization#run) — 第4回に対応するPythonの算術化演習です．
 
 [応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル．
 

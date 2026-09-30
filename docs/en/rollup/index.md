@@ -8,7 +8,7 @@ A six-stage development course connects Sessions 1–15 to deposits, L2 transfer
 
 Updated: September 27, 2026
 
-[Lectures](../learn/sessions) · [Balance arithmetization](../learn/balance-arithmetization) · [Exercises](../exercises/)
+[Lectures](../learn/sessions) · [Balance arithmetization](../exercises/session-04#program) · [Exercises](../exercises/)
 
 ::: info Course scope and supplied artifacts
 These pages provide specifications, implementation steps and acceptance tests. Downloads include a Python ledger/Merkle reference model and an introductory Circom arithmetic circuit. The integrated signature/Merkle rollup circuit, L1 bridge and operator-failure exits are learner implementation tasks. This is not a completed rollup or a deployed testnet system.

@@ -8,7 +8,7 @@ Updated: September 27, 2026
 
 [Session 4 prerequisite terms: eight worked explanations](./terms/)
 
-[Worked arithmetization example: balance deposits and withdrawals](./balance-arithmetization)
+[Worked arithmetization example: balance deposits and withdrawals](../exercises/session-04)
 
 [Browse by session](./sessions) · [Read the syllabus](./) · [Exercises and tools](../exercises/)
 
