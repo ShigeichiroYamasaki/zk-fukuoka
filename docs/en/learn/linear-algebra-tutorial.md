@@ -164,7 +164,67 @@ $$
 
 In other words, the linear map $z\mapsto Az$ is represented by polynomials that agree at the constraint evaluation points. The columns of $B$ and $C$ are interpolated similarly, and the row-wise R1CS equations are combined into polynomial identity or divisibility conditions. This row-column correspondence explains why QAP interpolates columns.
 
-## 8. Topics needed in this course
+## 8. Tensor products for understanding QAP multiplication
+
+In a QAP, the R1CS linear forms are represented by polynomials, and then two such polynomials are multiplied. A product of values produced by linear maps is a **bilinear** operation. Tensor products let us view this bilinear computation as a linear computation on a larger vector space.
+
+### 8.1 Tensor product of vectors
+
+For $u=(u_1,\ldots,u_n)^T$ and $v=(v_1,\ldots,v_m)^T$, the tensor product $u\otimes v$ is the vector containing every pairwise product $u_i v_j$. For example,
+
+$$
+u=\begin{pmatrix}a\\b\end{pmatrix},\quad
+v=\begin{pmatrix}c\\d\end{pmatrix},\quad
+u\otimes v=\begin{pmatrix}ac\\ad\\bc\\bd\end{pmatrix}.
+$$
+
+The ordering is fixed by the chosen basis. The key idea is to collect every combination of entries from the two vectors into one vector with $nm$ components. This differs from the componentwise product $u\circ v$ and usually has a different dimension.
+
+### 8.2 Representing a bilinear product as a linear map
+
+The product of two dot products can be expressed as a linear form on a tensor product:
+
+$$
+(r^Tz)(s^Tz)=(r\otimes s)^T(z\otimes z).
+$$
+
+The right side takes all pairwise products $z_i z_j$ in $z\otimes z$, weights them by the coefficients $r_i s_j$, and adds them. Thus a quadratic expression in $z$ can be viewed as a linear form on a tensor space. In each R1CS row, $(a_i^Tz)(b_i^Tz)=c_i^Tz$, the left side is such a quadratic expression and the right side remains linear in the original variables.
+
+### 8.3 Follow a QAP polynomial product through its coefficients
+
+As a small example, suppose two linear forms represented at an evaluation point are
+
+$$A(X)=x+2yX,\qquad B(X)=3x-yX.$$
+
+Their coefficient vectors are $(x,2y)^T$ and $(3x,-y)^T$, whose tensor product is
+
+$$
+\begin{pmatrix}x\\2y\end{pmatrix}\otimes
+\begin{pmatrix}3x\\-y\end{pmatrix}
+=\begin{pmatrix}3x^2\\-xy\\6xy\\-2y^2\end{pmatrix}.
+$$
+
+Apply a “convolution” map that adds terms of the same degree to obtain the product polynomial's coefficients:
+
+$$
+A(X)B(X)=3x^2+5xyX-2y^2X^2.
+$$
+
+The middle coefficient $5xy$ is the sum of the second and third tensor entries, $-xy$ and $6xy$. The tensor product preserves all pairwise coefficient products; polynomial multiplication then combines terms of equal degree.
+
+### 8.4 What this viewpoint says about QAP
+
+QAP polynomials have the form $A_z(X)=\sum_j z_jA_j(X)$ and $B_z(X)=\sum_k z_kB_k(X)$. Expanding their product gives
+
+$$
+A_z(X)B_z(X)=\sum_{j,k}z_jz_k A_j(X)B_k(X).
+$$
+
+Every product $z_jz_k$ is a component of $z\otimes z$. Pairing these components with coefficient polynomials $A_j(X)B_k(X)$ lets us view the product as a linear map on the tensor product. We then subtract the linear term $C_z(X)$ and collect the R1CS residuals into one polynomial. The QAP condition checks whether that residual polynomial is divisible by the vanishing polynomial $Z(X)$.
+
+This is a mathematical way to organize the QAP structure; it does not mean that a prover implementation must always materialize $z\otimes z$. Implementations use whichever polynomial multiplication and FFT-based methods suit their design.
+
+## 9. Topics needed in this course
 
 | Topic | Meaning | Role in the course |
 | --- | --- | --- |
@@ -173,6 +233,7 @@ In other words, the linear map $z\mapsto Az$ is represented by polynomials that 
 | Dot product and linear combination | Multiply coefficients by variables and add the results | Read each row of an R1CS constraint |
 | Matrix product | Compute many linear combinations together | Compute $(Az),(Bz),(Cz)$ |
 | Componentwise product | Multiply entries at matching positions | Express the quadratic part of R1CS constraints |
+| Tensor product | Vector of pairwise products of entries from two vectors | View bilinear products as linear maps on a larger space and expand QAP products |
 | Dimension and rank | Matrix shape and number of independent directions | Understand rows/columns in R1CS and the name Rank-1 |
 | Composition of linear maps | Applying transformations in sequence | Relate staged circuit computations to matrix products |
 
@@ -189,6 +250,10 @@ In other words, the linear map $z\mapsto Az$ is represented by polynomials that 
 **Exercise 3.** For $u=(1,2,3)^T$ and $v=(4,5,6)^T$, compute the dot product and componentwise product, and compare their result types.
 
 **Answer.** The dot product is the scalar $u^Tv=32$; the componentwise product is the vector $u\circ v=(4,10,18)^T$.
+
+**Exercise 4.** Let $u=(a,b)^T$ and $v=(c,d)^T$. Write $u\otimes v$, then explain how its shape and dimension differ from both the dot product and componentwise product.
+
+**Answer.** $u\otimes v=(ac,ad,bc,bd)^T$, a four-component vector. A dot product returns a scalar, while a componentwise product multiplies only entries at matching positions, so both differ from the tensor product.
 
 ## Continue learning
 
