@@ -289,3 +289,9 @@ In Session 6, we will study FRI as a concrete technique for low-degree testing. 
 - Before Section 3.2, ask whether random errors and errors deliberately introduced by an adversary require the same countermeasures. This helps motivate the Hamming model.
 - Have students derive $\delta = n-d+1$ from the fact that a nonzero polynomial has no more roots than its degree, strengthening the connection to Session 3.
 - Introduce list decoding as a relaxation: even if we cannot identify a unique answer, can we narrow the candidates down? Use this to prepare the question of why FRI can still guarantee soundness.
+
+---
+
+## Session 5 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 5 exercise](../exercises/session-05).

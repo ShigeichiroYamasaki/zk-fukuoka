@@ -329,3 +329,9 @@ In Session 7, we will study elliptic curves and pairings, algebraic structures u
 - Before presenting the folding equations, ask students what operation could efficiently halve a polynomial's degree. This helps motivate the even/odd decomposition.
 - Discuss why one execution is insufficient using a concrete error probability, such as $1/2$, to illustrate the need for soundness amplification.
 - Review the special soundness of Schnorr from Session 2 before introducing rewinding, connecting the new technique to familiar material.
+
+---
+
+## Session 6 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 6 exercise](../exercises/session-06).

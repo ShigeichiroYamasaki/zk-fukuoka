@@ -463,3 +463,9 @@ In Session 4, we begin concrete arithmetization techniques: R1CS, QAP, and AIR, 
 - Before presenting the lemma, ask whether checking just one point instead of comparing entire polynomials could really be sufficient, and whether this seems intuitively doubtful.
 - First establish the univariate fact that there are at most $d$ roots, then ask students to predict what might happen in multiple variables. This helps make the statement of the lemma intuitive.
 - Include an exercise asking what happens if $|S|$ is too small, with students constructing concrete counterexamples. This makes the meaning of the lemma's assumptions tangible.
+
+---
+
+## Session 3 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 3 exercise](../exercises/session-03).

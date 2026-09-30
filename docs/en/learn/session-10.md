@@ -181,3 +181,9 @@ This completes Act II. Session 11 begins Act III, integration, with Groth16. We 
 - Before stating the PCP theorem, ask whether changing the way a proof is written could reduce how much a verifier must read.
 - Have students tabulate PCP, IP, and IOP and explain the differences in the verifier's access in their own words.
 - When discussing the independence of arithmetization and commitments in Section 3.3, ask whether other combinations, such as AIR with KZG, are possible, highlighting the breadth of the design space.
+
+---
+
+## Session 10 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 10 exercise](../exercises/session-10).

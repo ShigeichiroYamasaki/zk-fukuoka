@@ -287,3 +287,9 @@ In Session 9, we will study the Fiat–Shamir transform: how to turn the interac
 - When introducing commitments, ask how binding and hiding can coexist despite seeming contradictory.
 - Before presenting KZG's verification equation, ask what is needed to check $f(\tau) = q(\tau)(\tau-x) + y$ without revealing $\tau$, helping students motivate pairings themselves.
 - Compare Sections 2.4 and 3.3 and ask students to explain why STARKs can claim post-quantum security, reinforcing the comparison table.
+
+---
+
+## Session 8 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 8 exercise](../exercises/session-08).

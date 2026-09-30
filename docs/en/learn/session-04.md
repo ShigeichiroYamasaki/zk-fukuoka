@@ -406,3 +406,9 @@ In Session 5, we examine how to treat these polynomial representations as codes 
 - Have students introduce intermediate variables and perform the R1CS conversion in Section 3.3 themselves to gain practical experience with arithmetization.
 - Ask when addition can be absorbed into a linear combination and when a separately stored value needs an equality constraint, to develop their understanding of linear combinations and nonlinearity.
 - After presenting AIR transition constraints, ask why AIR feels more natural even though the same computation could be expressed in R1CS. Use this to explore the difference in design philosophy.
+
+---
+
+## Session 4 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 4 exercise](../exercises/session-04).

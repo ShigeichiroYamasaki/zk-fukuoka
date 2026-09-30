@@ -291,3 +291,9 @@ In Session 8, we will study polynomial commitments: committing to a polynomial a
 - Present $e(aP, bQ) = e(P,Q)^{ab}$ and let students explore what it enables before discussing Section 2.3, highlighting the nontrivial new capability.
 - Ask why some protocols cannot be proved secure using standard assumptions alone, and discuss the motivation for introducing non-standard assumptions.
 - Have students explain the reduction structure in their own words: if an adversary existed, we could use it to solve another problem. Encourage them to notice the resemblance to proof by contradiction.
+
+---
+
+## Session 7 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 7 exercise](../exercises/session-07).

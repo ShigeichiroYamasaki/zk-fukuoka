@@ -299,3 +299,9 @@ Next time, we question the remaining Assumption A. How should we define not givi
 
 - Before beginning the discussion, ask students to predict whether it seems possible or impossible to convince someone that $x \in L$ without revealing the entire witness.
 - After presenting IP = PSPACE, ask questions such as “What if we allow infinitely many rounds of interaction?” or “Does fixing the number of rounds change the class?” These provide useful preparation for the discussion of efficiency—round complexity and succinctness—in Act II.
+
+---
+
+## Session 1 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 1 exercise](../exercises/session-01).

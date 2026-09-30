@@ -205,3 +205,9 @@ Next time (Session 12), we study PLONK: the motivation for universal setup to ad
 - Before presenting the difficulties in Section 2.1, ask students what could go wrong if $A(\tau)$ and $B(\tau)$ were simply sent as numbers. This helps motivate the need for pairings.
 - Display $e(\pi_A,\pi_B) = e([\alpha]_1,[\beta]_2) \cdot e(\mathrm{IC},[\gamma]_2) \cdot e(\pi_C,[\delta]_2)$ and ask where the public inputs enter and which multiplication relation the pairing checks.
 - Ask why circuit-specific key generation is needed, encouraging students to anticipate the motivation for universal setup in the next session.
+
+---
+
+## Session 11 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 11 exercise](../exercises/session-11).

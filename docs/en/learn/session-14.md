@@ -218,3 +218,9 @@ The final session (Session 15) introduces recursive SNARKs, folding schemes, and
 - Hand out Section 2’s map with empty cells and ask students to fill it using earlier lecture notes as an active review exercise.
 - Discuss protocol-selection scenarios in groups, then compare the reasoning of groups that reach different conclusions to deepen understanding of tradeoffs.
 - Ask how a new requirement, such as acceleration on particular hardware, might change the comparison table and motivate the next session’s advanced topics.
+
+---
+
+## Session 14 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 14 exercise](../exercises/session-14).

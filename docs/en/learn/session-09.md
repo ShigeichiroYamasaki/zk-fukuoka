@@ -251,3 +251,9 @@ Session 10 concludes Act II with the PCP theorem and the IOP framework. We will 
 - Before introducing Fiat–Shamir, ask how randomness might be obtained without an online verifier, helping motivate the use of hashing.
 - When presenting CGH, discuss the difference between a mathematical proof and security in a concrete implementation.
 - Ask students which resources—ROM, a CRS, or interaction—a design uses, and which assumptions support its security and efficiency.
+
+---
+
+## Session 9 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 9 exercise](../exercises/session-09).

@@ -245,3 +245,9 @@ When reading a new proof system, first ask what it aims to achieve. Which comput
 - Kothapalli, Setty, Tzialla, [“Nova: Recursive Zero-Knowledge Arguments from Folding Schemes,”](https://eprint.iacr.org/2021/370) CRYPTO 2022. Original paper; public PDF available.
 - Goldwasser, Kalai, Rothblum, [“Delegating Computation: Interactive Proofs for Muggles,”](https://www.microsoft.com/en-us/research/publication/delegating-computation-interactive-proofs-muggles/) STOC 2008. Original GKR paper; [public PDF](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/2008-DelegatingComputation.pdf).
 - Thaler, [*Proofs, Arguments, and Zero-Knowledge*](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html). A comprehensive textbook emphasizing sumcheck, with a [free PDF](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf). Recommended for reviewing and extending this course.
+
+---
+
+## Session 15 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 15 exercise](../exercises/session-15).

@@ -245,3 +245,9 @@ GKRは，回路の出力についての言明を，前の層の値について�
 - Kothapalli, Setty, Tzialla, [“Nova: Recursive Zero-Knowledge Arguments from Folding Schemes,”](https://eprint.iacr.org/2021/370) CRYPTO 2022(原論文，公開PDFあり)
 - Goldwasser, Kalai, Rothblum, [“Delegating Computation: Interactive Proofs for Muggles,”](https://www.microsoft.com/en-us/research/publication/delegating-computation-interactive-proofs-muggles/) STOC 2008(GKRプロトコルの原論文，[公開PDF](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/2008-DelegatingComputation.pdf))
 - Thaler, [*Proofs, Arguments, and Zero-Knowledge*](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html), (電子書籍，[無料公開PDF](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf))— sumcheckを中心に据えた優れた総合的教科書．本講義の復習・発展学習として推奨できる
+
+---
+
+## 第15回の演習へ
+
+講義で扱った内容を，計算や具体例で確かめましょう．[第15回の演習ページ](../exercises/session-15)を開く．

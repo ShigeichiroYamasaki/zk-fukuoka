@@ -257,3 +257,9 @@ Next time (Session 14), we integrate Act III. We compare how Groth16, PLONK, and
 - Recall KZG’s structure from Session 8 and discuss what restrictions arise when building a protocol without any trusted setup, motivating the choice of FRI.
 - Revisit the Session 8 comparison table and ask students to summarize what STARKs gain and give up.
 - Ask why elliptic-curve assumptions are vulnerable to quantum computers while suitable hashes are currently believed to resist them. Briefly introduce the period-finding intuition behind Shor’s algorithm.
+
+---
+
+## Session 13 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 13 exercise](../exercises/session-13).

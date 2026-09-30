@@ -237,3 +237,9 @@ Next time (Session 13), we study STARK. We will examine how a construction pursu
 - Before Section 2.1, ask where circuit-specific information could be moved if it must be removed from the SRS. This motivates selector polynomials.
 - Before introducing the permutation argument, invite students to discuss how to express consistent wiring—the same value used in several places—in polynomial language. Use this discussion to bridge to multiset equality.
 - Ask what disadvantages might arise from adding too many custom gates, including tradeoffs in constraint degree, column count, proving cost, and verification cost, to develop a sense of design balance.
+
+---
+
+## Session 12 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 12 exercise](../exercises/session-12).

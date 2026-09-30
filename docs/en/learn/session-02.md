@@ -550,3 +550,9 @@ This completes Act I, purpose and motivation. In Session 3, we begin Act II by d
 - When introducing the claim that a simulator can fabricate an interaction without a witness, first ask students whether this seems contradictory. This highlights the nontrivial nature of the simulator paradigm.
 - Write Schnorr's verification equation on the board and ask students to identify where the group structure is used. This makes the discussion in Section 4.1 more concrete.
 - Before presenting the two-axis matrix, invite students to suggest why Schnorr's protocol cannot be directly extended to general computation, then compare their predictions with the explanation.
+
+---
+
+## Session 2 exercise
+
+Check the lecture concepts with calculations and concrete examples in the [Session 2 exercise](../exercises/session-02).
