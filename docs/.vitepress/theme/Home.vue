@@ -62,7 +62,6 @@ const t = (ja, english) => (en.value ? english : ja);
       </p>
       <nav class="lesson-shortcuts" :aria-label="t('学習コンテンツの索引', 'Learning indexes')">
         <a :href="link('learn/')">{{ t('シラバス', 'Syllabus') }} ↗</a>
-        <a :href="link('learn/sessions.html')">{{ t('各回の授業インデックス', 'Session index') }} ↗</a>
         <a :href="link('learn/topics.html')">{{ t('トピック別インデックス', 'Topic index') }} ↗</a>
         <a :href="link('learn/foundations.html')">{{ t('初学者向け・前提知識と補助教材', 'Beginner prerequisites & resources') }} ↗</a>
         <a :href="link('rollup/')">{{ t('応用編・ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }} ↗</a>
