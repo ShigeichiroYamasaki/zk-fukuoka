@@ -71,6 +71,26 @@ $$
 
 A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires every such distinguisher’s gap to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
 
+### Statistical testing with samples
+
+An experiment observes finitely many samples, not the probability distributions themselves. Collect independent samples from each process under the same experimental conditions, then apply a distinguisher $D$ chosen in advance. If process $i$ supplies $n_i$ samples, estimate its probability of outputting $1$ by
+
+$$
+\widehat q_i=\frac{1}{n_i}\sum_{j=1}^{n_i}\mathbf{1}[D(z_{i,j})=1].
+$$
+
+The observed distinguishing gap is $\widehat{\operatorname{Adv}}_D=|\widehat q_0-\widehat q_1|$. For example, let $P_0$ be a fair coin and $P_1$ a coin that lands heads with probability $3/4$. For the test “output 1 on heads,” the theoretical gap is $|1/2-3/4|=1/4$. A sample experiment estimates this value and includes sampling error.
+
+Hoeffding’s inequality gives a simple uncertainty bound. For independent samples, with confidence at least $1-\alpha$, both estimates simultaneously satisfy
+
+$$
+|\widehat q_i-q_i|\le r_i,\qquad r_i=\sqrt{\frac{\log(4/\alpha)}{2n_i}},
+$$
+
+where $q_i=\Pr_{z\sim P_i}[D(z)=1]$. Thus the error in the estimated gap is at most $r_0+r_1$ at that confidence level. Increasing the sample count narrows this range at roughly the rate $1/\sqrt{n_i}$. For finite-valued random variables, empirical frequencies estimate the probability mass functions; one can also compare the empirical total variation $\frac12\sum_z|\widehat P_0(z)-\widehat P_1(z)|$, while remembering that it too is only a finite-sample estimate.
+
+Such an experiment asks whether a particular distinguisher detects a difference with the available samples. Failing to detect one does not prove that the distributions are equal or computationally indistinguishable to every efficient distinguisher. The latter requires a theoretical security proof that accounts for the security parameter, sample budget, and computational resources.
+
 Zero-knowledge requires that, for a fixed public input, a distinguisher cannot tell the probability distribution of the real interaction’s view from the probability distribution output by a simulator. Session 2 develops the perfect, statistical, and computational versions in detail; see its [formal definition and tables](./session-02#_2-2-formal-definition).
 
 In protocol analysis, distinguish “the verifier’s random challenge $R$,” “the adversary’s random coins $A$,” and “the acceptance indicator $Y$.” If we encode acceptance as $Y=1$ and rejection as $Y=0$, the soundness error can, for example, be expressed as the conditional probability
