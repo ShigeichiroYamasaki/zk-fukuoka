@@ -18,7 +18,7 @@ import { withBase } from "vitepress";
 作成日付：2026年9月26日<br>
 最終更新日付：2026年9月29日
 
-[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第6回](./#session-6) · [演習](../exercises/)
+[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第6回](./#session-6) · [第6回の演習](../exercises/session-06)
 
 ## 本講義の位置づけと到達目標
 

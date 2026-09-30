@@ -18,7 +18,7 @@ import { withBase } from "vitepress";
 Created: September 26, 2026<br>
 Last updated: September 29, 2026
 
-[Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Exercises](../exercises/)
+[Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Session 6 exercises](../exercises/session-06)
 
 ## Position in the course and learning objectives
 

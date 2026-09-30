@@ -8,6 +8,8 @@
 
 [言語と計算理論](./computation-theory) · [第1回](./session-01) · [第4回](./session-04) · [第10回](./session-10)
 
+[プログラムの意味：算術化を読むための前提](./program-semantics) — 入力・出力，状態遷移，実行トレースを予習する．
+
 ## 有限体と多項式
 
 [有限体と多項式：ZKを学ぶための最小チュートリアル](./finite-fields-tutorial) · [第3回](./session-03) · [多項式の用語と演算](./terms/polynomials) · [QAP：R1CSの制約を多項式にまとめる](./qap) · [第4回：算術化](./session-04)

@@ -18,7 +18,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 Created: September 26, 2026<br>
 Last updated: September 29, 2026
 
-[Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Exercises](../exercises/)
+[Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Session 7 exercises](../exercises/session-07)
 
 ## Position in the course and learning objectives
 

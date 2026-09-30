@@ -17,7 +17,7 @@ next:
 Created: September 26, 2026<br>
 Last updated: September 29, 2026
 
-[Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Exercises](../exercises/)
+[Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Session 9 exercises](../exercises/session-09)
 
 ## Position in the course and learning objectives
 

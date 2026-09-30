@@ -19,7 +19,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 作成日付：2026年9月26日<br>
 最終更新日付：2026年9月29日
 
-[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第8回](./#session-8) · [演習](../exercises/)
+[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第8回](./#session-8) · [第8回の演習](../exercises/session-08)
 
 ## 本講義の位置づけと到達目標
 

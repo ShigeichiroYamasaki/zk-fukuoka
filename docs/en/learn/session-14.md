@@ -18,7 +18,7 @@ next:
 Created: September 27, 2026<br>
 Last updated: September 27, 2026
 
-[Sessions](./sessions) · [Topics](./topics) · [Session 14 in the syllabus](./#session-14) · [Exercises](../exercises/)
+[Sessions](./sessions) · [Topics](./topics) · [Session 14 in the syllabus](./#session-14) · [Session 14 exercises](../exercises/session-14)
 
 ## Context and learning objectives
 

@@ -18,7 +18,9 @@ import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverv
 Created: September 26, 2026<br>
 Last updated: September 29, 2026
 
-[Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Exercises](../exercises/)
+[Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Session 4 exercises](../exercises/session-04)
+
+Preparation: [program meaning](./program-semantics)—read computation as inputs, outputs, states, and transitions.
 
 ::: tip Prerequisite terms
 New to NP relations, circuits or constraints? Open the [Session 4 term guide](./terms/). Each of its eight explanations includes a worked example and a self-check. Links in the lecture also lead directly to the relevant page.

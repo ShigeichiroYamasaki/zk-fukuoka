@@ -19,7 +19,7 @@ import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 作成日付：2026年9月24日<br>
 最終更新日付：2026年9月29日
 
-[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第1回](./#session-1) · [言語と計算理論の前提知識](./computation-theory)
+[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第1回](./#session-1) · [言語と計算理論の前提知識](./computation-theory) · [第1回の演習](../exercises/session-01)
 
 ## 本講義の位置づけと到達目標
 

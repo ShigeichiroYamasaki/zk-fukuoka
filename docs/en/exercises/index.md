@@ -6,6 +6,28 @@ outline: [2, 3]
 
 Explore lecture concepts through calculations and implementation. Find exercise materials, available tools, and basic operation manuals here.
 
+## Exercises by session
+
+Each page provides calculation, comparison, or implementation tasks tied to a lecture, with solutions or criteria for self-check. Use them for review or independent study.
+
+| Session | Exercise page | What it checks |
+| ---: | --- | --- |
+| 1 | [Statements and verification](./session-01) | Graph isomorphism, statement, and witness |
+| 2 | [Simulation and distinguishing](./session-02) | Distinguishing gaps and Schnorr relation |
+| 3 | [Finite fields and randomized checks](./session-03) | Field arithmetic and Schwartz–Zippel error |
+| 4 | [Translating computation into constraints](./session-04) | R1CS, QAP, and AIR example |
+| 5 | [Reed–Solomon distance](./session-05) | Codewords, distance, and correction radius |
+| 6 | [FRI folding and soundness amplification](./session-06) | Even/odd decomposition and repeated error |
+| 7 | [Elliptic curves, pairings, assumptions](./session-07) | Bilinearity and hardness assumptions |
+| 8 | [Polynomial commitments](./session-08) | KZG openings and FRI/Merkle roles |
+| 9 | [Fiat–Shamir and ROM](./session-09) | Transcript contents and ROM limitations |
+| 10 | [PCP and IOP roles](./session-10) | Verifier access and component mapping |
+| 11 | [Groth16 and QAP](./session-11) | Pairing verification and setup |
+| 12 | [PLONK gates and copy constraints](./session-12) | Selectors and permutation argument |
+| 13 | [STARK transparency and execution traces](./session-13) | AIR constraints and design tradeoffs |
+| 14 | [Comparing protocols](./session-14) | Completeness, soundness, zero knowledge, design axes |
+| 15 | [Recursion, folding, and research directions](./session-15) | Folding, sumcheck, Ethereum application |
+
 [Before Act III: work through R1CS/QAP and AIR with a small balance program](../learn/balance-arithmetization#run) — Python arithmetic exercise for Session 4.
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.

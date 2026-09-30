@@ -19,7 +19,7 @@ import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 Created: September 26, 2026<br>
 Last updated: September 29, 2026
 
-[Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations)
+[Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations) · [Session 3 exercises](../exercises/session-03)
 
 ## Context and learning objectives
 

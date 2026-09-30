@@ -8,6 +8,8 @@ Updated: September 29, 2026
 
 [Language and computation theory](./computation-theory) · [Session 1](./session-01) · [Session 4](./session-04) · [Session 10](./session-10)
 
+[Program meaning: a prerequisite for arithmetization](./program-semantics) — prepare with inputs, outputs, state transitions, and execution traces.
+
 ## Finite fields and polynomials
 
 [Finite fields and polynomials: a compact tutorial for ZK](./finite-fields-tutorial) · [Session 3](./session-03) · [Polynomial terms and operations](./terms/polynomials) · [QAP: Combining R1CS constraints into a polynomial](./qap) · [Session 4: Arithmetization](./session-04)

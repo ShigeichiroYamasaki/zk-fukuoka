@@ -19,7 +19,7 @@ import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
 Created: September 26, 2026<br>
 Last updated: September 28, 2026
 
-[Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2)
+[Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2) · [Session 2 exercises](../exercises/session-02)
 
 ## Context and learning objectives
 

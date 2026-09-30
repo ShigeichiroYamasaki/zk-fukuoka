@@ -19,7 +19,7 @@ import SchnorrOverview from "../.vitepress/theme/SchnorrOverview.vue";
 作成日付：2026年9月26日<br>
 最終更新日付：2026年9月30日
 
-[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第2回](./#session-2)
+[各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第2回](./#session-2) · [第2回の演習](../exercises/session-02)
 
 ## 本講義の位置づけと到達目標
 
