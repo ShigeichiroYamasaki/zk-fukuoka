@@ -93,7 +93,7 @@ In the next definition, $R$ and $L$ are fixed as part of the scheme and commonly
 
 ### 2.2 A formal definition
 
-Consider an interactive proof system $(P,V)$ with the relation $R$ and language $L$ introduced above. For every efficient verifier $V^*$, we require an efficient simulator $S$ that reproduces the verifier's information without the witness. Let us define the random variables to make clear which distributions are compared.
+Consider an interactive proof system $(P,V)$ with the relation $R$ and language $L$ introduced above. In the standard definition, for every **probabilistic polynomial-time verifier** $V^*$, there must be a **polynomial-time simulator** $S$ that reproduces the verifier's view of its interaction with the honest prover without the witness (some definitions permit expected polynomial time). Here, polynomial time is an asymptotic bound in the input size, not a claim that the computation is practically fast. Let us define the random variables to make clear which distributions are compared.
 
 **Separate what is fixed from what is sampled.** Fix a valid pair $(x,w)\in R$, the verifier algorithm $V^*$, and auxiliary input $z$ that the verifier possesses before the interaction. Use an empty string for $z$ when no auxiliary input is considered. We do not sample and average over $x$ or $w$ here.
 
@@ -132,7 +132,7 @@ $$\Delta(X,Y):=\frac12\sum_t\left|\Pr[X=t]-\Pr[Y=t]\right|\le\mathrm{negl}(n).$$
 
 $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
 
-  The algorithm $D$ receives public and auxiliary inputs together with one record from either generation process, and returns 1 to indicate “I think this is a real interaction.” The probabilities include both record-generation randomness and $D$'s own randomness. The distributions need not be statistically close; rather, every efficient $D$ has negligible distinguishing advantage. For each $D$, the bound must hold across all valid inputs, witnesses, and admissible auxiliary inputs.
+  The algorithm $D$ receives public and auxiliary inputs together with one record from either generation process, and returns 1 to indicate “I think this is a real interaction.” The probabilities include both record-generation randomness and $D$'s own randomness. The distributions need not be statistically close; rather, every probabilistic polynomial-time $D$ has negligible distinguishing advantage. For each $D$, the bound must hold across all valid inputs, witnesses, and admissible auxiliary inputs.
 
 **A small example clarifies what comparing distributions means.** These are hypothetical two-bit records, not a zero-knowledge protocol.
 
@@ -169,7 +169,7 @@ Fix V\*, a valid pair (x, w) ∈ R, and auxiliary input z.<br>Do not sample and 
 
 </div>
 
-Compare each record’s probability: Pr[X = t] versus Pr[Y = t]<br><br>Perfect ZK: equal probabilities for every t<br>Statistical ZK: statistical distance Δ(X, Y) ≤ negl(n)<br>Computational ZK: for every efficient distinguisher D,<br>&#124;Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]&#124; ≤ negl(n)
+Compare each record’s probability: Pr[X = t] versus Pr[Y = t]<br><br>Perfect ZK: equal probabilities for every t<br>Statistical ZK: statistical distance Δ(X, Y) ≤ negl(n)<br>Computational ZK: for every probabilistic polynomial-time distinguisher D,<br>&#124;Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]&#124; ≤ negl(n)
 
 As in the text, n = &#124;x&#124;. Probabilities are over record-generation randomness, plus D’s randomness when distinguishing. Compare the entire view, not only acceptance. Individual executions need not produce equal records.
 
