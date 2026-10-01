@@ -108,7 +108,7 @@ One question concerns what information to give the verifier. The other concerns 
 
 ### 2.1 Arthur–Merlin games
 
-In 1985, Babai proposed interactive games in which the verifier uses randomness. The prover, Merlin, has no computational restriction; the verifier, Arthur, has limited computational resources.
+In 1985, Babai proposed interactive games in which the verifier uses randomness. The prover, Merlin, has no bound on its computation time; the verifier, Arthur, runs in probabilistic polynomial time in the input length. The model still bounds message lengths and total communication by a polynomial.
 
 Merlin's power does not make its answers trustworthy. Arthur must check Merlin's statements within its own computational budget. Randomness and interaction provide tools for doing so.
 
@@ -205,9 +205,9 @@ Let us rewrite the preceding discussion as conditions a procedure must satisfy. 
 
 ### 5.1 Completeness and soundness
 
-For a language $L$, consider a pair $(P,V)$ consisting of prover $P$ and verifier $V$. The prover has unrestricted computational power, while the verifier runs in probabilistic polynomial time. We write $\langle P,V\rangle(x)=1$ when the verifier accepts as the outcome of their exchange.
+For a language $L$, consider a pair $(P,V)$ consisting of prover $P$ and verifier $V$. The prover has no bound on its internal computation time, while the verifier runs in probabilistic polynomial time in the input length $|x|$. The protocol also bounds the number of rounds, each message length, and total communication by a polynomial in $|x|$. Thus, an unbounded prover may take arbitrarily long to compute, but cannot send unbounded messages. We write $\langle P,V\rangle(x)=1$ when the verifier accepts as the outcome of their exchange.
 
-The verifier must run in time polynomial in the input length against any prover, with polynomially bounded communication and number of rounds. The probabilities below are over the random choices of the verifier and, when randomized, the prover.
+The verifier’s running time, including the time to read messages, is polynomial in the input length. The probabilities below are over the random choices of the verifier and, when randomized, the prover.
 
 Here, we state the two conditions in a form where error probabilities are negligible. $\mathrm{negl}(|x|)$ denotes a function that eventually becomes smaller than every inverse polynomial as the input length grows. IP can also be defined starting with constant error probabilities, which appropriate repetition can reduce.
 
@@ -259,18 +259,18 @@ A proof requires soundness even without restricting the adversary's computationa
 
 <div class="captioned-table" id="table-01-4" role="group" aria-labelledby="table-caption-01-4">
 
-<p class="table-caption" id="table-caption-01-4"><strong>Table 01-4：How powerful may a dishonest prover be?</strong></p>
+<p class="table-caption" id="table-caption-01-4"><strong>Table 01-4：Dishonest-prover computation and soundness</strong></p>
 
-| Proof system | Dishonest prover’s power | Guarantee |
-| --- | --- | --- |
-| Proof | No computational bound | Statistical soundness |
-| Argument | Polynomial-time bounded | Computational soundness |
+| Proof system | Dishonest prover’s computation time | Verifier and communication bounds in both systems | Soundness |
+| --- | --- | --- | --- |
+| Proof | Unbounded | Probabilistic polynomial time; polynomial communication | Statistical |
+| Argument | Polynomial time | Probabilistic polynomial time; polynomial communication | Computational |
 
 </div>
 
 The A in SNARK / STARK stands for Argument.
 
-In both cases the verifier is efficient. The distinction concerns guarantees against dishonest provers, not the strength of zero-knowledge.
+In both proof systems, the verifier runs in probabilistic polynomial time in the input length, and the protocol bounds its rounds and total communication by a polynomial. The distinction is the computational power allowed to a dishonest prover for the soundness guarantee: unrestricted computation time for a proof, versus polynomial time for an argument (in the input length and, for cryptographic schemes, the security parameter). This does not mean that a prover in an interactive proof may send messages of unlimited length.
 
 ---
 
