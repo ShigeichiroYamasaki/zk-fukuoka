@@ -17,7 +17,7 @@ import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 28, 2026
+Last updated: October 2, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2) · [Session 2 exercises](../exercises/session-02)
 
@@ -49,15 +49,11 @@ Timing and power side channels are not automatically covered by the abstract zer
 
 ### 2.1 The central idea
 
-What should we compare the information obtained by the verifier against? We use information that can be generated without the witness. The simulator paradigm expresses this idea as follows:
+Simply withholding the witness does not guarantee that no secret information leaks; the interaction record itself may reveal something. The **simulator paradigm** compares the verifier’s record from a real interaction with a record produced without the witness. If they are indistinguishable, the interaction reveals no additional information about the witness.
 
-> Everything a verifier obtains from an interaction is something it could **simulate on its own, without knowing the witness**.
+#### 2.1.1 Relation $R$ and proposition $x\in L_R$
 
-In other words, if an algorithm that generates a transcript—a simulator $S$—can output a distribution indistinguishable from a real interaction without access to the witness $w$, then the interaction is considered to give the verifier essentially no new information.
-
-#### 2.1.1 Before the definition: relation $R$, public input $x$, and proposition $x\in L_R$
-
-Before formalizing zero-knowledge, let us identify what is public and what we want to keep private. In Session 1, a verifier received a public input $x$ and a witness $w$. Relation $R$ specifies **which pairs of these values satisfy the required condition**.
+Let $x$ be public input and $w$ a private witness. A **relation $R$** specifies which pairs $(x,w)$ satisfy the condition. For “91 is composite,” $w=7$ is valid for $x=91$, while $w=8$ is not. Write a valid pair as $(x,w)\in R$.
 
 <div class="captioned-table" id="table-02-1" role="group" aria-labelledby="table-caption-02-1">
 
@@ -65,82 +61,61 @@ Before formalizing zero-knowledge, let us identify what is public and what we wa
 
 | Symbol | Meaning |
 | --- | --- |
-| $x$ | The public input shared by prover and verifier |
-| $w$ | A witness satisfying the condition for input $x$ |
-| $R$ | The set of pairs $(x,w)$ satisfying that condition |
-| $(x,w)\in R$ | The condition that $w$ is a valid witness for $x$ |
-| $L$ | The set of inputs $x$ with at least one valid witness |
+| $x$ | Public input shared by prover and verifier |
+| $w$ | Private candidate checked against the condition |
+| $R$ | Relation specifying valid pairs $(x,w)$ |
+| $(x,w)\in R$ | $w$ is a valid witness for $x$ |
+| $L_R$ | Inputs with at least one valid witness |
 
 </div>
 
-A relation here is a **binary relation**, specifying a condition on pairs of objects. Encoding inputs and witnesses as finite binary strings gives $R\subseteq\{0,1\}^*\times\{0,1\}^*$. Distinguish membership $(x,w)\in R$ from the procedure that checks it. We also sometimes write the result of this check as $R(x,w)=1$ for membership and $R(x,w)=0$ otherwise.
+Ignoring the encoding of integers, the composite-number relation is
 
-For the NP relations used in this course, membership in $R$ is decidable in deterministic polynomial time, and valid witnesses satisfy $|w|\le p(|x|)$ for some polynomial $p$. The associated language is
+$$R_{\mathrm{comp}}=\{(n,d)\mid 1<d<n,\ d\mid n\}.$$
 
-$$L=L_R:=\{x\mid \exists w,\ (x,w)\in R\}.$$
+It induces the language
 
-Thus **$R$ specifies whether a particular pair satisfies the condition, whereas $L$ collects the inputs for which a suitable partner $w$ exists**. Under these conditions, $L\in\mathrm{NP}$.
+$$L_R:=\{x\mid \exists w,\ (x,w)\in R\},$$
 
-Return to the composite-number example from Session 1. Omitting the encoding of integers, define
+the set of inputs that have a valid witness. The **proposition** to be proved is that public input $x$ belongs to this language, $x\in L_R$. For 91, the proposition is true because $d=7$ works; for the prime 97, it is false. This establishes that a witness exists; whether the prover in front of us knows it is handled by knowledge soundness in Section 3.
 
-$$R_{\mathrm{comp}}=\{(n,d)\mid n,d\text{ are integers},\ 1<d<n,\ d\mid n\}.$$
-
-Here $d\mid n$ means that $d$ divides $n$ exactly. The pairs $(91,7)$ and $(91,13)$ belong to this relation, but $(91,8)$ does not. The corresponding language $L_{R_{\mathrm{comp}}}$ consists of encodings of composite numbers: 91 belongs, whereas the prime 97 does not. This small example illustrates the notation, not the difficulty of discovering a secret.
-
-The proposition associated with public input $x$ is **“$x\in L_R$,” meaning that there exists a witness $w$ such that $(x,w)\in R$**. Section 3 distinguishes the truth of this proposition from the responding prover's knowledge of such a witness.
-
-In the next definition, $R$ and $L$ are fixed as part of the scheme and commonly known. The real prover uses a valid witness $w$, whereas the simulator receives public input $x$ without $w$. Keep that distinction in mind when reading the formula. See also [Sets, membership and languages](./terms/sets-and-languages) and [NP relations in more detail](./terms/np-relations).
+For the NP relations in this course, membership in $R$ is decidable in deterministic polynomial time, and valid witnesses have length polynomial in $|x|$. Under these conditions, $L_R\in\mathrm{NP}$. See [Sets, membership and languages](./terms/sets-and-languages) and [NP relations in more detail](./terms/np-relations).
 
 ### 2.2 A formal definition
 
-Consider an interactive proof system $(P,V)$ with the relation $R$ and language $L$ introduced above. In the standard definition, for every **probabilistic polynomial-time verifier** $V^*$, there must be a **polynomial-time simulator** $S$ that reproduces the verifier's view of its interaction with the honest prover without the witness (some definitions permit expected polynomial time). Here, polynomial time is an asymptotic bound in the input size; it does not mean that the computation is practically fast. Let us define the random variables to make clear which distributions are compared.
+Zero-knowledge compares the verifier’s record in a real interaction with a record generated by a simulator without the witness. For every probabilistic polynomial-time verifier $V^*$, there must be a polynomial-time simulator $S$ that makes the two records indistinguishable (some definitions allow expected polynomial time). $S$ may depend on $V^*$, but not on witness $w$: the same simulator must work for every valid $(x,w)\in R$.
 
-**Separate what is fixed from what is sampled.** Fix a valid pair $(x,w)\in R$, the verifier algorithm $V^*$, and auxiliary input $z$ that the verifier possesses before the interaction. Use an empty string for $z$ when no auxiliary input is considered. We do not sample and average over $x$ or $w$ here.
+To define what is compared, fix $x,w,V^*$ and auxiliary input $z$, whose length is polynomially bounded in $|x|$. In a real interaction, the prover and verifier use random tapes $r_P,r_V$. The verifier’s **entire view** is the random variable
 
-In a real interaction, independently sample the prover's random tape $r_P$ and the verifier's random tape $r_V$ according to their procedures. Once inputs and random tapes are fixed, the interaction is determined. Resampling the tapes makes the **verifier's complete record** a random variable:
+$$X_{x,w,z}:=\operatorname{View}_{V^*}[P(x,w;r_P)\leftrightarrow V^*(x,z;r_V)].$$
 
-$$X_{x,w,z}:=\operatorname{View}_{V^*}\bigl[P(x,w;r_P)\leftrightarrow V^*(x,z;r_V)\bigr].$$
+For example, encode it as $X=(x,z,r_V,m_1,\ldots,m_k)$, where $m_i$ are messages. The view includes what the verifier can observe, not only its accept/reject bit; it does not reveal the prover’s random tape or witness. The simulator’s output is
 
-Arguments after the semicolon specify an algorithm's random tape. The verifier's view can be encoded as
+$$Y_{x,z}:=S(x,z;r_S),$$
 
-$$X_{x,w,z}=(x,z,r_V,m_1,\ldots,m_k),$$
+where $r_S$ is its own randomness and $w$ is not an input.
 
-where $m_1,\ldots,m_k$ are the messages it receives. Its outgoing messages and final decision can be reconstructed from this record and its algorithm. **The comparison concerns the whole view, not just a one-bit accept/reject decision.** The prover's random tape $r_P$ and witness $w$ are not themselves supplied as components of the view.
+**Compare the probability distributions of records, not individual executions.** For each possible record $t$, compare $\Pr[X=t]$ with $\Pr[Y=t]$. Let $n=|x|$ and let $\mathrm{negl}(n)$ denote a function that eventually becomes smaller than every inverse polynomial.
 
-The simulator uses its own random tape $r_S$ to output a record in the same format. Its output is another random variable:
+- **Perfect zero-knowledge:** $\Pr[X=t]=\Pr[Y=t]$ for every $t$; the distributions are identical.
+- **Statistical zero-knowledge:** their statistical distance is negligible:
 
-$$Y_{x,z}:=S(x,z;r_S).$$
+$$\Delta(X,Y):=\frac12\sum_t|\Pr[X=t]-\Pr[Y=t]|\le\mathrm{negl}(n).$$
 
-The simulator receives $x,z$ but not $w$. It may depend on $V^*$, but we cannot choose a different simulator for each witness. One simulator must satisfy the condition for all valid pairs $(x,w)$ and admissible auxiliary inputs $z$. Depending on the definition, simulation runs in polynomial or expected polynomial time.
+  Even an unbounded distinguisher cannot detect a significant difference.
+- **Computational zero-knowledge:** for every probabilistic polynomial-time distinguisher $D$,
 
-**A distribution assigns a probability to each possible record.** For a particular record $t$, we compare
+$$|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]|\le\mathrm{negl}(n).$$
 
-$$\Pr[X_{x,w,z}=t]\quad\text{and}\quad\Pr[Y_{x,z}=t].$$
+  The probabilities include the randomness used to generate $X,Y$ and $D$’s own randomness. The distributions may be far apart, but no efficient distinguisher can tell them apart. These conditions apply to every valid $(x,w)$ and admissible $z$.
 
-The probability on the left comes from the real interaction's randomness $r_P,r_V$; the probability on the right comes from the simulator's randomness $r_S$. We do not require two executions to produce the same record. We compare **the probabilities with which records are produced**.
-
-Below, abbreviate the variables as $X,Y$. We compare families of distributions as input length $n=|x|$ grows, with auxiliary-input length polynomially bounded in $n$. A nonnegative function $\mathrm{negl}(n)$ eventually becomes smaller than every inverse polynomial. Concrete cryptographic schemes may instead explicitly use a security parameter separate from input length.
-
-- **Perfect zero-knowledge:** for every record $t$, $\Pr[X=t]=\Pr[Y=t]$. The two random variables have identical distributions.
-- **Statistical zero-knowledge:** the statistical distance between the distributions is negligible. For discrete records, this distance is defined by
-
-$$\Delta(X,Y):=\frac12\sum_t\left|\Pr[X=t]-\Pr[Y=t]\right|\le\mathrm{negl}(n).$$
-
-  Equivalently, for every set of records $A$, the difference $|\Pr[X\in A]-\Pr[Y\in A]|$ is bounded by the same limit. Even a computationally unbounded distinguisher can gain negligible advantage from the difference.
-
-- **Computational zero-knowledge:** for every probabilistic polynomial-time distinguisher $D$, the following difference is negligible:
-
-$$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
-
-  The algorithm $D$ receives public and auxiliary inputs together with one record from either generation process, and returns 1 to indicate “I think this is a real interaction.” The probabilities include both record-generation randomness and $D$'s own randomness. The distributions need not be statistically close; rather, every probabilistic polynomial-time $D$ has negligible distinguishing advantage. For each $D$, the bound must hold across all valid inputs, witnesses, and admissible auxiliary inputs.
-
-**A small example clarifies what comparing distributions means.** These are hypothetical two-bit records, not a zero-knowledge protocol.
+**A small example.** In the hypothetical two-bit records below, each individual bit has the same probability under $X$ and $Y$, but the full-record distributions differ. A distinguisher that returns 1 when the two bits agree has $|\Pr[D(X)=1]-\Pr[D(Y)=1]|=1/2$. This is why zero-knowledge compares the entire view.
 
 <div class="captioned-table" id="table-02-2" role="group" aria-labelledby="table-caption-02-2">
 
 <p class="table-caption" id="table-caption-02-2"><strong>Table 02-2：Two probability distributions over two-bit records</strong></p>
 
-| Record $t$ | Probability for real record $X$ | Probability for a candidate simulator's record $Y$ |
+| Record $t$ | Probability under real record $X$ | Probability under candidate simulator record $Y$ |
 | --- | --- | --- |
 | $00$ | $1/4$ | $1/2$ |
 | $01$ | $1/4$ | $0$ |
@@ -149,11 +124,7 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n).$$
 
 </div>
 
-Each individual bit is equally likely to be 0 or 1 under either distribution. However, a distinguisher returning 1 when the bits agree has $\Pr[D(X)=1]=1/2$ and $\Pr[D(Y)=1]=1$, giving advantage $1/2$. Identical marginal distributions do not imply an identical **joint distribution of the complete record**. If this gap persists as input length grows, even computational indistinguishability fails. This is why zero-knowledge compares the entire view.
-
-The objects being compared are therefore **the distributions of the real-view random variable $X$ and simulator-output random variable $Y$, for the same fixed public input**. Restricting a dishonest prover for soundness is a different axis from restricting distinguishers for zero-knowledge. Being an argument does not force computational zero-knowledge: original Groth16, studied in Session 11, establishes perfect zero-knowledge.
-
-Fix V\*, a valid pair (x, w) ∈ R, and auxiliary input z.<br>Do not sample and average over x or w.
+Figure 02-1 and Table 02-7 summarize how $X$ and $Y$ are generated and compared for fixed $x,w,z$. Being an argument alone does not determine the type of zero-knowledge; for example, the original Groth16 paper establishes perfect zero-knowledge.
 
 <span id="figure-02-1"></span>
 <span id="caption-02-1"></span>
@@ -164,20 +135,14 @@ Fix V\*, a valid pair (x, w) ∈ R, and auxiliary input z.<br>Do not sample and 
 
 | Item | Explanation | Equation / condition |
 | --- | --- | --- |
-| Real interaction → random variable X | P uses x, w; V\* uses x, z.<br>Sample r\_P and r\_V independently.<br>X is V\*’s view: public and auxiliary inputs, its own randomness, and received messages. | X = (x, z, r\_V, m₁, …, m\_k) |
-| Simulation → random variable Y | S uses x, z and its own randomness r\_S.<br>It receives no w.<br>Y is a generated record in the same format as X.<br>One S must work for every valid w. | Y = S(x, z; r\_S) |
+| Real interaction → random variable X | P uses $x,w$ and $V^*$ uses $x,z$. Sample $r_P,r_V$ independently and record the verifier’s entire view. | $X=(x,z,r_V,m_1,\ldots,m_k)$ |
+| Simulation → random variable Y | S uses $x,z,r_S$ and outputs a record in the same format without $w$. One S works for all valid $w$. | $Y=S(x,z;r_S)$ |
 
 </div>
 
-Compare each record’s probability: Pr[X = t] versus Pr[Y = t]<br><br>Perfect ZK: equal probabilities for every t<br>Statistical ZK: statistical distance Δ(X, Y) ≤ negl(n)<br>Computational ZK: for every probabilistic polynomial-time distinguisher D,<br>&#124;Pr[D(x, z, X) = 1] − Pr[D(x, z, Y) = 1]&#124; ≤ negl(n)
+Compare $\Pr[X=t]$ with $\Pr[Y=t]$ for each record $t$. Individual executions need not produce the same record.
 
-As in the text, n = &#124;x&#124;. Probabilities are over record-generation randomness, plus D’s randomness when distinguishing. Compare the entire view, not only acceptance. Individual executions need not produce equal records.
-
-An **honest verifier** is a verifier that follows the prescribed protocol, not a judgment about someone’s character. It samples challenges from the specified distribution and applies the specified acceptance rule. We still allow it to record and analyze the messages and its own randomness. **Honest-verifier zero-knowledge (HVZK)** means that this verifier’s view can be simulated without the witness. This differs from zero-knowledge against verifiers that deviate from the protocol, for example by choosing challenges differently.
-
-**Graph isomorphism example.** Let the public graphs be $G_0,G_1$ and the secret isomorphism be $\pi:G_0\to G_1$. The prover samples a random vertex permutation $\rho$, sends $H=\rho(G_0)$, receives a uniform bit $b$, and returns an isomorphism $G_b\to H$: $\rho$ for $b=0$, or $\rho\circ\pi^{-1}$ for $b=1$. Answers to both challenges for the same $H$ yield an isomorphism between the public graphs by composition.
-
-An honest-verifier simulator can choose $b$ and a random isomorphism $G_b\to H$ first. Malicious-verifier security requires a separate argument involving rewinding. Generating a record and answering a live verifier are different tasks.
+An **honest verifier** follows the specified challenge distribution and verification procedure. If its view can be simulated without the witness, the property is called honest-verifier zero-knowledge (HVZK); this differs from security against verifiers that deviate from the protocol. In the graph-isomorphism example, the prover first sends $H=\rho(G_0)$ for a random permutation $\rho$, then answers a random bit $b\in\{0,1\}$ with an isomorphism $G_b\to H$. An HVZK simulator can choose $b$ and that isomorphism first, then generate the corresponding record. Simulating a record is different from answering a malicious verifier in a live interaction.
 
 ### 2.3 Checking the intuition
 
