@@ -144,7 +144,7 @@ One query path checks a constant number of values per stage, giving roughly $O(\
 
 Schematic multiplicative FRI. Fix each table before receiving its new challenge. Check proximity and folding consistency; this is not simply discarding half a table.
 
-### 2.3 Why the claim is approximate
+### 2.3 Why low-degree testing is approximate
 
 FRI bounds the probability of accepting a table that is far from every permitted low-degree polynomial, using the Hamming distance introduced in Session 5. One accepting execution does not establish closeness with certainty. Quantifying this closeness involves list-decoding parameters, including Johnson-type bounds. Soundness error depends on a precise analysis of coding-theoretic parameters, and practical choices such as the number of folding rounds and queries are based on that analysis.
 

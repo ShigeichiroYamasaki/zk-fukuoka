@@ -55,7 +55,7 @@ For a Σ-protocol-style protocol, instead of receiving challenge $c$ from the ve
 
 $$c = H(\text{commitment}, x)$$
 
-The prover is not the only party computing this hash. The verifier recomputes the challenge from the same input and checks the response. Actual constructions unambiguously encode the statement, public parameters, preceding messages, protocol identifiers, and other required context. Choosing what enters the hash is part of the protocol.
+The prover is not the only party computing this hash. The verifier recomputes the challenge from the same input and checks the response. Actual constructions unambiguously encode the proposition being proved, public parameters, preceding messages, protocol identifiers, and other required context. Choosing what enters the hash is part of the protocol.
 
 ### 2.2 Security intuition
 
@@ -152,7 +152,7 @@ The CGH counterexample rules out a universal justification of this replacement; 
 
 ### 4.3 Why ROM is still widely used
 
-Does the counterexample make ROM analysis useless? There is value in analyzing a scheme, including adversarial queries, under explicit idealized conditions. But security claims must stay within what was proved. Consider the practical reasons below while retaining that distinction.
+Does the counterexample make ROM analysis useless? There is value in analyzing a scheme, including adversarial queries, under explicit idealized conditions. But security guarantees must stay within what was proved. Consider the practical reasons below while retaining that distinction.
 
 - Counterexamples such as CGH are deliberately constructed to exhibit pathological behavior; they do not themselves provide concrete attacks on practical protocols such as Fiat–Shamir-based Schnorr signatures.
 - A ROM proof establishes the specified security property within the idealized model; it does not certify an implementation or rule out every kind of attack.
@@ -164,7 +164,7 @@ When reading a scheme, trace where it uses a random oracle and what that assumpt
 
 ### 4.5 The IP perspective: losing the enforced order of interaction {#rom-interaction-limits}
 
-Recall interactive proofs from Session 1. Soundness says that for a false statement $x\notin L$, every cheating prover has bounded acceptance probability in an experiment including verifier randomness:
+Recall interactive proofs from Session 1. Soundness says that for the false proposition $x\notin L$, every cheating prover has bounded acceptance probability in an experiment including verifier randomness:
 
 $$\forall x\notin L,\ \forall P^*,\qquad
 \Pr_{\rho_V}[\langle P^*,V\rangle(x)=1]\le\epsilon.$$

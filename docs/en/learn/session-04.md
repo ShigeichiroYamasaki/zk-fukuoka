@@ -151,7 +151,7 @@ $$\mathbf r(\mathbf z)=(A\mathbf z)\circ(B\mathbf z)-C\mathbf z
 
 This identifies which relationships fail when an intermediate value is changed.
 
-Here $y=35$ is fixed as the statement's public input. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](../exercises/session-04#program).
+Here $y=35$ is fixed as the public input that specifies the proposition being verified. If $y$ were freely chosen, these three rows would not enforce output 35. A design hardcoding that output can add $(y-35)\cdot1=0$. These equations are over a finite field; integer applications such as balances additionally need range and wraparound analysis, as in the [deposit/withdrawal example](../exercises/session-04#program).
 
 <span id="figure-04-1"></span>
 <span id="caption-04-1"></span>

@@ -60,7 +60,7 @@ A polynomial commitment extends this framework to the case where the value $v$ i
 
 $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
-This equation describes checking the claim $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
+This equation describes checking the proposition $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
 
 <span id="figure-08-1"></span>
 <span id="caption-08-1"></span>
@@ -159,7 +159,7 @@ $$e(C-[1]_1,[1]_2)\overset{?}=e(\pi,[\tau]_2-3[1]_2).$$
 
 The exponents on the two sides are $f(\tau)-1$ and $q(\tau)(\tau-3)$: this is the quotient identity encoded through a pairing.
 
-For a numerical check only, suppose the setup internally used $\tau=5$. Then $C=[4]_1$, $\pi=[10]_1$, and both sides equal $[3]_T$, since $10(5-3)=20=3\pmod{17}$. Keeping the same proof but changing the claimed value to 2 makes the left side $[2]_T$, which fails. **A real setup does not publish $\tau$.** Revealing 5 here is only for arithmetic illustration; evaluation binding cannot be expected against someone who knows the secret point.
+For a numerical check only, suppose the setup internally used $\tau=5$. Then $C=[4]_1$, $\pi=[10]_1$, and both sides equal $[3]_T$, since $10(5-3)=20=3\pmod{17}$. Keeping the same proof but changing the asserted value to 2 makes the left side $[2]_T$, which fails. **A real setup does not publish $\tau$.** Revealing 5 here is only for arithmetic illustration; evaluation binding cannot be expected against someone who knows the secret point.
 
 The commitment is one $G_1$ element and the single-point opening proof is also one $G_1$ element. This example includes no hiding randomization. Review [Session 7's group and scalar notation](./session-07#pairing-math) to distinguish the objects being transmitted.
 
@@ -176,7 +176,7 @@ Can we achieve the goal without generating a setup secret? FRI-based constructio
 
 The prover commits to the evaluation representation of a polynomial $f$ using a Merkle tree: evaluation values are organized into a hash tree, and its root is sent as the commitment. To open a value, the prover supplies the Merkle path for the requested evaluation point, proving that the value belongs to the committed table.
 
-A Merkle path establishes membership of a value in the fixed table. FRI separately tests proximity to a low-degree polynomial. Opening a polynomial at an arbitrary point also needs a mechanism, such as a quotient-polynomial check, connecting that claim to the table. Distinguish table membership, low-degree proximity, and correctness of the claimed evaluation.
+A Merkle path establishes membership of a value in the fixed table. FRI separately tests proximity to a low-degree polynomial. Opening a polynomial at an arbitrary point also needs a mechanism, such as a quotient-polynomial check, connecting the proposition $f(x)=y$ to the table. Distinguish table membership, low-degree proximity, and correctness of the evaluation being asserted.
 
 <StudyDiagram id="08-3" :en="true" />
 
@@ -213,7 +213,7 @@ The opening point 3 lies outside this domain. This example separates table authe
 
 This establishes membership of value 11 at position $t=2$ in the fixed table. **There is no leaf for point 3, so a Merkle path alone cannot prove $f(3)=1$.**
 
-**Link the out-of-domain claim through a quotient.** Use the same $q(X)=(f(X)-1)/(X-3)=X+5$ as in KZG and fix its table with root $R_q$. Fix the tables before choosing random query locations. At $t=2$, authenticate $f(2)=11,q(2)=7$ and check
+**Link the out-of-domain evaluation proposition through a quotient.** Use the same $q(X)=(f(X)-1)/(X-3)=X+5$ as in KZG and fix its table with root $R_q$. Fix the tables before choosing random query locations. At $t=2$, authenticate $f(2)=11,q(2)=7$ and check
 
 $$f(2)-1=10,\qquad (2-3)q(2)=-7=10\pmod{17}.$$
 
@@ -230,7 +230,7 @@ The folded table is all 9 on $D^2=\{1,4,16,13\}$. The verifier also checks quoti
 
 ### 3.5 Where a false value causes a problem
 
-Suppose the prover claims $f(3)=2$ and computes $\widetilde q(t)=(f(t)-2)/(t-3)$ at all eight points. Local quotient equations pass, but this table cannot be the evaluations of a degree-at-most-one polynomial. Otherwise,
+Suppose the prover asserts that $f(3)=2$ and computes $\widetilde q(t)=(f(t)-2)/(t-3)$ at all eight points. Local quotient equations pass, but this table cannot be the evaluations of a degree-at-most-one polynomial. Otherwise,
 
 $$f(X)-2-(X-3)\widetilde q(X)$$
 
@@ -238,7 +238,7 @@ would have degree at most two and eight roots, hence be identically zero. Yet at
 
 This argument concerns polynomials agreeing at all domain points. FRI tests proximity probabilistically; bounding false acceptance requires analyzing distance, query counts, and evaluation consistency together.
 
-The transmitted objects include the initial root $R_f$, the claimed value 1, and quotient/FRI commitments, query values, and authentication paths. Displaying the full tables above is a teaching aid. KZG encodes the quotient relation with group elements and pairings; this approach combines authenticated tables with low-degree testing. Neither basic example includes a hiding mechanism, and opened values are revealed to the recipient.
+The transmitted objects include the initial root $R_f$, the asserted evaluation value 1, and quotient/FRI commitments, query values, and authentication paths. Displaying the full tables above is a teaching aid. KZG encodes the quotient relation with group elements and pairings; this approach combines authenticated tables with low-degree testing. Neither basic example includes a hiding mechanism, and opened values are revealed to the recipient.
 
 
 ---
@@ -253,7 +253,7 @@ The transmitted objects include the initial root $R_f$, the claimed value 1, and
 |---|---|---|
 | Underlying tool | Pairings (Session 7) | Low-degree testing / FRI (Session 6) |
 | Trusted setup | Required to generate the SRS | Not required; transparent |
-| Evaluation correctness | Evaluation binding under a degree-appropriate SDH assumption | Table binding + FRI soundness + consistency with the evaluation claim |
+| Evaluation correctness | Evaluation binding under a degree-appropriate SDH assumption | Table binding + FRI soundness + consistency with the evaluation proposition |
 | Evaluation-proof size | Constant number of group elements for a fixed group | Count queried values and Merkle paths; polylogarithmic in representative constructions |
 
 </div>
@@ -286,7 +286,7 @@ In Session 9, we will study the Fiat–Shamir transform: how to turn the interac
 
 - When introducing commitments, ask how binding and hiding can coexist despite seeming contradictory.
 - Before presenting KZG's verification equation, ask what is needed to check $f(\tau) = q(\tau)(\tau-x) + y$ without revealing $\tau$, helping students motivate pairings themselves.
-- Compare Sections 2.4 and 3.3 and ask students to explain why STARKs can claim post-quantum security, reinforcing the comparison table.
+- Compare Sections 2.4 and 3.3 and ask students to explain why STARKs are often described as post-quantum secure, reinforcing the comparison table.
 
 ---
 

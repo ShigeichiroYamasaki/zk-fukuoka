@@ -220,7 +220,7 @@ $$\mathcal L_t(r)=\{f\in K[X]:\deg f<d,\ d_H(\operatorname{ev}_D(f),r)\le t\}.$$
 
 Within the unique-decoding radius it has at most one candidate. Beyond that, we need both inclusion of the transmitted candidate and control of list size.
 
-A Johnson-type radius for RS is $J=n-\sqrt{n(d-1)}$. Guruswami–Sudan decoding handles a range strictly inside this radius. Boundary and runtime details depend on parameters, so use $t<J$ here and retain a gap from the boundary in asymptotic claims. Its relative version is $1-\sqrt{(d-1)/n}$, approaching $1-\sqrt R$ for fixed rate $R=d/n$ as $n$ grows.
+A Johnson-type radius for RS is $J=n-\sqrt{n(d-1)}$. Guruswami–Sudan decoding handles a range strictly inside this radius. Boundary and runtime details depend on parameters, so use $t<J$ here and retain a gap from the boundary in asymptotic bounds. Its relative version is $1-\sqrt{(d-1)/n}$, approaching $1-\sqrt R$ for fixed rate $R=d/n$ as $n$ grows.
 
 For $n=7,d=3$, unique decoding guarantees two errors, while $J=7-\sqrt{14}\approx3.258$ includes a list-decoding radius of three errors. Coding information alone need not identify which candidate was sent. Nor can this radius be substituted directly for FRI soundness error: folding and query analysis are additional requirements.
 
@@ -255,7 +255,7 @@ At corrupted points both $E$ and $Q$ vanish; elsewhere $r_i=f(x_i)$. Dividing $Q
 
 ### 5.2 Complexity and the distinction from FRI testing
 
-Straightforward Horner evaluation at every point encodes in $O(nd)$ field operations. Solving the generalized decoding equations by ordinary elimination gives an upper bound of $O(n^3)$ field operations when $d+2t\le n$; this is not a claim of optimal decoding complexity. Field-operation bit costs are additional. FFT/NTT acceleration requires suitable evaluation-domain structure.
+Straightforward Horner evaluation at every point encodes in $O(nd)$ field operations. Solving the generalized decoding equations by ordinary elimination gives an upper bound of $O(n^3)$ field operations when $d+2t\le n$; this is not an optimal decoding complexity bound. Field-operation bit costs are additional. FFT/NTT acceleration requires suitable evaluation-domain structure.
 
 FRI aims to test proximity to a low-degree code using few queries, rather than read the entire table and decode the message. Define $\Delta(r,\mathcal C)=\min_{c\in\mathcal C}d_H(r,c)/n$. For a particular fixed codeword $c$ differing in $\rho n$ positions, $s$ independent uniform position tests all agree with probability $(1-\rho)^s$. But **the nearest codeword is unknown, so this comparison is not automatically available**. The additional machinery is the subject of the next session.
 

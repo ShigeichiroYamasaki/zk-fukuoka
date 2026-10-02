@@ -92,8 +92,8 @@ export const diagrams = {
     "section": "4.1",
     "type": "flow",
     "title": [
-      "Schnorr：言明・ウィットネスから検証と抽出へ",
-      "Schnorr: from statement and witness to verification and extraction"
+      "Schnorr：命題・ウィットネスから検証と抽出へ",
+      "Schnorr: from proposition and witness to verification and extraction"
     ],
     "lead": [
       "公開入力 x = (G, q, g, y) と秘密の指数 w の関係は y = gʷ．例：p = 23，q = 11，g = 2，y = 8，w = 3．",
@@ -102,12 +102,12 @@ export const diagrams = {
     "nodes": [
       {
         "title": [
-          "言明とウィットネス",
-          "Statement and witness"
+          "命題とウィットネス",
+          "Proposition and witness"
         ],
         "body": [
-          "言明：公開値 y の離散対数を知っている．\nウィットネス：指数 w．関係 R_DL：y = gʷ．",
-          "Claim: know the discrete logarithm of public y.\nWitness: exponent w. Relation R_DL: y = gʷ."
+          "命題：公開値 y の離散対数を持つウィットネス w が存在する．\n証明者は「離散対数を知っている」と言明する．関係 R_DL：y = gʷ．",
+          "Proposition: a witness w exists for the discrete logarithm of public y.\nThe prover asserts, “I know the discrete logarithm.” Relation R_DL: y = gʷ."
         ]
       },
       {
@@ -1084,8 +1084,8 @@ export const diagrams = {
     "nodes": [
       {
         "title": [
-          "ROMでの言明",
-          "Claim in the ROM"
+          "ROMでの命題",
+          "Proposition in the ROM"
         ],
         "body": [
           "Hを理想的なランダムオラクルとして扱い，安全性を証明する．",
@@ -1191,7 +1191,7 @@ export const diagrams = {
           "YES case"
         ],
         "body": [
-          "正しい言明には，多くの検査を満たす証明がある．",
+          "真の命題には，多くの検査を満たす証明がある．",
           "A true instance has a proof satisfying many tests."
         ]
       },
@@ -1201,7 +1201,7 @@ export const diagrams = {
           "NO case"
         ],
         "body": [
-          "誤った言明では，どの証明にも一定割合の失敗が残る．",
+          "偽の命題では，どの証明にも一定割合の失敗が残る．",
           "For a false instance, every proof fails a nontrivial fraction of tests."
         ]
       }
@@ -1741,8 +1741,8 @@ export const diagrams = {
           "Soundness"
         ],
         [
-          "誤った言明を誰が，どの確率で通せるか",
-          "Who can make a false statement accept, and with what probability?"
+          "偽の命題を誰が，どの確率で受理させられるか",
+          "Who can make a false proposition be accepted, and with what probability?"
         ]
       ],
       [
@@ -1902,7 +1902,7 @@ export const diagrams = {
       {
         "title": [
           "次の証明対象",
-          "Next statement to prove"
+          "Next proposition to establish"
         ],
         "body": [
           "πᵢの検証 ＋ sᵢ → sᵢ₊₁ の正しい実行",
@@ -1970,17 +1970,17 @@ export const diagrams = {
     "type": "flow",
     "title": [
       "Sumcheck：総和を，一つの評価の確認まで減らす",
-      "Sumcheck: reduce a sum claim to checking one evaluation"
+      "Sumcheck: reduce a sum proposition to checking one evaluation"
     ],
     "note": [
-      "各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ．最後の評価の確認は省けない．GKRでは層ごとの言明の縮約にこの考え方を使う．",
+      "各ラウンドで次数上限と和の整合性を検査し，メッセージの後にチャレンジを選ぶ．最後の評価の確認は省けない．GKRでは層ごとの命題の縮約にこの考え方を使う．",
       "Check degree bounds and sum consistency each round, choosing the challenge after the message. The final evaluation check is essential. GKR uses such reductions between layers."
     ],
     "nodes": [
       {
         "title": [
-          "最初の言明",
-          "Initial claim"
+          "最初の命題",
+          "Initial proposition"
         ],
         "body": [
           "T = ∑_{b₁,…,bₙ∈{0,1}} g(b₁,…,bₙ)",
@@ -2028,7 +2028,7 @@ export const diagrams = {
     ],
     "note": [
       "本文の2026年9月27日時点の整理を比較．EIP-8025のDraft提案では証明は任意の補助チェックで，再実行を継続する．メインネットでの有効化を示すものではない．",
-      "Visual summary of the lecture’s September 27, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation."
+      "Visual summary of the lecture’s September 27, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This does not indicate mainnet activation."
     ],
     "nodes": [
       {

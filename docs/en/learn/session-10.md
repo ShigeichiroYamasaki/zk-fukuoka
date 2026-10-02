@@ -25,21 +25,21 @@ At the end of Act II, let us connect the tools: represent computation through ar
 
 There are three learning objectives:
 
-1. Understand the statement and historical significance of the PCP theorem without studying its proof.
+1. Understand the formulation and historical significance of the PCP theorem without studying its proof.
 2. Understand its independent importance in complexity theory through its connection to hardness of approximation.
 3. Understand the IOP framework and organize the techniques learned so far within it.
 
 ---
 
 ::: tip How to read the mathematics in this session
-In the PCP notation, $n$ is the input length, $O(\log n)$ is the number of random bits, and $O(1)$ is the number of queries to the proof. Random string $r$ selects the queried positions; reading the proof is counted as oracle queries at those positions. Completeness concerns acceptance of true statements, while soundness bounds acceptance of false statements. IOP extends this query-access model across multiple rounds. Recall probabilistic verification from Session 1 and polynomial identity testing from Session 3.
+In the PCP notation, $n$ is the input length, $O(\log n)$ is the number of random bits, and $O(1)$ is the number of queries to the proof. Random string $r$ selects the queried positions; reading the proof is counted as oracle queries at those positions. Completeness concerns acceptance when the proposition is true, while soundness bounds acceptance when it is false. IOP extends this query-access model across multiple rounds. Recall probabilistic verification from Session 1 and polynomial identity testing from Session 3.
 :::
 
 ## 1. The PCP theorem: Statement and significance
 
 ### 1.1 What is a PCP?
 
-Can a long proof be checked without reading it all? Simply sampling a few arbitrary locations might miss deliberately placed errors. A PCP jointly designs the proof representation and checking procedure so that few queries can detect false claims.
+Can a long proof be checked without reading it all? Simply sampling a few arbitrary locations might miss deliberately placed errors. A PCP jointly designs the proof representation and checking procedure so that few queries can detect false propositions.
 
 ### 1.2 Statement of the PCP theorem
 
@@ -47,7 +47,7 @@ Can a long proof be checked without reading it all? Simply sampling a few arbitr
 
 The two quantities specify the verifier’s random bits and proof-bit queries. Every NP language admits polynomial-length proofs checkable with logarithmically many random bits and constantly many queries, satisfying completeness and constant soundness error. Reducing that error further incurs additional checking costs.
 
-**Notation varies across sources.** On this page, the first argument of $\mathrm{PCP}[r(n),q(n)]$ counts random bits, and the second counts queries to the proof. Some sources omit the $O(\cdot)$ notation, or count queried proof symbols rather than bits when the proof alphabet is not binary. Sources that expose completeness and soundness parameters may write, for example, $\mathrm{PCP}_{c,s}[r,q]$; check the subscript order in each source. The theorem above is the standard form with completeness on true statements and constant soundness error on false statements, while $O(\log n)$ and $O(1)$ are asymptotic bounds. When reading a paper, check which quantities its symbols denote.
+**Notation varies across sources.** On this page, the first argument of $\mathrm{PCP}[r(n),q(n)]$ counts random bits, and the second counts queries to the proof. Some sources omit the $O(\cdot)$ notation, or count queried proof symbols rather than bits when the proof alphabet is not binary. Sources that expose completeness and soundness parameters may write, for example, $\mathrm{PCP}_{c,s}[r,q]$; check the subscript order in each source. The theorem above is the standard form with completeness when propositions are true and constant soundness error when they are false, while $O(\log n)$ and $O(1)$ are asymptotic bounds. When reading a paper, check which quantities its symbols denote.
 
 ### 1.3 What makes this surprising?
 
@@ -61,7 +61,7 @@ Session 1’s definition of NP did not require every witness bit to be read. The
 
 ### 2.1 Why does the PCP theorem connect to approximation algorithms?
 
-How can checking a few proof locations relate to optimization? Read the verifier’s acceptance conditions as constraints to satisfy. A construction separating true claims that satisfy many conditions from false claims that leave a fixed fraction unsatisfied gives a tool for proving approximation limits.
+How can checking a few proof locations relate to optimization? Read the verifier’s acceptance conditions as constraints to satisfy. A construction separating true propositions that satisfy many conditions from false propositions that leave a fixed fraction unsatisfied gives a tool for proving approximation limits.
 
 Intuitively, constructions used in the theorem can be turned into reductions showing that distinguishing optimization instances with different optimum values—for example, instances of MAX-3SAT—is NP-hard. This yields **hardness-of-approximation** results: unless P = NP, polynomial-time algorithms cannot guarantee approximation beyond certain ratios.
 

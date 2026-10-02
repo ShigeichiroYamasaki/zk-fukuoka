@@ -314,7 +314,7 @@ Schwartz–Zippel bounds for a fixed nonzero polynomial of total degree d=2, wit
 
 As an algorithm, this test always recognizes an identically zero polynomial and may err only on a nonzero one. Given an efficiently evaluable representation and a suitable sampling space, PIT admits a one-sided-error randomized algorithm. It is also in BPP; identifying the direction of error clarifies the connection to soundness.
 
-For this course, its crucial role is as **the theoretical foundation for polynomial identity testing, a core technique in PCPs and IOPs**. In many SNARK and STARK protocols, the prover claims that a polynomial relation holds. Rather than checking the entire relation, the verifier checks evaluations at random points, or random linear combinations. The Schwartz–Zippel lemma provides the mathematical justification for this idea of checking at a random point without examining the whole object.
+For this course, its crucial role is as **the theoretical foundation for polynomial identity testing, a core technique in PCPs and IOPs**. In many SNARK and STARK protocols, the prover asserts that a polynomial relation holds. Rather than checking the entire relation, the verifier checks evaluations at random points, or random linear combinations. The Schwartz–Zippel lemma provides the mathematical justification for this idea of checking at a random point without examining the whole object.
 
 *(We will study concrete applications in the later sessions of Act II on FRI and PCPs/IOPs. Today we first establish why this technique supports soundness.)*
 
@@ -432,7 +432,7 @@ For the decision problem “Is $h$ identically zero?”, a Yes instance is alway
 
 Polynomial time is measured against the **input description length**, not just the polynomial's degree. A circuit with $L$ binary multiplication gates can reach degree $2^L$ through repeated squaring. But the point representation needed for $m\ge2d$ uses only $O(\log d)$ bits, which is $O(L)$ when $d\le2^L$. Evaluating the circuit directly over a suitable finite field avoids reading the expanded coefficient list. Conversely, a small query count alone does not imply polynomial running time for a black box without an efficient evaluation procedure.
 
-Schwartz–Zippel bounds the error. A complexity claim must also specify **the input representation, operations, randomness, and number of repetitions**. See Anup Rao's lecture notes in the references for arithmetic-circuit PIT.
+Schwartz–Zippel bounds the error. A complexity analysis must also specify **the input representation, operations, randomness, and number of repetitions**. See Anup Rao's lecture notes in the references for arithmetic-circuit PIT.
 
 ---
 
@@ -461,7 +461,7 @@ In Session 4, we begin concrete arithmetization techniques: R1CS, QAP, and AIR, 
 ## Suggested classroom questions
 
 - Before presenting the lemma, ask whether checking just one point instead of comparing entire polynomials could really be sufficient, and whether this seems intuitively doubtful.
-- First establish the univariate fact that there are at most $d$ roots, then ask students to predict what might happen in multiple variables. This helps make the statement of the lemma intuitive.
+- First establish the univariate fact that there are at most $d$ roots, then ask students to predict what might happen in multiple variables. This helps make the lemma's formulation intuitive.
 - Include an exercise asking what happens if $|S|$ is too small, with students constructing concrete counterexamples. This makes the meaning of the lemma's assumptions tangible.
 
 ---

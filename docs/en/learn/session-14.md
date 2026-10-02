@@ -22,7 +22,7 @@ Last updated: September 27, 2026
 
 ## Context and learning objectives
 
-We have read Groth16, PLONK, and STARKs separately. Today compare them by returning to Session 1’s questions. What ensures acceptance of true claims? Which assumptions prevent cheating? What hides witness information? **Reading constructions from their goals** reveals the roles of Act II’s tools.
+We have read Groth16, PLONK, and STARKs separately. Today compare them by returning to Session 1’s questions. What ensures acceptance of true propositions? Which assumptions prevent cheating? What hides witness information? **Reading constructions from their goals** reveals the roles of Act II’s tools.
 
 The three learning objectives are:
 
@@ -42,7 +42,7 @@ First consider an honest prover following the procedure with a valid witness. Al
 
 ### 1.2 Soundness: proof or argument?
 
-Next consider an adversary trying to establish a false claim. Groth16, PLONK, and STARKs are arguments, providing guarantees against computationally bounded adversaries—the distinction in Session 1, Section 5.2. That classification alone does not identify their security premises. Use the table to separate the bases of each guarantee.
+Next consider an adversary trying to make a false proposition be accepted. Groth16, PLONK, and STARKs are arguments, providing guarantees against computationally bounded adversaries—the distinction in Session 1, Section 5.2. That classification alone does not identify their security premises. Use the table to separate the bases of each guarantee.
 
 <div class="captioned-table" id="table-14-1" role="group" aria-labelledby="table-caption-14-1">
 
@@ -84,7 +84,7 @@ Groth16's generic-group analysis, PLONK's polynomial-commitment construction, an
 | Property | Question to ask |
 | --- | --- |
 | Completeness | Does honest execution with a valid witness accept? |
-| Soundness | Who can make a false statement accept, and with what probability? |
+| Soundness | Who can make a false proposition be accepted, and with what probability? |
 | Zero-knowledge | Can the view be simulated without the witness? |
 | Knowledge soundness | Under what access and assumptions can a witness be extracted? |
 

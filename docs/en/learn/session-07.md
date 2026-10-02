@@ -149,7 +149,7 @@ Likewise,
 
 $$e([a]_1,[b]_2)=e([c]_1,[1]_2)e([h]_1,[z]_2)\quad\Longleftrightarrow\quad ab=c+hz.$$
 
-This helps read [Session 4's QAP relation](./session-04#qap-worked-math), $\mathcal A(\tau)\mathcal B(\tau)=\mathcal C(\tau)+H(\tau)Z(\tau)$. It is not a claim that Groth16 sends these four evaluations directly.
+This helps read [Session 4's QAP relation](./session-04#qap-worked-math), $\mathcal A(\tau)\mathcal B(\tau)=\mathcal C(\tau)+H(\tau)Z(\tau)$. This does not mean that Groth16 sends these four evaluations directly.
 
 Pairing output lies in $G_T$ and cannot simply be fed back into the pairing to multiply by another unknown scalar. Encoding a value as a point also does not automatically hide it: if $a\in\{0,1\}$, compare $[a]_1$ with $O$ and $P$. Discrete-log hardness and zero-knowledge are distinct properties.
 

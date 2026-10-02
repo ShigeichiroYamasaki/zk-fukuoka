@@ -23,7 +23,7 @@ Last updated: September 28, 2026
 
 ## Context and learning objectives
 
-Last time, we asked what changes when a verifier can ask questions. Today we question the other assumption: must we hand over the witness to have a claim checked? If we do not, how can we establish that no extra information is conveyed? Today’s three objectives are:
+Last time, we asked what changes when a verifier can ask questions. Today we question the other assumption: must we hand over the witness to have a proposition checked? If we do not, how can we establish that no extra information is conveyed? Today’s three objectives are:
 
 1. Formally define zero-knowledge through the simulator paradigm and understand the hierarchy of indistinguishability.
 2. Introduce knowledge soundness and extractors as concepts that capture whether a prover really knows a witness.
@@ -55,7 +55,7 @@ What should we compare the information obtained by the verifier against? We use 
 
 In other words, if an algorithm that generates a transcript—a simulator $S$—can output a distribution indistinguishable from a real interaction without access to the witness $w$, then the interaction is considered to give the verifier essentially no new information.
 
-#### 2.1.1 Before the definition: relation $R$ and statement $x$
+#### 2.1.1 Before the definition: relation $R$, public input $x$, and proposition $x\in L_R$
 
 Before formalizing zero-knowledge, let us identify what is public and what we want to keep private. In Session 1, a verifier received a public input $x$ and a witness $w$. Relation $R$ specifies **which pairs of these values satisfy the required condition**.
 
@@ -68,7 +68,7 @@ Before formalizing zero-knowledge, let us identify what is public and what we wa
 | $x$ | The public input shared by prover and verifier |
 | $w$ | A witness satisfying the condition for input $x$ |
 | $R$ | The set of pairs $(x,w)$ satisfying that condition |
-| $(x,w)\in R$ | The statement that $w$ is a valid witness for $x$ |
+| $(x,w)\in R$ | The condition that $w$ is a valid witness for $x$ |
 | $L$ | The set of inputs $x$ with at least one valid witness |
 
 </div>
@@ -87,13 +87,13 @@ $$R_{\mathrm{comp}}=\{(n,d)\mid n,d\text{ are integers},\ 1<d<n,\ d\mid n\}.$$
 
 Here $d\mid n$ means that $d$ divides $n$ exactly. The pairs $(91,7)$ and $(91,13)$ belong to this relation, but $(91,8)$ does not. The corresponding language $L_{R_{\mathrm{comp}}}$ consists of encodings of composite numbers: 91 belongs, whereas the prime 97 does not. This small example illustrates the notation, not the difficulty of discovering a secret.
 
-“Statement $x$” is shorthand for **the statement “$x\in L$” about public input $x$: there exists a witness $w$ such that $(x,w)\in R$**. Section 3 distinguishes the truth of this statement from the responding prover's knowledge of such a witness.
+The proposition associated with public input $x$ is **“$x\in L_R$,” meaning that there exists a witness $w$ such that $(x,w)\in R$**. Section 3 distinguishes the truth of this proposition from the responding prover's knowledge of such a witness.
 
 In the next definition, $R$ and $L$ are fixed as part of the scheme and commonly known. The real prover uses a valid witness $w$, whereas the simulator receives public input $x$ without $w$. Keep that distinction in mind when reading the formula. See also [Sets, membership and languages](./terms/sets-and-languages) and [NP relations in more detail](./terms/np-relations).
 
 ### 2.2 A formal definition
 
-Consider an interactive proof system $(P,V)$ with the relation $R$ and language $L$ introduced above. In the standard definition, for every **probabilistic polynomial-time verifier** $V^*$, there must be a **polynomial-time simulator** $S$ that reproduces the verifier's view of its interaction with the honest prover without the witness (some definitions permit expected polynomial time). Here, polynomial time is an asymptotic bound in the input size, not a claim that the computation is practically fast. Let us define the random variables to make clear which distributions are compared.
+Consider an interactive proof system $(P,V)$ with the relation $R$ and language $L$ introduced above. In the standard definition, for every **probabilistic polynomial-time verifier** $V^*$, there must be a **polynomial-time simulator** $S$ that reproduces the verifier's view of its interaction with the honest prover without the witness (some definitions permit expected polynomial time). Here, polynomial time is an asymptotic bound in the input size; it does not mean that the computation is practically fast. Let us define the random variables to make clear which distributions are compared.
 
 **Separate what is fixed from what is sampled.** Fix a valid pair $(x,w)\in R$, the verifier algorithm $V^*$, and auxiliary input $z$ that the verifier possesses before the interaction. Use an empty string for $z$ when no auxiliary input is considered. We do not sample and average over $x$ or $w$ here.
 
@@ -208,7 +208,7 @@ If a transcript can be generated without the witness, could a dishonest prover d
 
 ### 3.1 Why soundness alone is insufficient
 
-Soundness requires that false claims are unlikely to be accepted. But is a claim being true the same as this prover knowing a witness? In authentication, it is not enough that someone with the secret exists. We want the party responding now to possess it. Knowledge soundness addresses this distinction.
+Soundness requires that false propositions are unlikely to be accepted. But is a proposition being true the same as this prover knowing a witness? In authentication, it is not enough that someone with the secret exists. We want the party responding now to possess it. Knowledge soundness addresses this distinction.
 
 ### 3.2 The concept of an extractor
 
@@ -321,9 +321,9 @@ This is the second half of today's lecture and the closing topic of Act I as a w
 
 ### 4.1 Simple witnesses: proofs built on structure
 
-Use Schnorr identification to make the distinction concrete. First fix what the public statement is and what the prover claims to know.
+Use Schnorr identification to make the distinction concrete. First fix the proposition being checked and what the prover asserts that they know.
 
-**Separate the statement from its witness**
+**Separate the proposition from its witness**
 
 The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
 
@@ -333,7 +333,7 @@ The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order
 
 | Symbol | Meaning | Who has it? |
 | --- | --- | --- |
-| $x=(G,q,g,y)$ | Public input representing the statement; $y\in G$ acts as a public key | Both prover and verifier |
+| $x=(G,q,g,y)$ | Public input that specifies the proposition $x\in L_{R_{\mathrm{DL}}}$; $y\in G$ acts as a public key | Both prover and verifier |
 | $w\in\mathbb{Z}_q$ | A secret exponent satisfying $y=g^w$: the witness | The honest prover |
 | $R_{\mathrm{DL}}$ | The relation checking that the public input and exponent match | Its definition and checking procedure are public |
 
@@ -347,7 +347,7 @@ $$
 x=(G,q,g,y),\quad w\in\mathbb{Z}_q,\quad y=g^w.
 $$
 
-This instantiates Section 2's relation $R$ as the discrete-logarithm relation $R_{\mathrm{DL}}$. When the group parameters are fixed, the public input may be written simply as $y$. The claim is: **“For this public value $y$, I know an exponent $w$ such that $y=g^w$.”** The prover does not send $w$. Every $y\in G$ has such an exponent, so checking existence alone does not establish knowledge. Section 3's extractor formalizes precisely this distinction.
+This instantiates Section 2's relation $R$ as the discrete-logarithm relation $R_{\mathrm{DL}}$. When the group parameters are fixed, the public input may be written simply as $y$. The prover asserts: **“For this public value $y$, I know an exponent $w$ such that $y=g^w$.”** The prover does not send $w$. Every $y\in G$ has such an exponent, so checking existence alone does not establish knowledge. Section 3's extractor formalizes precisely this distinction.
 
 **Group elements and exponents live in different algebraic structures**
 
@@ -421,7 +421,7 @@ Public input x = (G, q, g, y) and secret exponent w satisfy y = gʷ. Example: p 
 
 <div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 
-<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Schnorr: from statement and witness to verification and extraction</strong></p>
+<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Schnorr: from proposition and witness to verification and extraction</strong></p>
 
 | Step / stage | Explanation |
 | --- | --- |
@@ -547,7 +547,7 @@ This completes Act I, purpose and motivation. In Session 3, we begin Act II by d
 
 ## Suggested classroom questions
 
-- When introducing the claim that a simulator can fabricate an interaction without a witness, first ask students whether this seems contradictory. This highlights the nontrivial nature of the simulator paradigm.
+- When introducing the proposition that a simulator can fabricate an interaction without a witness, first ask students whether this seems contradictory. This highlights the nontrivial nature of the simulator paradigm.
 - Write Schnorr's verification equation on the board and ask students to identify where the group structure is used. This makes the discussion in Section 4.1 more concrete.
 - Before presenting the two-axis matrix, invite students to suggest why Schnorr's protocol cannot be directly extended to general computation, then compare their predictions with the explanation.
 

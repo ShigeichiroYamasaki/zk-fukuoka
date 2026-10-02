@@ -58,7 +58,7 @@ One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve'
 | Step / stage | Explanation |
 | --- | --- |
 | 1. Previous result | State sᵢ and proof πᵢ of its history |
-| 2. Next statement to prove | Verify πᵢ and correctly execute sᵢ → sᵢ₊₁ |
+| 2. Next proposition to establish | Verify πᵢ and correctly execute sᵢ → sᵢ₊₁ |
 | 3. New result | Pass state sᵢ₊₁ and proof πᵢ₊₁ to the next step |
 
 </div>
@@ -114,18 +114,18 @@ Return to sumcheck, previewed in Session 1. For a sum with many terms, consider 
 
 $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
-interactively, fixing one variable at a time, without the verifier evaluating every summand. Each variable needs a degree bound, and the verifier checks degrees and sum consistency round by round. The final random-point evaluation of $g$ must also be verified, either directly or through another appropriate mechanism; without that check, the claimed sum is not established. Sumcheck is also central to IP = PSPACE from Session 1.
+interactively, fixing one variable at a time, without the verifier evaluating every summand. Each variable needs a degree bound, and the verifier checks degrees and sum consistency round by round. The final random-point evaluation of $g$ must also be verified, either directly or through another appropriate mechanism; without that check, the proposition that this is the correct sum is not established. Sumcheck is also central to IP = PSPACE from Session 1.
 
 <span id="figure-15-3"></span>
 <span id="caption-15-3"></span>
 
 <div class="captioned-table" id="table-15-5" role="group" aria-labelledby="table-caption-15-5">
 
-<p class="table-caption" id="table-caption-15-5"><strong>Table 15-5：Sumcheck: reduce a sum claim to checking one evaluation</strong></p>
+<p class="table-caption" id="table-caption-15-5"><strong>Table 15-5：Sumcheck: reduce the sum proposition to checking one evaluation</strong></p>
 
 | Step / stage | Explanation |
 | --- | --- |
-| 1. Initial claim | T = ∑\_&#123;b₁,…,bₙ∈&#123;0,1&#125;&#125; g(b₁,…,bₙ) |
+| 1. Initial proposition | T = ∑\_&#123;b₁,…,bₙ∈&#123;0,1&#125;&#125; g(b₁,…,bₙ) |
 | 2. Check a univariate polynomial | p₁(0)+p₁(1)=T → reduce to p₁(r₁) at random r₁ |
 | 3. Fix one variable per round | Repeat the check for the remaining sum |
 | 4. Check the final evaluation | Compute g(r₁,…,rₙ) independently or check it with an appropriate mechanism |
@@ -136,7 +136,7 @@ Check degree bounds and sum consistency each round, choosing the challenge after
 
 ### 3.2 The GKR protocol
 
-GKR verifies claims about circuit outputs by reducing them to claims about preceding layers, using sumcheck for the reduction. Unlike directly checking R1CS or AIR constraints, it exploits layered circuit structure. Understand the 2008 Goldwasser–Kalai–Rothblum protocol through this connection between its goal and tool.
+GKR verifies propositions about circuit outputs by reducing them to propositions about preceding layers, using sumcheck for the reduction. Unlike directly checking R1CS or AIR constraints, it exploits layered circuit structure. Understand the 2008 Goldwasser–Kalai–Rothblum protocol through this connection between its goal and tool.
 
 ### 3.3 Read GKR/sumcheck as one direction for cost optimization {#gkr-cost}
 
@@ -204,11 +204,11 @@ EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not est
 
 The “zk” name alone does not imply transaction privacy
 
-Visual summary of the lecture’s September 29, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This is not a claim of mainnet activation.
+Visual summary of the lecture’s September 29, 2026 snapshot. The Draft EIP-8025 proposal uses proofs as optional supplementary checks while re-execution continues. This does not indicate mainnet activation.
 
 ### 4.4 Connecting the application to the course's research map
 
-Return from the Ethereum example to the course’s questions. The following table connects application decisions to the tools studied. It does not claim that EIP-8025 selects a particular folding scheme or GKR construction.
+Return from the Ethereum example to the course’s questions. The following table connects application decisions to the tools studied. EIP-8025 does not prescribe a particular folding scheme or GKR construction.
 
 <div class="captioned-table" id="table-15-2" role="group" aria-labelledby="table-caption-15-2">
 
