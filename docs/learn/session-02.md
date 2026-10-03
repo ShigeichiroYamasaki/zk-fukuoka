@@ -18,7 +18,7 @@ import GraphIsoExample from "../.vitepress/theme/GraphIsoExample.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月03日
+最終更新日付：2026年10月04日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第2回](./#session-2) · [第2回の演習](../exercises/session-02)
 
@@ -208,11 +208,36 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n)$$
 
 公開グラフを $G_0,G_1$，秘密の同型写像を $\pi:G_0\to G_1$ とする．証明者はランダムな頂点の置換 $\rho$ で $H=\rho(G_0)$ を作り，先に $H$ を送る．検証者は一様分布の 1 ビット $b$ を選び，証明者は $G_b\to H$ の同型写像を返す．$b=0$ なら $\rho$，$b=1$ なら $\rho\circ\pi^{-1}$ を使える．同じ $H$ について両方に答えられれば，二つの写像の合成から $G_0\to G_1$ の同型を抽出できる．
 
+**1ラウンドの手続き**を，送受信の順に追う．(1) 証明者は頂点名をランダムに付け替えたグラフ $H$ を作り，辺の一覧を検証者に送る．(2) 検証者は $H$ を受け取ってから，公平なコインを投げて $b=0$ または $b=1$ を選び，「$G_b$ から $H$ への対応を示せ」と求める．(3) 証明者は頂点対応表 $f$ を返す．(4) 検証者は，対応表が全頂点を一度ずつ使っていることと，すべての頂点対について辺の有無が保たれることを確認する．一つでも条件を満たさなければそのラウンドを拒否する．この順序が重要で，証明者は $H$ を送った後にどちらを求められるか知るため，先にチャレンジを見て対応表を用意することはできない．
+
 **検証者が確かめるのは，返された対応表が本当に同型写像になっているかである．** 検証者には公開グラフ $G_0,G_1$，コミットされたグラフ $H$，チャレンジ $b$，そして証明者の返答 $f:G_b\to H$ が見える．まず，$f$ が全頂点を重複なく対応づける全単射かを確かめる．次に，無向単純グラフとして，$G_b$ の任意の頂点対 $u,v$ について
 
 $$uv\in E(G_b)\quad\Longleftrightarrow\quad f(u)f(v)\in E(H)$$
 
 が成り立つかを調べる．つまり，辺がある組だけでなく，辺がない組も保たれる必要がある．図の例で $b=0$，$\rho(a)=2,\rho(b)=5,\rho(c)=1,\rho(d)=4,\rho(e)=3$ なら，証明者はこの対応表を返す．$G_0$ の辺 $a-b$ と $a-c$ が，$H$ の辺 $2-5$ と $2-1$ に写ることを確認し，さらに例えば辺でない $a-d$ が，辺でない $2-4$ に写ることも確認する．実際には5頂点間の全10組を調べる．この一回の確認に $\pi$ は必要ない．検証者は指定された片方のグラフとの対応だけを確かめる．
+
+たとえば図の例では，次の10組をすべて確認する．「辺あり」は両方のグラフで辺，「辺なし」は両方で辺がないことを表す．一組でも左右の状態が食い違えば，返答は有効な同型写像ではないとして拒否する．
+
+<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+
+<p class="table-caption" id="table-caption-02-3"><strong>表 02-3：頂点対ごとの辺の有無の確認</strong></p>
+
+| $G_0$ の頂点対 | 対応する $H$ の頂点対 | 確認結果 |
+| --- | --- | --- |
+| $a-b$ | $2-5$ | 辺あり |
+| $a-c$ | $2-1$ | 辺あり |
+| $a-d$ | $2-4$ | 辺なし |
+| $a-e$ | $2-3$ | 辺あり |
+| $b-c$ | $5-1$ | 辺あり |
+| $b-d$ | $5-4$ | 辺なし |
+| $b-e$ | $5-3$ | 辺なし |
+| $c-d$ | $1-4$ | 辺あり |
+| $c-e$ | $1-3$ | 辺なし |
+| $d-e$ | $4-3$ | 辺あり |
+
+</div>
+
+この一回の成功が示すのは，要求された一方のグラフと $H$ が同型だということまでである．同じ手続きを新しいランダムな $H$ で繰り返し，各ラウンドの確認にすべて通ったときだけ受理する．もし $G_0$ と $G_1$ が同型でなければ，どの $H$ に対しても両方からの同型写像を用意することはできない．したがって証明者は，ランダムな $b$ のどちらか一方にしか正しく答えられず，1ラウンドで誤って受理される確率は高々 $1/2$ である．独立なチャレンジで $k$ ラウンド繰り返すと，すべてを通過する確率は高々 $2^{-k}$ になる．一方，二つのグラフが同型なら，秘密の $\pi$ を使ってどちらのチャレンジにも答えられるため，正直な証明者は毎回受理される．
 
 **正直な検証者に対するシミュレータは，ウィットネス $\pi$ を知らずに記録を生成できる．** 実際の対話では，証明者は一様ランダムな頂点置換 $\rho$ を選び，$H=\rho(G_0)$ を先に送る．その後，検証者が独立に一様なビット $b$ を選ぶ．シミュレータは順序を変え，まず一様な $b$ を選び，次に頂点の一様ランダムな付け替え $\varphi_b$ を選んで，$H=\varphi_b(G_b)$ と応答 $\varphi_b$ を記録する．
 
@@ -226,9 +251,9 @@ $$uv\in E(G_b)\quad\Longleftrightarrow\quad f(u)f(v)\in E(H)$$
 
 <SchnorrOverview />
 
-<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
 
-<p class="table-caption" id="table-caption-02-3"><strong>表 02-3：実際の対話とシミュレーションでのメッセージ生成</strong></p>
+<p class="table-caption" id="table-caption-02-4"><strong>表 02-4：実際の対話とシミュレーションでのメッセージ生成</strong></p>
 
 | 場面                                 | 生成順序   | 条件                                                              |
 | ------------------------------------ | ---------- | ----------------------------------------------------------------- |
@@ -285,9 +310,9 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 と定める．抽出者の目的は，正しい組 $(x,w')\in R$ となる何らかの $w'$ を出すことである．証明者の内部に元々あった値と同じものを復元する，という要求ではない．
 
-<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
+<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
 
-<p class="table-caption" id="table-caption-02-4"><strong>表 02-4：実際の対話と抽出実験の確率変数・出力</strong></p>
+<p class="table-caption" id="table-caption-02-5"><strong>表 02-5：実際の対話と抽出実験の確率変数・出力</strong></p>
 
 | 比較する点       | 実際の対話            | 抽出実験                           |
 | ---------------- | --------------------- | ---------------------------------- |
@@ -302,9 +327,9 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 固定：公開入力 x と，私的情報を含む証明者 P\* の戦略<br>P\* がウィットネスを持つことは，あらかじめ仮定しない．
 
-<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
+<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
 
-<p class="table-caption" id="table-caption-02-5"><strong>表 02-5：受理と抽出：異なる実験・異なる確率変数</strong></p>
+<p class="table-caption" id="table-caption-02-6"><strong>表 02-6：受理と抽出：異なる実験・異なる確率変数</strong></p>
 
 | 項目                | 説明                                                                                                                                                         | 式・条件                                                         |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
@@ -363,9 +388,9 @@ Schnorr識別プロトコルで，この違いを具体的に確認しよう．�
 
 公開のパラメータとして，素数位数 $q$ の巡回群 $G=\langle g\rangle$ と生成元 $g$ を共有する．巡回群とは，$g$ のべき乗によってすべての元を表せる群であり，位数 $q$ は元の個数である．以下では，群の演算を乗算で書く．
 
-<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
+<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
 
-<p class="table-caption" id="table-caption-02-6"><strong>表 02-6：Schnorrの公開入力・ウィットネス・関係</strong></p>
+<p class="table-caption" id="table-caption-02-7"><strong>表 02-7：Schnorrの公開入力・ウィットネス・関係</strong></p>
 
 | 記号               | 意味                                                                          | 誰が持つか           |
 | ------------------ | ----------------------------------------------------------------------------- | -------------------- |
@@ -452,9 +477,9 @@ $$
 
 公開入力 x = (G, q, g, y) と秘密の指数 w の関係は y = gʷ．例：p = 23，q = 11，g = 2，y = 8，w = 3．
 
-<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
+<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
 
-<p class="table-caption" id="table-caption-02-7"><strong>表 02-7：Schnorr：命題・ウィットネスから検証と抽出へ</strong></p>
+<p class="table-caption" id="table-caption-02-8"><strong>表 02-8：Schnorr：命題・ウィットネスから検証と抽出へ</strong></p>
 
 | 手順・段階                               | 説明                                                                                                                                                    |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -525,9 +550,9 @@ $$c=H(\text{方式を区別する情報},x,t)$$
 
 以上を踏まえて，方式を次のように配置できる．ここで「対話か非対話か」と「簡潔かどうか」は，同じ軸として扱わない．
 
-<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
+<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 
-<p class="table-caption" id="table-caption-02-8"><strong>表 02-8：対象となる関係と対話性・簡潔性の比較</strong></p>
+<p class="table-caption" id="table-caption-02-9"><strong>表 02-9：対象となる関係と対話性・簡潔性の比較</strong></p>
 
 | 対象となる関係 | 対話型の例               | 非対話型の例                         | 簡潔性を読む際の注意                                                              |
 | -------------- | ------------------------ | ------------------------------------ | --------------------------------------------------------------------------------- |
@@ -538,9 +563,9 @@ $$c=H(\text{方式を区別する情報},x,t)$$
 
 これらの方式がすべて同じ手順で得られるわけではない．例えばGroth16はFiat-Shamir変換を経由せず，参照文字列を用いて非対話型として構成される．方式ごとの成り立ちは幕IIIで確認する．
 
-<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
+<div class="captioned-table" id="table-02-10" role="group" aria-labelledby="table-caption-02-10">
 
-<p class="table-caption" id="table-caption-02-9"><strong>表 02-9：表現力と効率性を分けて見る</strong></p>
+<p class="table-caption" id="table-caption-02-10"><strong>表 02-10：表現力と効率性を分けて見る</strong></p>
 
 | 問い             | 代数的関係：Schnorrの例                      | 一般の計算                                               |
 | ---------------- | -------------------------------------------- | -------------------------------------------------------- |

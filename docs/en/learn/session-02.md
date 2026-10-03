@@ -18,7 +18,7 @@ import GraphIsoExample from "../../.vitepress/theme/GraphIsoExample.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 3, 2026
+Last updated: October 4, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2) · [Session 2 exercises](../exercises/session-02)
 
@@ -176,11 +176,36 @@ The indistinguishability condition concerns the distributions of the random vari
 
 Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
 
+**Follow one round in message order.** (1) The prover randomly relabels the vertices, forms $H$, and sends its edge list. (2) Only after receiving $H$, the verifier flips a fair coin to choose $b=0$ or $b=1$ and asks for a map from $G_b$ to $H$. (3) The prover returns a vertex map $f$. (4) The verifier checks that every vertex is used exactly once and that adjacency is preserved for every vertex pair. It rejects the round if either check fails. The order matters: after sending $H$, the prover does not know which graph the verifier will select, so it cannot prepare its response after seeing the challenge.
+
 **The verifier checks whether the returned map is actually an isomorphism.** The verifier sees the public graphs $G_0,G_1$, the committed graph $H$, the challenge $b$, and the prover's response $f:G_b\to H$. First, it checks that $f$ maps every vertex exactly once, so it is a bijection. Then, treating these as undirected simple graphs, it checks every vertex pair $u,v$:
 
 $$uv\in E(G_b)\quad\Longleftrightarrow\quad f(u)f(v)\in E(H).$$
 
 This must preserve non-edges as well as edges. In the figure's example, for $b=0$ let $\rho(a)=2,\rho(b)=5,\rho(c)=1,\rho(d)=4,\rho(e)=3$. The prover returns that vertex map. The verifier checks, for example, that edges $a-b$ and $a-c$ in $G_0$ map to edges $2-5$ and $2-1$ in $H$, and that the non-edge $a-d$ maps to the non-edge $2-4$. In this five-vertex example, it checks all ten vertex pairs. The verifier does not need $\pi$ for this one challenge; it only checks the mapping from the graph selected by $b$.
+
+For this example, the verifier checks all ten pairs as follows. “Edge” means both graphs contain the corresponding edge; “non-edge” means neither graph does. If even one pair disagrees, the response is not an isomorphism and the verifier rejects.
+
+<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+
+<p class="table-caption" id="table-caption-02-3"><strong>Table 02-3: Checking adjacency for every vertex pair</strong></p>
+
+| Pair in $G_0$ | Corresponding pair in $H$ | Check |
+| --- | --- | --- |
+| $a-b$ | $2-5$ | Edge |
+| $a-c$ | $2-1$ | Edge |
+| $a-d$ | $2-4$ | Non-edge |
+| $a-e$ | $2-3$ | Edge |
+| $b-c$ | $5-1$ | Edge |
+| $b-d$ | $5-4$ | Non-edge |
+| $b-e$ | $5-3$ | Non-edge |
+| $c-d$ | $1-4$ | Edge |
+| $c-e$ | $1-3$ | Non-edge |
+| $d-e$ | $4-3$ | Edge |
+
+</div>
+
+Passing one round shows only that the selected graph is isomorphic to $H$. The protocol repeats the same procedure with a fresh random $H$ and accepts only if every round passes. If $G_0$ and $G_1$ are not isomorphic, no $H$ can be isomorphic to both. The prover can therefore answer correctly for at most one of the two possible challenges, so its chance of being accepted by mistake in one round is at most $1/2$. With $k$ independent challenges, the probability of passing all rounds is at most $2^{-k}$. If the graphs are isomorphic, the honest prover uses secret $\pi$ to answer either challenge and passes every round.
 
 **A simulator for an honest verifier can generate the record without knowing witness $\pi$.** In the real interaction, the prover samples a uniform random vertex permutation $\rho$ and sends $H=\rho(G_0)$ first. The verifier then independently samples a uniform bit $b$. The simulator reverses the sampling order: it first samples a uniform $b$, then a uniform random relabeling $\varphi_b$, and records $H=\varphi_b(G_b)$ together with the response $\varphi_b$.
 
@@ -194,9 +219,9 @@ The next explanation previews the **Schnorr identification protocol**, developed
 
 <SchnorrOverview :en="true" />
 
-<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
 
-<p class="table-caption" id="table-caption-02-3"><strong>Table 02-3：Message generation in the real interaction and simulation</strong></p>
+<p class="table-caption" id="table-caption-02-4"><strong>Table 02-4：Message generation in the real interaction and simulation</strong></p>
 
 | Setting | Generation order | Condition |
 | --- | --- | --- |
@@ -253,9 +278,9 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the exact value originally stored inside the prover.
 
-<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
+<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
 
-<p class="table-caption" id="table-caption-02-4"><strong>Table 02-4：Random variables and outputs in interaction and extraction</strong></p>
+<p class="table-caption" id="table-caption-02-5"><strong>Table 02-5：Random variables and outputs in interaction and extraction</strong></p>
 
 | Aspect | Real interaction | Extraction experiment |
 | --- | --- | --- |
@@ -270,9 +295,9 @@ These are separate experiments: do not assume $p_{P^*}(x)=e_{P^*}(x,T)$. Nor is 
 
 Fix public input x and prover strategy P\*, including its private information.<br>Do not assume that P\* starts with a witness.
 
-<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
+<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
 
-<p class="table-caption" id="table-caption-02-5"><strong>Table 02-5：Acceptance and extraction: different experiments and random variables</strong></p>
+<p class="table-caption" id="table-caption-02-6"><strong>Table 02-6：Acceptance and extraction: different experiments and random variables</strong></p>
 
 | Item | Explanation | Equation / condition |
 | --- | --- | --- |
@@ -331,9 +356,9 @@ Use Schnorr identification to make the distinction concrete. First fix the propo
 
 The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
 
-<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
+<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
 
-<p class="table-caption" id="table-caption-02-6"><strong>Table 02-6：Schnorr public input, witness and relation</strong></p>
+<p class="table-caption" id="table-caption-02-7"><strong>Table 02-7：Schnorr public input, witness and relation</strong></p>
 
 | Symbol | Meaning | Who has it? |
 | --- | --- | --- |
@@ -420,9 +445,9 @@ In the numerical example, suppose we also obtain the accepting response $s_2=8$ 
 
 Public input x = (G, q, g, y) and secret exponent w satisfy y = gʷ. Example: p = 23, q = 11, g = 2, y = 8, w = 3.
 
-<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
+<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
 
-<p class="table-caption" id="table-caption-02-7"><strong>Table 02-7：Schnorr: from proposition and witness to verification and extraction</strong></p>
+<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Schnorr: from proposition and witness to verification and extraction</strong></p>
 
 | Step / stage | Explanation |
 | --- | --- |
@@ -493,9 +518,9 @@ Typical analyses use the **random oracle model (ROM)**, treating the hash as an 
 
 With these distinctions in place, the landscape can be organized as follows. Interactive versus non-interactive is not the same distinction as succinct versus non-succinct.
 
-<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
+<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 
-<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Relations, interaction and succinctness</strong></p>
+<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Relations, interaction and succinctness</strong></p>
 
 | Relation | Interactive examples | Non-interactive examples | Reading succinctness |
 | --- | --- | --- | --- |
@@ -506,9 +531,9 @@ With these distinctions in place, the landscape can be organized as follows. Int
 
 These constructions do not all follow the same route. For example, Groth16 is constructed non-interactively using a reference string, without applying Fiat–Shamir. Act III examines each construction's route.
 
-<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
+<div class="captioned-table" id="table-02-10" role="group" aria-labelledby="table-caption-02-10">
 
-<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Separate expressiveness from efficiency</strong></p>
+<p class="table-caption" id="table-caption-02-10"><strong>Table 02-10：Separate expressiveness from efficiency</strong></p>
 
 | Question | Algebraic relation: the Schnorr example | General computation |
 | --- | --- | --- |
