@@ -41,7 +41,7 @@ const tx = (ja, en) => props.en ? en : ja;
       <div class="gi-step"><b>4</b><div><strong>{{ tx('検証者が確認', 'Verifier checks') }}</strong><p>{{ tx('応答が G_b から H への全単射かつ辺を保つかを検査する．', 'Check that the response is a bijection G_b→H preserving edges.') }}</p></div></div>
     </div>
 
-    <div class="gi-simulator"><strong>{{ tx('正直な検証者に対するシミュレータ', 'Simulator for an honest verifier') }}</strong><p>{{ tx('b と頂点のランダムな付け替え φ_b を先に選び，H=φ_b(G_b) として記録を作る．ウィットネス π を使わずに実際の記録と同じ確率分布を生成する．', 'Choose b and a random relabeling φ_b of the vertices first, then set H=φ_b(G_b). This generates a record with the same probability distribution as a real transcript, without using witness π.') }}</p></div>
+    <div class="gi-simulator"><strong>{{ tx('正直な検証者に対するシミュレータ', 'Simulator for an honest verifier') }}</strong><p>{{ tx('チャレンジ ', 'Choose the challenge ') }}b{{ tx(' と，頂点のランダムな付け替え φ', ' and a random relabeling φ') }}<sub>b</sub>{{ tx(' を先に選ぶ．次に H=φ', ' first. Then set H=φ') }}<sub>b</sub>({{ tx('G', 'G') }}<sub>b</sub>){{ tx(' として記録を作る．ウィットネス π を使わずに，実際の記録と同じ確率分布を生成する．', '. This generates a record with the same probability distribution as a real transcript, without using witness π.') }}</p></div>
     <p class="gi-alt">{{ tx('図の読み方：G₀の辺は a–b，b–c，c–d，d–e，e–a，a–c．G₁の辺は 3–1，1–5，5–2，2–4，4–3，3–5．π は各辺を対応する辺へ写す．', 'Text alternative: G₀ has edges a–b, b–c, c–d, d–e, e–a, and a–c. G₁ has edges 3–1, 1–5, 5–2, 2–4, 4–3, and 3–5. π maps each edge to the corresponding edge.') }}</p>
   </figure>
 </template>
