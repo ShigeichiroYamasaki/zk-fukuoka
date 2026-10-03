@@ -176,7 +176,9 @@ The indistinguishability condition concerns the distributions of the random vari
 
 Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
 
-To generate an honest verifier's record, a simulator can first choose $b$ and a random isomorphism $G_b\to H$, then construct the record. Security against a dishonest verifier requires a separate argument that includes rewinding. Distinguish being able to verify without receiving the secret from being able to respond to a verifier in a live interaction.
+**A simulator for an honest verifier can generate the record without knowing witness $\pi$.** In the real interaction, the prover samples a uniform random vertex permutation $\rho$ and sends $H=\rho(G_0)$ first. The verifier then independently samples a uniform bit $b$. The simulator reverses the sampling order: it first samples a uniform $b$, then a uniform random relabeling $\varphi_b$, and records $H=\varphi_b(G_b)$ together with the response $\varphi_b$.
+
+This record has the same probability distribution as a real interaction because $G_0$ and $G_1$ are isomorphic. Relabeling either graph uniformly selects from the same set of labeled graphs with the same probabilities. Moreover, for a fixed $H$ and $b$, the response mapping is selected with the same probability as the real prover's mapping. Thus the entire verifier record has exactly the same distribution. This explains simulation for an honest verifier only; zero-knowledge against a verifier that changes the challenge procedure requires a separate argument, such as one involving rewinding. Distinguish generating a record without the witness from responding to an arbitrary verifier in a live interaction.
 
 <GraphIsoExample :en="true" />
 

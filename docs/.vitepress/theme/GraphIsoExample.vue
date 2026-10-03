@@ -38,7 +38,7 @@ const tx = (ja, en) => props.en ? en : ja;
       <div class="gi-arrow" aria-hidden="true">→</div>
       <div class="gi-step"><b>3</b><div><strong>{{ tx('証明者が応答', 'Prover responds') }}</strong><p>{{ tx('b=0 なら ρ，b=1 なら ρ∘π⁻¹ を返す．', 'Return ρ if b=0, or ρ∘π⁻¹ if b=1.') }}</p></div></div>
       <div class="gi-arrow" aria-hidden="true">→</div>
-      <div class="gi-step"><b>4</b><div><strong>{{ tx('検証者が確認', 'Verifier checks') }}</strong><p>{{ tx('応答が G_b から H への全単射かつ辺を保つかを検査する．', 'Check that the response is a bijection G_b→H preserving edges.') }}</p></div></div>
+      <div class="gi-step"><b>4</b><div><strong>{{ tx('検証者が確認', 'Verifier checks') }}</strong><p>{{ tx('応答が G', 'Check that the response is a bijection from G') }}<sub>b</sub>{{ tx(' から H への全単射で，辺の有無を保つか検査する．', ' to H that preserves adjacency.') }}</p></div></div>
     </div>
 
     <div class="gi-simulator"><strong>{{ tx('正直な検証者に対するシミュレータ', 'Simulator for an honest verifier') }}</strong><p>{{ tx('チャレンジ ', 'Choose the challenge ') }}b{{ tx(' と，頂点のランダムな付け替え φ', ' and a random relabeling φ') }}<sub>b</sub>{{ tx(' を先に選ぶ．次に H=φ', ' first. Then set H=φ') }}<sub>b</sub>({{ tx('G', 'G') }}<sub>b</sub>){{ tx(' として記録を作る．ウィットネス π を使わずに，実際の記録と同じ確率分布を生成する．', '. This generates a record with the same probability distribution as a real transcript, without using witness π.') }}</p></div>
