@@ -4,9 +4,9 @@ const tx = (ja, en) => props.en ? en : ja;
 </script>
 
 <template>
-  <figure id="figure-02-6" class="gi-figure" aria-labelledby="caption-02-6">
-    <figcaption id="caption-02-6">
-      <span class="gi-number">{{ en ? 'Figure 02-6' : '図 02-6' }}</span>
+  <figure id="figure-02-1" class="gi-figure" aria-labelledby="caption-02-1">
+    <figcaption id="caption-02-1">
+      <span class="gi-number">{{ en ? 'Figure 02-1' : '図 02-1' }}</span>
       <strong>{{ tx('グラフ同型性：ウィットネス，対話，シミュレーション', 'Graph isomorphism: witness, interaction, and simulation') }}</strong>
     </figcaption>
     <p class="gi-intro">{{ tx('公開入力は二つのグラフ．辺の形は同じで，頂点の名前だけが置き換わっている．', 'The public input is a pair of graphs. They have the same edge structure, with different vertex labels.') }}</p>

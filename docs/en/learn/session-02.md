@@ -172,24 +172,6 @@ Under both random variables, each bit considered individually is equally likely 
 
 The indistinguishability condition concerns the distributions of the random variable $X$, representing the real verifier view, and $Y$, representing the simulator output, for the same fixed public input. Restricting a dishonest prover's power for soundness and restricting a distinguisher's power for zero-knowledge are separate axes. Being an argument does not imply computational zero-knowledge; for example, the original Groth16 paper proves perfect zero-knowledge.
 
-The following figure and table fix $V^*$, a valid pair $(x,w)\in R$, and auxiliary input $z$. They do not average over random choices of $x$ or $w$.
-
-<span id="figure-02-1"></span>
-<span id="caption-02-1"></span>
-
-<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
-
-<p class="table-caption" id="table-caption-02-7"><strong>Table 02-7：Random variables X and Y: comparing distributions of the whole record</strong></p>
-
-| Item | Explanation | Equation / condition |
-| --- | --- | --- |
-| Real interaction → random variable X | P uses $x,w$; $V^*$ uses $x,z$. Sample independent random tapes $r_P,r_V$. $X$ is the entire verifier view: public and auxiliary inputs, its own random tape, and received messages. | $X=(x,z,r_V,m_1,\ldots,m_k)$ |
-| Simulation → random variable Y | S uses $x,z$ and its own tape $r_S$, but not $w$. $Y$ is a record in the same format as $X$. The same S works for every valid $w$. | $Y=S(x,z;r_S)$ |
-
-</div>
-
-Compare the probability of each record $t$, $\Pr[X=t]$ and $\Pr[Y=t]$. Perfect zero-knowledge requires equality for every $t$; statistical zero-knowledge bounds $\Delta(X,Y)$; computational zero-knowledge bounds every efficient distinguisher's advantage. Probabilities include record-generation randomness and, for a distinguisher, its own randomness. The same individual record need not appear in both experiments.
-
 **Graph-isomorphism example**
 
 Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
@@ -204,11 +186,9 @@ The next explanation previews the **Schnorr identification protocol**, developed
 
 <SchnorrOverview :en="true" />
 
+<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
 
-
-<div class="captioned-table" id="table-02-10" role="group" aria-labelledby="table-caption-02-10">
-
-<p class="table-caption" id="table-caption-02-10"><strong>Table 02-10：Message generation in the real interaction and simulation</strong></p>
+<p class="table-caption" id="table-caption-02-3"><strong>Table 02-3：Message generation in the real interaction and simulation</strong></p>
 
 | Setting | Generation order | Condition |
 | --- | --- | --- |
@@ -265,9 +245,9 @@ $$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(
 
 The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the exact value originally stored inside the prover.
 
-<div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
+<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
 
-<p class="table-caption" id="table-caption-02-3"><strong>Table 02-3：Random variables and outputs in interaction and extraction</strong></p>
+<p class="table-caption" id="table-caption-02-4"><strong>Table 02-4：Random variables and outputs in interaction and extraction</strong></p>
 
 | Aspect | Real interaction | Extraction experiment |
 | --- | --- | --- |
@@ -282,12 +262,9 @@ These are separate experiments: do not assume $p_{P^*}(x)=e_{P^*}(x,T)$. Nor is 
 
 Fix public input x and prover strategy P\*, including its private information.<br>Do not assume that P\* starts with a witness.
 
-<span id="figure-02-4"></span>
-<span id="caption-02-4"></span>
+<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
 
-<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
-
-<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Acceptance and extraction: different experiments and random variables</strong></p>
+<p class="table-caption" id="table-caption-02-5"><strong>Table 02-5：Acceptance and extraction: different experiments and random variables</strong></p>
 
 | Item | Explanation | Equation / condition |
 | --- | --- | --- |
@@ -346,9 +323,9 @@ Use Schnorr identification to make the distinction concrete. First fix the propo
 
 The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
 
-<div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
+<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
 
-<p class="table-caption" id="table-caption-02-4"><strong>Table 02-4：Schnorr public input, witness and relation</strong></p>
+<p class="table-caption" id="table-caption-02-6"><strong>Table 02-6：Schnorr public input, witness and relation</strong></p>
 
 | Symbol | Meaning | Who has it? |
 | --- | --- | --- |
@@ -435,12 +412,9 @@ In the numerical example, suppose we also obtain the accepting response $s_2=8$ 
 
 Public input x = (G, q, g, y) and secret exponent w satisfy y = gʷ. Example: p = 23, q = 11, g = 2, y = 8, w = 3.
 
-<span id="figure-02-2"></span>
-<span id="caption-02-2"></span>
+<div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
 
-<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
-
-<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Schnorr: from proposition and witness to verification and extraction</strong></p>
+<p class="table-caption" id="table-caption-02-7"><strong>Table 02-7：Schnorr: from proposition and witness to verification and extraction</strong></p>
 
 | Step / stage | Explanation |
 | --- | --- |
@@ -511,9 +485,9 @@ Typical analyses use the **random oracle model (ROM)**, treating the hash as an 
 
 With these distinctions in place, the landscape can be organized as follows. Interactive versus non-interactive is not the same distinction as succinct versus non-succinct.
 
-<div class="captioned-table" id="table-02-5" role="group" aria-labelledby="table-caption-02-5">
+<div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
 
-<p class="table-caption" id="table-caption-02-5"><strong>Table 02-5：Relations, interaction and succinctness</strong></p>
+<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Relations, interaction and succinctness</strong></p>
 
 | Relation | Interactive examples | Non-interactive examples | Reading succinctness |
 | --- | --- | --- | --- |
@@ -524,11 +498,9 @@ With these distinctions in place, the landscape can be organized as follows. Int
 
 These constructions do not all follow the same route. For example, Groth16 is constructed non-interactively using a reference string, without applying Fiat–Shamir. Act III examines each construction's route.
 
-<span id="figure-02-3"></span>
+<div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 
-<div class="captioned-table" id="table-02-6" role="group" aria-labelledby="table-caption-02-6">
-
-<p class="table-caption" id="table-caption-02-6"><strong>Table 02-6：Separate expressiveness from efficiency</strong></p>
+<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Separate expressiveness from efficiency</strong></p>
 
 | Question | Algebraic relation: the Schnorr example | General computation |
 | --- | --- | --- |

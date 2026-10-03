@@ -54,10 +54,12 @@ for session in [f'{n:02}' for n in range(1,16)]+['01-illustrated']:
                 assert m and m[1].startswith(session[:2]+'-'), (file,kind,label)
                 numbers.append(m[1])
             assert len(numbers)==len(set(numbers)), (file,kind,'duplicate numbers')
+            if session=='02':
+                assert numbers==[f'02-{i}' for i in range(1,len(numbers)+1)], (file,kind,'numbers must follow reading order',numbers)
             found.append(numbers)
         ids.append(found)
         if locale=='' and session!='01-illustrated':
             totals=[a+len(b) for a,b in zip(totals,found)]
     assert ids[0]==ids[1], (session,'locale numbering mismatch')
-assert totals==[14,69], totals
+assert totals==[15,68], totals
 print(f'15 bilingual lessons: {totals[0]} figures and {totals[1]} tables per locale have unique numbered captions; illustrated Session 1 also checked.')
