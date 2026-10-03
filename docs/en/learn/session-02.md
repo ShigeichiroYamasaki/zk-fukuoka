@@ -11,6 +11,7 @@ next:
 <script setup>
 
 import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
+import GraphIsoExample from "../../.vitepress/theme/GraphIsoExample.vue";
 </script>
 
 # Session 2: Zero-knowledge and the generalization of witnesses
@@ -194,6 +195,8 @@ Compare the probability of each record $t$, $\Pr[X=t]$ and $\Pr[Y=t]$. Perfect z
 Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
 
 To generate an honest verifier's record, a simulator can first choose $b$ and a random isomorphism $G_b\to H$, then construct the record. Security against a dishonest verifier requires a separate argument that includes rewinding. Distinguish being able to verify without receiving the secret from being able to respond to a verifier in a live interaction.
+
+<GraphIsoExample :en="true" />
 
 ### 2.4 Checking the intuition
 

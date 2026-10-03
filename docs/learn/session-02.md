@@ -11,6 +11,7 @@ next:
 <script setup>
 
 import SchnorrOverview from "../.vitepress/theme/SchnorrOverview.vue";
+import GraphIsoExample from "../.vitepress/theme/GraphIsoExample.vue";
 </script>
 
 # 第2回:ゼロ知識性とウィットネスの一般化
@@ -235,6 +236,8 @@ $$\left|\Pr[D(x,z,X)=1]-\Pr[D(x,z,Y)=1]\right|\le\mathrm{negl}(n)$$
 公開グラフを $G_0,G_1$，秘密の同型写像を $\pi:G_0\to G_1$ とする．証明者はランダムな頂点の置換 $\rho$ で $H=\rho(G_0)$ を作り，先に $H$ を送る．検証者は一様分布の 1 ビット $b$ を選び，証明者は $G_b\to H$ の同型写像を返す．$b=0$ なら $\rho$，$b=1$ なら $\rho\circ\pi^{-1}$ を使える．同じ $H$ について両方に答えられれば，二つの写像の合成から $G_0\to G_1$ の同型を抽出できる．
 
 正直な検証者の記録なら，シミュレータは先に $b$ とランダムな同型写像 $G_b\to H$ を選んで生成できる．不正な検証者に対する保証には巻き戻しを含む別の議論が必要になる．秘密を渡さずに検証できることと，検証者を実際に相手にして応答できることを区別しよう．
+
+<GraphIsoExample />
 
 ### 2.4 直感の確認
 
