@@ -456,68 +456,41 @@ Schnorr extracts an exponent from two accepted responses to the same commitment.
 The next section organizes these questions along two axes: expressiveness and efficiency.
 
 
-## 5. Organizing the landscape in a two-axis matrix
+## 5. Organizing proof systems with two axes
 
-Separate the questions into **what can be expressed** and **how much interaction and computation is needed**. Before reading the comparison tables, clarify the purposes and limitations of three terms.
+Proof systems can first be compared by asking two questions:
 
-### 5.1 Succinctness: reduce the verifier's workload
-
-**Succinctness** asks for a short proof and little verification work relative to a potentially large computation, so that checking the result is cheaper than repeating all of it. This serves Section 4.3's goal of outsourcing computation while reducing the checking burden. Specify what “short” is relative to: computation size, public-input length, and the security parameter play different roles.
-
-However, **a short proof need not be cheap to generate**. Reading public inputs still costs work. Succinctness also does not imply that the witness is hidden or that interaction is unnecessary. Zero-knowledge, non-interactivity, and succinctness are separate properties. Sessions 11–13 compare concrete proof sizes and verification costs.
-
-### 5.2 Sigma protocols: a basic form of interactive knowledge proof
-
-A **Sigma protocol (Σ-protocol)** is a framework for three-message interactive protocols demonstrating knowledge of a witness. Schnorr in Section 4.1 is an example: commitment $t$, then a uniform random challenge $c$, then response $s$.
-
-Three messages alone do not make a Sigma protocol. Here we use the basic definition requiring **completeness**, **special soundness** (extracting a witness from two accepting records with the same commitment and distinct challenges), and **special honest-verifier zero-knowledge** (simulating an honest transcript even for a specified challenge, without a witness). In Schnorr, fix $c$, choose uniform $s$, and compute $t=g^s y^{-c}$ to generate such a record.
-
-The purpose is to design and analyze interactions with these properties through a common framework. The definition alone does not guarantee **zero-knowledge against malicious verifiers** or **succinctness for general computations**. Schnorr's short transcripts exploit the structure of a particular discrete-logarithm relation. Moving to general NP relations requires reassessing representation and communication costs.
-
-### 5.3 Fiat–Shamir: remove the round trip with the verifier
-
-The **Fiat–Shamir transformation** aims to turn a suitable interactive protocol into a **non-interactive** one: the prover generates a proof that a verifier can check later. In the Schnorr example, instead of receiving $c$ from the verifier, the prover derives it by hashing public input $x$, commitment $t$, and context:
-
-$$c=H(\text{protocol identifier},x,t).$$
-
-This is schematic: an implementation must specify input encoding and how hash outputs map to challenges. The prover sends $(t,s)$; the verifier recomputes $c$ from the same inputs and checks the proof. A signature application also includes the signed message in the hash input. See [RFC 8235 §2.3](https://www.rfc-editor.org/rfc/rfc8235.html#section-2.3) for an application to Schnorr.
-
-However, **removing interaction does not compress a long proof**. A protocol that sends large amounts of data does not automatically become succinct for general computation through Fiat–Shamir. Nor can every interactive protocol be transformed safely: security depends on the original construction and how the hash is modeled.
-
-Typical analyses use the **random oracle model (ROM)**, treating the hash as an ideal random function. A proof in that model does not unconditionally guarantee security when a concrete hash function is substituted. The analysis must also account for a prover trying many commitments and hash queries. [Session 9](./session-09.md) develops the transformation and its limitations.
-
-### 5.4 Compare expressiveness and efficiency separately
-
-With these distinctions in place, the landscape can be organized as follows. Interactive versus non-interactive is not the same distinction as succinct versus non-succinct.
+- **Expressiveness:** What kinds of relations can be proved, from a specific algebraic relation to a general computation?
+- **Efficiency:** How small can the proof and verifier's workload be relative to the original computation? Prover cost and setup requirements must be checked separately.
 
 <div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 
-<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Relations, interaction and succinctness</strong></p>
+<p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Proof systems by expressiveness and efficiency</strong></p>
 
-| Relation | Interactive examples | Non-interactive examples | Reading succinctness |
-| --- | --- | --- | --- |
-| Algebraic relations | Schnorr | Fiat–Shamir applied to suitable Sigma protocols | Short transcripts for a particular relation do not mean that Fiat–Shamir compresses proofs |
-| General NP relations | Interactive ZK constructions for general NP | Groth16 / PLONK / STARK | Assess proof size and verification cost relative to computation size separately from non-interactivity |
+| Expressiveness \ Efficiency | Examples not primarily designed for succinctness | Examples aiming for succinctness |
+| --- | --- | --- |
+| Specific algebraic relations | Interactive proofs such as Schnorr | Schnorr-type protocols after Fiat–Shamir |
+| General computation (general NP relations) | Interactive zero-knowledge proofs for general NP | Groth16, PLONK, STARK |
 
 </div>
 
-These constructions do not all follow the same route. For example, Groth16 is constructed non-interactively using a reference string, without applying Fiat–Shamir. Act III examines each construction's route.
+This table is a rough map. Fiat–Shamir removes interaction with the verifier; by itself, it does not shorten a proof. A succinct proof does not necessarily make proving or setup inexpensive.
+
+The three properties ask different questions:
 
 <div class="captioned-table" id="table-02-10" role="group" aria-labelledby="table-caption-02-10">
 
-<p class="table-caption" id="table-caption-02-10"><strong>Table 02-10：Separate expressiveness from efficiency</strong></p>
+<p class="table-caption" id="table-caption-02-10"><strong>Table 02-10：Three independent properties for evaluating proof systems</strong></p>
 
-| Question | Algebraic relation: the Schnorr example | General computation |
-| --- | --- | --- |
-| What is represented? | Knowledge of an exponent satisfying $y=g^w$ | Knowledge of an input and execution satisfying a program's conditions |
-| Checking tools | Group relations and Sigma protocols | Arithmetization and polynomial constraints, among other tools |
-| Purpose of non-interactivity | Remove the verifier round trip and allow later verification | The same purpose, with a construction-dependent route |
-| Purpose of succinctness | Limit communication and verification group operations for the relation | Keep proof size and verification work small relative to a large computation |
-| What must be checked separately? | The relation, verifier model, and security after transformation | Prover cost, public-input processing, setup, and security assumptions |
+| Property | Question |
+| --- | --- |
+| Zero-knowledge | Is information about the witness hidden? |
+| Non-interactivity | Can verification happen without a round trip with the prover? |
+| Succinctness | Are proof size and verifier work small relative to a large computation? |
 
 </div>
 
-Increasing expressiveness and improving proof efficiency are separate design tasks. Rather than treating succinctness, non-interactivity, and zero-knowledge as a single notion of performance, distinguish the guarantees and remaining costs. This provides a guide to the tools and protocols in Acts II and III.
+Act II develops tools for these goals. Act III compares how Groth16, PLONK, and STARK address expressiveness and efficiency.
 
 ---
 
