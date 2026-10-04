@@ -30,7 +30,7 @@ Updated: September 27, 2026
 | Topic | Lecture sections |
 | --- | --- |
 | Sets, membership, strings, languages and x ∈ L | [Prerequisite explanation](./terms/sets-and-languages) / [Session 1](./session-01) |
-| NP verifiers, witnesses and NP relations | [Session 1 §1.1](./session-01#_1-1-the-np-verifier-paradigm) / [Session 2 §4.2](./session-02#_4-2-general-witnesses-when-that-structure-is-absent) / [Explanation](./terms/np-relations) |
+| NP verifiers, witnesses and NP relations | [Session 1 §1.1](./session-01#_1-1-the-np-verifier-paradigm) / [Session 2 §4.2](./session-02#general-computation-arithmetization) / [Explanation](./terms/np-relations) |
 | Interactive proofs, provers and verifiers | [Session 1 §4](./session-01#_4-the-convergence-of-the-two-motivations) / [Session 1 §5](./session-01#_5-a-formal-definition-of-interactive-proof-systems) |
 | Password authentication and graph isomorphism (motivating examples) | [Session 1 §3.2](./session-01#_3-2-building-intuition-with-examples) |
 | Completeness | [Session 1 §5.1](./session-01#_5-1-completeness-and-soundness) / [Session 14 §1.1](./session-14#_1-1-completeness) |
@@ -38,10 +38,10 @@ Updated: September 27, 2026
 | Zero-knowledge and the simulator paradigm | [Session 2 §2.1](./session-02#_2-1-the-central-idea) / [Session 2 §2.2](./session-02#_2-2-a-formal-definition) |
 | Perfect, statistical and computational zero-knowledge; indistinguishability | [Session 2 §2.2](./session-02#_2-2-a-formal-definition) / [Session 14 §1.3](./session-14#_1-3-zero-knowledge) |
 | Honest-verifier simulation | [Session 2 §2.3](./session-02#_2-3-checking-the-intuition) |
-| Knowledge soundness, knowledge extraction and extractors | [Session 2 §3.2](./session-02#_3-2-the-concept-of-an-extractor) / [Session 2 §4.4](./session-02#_4-4-the-increasing-difficulty-of-knowledge-extraction) / [Session 14 §1.4](./session-14#_1-4-knowledge-soundness-and-extractors) |
-| Schnorr, Sigma protocols and extraction from two accepting transcripts | [Session 2 §4.1](./session-02#_4-1-simple-witnesses-proofs-built-on-structure) / [Session 6 §4.1](./session-06#_4-1-the-idea-of-rewinding) |
-| Generalizing witnesses and the motivation for arithmetization | [Session 2 §4.2](./session-02#_4-2-general-witnesses-when-that-structure-is-absent) |
-| Expressiveness, succinctness and non-interactivity | [Session 2 §4.3](./session-02#_4-3-how-efficiency-requirements-change) / [Session 2 §5](./session-02#_5-organizing-the-landscape-in-a-two-axis-matrix) |
+| Knowledge soundness, knowledge extraction and extractors | [Session 2 §3.2](./session-02#_3-2-the-concept-of-an-extractor) / [Session 2 §4.4](./session-02#general-knowledge-extraction) / [Session 14 §1.4](./session-14#_1-4-knowledge-soundness-and-extractors) |
+| Schnorr, Sigma protocols and extraction from two accepting transcripts | [Session 2 §4.1](./session-02#schnorr-witness-extraction) / [Session 6 §4.1](./session-06#_4-1-the-idea-of-rewinding) |
+| Generalizing witnesses and the motivation for arithmetization | [Session 2 §4.2](./session-02#general-computation-arithmetization) |
+| Expressiveness, succinctness and non-interactivity | [Session 2 §4.3](./session-02#succinctness-motivation) / [Session 2 §5](./session-02#_5-organizing-the-landscape-in-a-two-axis-matrix) |
 
 ## Finite fields, polynomials & arithmetization {#algebra}
 

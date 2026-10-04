@@ -362,15 +362,15 @@ Zero-knowledge protects against extra information being learned in ordinary inte
 
 ## 4. Generalizing witnesses: from algebraic relations to general computation
 
-This is the second half of today's lecture and the closing topic of Act I as a whole.
+Section 3 treated “knowing a witness” operationally: can an extractor obtain a valid witness from the prover's responses? This section asks what changes when the witness grows from a simple value to an entire computation.
 
-### 4.1 Simple witnesses: proofs built on structure
+### 4.1 In Schnorr, the group structure helps verification {#schnorr-witness-extraction}
 
-Use Schnorr identification to make the distinction concrete. First fix the proposition being checked and what the prover asserts that they know.
+In the Schnorr identification protocol, the public value $y$ and secret exponent $w$ satisfy
 
-**Separate the proposition from its witness**
+$$y=g^w.$$
 
-The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order $q$ and a generator $g$. “Cyclic” means that every group element is a power of $g$; the order $q$ is the number of elements. We write the group operation multiplicatively.
+The exponent $w$ satisfying this equation is the witness for the public value $y$. The relation being checked is summarized below.
 
 <div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
 
@@ -378,127 +378,83 @@ The public parameters specify a cyclic group $G=\langle g\rangle$ of prime order
 
 | Symbol | Meaning | Who has it? |
 | --- | --- | --- |
-| $x=(G,q,g,y)$ | Public input that specifies the proposition $x\in L_{R_{\mathrm{DL}}}$; $y\in G$ acts as a public key | Both prover and verifier |
-| $w\in\mathbb{Z}_q$ | A secret exponent satisfying $y=g^w$: the witness | The honest prover |
-| $R_{\mathrm{DL}}$ | The relation checking that the public input and exponent match | Its definition and checking procedure are public |
+| $x=(G,q,g,y)$ | Public input containing the group parameters and public value $y$ | Prover and verifier |
+| $w\in\mathbb{Z}_q$ | Secret exponent satisfying $y=g^w$ (the witness) | Honest prover |
+| $R_{\mathrm{DL}}$ | Relation that checks whether $(x,w)$ satisfies $y=g^w$ | Public definition |
 
 </div>
 
-In an implementation, $G$ is represented by a description of the group and its operations. With valid shared group parameters and membership of $y$ checked, define
+The protocol proceeds as follows:
 
-$$
-(x,w)\in R_{\mathrm{DL}}
-\quad\Longleftrightarrow\quad
-x=(G,q,g,y),\quad w\in\mathbb{Z}_q,\quad y=g^w.
-$$
+1. The prover chooses fresh randomness $r$ and sends $t=g^r$.
+2. The verifier sends a random challenge $c$.
+3. The prover responds with $s=r+cw\pmod q$.
+4. The verifier checks $g^s=t\,y^c$.
 
-This instantiates Section 2's relation $R$ as the discrete-logarithm relation $R_{\mathrm{DL}}$. When the group parameters are fixed, the public input may be written simply as $y$. The prover asserts: **“For this public value $y$, I know an exponent $w$ such that $y=g^w$.”** The prover does not send $w$. Every $y\in G$ has such an exponent, so checking existence alone does not establish knowledge. Section 3's extractor formalizes precisely this distinction.
+An honest prover is accepted because
 
-**Group elements and exponents live in different algebraic structures**
+$$g^s=g^{r+cw}=g^r(g^w)^c=t\,y^c.$$
 
-The exponents $w,r,c,s$ lie in $\mathbb{Z}_q$, with addition and multiplication modulo $q$. Since $q$ is prime, this is also a finite field, in which every nonzero element has an inverse. In contrast, $y$ and the commitment $t$ are elements of $G$. If $G$ is a subgroup of the multiplicative group of $\mathbb{F}_p$, **group multiplication is modulo $p$, while exponent arithmetic is modulo $q$**.
+The verifier checks this equation without receiving $w$. This is **completeness**.
 
-The map connecting these structures is $\varphi:\mathbb{Z}_q\to G$, $\varphi(a)=g^a$. It satisfies
+Why can a witness be extracted from this check? Suppose responses $s_1,s_2$ to two different challenges $c_1,c_2$ are both accepted for the same first message $t$. Canceling $t$ in the two verification equations gives
 
-$$
-\varphi(a+b)=\varphi(a)\varphi(b),\qquad
-\varphi(ca)=\varphi(a)^c.
-$$
+$$g^{s_1-s_2}=y^{c_1-c_2}.$$
 
-This **group homomorphism** translates addition of exponents into multiplication of group elements. Because $g$ has order $q$, $g^a=g^b$ implies $a=b\pmod q$. The inverse map exists mathematically, but in a cryptographic group recovering $w$ efficiently from $g^w$ is assumed difficult. An invertible mathematical structure does not imply an efficient inversion algorithm.
+Then compute
 
-**Use this structure to verify without sending the witness**
+$$w'=(s_1-s_2)(c_1-c_2)^{-1}\pmod q$$
 
-1. Prover: choose fresh uniform $r\in\mathbb{Z}_q$ and send the commitment $t=g^r$.
-2. Verifier: send a uniform challenge $c\in\mathbb{Z}_q$.
-3. Prover: send the response $s=r+cw\pmod q$.
-4. Verifier: check valid group-element and exponent inputs, and check $g^s=t\cdot y^c$.
+to obtain a witness satisfying $g^{w'}=y$. The algebraic relation between group operations and exponents makes this possible. This property is called **special soundness**.
 
-For an honest prover, the verification equation follows from
+This is not an instruction for an ordinary verifier to send two challenges. It describes a security proof in which an extractor rewinds the prover to obtain another response from the same $t$.
 
-$$
-g^s=g^{r+cw}=g^r(g^w)^c=t\cdot y^c.
-$$
+::: details Group arithmetic and a small numerical example
+Exponent arithmetic is modulo $q$, while multiplication of group elements in this example is modulo $p$. For example, with $p=23,\ q=11,\ g=2$, the group $G=\langle2\rangle\subset\mathbb{F}_{23}^{*}$ has order 11. If $w=3$, then $y=2^3\bmod23=8$.
 
-The verifier uses only public $g,y$, received $t,s$, and its own challenge $c$, without needing $w$ or $r$. This identity explains completeness; a single acceptance does not by itself guarantee knowledge.
+For $r=4$ and $c=2$, the commitment is $t=2^4\bmod23=16$, and the response is $s=4+2\cdot3=10\pmod{11}$. The verifier computes
 
-**Work through small numbers**
+$$2^{10}\bmod23=12,\qquad 16\cdot8^2\bmod23=12,$$
 
-For illustration, take $p=23$, $q=11$, and $g=2$. In power order, the 11 elements of $G=\langle2\rangle\subset\mathbb{F}_{23}^{*}$ are $1,2,4,8,16,9,18,13,3,6,12$. This tiny group is searchable exhaustively and unsuitable for real cryptography.
+so the two sides agree. This tiny group is exhaustively searchable and is unsuitable for cryptography; the values are only for illustration.
 
-With witness $w=3$, the public value is $y=2^3\bmod23=8$. Randomness $r=4$ gives commitment $t=16$. For challenge $c=2$, the response is $s=4+2\cdot3=10\pmod{11}$. The verifier obtains
-
-$$
-2^{10}\bmod23=12,\qquad
-16\cdot8^2\bmod23=12.
-$$
-
-The two sides agree. The secret input $w=3$ satisfies the relation, whereas $r=4$ is fresh randomness for this execution. Both are exponents, but their roles differ.
-
-**Extract an exponent satisfying the same relation from two accepting records**
-
-For a malicious prover, do not assume that its responses were honestly computed as $s=r+cw$. Nevertheless, if responses to distinct challenges $c_1\ne c_2$ are both accepted with **the same initial commitment $t$**, dividing the verification equations gives
-
-$$
-\frac{g^{s_1}}{g^{s_2}}
-=\frac{t y^{c_1}}{t y^{c_2}}
-\quad\Longrightarrow\quad
-g^{s_1-s_2}=y^{c_1-c_2}.
-$$
-
-The nonzero difference $c_1-c_2$ has an inverse in $\mathbb{Z}_q$. Raising both sides to that inverse yields
-
-$$
-w'=(s_1-s_2)(c_1-c_2)^{-1}\pmod q,
-\qquad g^{w'}=y.
-$$
-
-Thus the extracted $w'$ is a **witness satisfying the original relation $(x,w')\in R_{\mathrm{DL}}$**. Group division cancels the common commitment, and inversion in the exponent field solves for a witness. This is special soundness.
-
-In the numerical example, suppose we also obtain the accepting response $s_2=8$ to challenge $c_2=5$ for the same $t=16$. Since $c_1-c_2=8\pmod{11}$ has inverse 7, extraction gives $w'=(10-8)\cdot7=3\pmod{11}$. This describes Section 3's rewinding experiment, not a procedure for reusing randomness in ordinary interactions.
-
-**The relation's algebraic structure directly supplies both the verification and extraction equations.** Whether arbitrary computations come with such a structure is the question leading into Section 4.2.
-
-Public input x = (G, q, g, y) and secret exponent w satisfy y = gʷ. Example: p = 23, q = 11, g = 2, y = 8, w = 3.
+If a second accepted response $s_2=8$ to challenge $c_2=5$ is obtained for the same $t=16$, combine it with $c_1=2,s_1=10$ to compute $w'=3$. The extracted witness need not equal the prover's original internal value; it is valid as long as it satisfies $y=g^{w'}$.
 
 <div class="captioned-table" id="table-02-8" role="group" aria-labelledby="table-caption-02-8">
 
-<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Schnorr: from proposition and witness to verification and extraction</strong></p>
+<p class="table-caption" id="table-caption-02-8"><strong>Table 02-8：Schnorr numerical example and extraction</strong></p>
 
-| Step / stage | Explanation |
+| Stage | Example or check |
 | --- | --- |
-| 1. Statement and witness | Claim: know the discrete logarithm of public y.<br>Witness: exponent w. Relation R\_DL: y = gʷ. |
-| 2. Connect two algebraic structures | Exponent addition a + b (mod q) → group multiplication gᵃgᵇ.<br>φ(a) = gᵃ; φ(a + b) = φ(a)φ(b). |
-| 3. Prover P ↔ verifier V | P → V: t = gʳ / V → P: c / P → V: s = r + cw.<br>V checks gˢ = tyᶜ. Example: r = 4, t = 16, c = 2, s = 10. Both sides are 12 (mod 23). |
-| 4. Extractor E: divide two accepting equations for the same t | gˢ¹ = tyᶜ¹ and gˢ² = tyᶜ² → g⁽ˢ¹⁻ˢ²⁾ = y⁽ᶜ¹⁻ᶜ²⁾.<br>w′ = (s₁ − s₂)(c₁ − c₂)⁻¹ mod q → gʷ′ = y.<br>Example: (c₁, s₁) = (2, 10), (c₂, s₂) = (5, 8) → w′ = 3. |
+| Public input and witness | $p=23,\ q=11,\ g=2,\ y=8,\ w=3$. Relation: $y=g^w$. |
+| First interaction | $r=4,\ t=16,\ c_1=2,\ s_1=10$. Both sides equal $12\pmod{23}$. |
+| Second response | For the same $t=16$, $c_2=5,\ s_2=8$. |
+| Extraction | $w'=(10-8)(2-5)^{-1}=3\pmod{11}$, hence $g^{w'}=y$. |
 
 </div>
 
-Exponent arithmetic (w, r, c, s) is modulo q; group multiplication in this example is modulo p. Extraction requires the same t and distinct c. These small values are illustrative; never reuse r in normal interactions.
+:::
 
-For another description of the construction, see [RFC 8235 §2.2](https://www.rfc-editor.org/rfc/rfc8235.html#section-2.2). It uses subtraction in the response, so its verification equation is arranged differently from the additive-response convention used here.
+### 4.2 For a general computation, we must build a checkable representation {#general-computation-arithmetization}
 
-### 4.2 General witnesses: when that structure is absent
+In Schnorr, the witness is an exponent $w$, and the group relation $y=g^w$ supports both verification and extraction. For a general program, the claim may be that a given input produces a specified output. The witness may include an input or intermediate computation values, and Schnorr's equation does not automatically apply.
 
-Now extend the relation to a general program. Consider an NP relation, with bounded computation time and witness length, expressing knowledge of an input producing a specified output. A computation containing branches and comparisons need not come with a group relation to which Schnorr’s verification equation directly applies. We therefore need to translate the computation into a form we can check.
+Instead, we translate the program into a collection of constraints that can be checked. Representing a computation with circuits and polynomial constraints is called **arithmetization**. Session 4 introduces R1CS, QAP, and AIR as concrete methods. Arithmetization is not itself a proof; it prepares the claimed computation in a form a proof system can handle.
 
-The qualitative shift is worth making explicit:
+The key change is that a general computation does not automatically come with Schnorr's convenient verification equation. We must translate the computation into another representation.
 
-> A shift from “use the group homomorphism” to “**translate the computation itself into the language of polynomials**.”
+### 4.3 Large computations also make verification cost matter {#succinctness-motivation}
 
-This translation mechanism is **arithmetization**, a central topic of Act II that we will study in Session 4 through R1CS/QAP and AIR. For now, emphasize that this translation is a **means, not an end**. The goal remains to satisfy completeness, soundness, and zero-knowledge for arbitrary computations.
+If the verifier must check every step from scratch after the prover performs the computation, outsourcing saves little. SNARKs and STARKs therefore also aim for **succinctness**: short proofs and low verification costs relative to the original computation.
 
-### 4.3 How efficiency requirements change
+Zero-knowledge and succinctness are separate properties. A system may hide the witness yet have a large proof or verification cost; a short proof does not by itself hide the witness. Consider separately what can be represented and the cost of proving and verifying it.
 
-Generalizing computation also raises the question of how much work the verifier performs. In the discrete-log example, the exponent is small once security parameters are fixed. A program’s execution record grows with the computation. Checking the whole record may establish correctness, but does it achieve the goal of delegating computation to reduce verification work?
+### 4.4 Extraction must also be designed for each proof system {#general-knowledge-extraction}
 
-For that goal, we require **succinctness**: proof size and verification time should be small relative to the original computation or witness. Costs such as reading public inputs remain. General zero-knowledge proofs need not be succinct; distinguish succinctness as a design goal of the SNARKs and STARKs studied here. Session 10 introduces PCPs and IOPs as frameworks for pursuing it.
+Schnorr extracts an exponent from two accepted responses to the same commitment. For a general computation, the target is an input or execution record satisfying the constraints, and the useful interaction depends on the proof system. It is therefore unsafe to assume that two responses always suffice. As Section 3 explained, knowledge soundness includes what access the extractor is allowed and how efficiently it can obtain a valid witness.
 
-### 4.4 The increasing difficulty of knowledge extraction
+The next section organizes these questions along two axes: expressiveness and efficiency.
 
-Changing the witness representation also changes extraction. In Schnorr, two accepting transcripts with the same first commitment and different challenges yield the exponent. For a general computation, the target is an assignment satisfying circuit constraints. Required transcripts and access depend on the scheme; extraction may use several response stages or knowledge properties of commitments. Do not assume that two transcripts always suffice in the same way.
-
----
 
 ## 5. Organizing the landscape in a two-axis matrix
 
