@@ -240,17 +240,31 @@ If a transcript can be generated without the witness, could a dishonest prover d
 
 ### 3.1 Why soundness alone is insufficient
 
-Soundness requires that false propositions are unlikely to be accepted. But is a proposition being true the same as this prover knowing a witness? In authentication, it is not enough that someone with the secret exists. We want the party responding now to possess it. Knowledge soundness addresses this distinction.
+**Soundness** asks whether a prover can make a false proposition be accepted. Authentication asks an additional question: is the prover responding now the one who knows the secret? It is not enough that the proposition is true or that someone, somewhere, knows a secret. **Knowledge soundness** addresses this distinction.
+
+Consider the graph-isomorphism example. The witness for the public statement that $G_0$ and $G_1$ are isomorphic is an isomorphism $\pi:G_0\to G_1$. Suppose the prover correctly answers both challenges, $b=0$ and $b=1$, for the same committed graph $H$. Write the two responses as $f_0:G_0\to H$ and $f_1:G_1\to H$. Then we can compute
+
+$$\pi'=f_1^{-1}\circ f_0:G_0\to G_1.$$
+
+This is a valid isomorphism, so the extractor has obtained a witness. It did not look inside the prover's memory; it built a valid witness from the prover's responses.
+
+The composition is an isomorphism because $f_0$ maps $G_0$ to $H$, and $f_1^{-1}$ maps $H$ to $G_1$. Both preserve adjacency, so their composition does too.
+
+Conversely, if $G_0$ and $G_1$ are not isomorphic, no single $H$ can be isomorphic to both. For a fixed $H$, the prover can answer at most one of the two challenges. With one random-bit challenge, the chance of accidental acceptance is at most $1/2$. This is the soundness idea from the previous section.
 
 ### 3.2 The concept of an extractor
 
-**Knowledge soundness** formalizes this requirement. We focus on **black-box extraction**, commonly used for classical interactive protocols: an extractor invokes a prover and examines its responses. It is not assumed to read the prover's secret directly.
+An **extractor $E$** is a hypothetical algorithm used in a security proof. In this graph example, it rewinds the prover to the point where it sent the same commitment $H$, issues the other challenge, and obtains both responses. It then constructs a witness using the equation above. This method of invoking a prover and examining its responses is called **black-box extraction**.
 
-> If a prover $P^*$ makes verifier $V$ accept with probability above a specified threshold, an extractor $E$ with prescribed access to $P^*$ must be able to obtain a valid witness. Its success probability and running time must also be evaluated.
+The extractor is not a third participant in the ordinary interaction, and it cannot read the prover's private memory. Whether rewinding is allowed depends on the proof system and security definition. In this example, **knowledge soundness** requires that if a prover convinces the verifier more often than the “guess at random” baseline, an extractor can obtain a valid witness.
 
-The potentially dishonest $P^*$ is not assumed to start with a witness as input. Here $V$ follows the protocol. This differs from Section 2, where we protected information against a potentially dishonest verifier $V^*$.
+The key idea is to define “knowing the secret” operationally: can a valid witness be constructed from the prover's responses? The extractor does not have to recover the exact secret originally held inside the prover.
 
-**The extractor is not a third participant in an ordinary execution.** It is an algorithm constructed in a security proof. Below, the access model allows restarting the prover or rewinding it to the same state with the same randomness and issuing another challenge. An actual verifier interacting with a remote party does not automatically have this access. Permissions depend on the scheme and definition; not all extractors use rewinding.
+Keep this separate from the simulator in Section 2. A simulator produces the **verifier's record** without a witness. An extractor invokes the prover and constructs a **valid witness** from its responses. They have different goals and outputs.
+
+The formal treatment using random variables and knowledge error is available in the expandable note below.
+
+::: details Formal note: random variables, knowledge error, and the Schnorr example
 
 ### 3.3 Two experiments and their random variables
 
@@ -341,6 +355,8 @@ Section 2's simulator $S$ generates a **verifier's record** without a witness. T
 Zero-knowledge protects against extra information being learned in ordinary interaction. Extraction with additional rewinding access does not by itself contradict that guarantee. If an implementation allows the verifier to force randomness reuse or reset the prover, its security in that setting needs separate analysis.
 
 *(Session 6 develops rewinding and the forking lemma further.)*
+
+:::
 
 ---
 
