@@ -12,8 +12,8 @@ Each page provides calculation, comparison, or implementation tasks tied to a le
 
 | Session | Exercise page | What it checks |
 | ---: | --- | --- |
-| 1 | [Statements and verification](./session-01) | Graph isomorphism, statement, and witness |
-| 2 | [Simulation and distinguishing](./session-02) | Distinguishing gaps and Schnorr relation |
+| 1 | [What is a proof?](./session-01) | NP verification, motivation for interaction, IP = PSPACE, completeness/soundness, Proof/Argument |
+| 2 | [Zero knowledge and generalizing the witness](./session-02) | Distributions, graph isomorphism, simulator/extractor, Schnorr, evaluation axes |
 | 3 | [Finite fields and randomized checks](./session-03) | Field arithmetic and Schwartz–Zippel error |
 | 4 | [Translating computation into constraints](./session-04) | R1CS, QAP, and AIR example |
 | 5 | [Reed–Solomon distance](./session-05) | Codewords, distance, and correction radius |
