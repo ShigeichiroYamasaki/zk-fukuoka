@@ -288,7 +288,7 @@ The superscript $P^*$ denotes access to the prover, not exponentiation. The symb
 
 Randomness in this experiment comes from $E$ and from the random tapes selected for its executions of $P^*$. Rewound branches reuse the prover's randomness, so **their responses need not be independent**. Define extraction's success indicator and probability by
 
-$$B_{x,T}:=\mathbf{1}\{W_{x,T}\ne\bot\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(x,T):=\Pr[B_{x,T}=1].$$
+$$B_{x,T}:=\mathbf{1}\{W_{x,T}\in\{0,1\}^*\ \land\ (x,W_{x,T})\in R\},\qquad e_{P^*}(x,T):=\Pr[B_{x,T}=1].$$
 
 The extractor must output some $w'$ with $(x,w')\in R$. It need not recover the exact value originally stored inside the prover.
 
@@ -366,11 +366,11 @@ Section 3 treated “knowing a witness” operationally: can an extractor obtain
 
 ### 4.1 In Schnorr, the group structure helps verification {#schnorr-witness-extraction}
 
-In the Schnorr identification protocol, the public value $y$ and secret exponent $w$ satisfy
+Let $G=\langle g\rangle$ be a cyclic group of prime order $q$ with generator $g$. Exponents are computed in $\mathbb{Z}_q$. The public value $y\in G$ and secret exponent $w\in\mathbb{Z}_q$ satisfy
 
 $$y=g^w.$$
 
-The exponent $w$ satisfying this equation is the witness for the public value $y$. The relation being checked is summarized below.
+The exponent $w$ is the witness. With public input $x=(G,q,g,y)$, the relation is $R_{\mathrm{DL}}=\{(x,w)\mid w\in\mathbb{Z}_q,\ y=g^w\}$.
 
 <div class="captioned-table" id="table-02-7" role="group" aria-labelledby="table-caption-02-7">
 
@@ -386,10 +386,10 @@ The exponent $w$ satisfying this equation is the witness for the public value $y
 
 The protocol proceeds as follows:
 
-1. The prover chooses fresh randomness $r$ and sends $t=g^r$.
-2. The verifier sends a random challenge $c$.
+1. The prover chooses uniform $r\in\mathbb{Z}_q$ and sends $t=g^r$.
+2. The verifier sends a uniform challenge $c\in\mathbb{Z}_q$.
 3. The prover responds with $s=r+cw\pmod q$.
-4. The verifier checks $g^s=t\,y^c$.
+4. The verifier validates the group parameters and checks $y,t\in G$, then verifies $g^s=t\,y^c$.
 
 An honest prover is accepted because
 
@@ -401,7 +401,7 @@ Why can a witness be extracted from this check? Suppose responses $s_1,s_2$ to t
 
 $$g^{s_1-s_2}=y^{c_1-c_2}.$$
 
-Then compute
+Since $y=g^w$ and $g$ has order $q$, the exponents satisfy $s_1-s_2\equiv w(c_1-c_2)\pmod q$. For $c_1\ne c_2$, primality of $q$ makes the difference invertible in $\mathbb{Z}_q$. Thus compute
 
 $$w'=(s_1-s_2)(c_1-c_2)^{-1}\pmod q$$
 
@@ -467,14 +467,14 @@ Proof systems can first be compared by asking two questions:
 
 <p class="table-caption" id="table-caption-02-9"><strong>Table 02-9：Proof systems by expressiveness and efficiency</strong></p>
 
-| Expressiveness \ Efficiency | Examples not primarily designed for succinctness | Examples aiming for succinctness |
+| Expressiveness \ Efficiency | Examples not primarily focused on communication and verification cost | Examples designed to reduce communication and verification cost |
 | --- | --- | --- |
-| Specific algebraic relations | Interactive proofs such as Schnorr | Schnorr-type protocols after Fiat–Shamir |
-| General computation (general NP relations) | Interactive zero-knowledge proofs for general NP | Groth16, PLONK, STARK |
+| Specific algebraic relations | Interactive proofs such as Schnorr | Schnorr-type protocols after Fiat–Shamir (short records for that relation) |
+| General computation (general NP relations) | Interactive zero-knowledge proofs for general NP | Groth16, PLONK, STARK (succinctness for large computations) |
 
 </div>
 
-This table is a rough map. Fiat–Shamir removes interaction with the verifier; by itself, it does not shorten a proof. A succinct proof does not necessarily make proving or setup inexpensive.
+This table is a rough map. A short Schnorr-type record does not by itself demonstrate succinctness in the SNARK sense for a large general computation. Fiat–Shamir removes interaction with the verifier; by itself, it does not shorten a proof. A succinct proof does not necessarily make proving or setup inexpensive.
 
 The three properties ask different questions:
 
