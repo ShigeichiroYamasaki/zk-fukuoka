@@ -167,7 +167,7 @@ PAGES_BASE_PATH=/zk-fukuoka/ npm run docs:preview
 | soundness error | 健全性誤差 |
 | soundness amplification | 健全性増幅 |
 | soundness | 健全性 |
-| extractor / 抽出器 | 抽出者 |
+| extractor / 抽出者 | 抽出器 |
 | simulator paradigm | シミュレータパラダイム |
 | trusted setup / 信頼設定 | トラステッドセットアップ |
 
