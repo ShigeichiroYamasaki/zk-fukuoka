@@ -40,7 +40,7 @@ First, consider what “not revealing a secret” means. Last time, we stated a 
 
 One might initially think it is enough not to send the witness $w$ to the verifier. That is insufficient, however: the **process** of interaction can itself leak partial information about the witness. Examples include the timing of the prover's responses, statistical biases in those responses, and information accumulated across multiple proofs.
 
-How can we formalize “nothing leaks”? GMR's answer was the **simulator paradigm**.
+How can we formalize “nothing leaks”? Goldwasser, Micali, and Rackoff (abbreviated **GMR**) introduced the **simulator paradigm** in 1985.
 
 ---
 
@@ -170,11 +170,11 @@ The following hypothetical two-bit records illustrate probability distributions;
 
 Under both random variables, each bit considered individually is equally likely to be 0 or 1. But a distinguisher that outputs 1 when the two bits agree has $\Pr[D(X)=1]=1/2$ and $\Pr[D(Y)=1]=1$, a difference of $1/2$. Even when each bit has the same marginal distribution, the **joint distribution of the whole record** differs. If this gap remains as the input grows, computational indistinguishability fails. This is why zero-knowledge compares the entire view.
 
-The indistinguishability condition concerns the distributions of the random variable $X$, representing the real verifier view, and $Y$, representing the simulator output, for the same fixed public input. Restricting a dishonest prover's power for soundness and restricting a distinguisher's power for zero-knowledge are separate axes. Being an argument does not imply computational zero-knowledge; for example, the original Groth16 paper proves perfect zero-knowledge.
+The indistinguishability condition concerns the distributions of the random variable $X$, representing the real verifier view, and $Y$, representing the simulator output, for the same fixed public input. Restricting a dishonest prover's power for soundness and restricting a distinguisher's power for zero-knowledge are separate axes. Being an argument does not imply computational zero-knowledge; for example, the original paper for Groth16, a proof system studied in Session 11, proves perfect zero-knowledge.
 
 **Graph-isomorphism example**
 
-Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
+A **graph isomorphism** is a bijection between the vertices of two graphs that preserves both edges and non-edges. Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
 
 **Follow one round in message order.** (1) The prover randomly relabels the vertices, forms $H$, and sends its edge list. (2) Only after receiving $H$, the verifier flips a fair coin to choose $b=0$ or $b=1$ and asks for a map from $G_b$ to $H$. (3) The prover returns a vertex map $f$. (4) The verifier checks that every vertex is used exactly once and that adjacency is preserved for every vertex pair. It rejects the round if either check fails. The order matters: after sending $H$, the prover does not know which graph the verifier will select, so it cannot prepare its response after seeing the challenge.
 
@@ -445,7 +445,7 @@ The key change is that a general computation does not automatically come with Sc
 
 ### 4.3 Large computations also make verification cost matter {#succinctness-motivation}
 
-If the verifier must check every step from scratch after the prover performs the computation, outsourcing saves little. SNARKs and STARKs therefore also aim for **succinctness**: short proofs and low verification costs relative to the original computation.
+If the verifier must check every step from scratch after the prover performs the computation, outsourcing saves little. Two representative names for proof systems in this area are **zk-SNARK** and **zk-STARK**. SNARK abbreviates “Succinct Non-interactive Arguments of Knowledge,” and STARK abbreviates “Scalable Transparent Arguments of Knowledge”; the prefix zk means zero-knowledge. Both target general computations and aim for efficient proofs or verification. Transparency is also a defining design goal of STARKs: they do not require a secret trusted setup. Sessions 11–13 study their constructions. These systems therefore also aim for **succinctness**: short proofs and low verification costs relative to the original computation.
 
 Zero-knowledge and succinctness are separate properties. A system may hide the witness yet have a large proof or verification cost; a short proof does not by itself hide the witness. Consider separately what can be represented and the cost of proving and verifying it.
 
@@ -461,7 +461,9 @@ The next section organizes these questions along two axes: expressiveness and ef
 Proof systems can first be compared by asking two questions:
 
 - **Expressiveness:** What kinds of relations can be proved, from a specific algebraic relation to a general computation?
-- **Efficiency:** How small can the proof and verifier's workload be relative to the original computation? Prover cost and setup requirements must be checked separately.
+- **Efficiency:** How small can the proof and verifier's workload be relative to the original computation? Prover cost and **setup** (preparing the public parameters a proof system needs) must be checked separately. Whether setup requires trust and whether it is circuit-specific or reusable depends on the system.
+
+The **Fiat–Shamir transform** is a common way to remove interaction from suitable interactive protocols: it derives the verifier's random challenge by hashing the public input and messages sent so far. The prover can then produce one proof that a verifier checks later, without a live exchange (a non-interactive proof). Applying it mechanically does not make every protocol secure; Session 9 discusses the security conditions in detail.
 
 <div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 
