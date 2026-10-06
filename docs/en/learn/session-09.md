@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 9: The Fiat–Shamir transform and the merits and limits of ROM
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Session 9 exercises](../exercises/session-09)
 
@@ -29,6 +30,12 @@ There are three learning objectives:
 2. Understand the idea of security proofs in the Random Oracle Model (ROM).
 3. Recognize the heuristic nature of using ROM for concrete implementations, learn about theoretical counterexamples, and critically evaluate the model's significance and limitations.
 
+
+::: tip Prerequisites and route through this session
+Recall challenges in interactive proofs ([Session 2](./session-02)), rewinding and soundness amplification ([Session 6](./session-06)), and commitments ([Session 8](./session-08)). The [cryptographic security tutorial](./cryptographic-security-tutorial) also reviews randomized adversaries and security experiments relevant to ROM.
+
+The route is: why remove interaction; how Fiat–Shamir derives challenges; how proofs work in the ROM; and what is lost when an ideal oracle is replaced by a concrete hash. Keep the transform separate from the model used to prove its security.
+:::
 ---
 
 ## 1. Why is non-interactivity necessary?
@@ -61,8 +68,7 @@ The prover is not the only party computing this hash. The verifier recomputes th
 
 The prover can choose commitments and inspect their hashes, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
 
-<span id="figure-09-1"></span>
-<span id="caption-09-1"></span>
+<StudyDiagram id="09-1" en />
 
 <div class="captioned-table" id="table-09-2" role="group" aria-labelledby="table-caption-09-2">
 
@@ -99,8 +105,7 @@ To model how responses to inputs are determined, treat the hash as an ideal rand
 - Repeated queries on the same input always receive the same output, ensuring consistency.
 - All algorithms, including attackers, access $H$ only through queries and cannot inspect its internal representation.
 
-<span id="figure-09-2"></span>
-<span id="caption-09-2"></span>
+<StudyDiagram id="09-2" en />
 
 <div class="captioned-table" id="table-09-1" role="group" aria-labelledby="table-caption-09-1">
 
@@ -132,8 +137,7 @@ After proving security in ROM, ask exactly what was proved. The theorem concerns
 
 Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete hash instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
 
-<span id="figure-09-3"></span>
-<span id="caption-09-3"></span>
+<StudyDiagram id="09-3" en />
 
 <div class="captioned-table" id="table-09-3" role="group" aria-labelledby="table-caption-09-3">
 

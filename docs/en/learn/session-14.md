@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 </script>
 
@@ -16,7 +17,7 @@ next:
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 27, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 14 in the syllabus](./#session-14) · [Session 14 exercises](../exercises/session-14)
 
@@ -32,6 +33,12 @@ The three learning objectives are:
 
 We introduce few new concepts. The emphasis is on reconnecting earlier material. We compare Groth16, original KZG-based PLONK, and representative AIR/FRI-based STARKs. Derivatives can have different components and assumptions; a family name alone does not determine its properties.
 
+
+::: tip Prerequisites and route through this session
+Review completeness, soundness and zero-knowledge ([Sessions 1](./session-01) and [2](./session-02)) and the constructions ([Sessions 11](./session-11)–[13](./session-13)). Use the [cryptographic security tutorial](./cryptographic-security-tutorial) to keep properties, adversaries and assumptions distinct.
+
+Compare in this order: what is guaranteed; which tools and assumptions support it; and which costs matter (proof size, verifier, prover or setup). Do not rank systems by a single number without aligning assumptions and workloads.
+:::
 ---
 
 ## 1. Revisiting the properties from Act I
@@ -74,8 +81,7 @@ In Session 2, two accepting Schnorr transcripts sharing the first commitment but
 
 Groth16's generic-group analysis, PLONK's polynomial-commitment construction, and STARK's coding-theoretic construction cannot all be described as generalizations of rewinding or the forking lemma. Identify what is extracted, which access the extractor has, and which assumptions it uses.
 
-<span id="figure-14-1"></span>
-<span id="caption-14-1"></span>
+<StudyDiagram id="14-1" en />
 
 <div class="captioned-table" id="table-14-2" role="group" aria-labelledby="table-caption-14-2">
 
@@ -117,8 +123,7 @@ Now shift from properties to tools. Even the same finite fields and polynomials 
 
 Sharing tools does not make entire constructions equivalent. Groth16 and KZG-based PLONK both use pairings, but Groth16 does not incorporate KZG openings. In a STARK, Merkle trees fix tables while FRI checks low-degree proximity. Read across and down the table to check these different roles.
 
-<span id="figure-14-2"></span>
-<span id="caption-14-2"></span>
+<StudyDiagram id="14-2" en />
 
 <div class="captioned-table" id="table-14-4" role="group" aria-labelledby="table-caption-14-4">
 
@@ -173,8 +178,7 @@ Imagine choosing a scheme for each situation below. Give more than its name: exp
 
 If groups reach different conclusions, compare their premises first. One may prioritize verification cost, another setup or long-term security. Asking which changed condition would change the decision is a practical way to understand the tradeoffs.
 
-<span id="figure-14-3"></span>
-<span id="caption-14-3"></span>
+<StudyDiagram id="14-3" en />
 
 <div class="captioned-table" id="table-14-6" role="group" aria-labelledby="table-caption-14-6">
 

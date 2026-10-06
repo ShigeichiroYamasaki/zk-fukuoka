@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第12回:PLONK
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年9月29日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第12回](./#session-12) · [第12回の演習](../exercises/session-12)
 
@@ -49,6 +50,8 @@ next:
 | [第9回](./session-09#_2-fiat-shamir変換) | Fiat–Shamir，トランスクリプト，ROM | 対話型のランダムチャレンジを非対話で導出 |
 
 </div>
+
+この回の論点は，数学的前提を確認したあと，回路依存の準備を共通化する動機，行ごとのゲート制約，位置を保つコピー制約，効率を調整するカスタムゲートの順に進む．制約式の確認と，値の配線が正しいことの確認は別の検査である．
 
 特に，コピー制約は「値の多重集合が等しい」だけでは足りず，回路が指定した位置の対応を固定して検査する．第3節で位置ラベル，置換，ランダムな β, γ，grand productの順に確認する．
 
@@ -97,8 +100,7 @@ $$F(X)=Z_H(X)T_{\mathrm{gate}}(X)$$
 
 と表せる．実際のプロトコルではコピー制約等も組み合わせ，次数の制限とコミットメントに基づいて多項式関係を検証する．**回路を固定する前処理データと，各証明のウィットネスを分ける**ことが，汎用SRSを使いながら指定の回路を証明するための要点である．[PLONK原論文](https://eprint.iacr.org/2019/953)を参照．
 
-<span id="figure-12-1"></span>
-<span id="caption-12-1"></span>
+<StudyDiagram id="12-1" />
 
 <div class="captioned-table" id="table-12-1" role="group" aria-labelledby="table-caption-12-1">
 
@@ -133,8 +135,7 @@ $$\prod_j\bigl(v_j+\beta\,\mathrm{id}_j+\gamma\bigr)=\prod_j\bigl(v_j+\beta\,\ma
 
 多数の積を扱うため，PLONKはgrand product(累積積)の多項式を用い，隣接行の更新関係と境界条件を検証する．積の終点だけでなく，累積積の更新も正しく制約する必要がある．[原論文のpermutation argument](https://eprint.iacr.org/2019/953)で具体的な構成を確認できる．
 
-<span id="figure-12-2"></span>
-<span id="caption-12-2"></span>
+<StudyDiagram id="12-2" />
 
 <div class="captioned-table" id="table-12-2" role="group" aria-labelledby="table-caption-12-2">
 
@@ -192,8 +193,7 @@ $$\Pr\left[\bigcup_i E_i\right]\le\sum_i\epsilon_i$$
 
 上限を定めた汎用・更新可能SRS
 
-<span id="figure-12-3"></span>
-<span id="caption-12-3"></span>
+<StudyDiagram id="12-3" />
 
 <div class="captioned-table" id="table-12-3" role="group" aria-labelledby="table-caption-12-3">
 

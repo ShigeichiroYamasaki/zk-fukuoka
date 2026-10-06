@@ -10,6 +10,7 @@ next:
 
 <script setup>
 
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 import SchnorrOverview from "../../.vitepress/theme/SchnorrOverview.vue";
 import GraphIsoExample from "../../.vitepress/theme/GraphIsoExample.vue";
 </script>
@@ -241,6 +242,8 @@ If a transcript can be generated without the witness, could a dishonest prover d
 ### 3.1 Why soundness alone is insufficient
 
 **Soundness** asks whether a prover can make a false proposition be accepted. Authentication asks an additional question: is the prover responding now the one who knows the secret? It is not enough that the proposition is true or that someone, somewhere, knows a secret. **Knowledge soundness** addresses this distinction.
+
+<StudyDiagram id="02-3" en />
 
 Consider the graph-isomorphism example. The witness for the public statement that $G_0$ and $G_1$ are isomorphic is an isomorphism $\pi:G_0\to G_1$. Suppose the prover correctly answers both challenges, $b=0$ and $b=1$, for the same committed graph $H$. Write the two responses as $f_0:G_0\to H$ and $f_1:G_1\to H$. Then we can compute
 

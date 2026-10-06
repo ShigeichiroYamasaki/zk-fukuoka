@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 12: PLONK
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 12 in the syllabus](./#session-12) · [Session 12 exercises](../exercises/session-12)
 
@@ -49,6 +50,8 @@ Before following the equations, review the tools in this order. This session com
 | [Session 9](./session-09#_2-the-fiat–shamir-transform) | Fiat–Shamir, transcripts and ROM | Derive non-interactive challenges from the interactive protocol |
 
 </div>
+
+The route is: review the mathematical prerequisites; motivate reusable setup; check gate constraints row by row; enforce copy constraints while preserving positions; and consider custom gates for efficiency. Checking each gate equation and checking that values are wired to the right places are separate tasks.
 
 In particular, copy constraints cannot be checked merely by observing that two value multisets match: the circuit's intended position mapping must be fixed and checked. Section 3 follows the position labels, permutation, random β and γ challenges, and grand product in sequence.
 
@@ -97,8 +100,7 @@ $$F(X)=Z_H(X)T_{\mathrm{gate}}(X)$$
 
 for a quotient polynomial $T_{\mathrm{gate}}(X)$. The full protocol combines this with copy constraints and checks polynomial relations using degree bounds and commitments. **Separating fixed circuit preprocessing from each proof's witness** lets a universal SRS support proofs of a specified circuit. See the [PLONK paper](https://eprint.iacr.org/2019/953).
 
-<span id="figure-12-1"></span>
-<span id="caption-12-1"></span>
+<StudyDiagram id="12-1" en />
 
 <div class="captioned-table" id="table-12-1" role="group" aria-labelledby="table-caption-12-1">
 
@@ -133,8 +135,7 @@ The left side encodes values with their original positions; the right side pairs
 
 PLONK uses a grand-product polynomial to handle the many factors, enforcing adjacent-row updates and boundary conditions. Checking only the final product would not suffice: the accumulation updates must also be constrained. See the [original permutation argument](https://eprint.iacr.org/2019/953) for the construction.
 
-<span id="figure-12-2"></span>
-<span id="caption-12-2"></span>
+<StudyDiagram id="12-2" en />
 
 <div class="captioned-table" id="table-12-2" role="group" aria-labelledby="table-caption-12-2">
 
@@ -192,8 +193,7 @@ Review where circuit-specific information is fixed, which relations are checked,
 
 Universal, updatable SRS with a fixed capacity
 
-<span id="figure-12-3"></span>
-<span id="caption-12-3"></span>
+<StudyDiagram id="12-3" en />
 
 <div class="captioned-table" id="table-12-3" role="group" aria-labelledby="table-caption-12-3">
 

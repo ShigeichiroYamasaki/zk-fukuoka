@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第11回:Groth16
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年9月28日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第11回](./#session-11) · [第11回の演習](../exercises/session-11)
 
@@ -29,6 +30,12 @@ next:
 2. なぜGroth16にトラステッドセットアップ(trusted setup)が必要になるのかを，その構成の必然性として理解する
 3. 第10回の見取り図と比較し，Groth16が共通参照文字列(CRS)モデルで直接非対話型として構成される点を理解する
 
+
+::: tip 前提知識とこの回の論点
+R1CSからQAPへの変換（[第4回](./session-04)），双線形性（[第7回](./session-07)），トラステッドセットアップと拘束性（[第8回](./session-08)）を前提にする．[第7回のペアリング導出](./session-07#groth16-pairing-derivation)を見直すと，検証式の群の型と積の扱いを追いやすい．
+
+論点は，QAPが表す関係→秘密の評価点で積を検査する理由→セットアップ・証明・検証の役割→どの安全性主張がどのモデルに依存するか，の順である．Groth16はペアリングを使うがKZG開示を部品として使わず，CRSのもとで直接非対話型に構成される．
+:::
 ---
 
 ## 1. 出発点の確認:QAPの検証すべき式
@@ -65,8 +72,7 @@ $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
 という形で，指数の**積**を対象群 $G_T$ の要素として扱える．これが第7回の「ペアリングが与える乗法的な検証能力」である．ただし，この性質だけで証明系が完成するわけではなく，QAP・公開入力・ウィットネスの整合性を保証する鍵の構造と，ゼロ知識性のためのランダム化が必要になる．
 
-<span id="figure-11-1"></span>
-<span id="caption-11-1"></span>
+<StudyDiagram id="11-1" />
 
 <div class="captioned-table" id="table-11-2" role="group" aria-labelledby="table-caption-11-2">
 
@@ -112,8 +118,7 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\
 
 証明は**3つの群要素**であり，その要素数は回路サイズやウィットネス長に依存しない．ペアリングの回数も定数で，$e([\alpha]_1,[\beta]_2)$ を事前計算すれば，実行時は3回のペアリングで等式を評価できる．一方，$\mathrm{IC}$ の計算には公開入力数 $\ell$ に比例する群演算が必要なので，**検証全体は公開入力数によらない定数時間ではない**．群と安全性パラメータを固定した場合，公開入力の処理と定数回のペアリングからなる．[原論文の構成と効率の説明](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf)を参照．
 
-<span id="figure-11-2"></span>
-<span id="caption-11-2"></span>
+<StudyDiagram id="11-2" />
 
 <div class="captioned-table" id="table-11-1" role="group" aria-labelledby="table-caption-11-1">
 
@@ -142,8 +147,7 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\
 
 回路を変えると，何を作り直す必要があるだろうか．Groth16では，回路を表すQAPの情報が鍵に入っているため，新しい回路に対応する証明鍵・検証鍵が必要になる．複数回路で共有できる準備段階があっても，回路固有の段階は残る．この運用上の負担を減らすことが，次回のPLONKで汎用SRSを考える動機になる．
 
-<span id="figure-11-3"></span>
-<span id="caption-11-3"></span>
+<StudyDiagram id="11-3" />
 
 <div class="captioned-table" id="table-11-3" role="group" aria-labelledby="table-caption-11-3">
 

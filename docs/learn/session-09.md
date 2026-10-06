@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第9回:Fiat-Shamir変換とROMの功罪
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年9月29日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第9回](./#session-9) · [第9回の演習](../exercises/session-09)
 
@@ -29,6 +30,12 @@ next:
 2. Random Oracle Model(ROM)における安全性証明の考え方を理解する
 3. ROMは明確に定義された理想モデルである一方，具体的なハッシュへの置換はヒューリスティックであり，その一般的な正当化には反例があることを知り，その意義と限界を批判的に評価できるようになる
 
+
+::: tip 前提知識とこの回の論点
+対話型証明でのチャレンジ（[第2回](./session-02)），巻き戻しと健全性増幅（[第6回](./session-06)），コミットメント（[第8回](./session-08)）を思い出す．ROMを読む際は，[暗号学の安全性チュートリアル](./cryptographic-security-tutorial)の確率的な相手・安全性実験の考え方も役立つ．
+
+順序は「対話をなくす必要→Fiat–Shamirがチャレンジを導く方法→ROMでの証明→理想モデルを実ハッシュに置き換える限界」と進む．変換の手順と，その安全性を証明するモデルを混同しない．
+:::
 ---
 
 ## 1. なぜ非対話性が必要か
@@ -61,8 +68,7 @@ $$c = H(\text{コミット}, x)$$
 
 証明者はコミットを選び，ハッシュ値を調べることができる．したがって，「都合のよい値を探すこと自体ができない」という説明は正確ではない．必要なのは，効率的な相手が試行を繰り返しても，不正な証明を作る確率を十分小さく抑えられることである．ハッシュの一方向性だけではこの結論は得られない．次のROMで，問い合わせと成功確率を明示して解析する．
 
-<span id="figure-09-1"></span>
-<span id="caption-09-1"></span>
+<StudyDiagram id="09-1" />
 
 <div class="captioned-table" id="table-09-2" role="group" aria-labelledby="table-caption-09-2">
 
@@ -99,8 +105,7 @@ $$c = H(\text{コミット}, x)$$
 - 同じ入力には常に同じ出力を返す(一貫性)
 - 攻撃者を含むすべてのアルゴリズムは，$H$ の中身を直接見ることはできず，問い合わせを通じてのみアクセスできる
 
-<span id="figure-09-2"></span>
-<span id="caption-09-2"></span>
+<StudyDiagram id="09-2" />
 
 <div class="captioned-table" id="table-09-1" role="group" aria-labelledby="table-caption-09-1">
 
@@ -132,8 +137,7 @@ ROMで安全性を示したとき，何について証明できたのかを確�
 
 Canetti・Goldreich・Haleviの結果は，この区別が言葉だけの問題ではないことを示す．ROMでは安全でも，具体的なハッシュ関数で実体化すると安全でなくなる人工的な構成がある．2004年のJACM論文は，このような反例を扱っている．これは実用方式への攻撃を一括して示す結果ではなく，ROMから実装への保証を一般には導けないという結果である．
 
-<span id="figure-09-3"></span>
-<span id="caption-09-3"></span>
+<StudyDiagram id="09-3" />
 
 <div class="captioned-table" id="table-09-3" role="group" aria-labelledby="table-caption-09-3">
 

@@ -44,7 +44,7 @@ export const diagrams = {
       "As in the text, n = |x|. Probabilities are over record-generation randomness, plus D’s randomness when distinguishing. Compare the entire view, not only acceptance. Individual executions need not produce equal records."
     ]
   },
-  "02-4": {
+  "02-3": {
     "section": "3.3",
     "type": "compare",
     "title": [

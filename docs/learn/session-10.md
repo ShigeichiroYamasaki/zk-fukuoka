@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第10回:PCP定理とIOPの枠組み — 計算量理論的総括
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年9月29日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第10回](./#session-10) · [第10回の演習](../exercises/session-10)
 
@@ -29,6 +30,12 @@ next:
 2. 近似困難性研究とのつながりを通じて，PCP定理が計算量理論において独立に重要な結果であることを把握する
 3. IOPの枠組みを理解し，これまで学んだ個々の技法(算術化，FRI，コミットメント)が，この枠組みの中でどう位置づけられるかを整理する
 
+
+::: tip 前提知識とこの回の論点
+NPと言明・ウィットネス（[第1回](./session-01)），ランダムな検査（[第1回](./session-01)），多項式恒等式検査（[第3回](./session-03)）を前提にする．PCP記法の乱数量と問い合わせ量は，[確率論チュートリアル](./probability-tutorial)の確率的検査の見方と結び付けて読む．
+
+まずPCP定理で「長い証明から少数しか読まない」保証を確認し，近似困難性との接点を見てから，PCP・IP・IOPのアクセス方法を区別する．最後にIOPを，幕IIIのプロトコルを読むための設計図として使う．
+:::
 ---
 
 ::: tip この回の数学的な読み方
@@ -67,8 +74,7 @@ PCP定理の記法では，$n$ は入力長，$O(\log n)$ は乱数ビット数�
 
 PCP検証者の局所的な検査を，制約として表す
 
-<span id="figure-10-2"></span>
-<span id="caption-10-2"></span>
+<StudyDiagram id="10-2" />
 
 <div class="captioned-table" id="table-10-2" role="group" aria-labelledby="table-caption-10-2">
 
@@ -105,8 +111,7 @@ PCP検証者の局所的な検査を，制約として表す
 
 という位置づけで整理すると理解しやすい．
 
-<span id="figure-10-1"></span>
-<span id="caption-10-1"></span>
+<StudyDiagram id="10-1" />
 
 <div class="captioned-table" id="table-10-1" role="group" aria-labelledby="table-caption-10-1">
 
@@ -133,8 +138,7 @@ PCP検証者の局所的な検査を，制約として表す
 
 このように，多項式IOPを設計し，コミットメントで必要なアクセスを実装し，Fiat-Shamirで非対話化する，という組み立て方がある．ただし，任意のIOPを任意のコミットメントと組み合わせればよいわけではない．アクセスの種類や安全性条件を合わせる必要がある．また，第11回のGroth16はこの手順をそのまま使う方式ではなく，CRSモデルで直接構成される．見取り図の共通点と適用範囲を分けて使おう．
 
-<span id="figure-10-3"></span>
-<span id="caption-10-3"></span>
+<StudyDiagram id="10-3" />
 
 <div class="captioned-table" id="table-10-3" role="group" aria-labelledby="table-caption-10-3">
 

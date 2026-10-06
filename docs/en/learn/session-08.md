@@ -17,7 +17,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 8 in the syllabus](./#session-8) · [Session 8 exercises](../exercises/session-08)
 
@@ -31,6 +31,12 @@ There are three learning objectives:
 2. Understand the KZG construction and how its security relates to pairings and the q-SDH assumption.
 3. Understand the construction of FRI-based commitments and how their security relates to low-degree testing from Session 6.
 
+
+::: tip Prerequisites and route through this session
+Review polynomial evaluation and roots in [Session 3](./session-03), pairings in [Session 7](./session-07), and the distinction between binding and hiding in the [cryptographic security tutorial](./cryptographic-security-tutorial).
+
+First identify what is fixed and what is later opened. Then follow KZG and FRI-based constructions, and compare their security bases and proof sizes. They serve a similar purpose but use different assumptions and opening mechanisms.
+:::
 ---
 
 ## 1. General principles of cryptographic commitment schemes
@@ -62,8 +68,7 @@ $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
 This equation describes checking the proposition $f(x)=y$ about a committed polynomial using a proof $\pi$. The goal is to authenticate a needed evaluation without resending the entire polynomial. It helps implement Session 3’s requirement to fix the arithmetization polynomials before selecting the test point.
 
-<span id="figure-08-1"></span>
-<span id="caption-08-1"></span>
+<StudyDiagram id="08-1" en />
 
 <div class="captioned-table" id="table-08-3" role="group" aria-labelledby="table-caption-08-3">
 
@@ -108,8 +113,7 @@ $$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
 Write the preceding generator $g$ as $g_1\in G_1$ and include $g_2,g_2^\tau\in G_2$ in the verifier parameters. Reading the equation in the exponent gives $f(\tau)-y=q(\tau)(\tau-x)$. Session 7’s pairing handles this product relation without exposing the secret point.
 
-<span id="figure-08-2"></span>
-<span id="caption-08-2"></span>
+<StudyDiagram id="08-2" en />
 
 <div class="captioned-table" id="table-08-4" role="group" aria-labelledby="table-caption-08-4">
 

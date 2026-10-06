@@ -9,6 +9,7 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 </script>
 
@@ -16,7 +17,7 @@ next:
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年10月04日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第14回](./#session-14) · [第14回の演習](../exercises/session-14)
 
@@ -32,6 +33,12 @@ next:
 
 新しい概念はほとんど導入せず，これまでの13回の内容を再構成し，つなぎ直すことに主眼を置く回である．比較対象はGroth16，原論文のKZG型PLONK，代表的なAIR・FRI型STARKとする．派生方式では構成や前提が変わるため，方式名だけで性質を決め付けない．
 
+
+::: tip 前提知識とこの回の論点
+完全性・健全性・ゼロ知識性（[第1回](./session-01)，[第2回](./session-02)）と，各プロトコルの構成（[第11回](./session-11)〜[第13回](./session-13)）を前提にする．[暗号学の安全性チュートリアル](./cryptographic-security-tutorial)も参照し，性質・攻撃者・仮定を分けて読む．
+
+比較は「何を保証するか」→「どの道具と仮定が保証を支えるか」→「証明サイズ・検証者・証明者・セットアップのどれを重視するか」の順に進む．数値だけで方式を順位付けせず，前提と対象の計算を揃えて判断する．
+:::
 ---
 
 ## 1. 幕Iの性質から振り返る
@@ -74,8 +81,7 @@ next:
 
 Groth16の汎用群モデルでの解析，PLONKの多項式コミットメントを用いる構成，STARKの符号理論的な構成を，すべてrewindingやforking lemmaの一般化として説明することはできない．知識の健全性を読む際は，何が抽出されるか，抽出器にどのアクセスが許されるか，どの仮定を使うかを区別する．
 
-<span id="figure-14-1"></span>
-<span id="caption-14-1"></span>
+<StudyDiagram id="14-1" />
 
 <div class="captioned-table" id="table-14-2" role="group" aria-labelledby="table-caption-14-2">
 
@@ -117,8 +123,7 @@ Groth16の汎用群モデルでの解析，PLONKの多項式コミットメン�
 
 共通の道具があっても，構成全体が同じとは限らない．Groth16とKZG型PLONKはペアリングを共有するが，前者にKZGの開示証明を組み込んでいるわけではない．STARKでは，表を固定するMerkle木と，低次数近接性を調べるFRIが別の仕事をしている．表の横方向と縦方向を往復して，この役割の違いを確認しよう．
 
-<span id="figure-14-2"></span>
-<span id="caption-14-2"></span>
+<StudyDiagram id="14-2" />
 
 <div class="captioned-table" id="table-14-4" role="group" aria-labelledby="table-caption-14-4">
 
@@ -173,8 +178,7 @@ STARKのコストはFRIの段階数だけでは決まらず，問い合わせ回
 
 グループで結論が違ったら，まず前提を比べてみよう．あるグループは検証費用を，別のグループはセットアップや長期安全性を重視しているかもしれない．どの条件を変えると結論が変わるかを確認することが，トレードオフを理解する練習になる．
 
-<span id="figure-14-3"></span>
-<span id="caption-14-3"></span>
+<StudyDiagram id="14-3" />
 
 <div class="captioned-table" id="table-14-6" role="group" aria-labelledby="table-caption-14-6">
 

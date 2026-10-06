@@ -30,7 +30,12 @@ for(const [id,d] of Object.entries(diagrams)){
  for(const field of ['title','note'])assert.ok(d[field].length===2&&d[field].every(s=>typeof s==='string'&&s.length));
  for(const locale of ['','en/']){
   const page=readFileSync(new URL(`../docs/${locale}learn/session-${id.slice(0,2)}.md`,import.meta.url),'utf8');
-  const marker = ['scatter','merkle'].includes(d.type) ? `<StudyDiagram id="${id}"` : `<span id="figure-${id}">`;
+  const session = Number(id.slice(0,2));
+  const marker = (session >= 8 && session <= 15) || ['02-3'].includes(id) || ['scatter','merkle'].includes(d.type)
+   ? `<StudyDiagram id="${id}"`
+   : id === '02-1' ? '<GraphIsoExample'
+   : id === '02-2' ? '<SchnorrOverview'
+   : `<span id="figure-${id}">`;
   assert.equal(page.split(marker).length-1,1,`${locale}${id}`);
  }
  if(d.type==='matrix')for(const row of d.rows)assert.equal(row.length,d.headers.length,id);

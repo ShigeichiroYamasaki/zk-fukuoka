@@ -17,7 +17,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年9月29日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第8回](./#session-8) · [第8回の演習](../exercises/session-08)
 
@@ -31,6 +31,12 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 2. KZGコミットメントの構成と，その安全性がペアリング・q-SDH仮定にどう対応するかを理解する
 3. FRIベースのコミットメントの構成と，その安全性が第6回のLow-Degree Testingにどう対応するかを理解する
 
+
+::: tip 前提知識とこの回の論点
+多項式の評価と根（[第3回](./session-03)），ペアリング（[第7回](./session-07)），拘束性・隠蔽性という安全性の区別（[暗号学の安全性チュートリアル](./cryptographic-security-tutorial)）を前提にする．
+
+まず「何を固定し，後で何を開示するか」を定め，次にKZGとFRIベースの構成を追い，最後に安全性の根拠と証明サイズを比べる．二つの方式は同じ目的を持つが，使う仮定と開示の仕組みが異なる．
+:::
 ---
 
 ## 1. 暗号学的コミットメントスキームの一般論
@@ -62,8 +68,7 @@ $$\mathrm{Eval}(c, x, y, \pi) \to \{0, 1\}$$
 
 この式は，コミット済みの多項式 $f$ について，命題 $f(x)=y$ を証明 $\pi$ で検査する手続きを表す．多項式全体を送り直さずに，必要な点の値を確かめられることが目的である．算術化で作った多項式を先に固定し，その後で検査点を選ぶ，という第3回の条件を実装する道具になる．
 
-<span id="figure-08-1"></span>
-<span id="caption-08-1"></span>
+<StudyDiagram id="08-1" />
 
 <div class="captioned-table" id="table-08-3" role="group" aria-labelledby="table-caption-08-3">
 
@@ -108,8 +113,7 @@ $$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
 ここでは前節の $g$ を $g_1\in G_1$ と書き直し，検証用SRSに $g_2,g_2^\tau\in G_2$ も含める．式を指数の関係として読むと，$f(\tau)-y=q(\tau)(\tau-x)$ を確認している．秘密点を公開せずに積の関係を扱うために，第7回のペアリングを使っているのである．
 
-<span id="figure-08-2"></span>
-<span id="caption-08-2"></span>
+<StudyDiagram id="08-2" />
 
 <div class="captioned-table" id="table-08-4" role="group" aria-labelledby="table-caption-08-4">
 

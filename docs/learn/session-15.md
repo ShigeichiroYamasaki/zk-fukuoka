@@ -7,6 +7,7 @@ next: false
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 </script>
 
@@ -14,7 +15,7 @@ next: false
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年9月29日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第15回](./#session-15) · [第15回の演習](../exercises/session-15)
 
@@ -28,6 +29,12 @@ next: false
 2. Folding schemes(Nova等)が，再帰的証明のどのような実務上の課題を解決しているかを理解する
 3. GKR/sumcheckベースの方式が，これまで学んだIOPの枠組み(第10回)とどう関係し，証明者コストを含むどの指標を改善しうるかを，方式ごとの前提とともに理解する
 
+
+::: tip 前提知識とこの回の論点
+証明の検証を計算として扱う算術化（[第4回](./session-04)），IOPとsumcheck（[第10回](./session-10)），各方式の評価軸（[第14回](./session-14)）を前提にする．foldingとFRIはどちらも段階的な縮約を行うが，縮約する対象も安全性の根拠も異なる．
+
+再帰的証明が増やす能力→foldingが扱う累積関係→GKR/sumcheckによる検査→Ethereumの応用例と研究課題の順に読む．各方式が証明者・検証者のどのコストを減らし，何を別途仮定するかを意識しよう．
+:::
 ---
 
 ## 1. 再帰的証明(Recursive SNARKs)
@@ -48,8 +55,7 @@ next: false
 
 この問題に取り組む道具の一つが**楕円曲線のサイクル**である．2曲線のサイクルでは，一方の曲線の基礎体が他方のスカラー体に対応し，その逆も成り立つ．この対応は群演算を回路で扱う際に有用で，ペアリングを使わない再帰でも利用される．「ペアリング演算を効率化する曲線ペア」だけを意味せず，すべての再帰的構成が曲線サイクルを必要とするわけでもない．[Nova原論文](https://eprint.iacr.org/2021/370)も参照する．
 
-<span id="figure-15-1"></span>
-<span id="caption-15-1"></span>
+<StudyDiagram id="15-1" />
 
 <div class="captioned-table" id="table-15-3" role="group" aria-labelledby="table-caption-15-3">
 
@@ -83,8 +89,7 @@ folding単体で簡潔なゼロ知識証明が完成するわけではない．�
 
 第6回のFRIも「折り畳み」という操作を使うが，FRIは低次数近接性を検査するために多項式の次数を縮小し，Novaは制約充足のインスタンスを集約する．段階的な処理という直感は共通していても，同じプロトコルや同じ健全性証明を使うという意味ではない．
 
-<span id="figure-15-2"></span>
-<span id="caption-15-2"></span>
+<StudyDiagram id="15-2" />
 
 <div class="captioned-table" id="table-15-4" role="group" aria-labelledby="table-caption-15-4">
 
@@ -116,8 +121,7 @@ $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
 という総和の値を，検証者が全項を計算することなく，対話的に(各変数を1つずつ確定させていく形で)検証できるプロトコルである．各変数の次数上限を定め，各ラウンドの一変数多項式の次数と和の整合性を検査する．最後に残るランダム点での $g$ の評価も，検証者自身の計算や別の適切な検証手段で確認する必要がある．この最終確認なしに，総和の正しさは保証できない．SumcheckはIP=PSPACE定理(第1回)の証明技法の中核でもある．
 
-<span id="figure-15-3"></span>
-<span id="caption-15-3"></span>
+<StudyDiagram id="15-3" />
 
 <div class="captioned-table" id="table-15-5" role="group" aria-labelledby="table-caption-15-5">
 
@@ -188,8 +192,7 @@ GKRは，回路の出力についての命題を，前の層の値について�
 
 2026年5月14日のEF記事はHegotáへの採用を提案しているが，提案の存在をメインネットでの有効化済みという意味に読み替えない．[Hegotáに向けた提案記事](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
 
-<span id="figure-15-4"></span>
-<span id="caption-15-4"></span>
+<StudyDiagram id="15-4" />
 
 <div class="captioned-table" id="table-15-6" role="group" aria-labelledby="table-caption-15-6">
 

@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 10: The PCP theorem and the IOP framework — A complexity-theoretic synthesis
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 10 in the syllabus](./#session-10) · [Session 10 exercises](../exercises/session-10)
 
@@ -29,6 +30,12 @@ There are three learning objectives:
 2. Understand its independent importance in complexity theory through its connection to hardness of approximation.
 3. Understand the IOP framework and organize the techniques learned so far within it.
 
+
+::: tip Prerequisites and route through this session
+Review NP, propositions and witnesses ([Session 1](./session-01)), randomized checking ([Session 1](./session-01)), and polynomial identity testing ([Session 3](./session-03)). Read the randomness and query bounds in PCP notation as resource counts for a probabilistic verifier; review the [probability tutorial](./probability-tutorial) if needed.
+
+First use the PCP theorem to understand how a long proof can be checked with few queries, then see its connection to hardness of approximation, and distinguish the access models of PCP, IP and IOP. Finally use IOP as a map for reading the protocols in Act III.
+:::
 ---
 
 ::: tip How to read the mathematics in this session
@@ -67,8 +74,7 @@ Intuitively, constructions used in the theorem can be turned into reductions sho
 
 Represent a PCP verifier’s local tests as constraints
 
-<span id="figure-10-2"></span>
-<span id="caption-10-2"></span>
+<StudyDiagram id="10-2" en />
 
 <div class="captioned-table" id="table-10-2" role="group" aria-labelledby="table-caption-10-2">
 
@@ -105,8 +111,7 @@ A useful comparison is:
 - IP: Multiple rounds of interaction, with messages read in full.
 - IOP: Multiple rounds of interaction, with oracle access to prover messages.
 
-<span id="figure-10-1"></span>
-<span id="caption-10-1"></span>
+<StudyDiagram id="10-1" en />
 
 <div class="captioned-table" id="table-10-1" role="group" aria-labelledby="table-caption-10-1">
 
@@ -133,8 +138,7 @@ For each tool, identify what it represents, what it fixes, and what it checks. T
 
 One approach designs a polynomial IOP, implements the required access using commitments, and applies Fiat–Shamir. This does not allow arbitrary IOPs and commitments to be combined without checking access types and security conditions. Groth16 in Session 11 is instead constructed directly in the CRS model. Use the map while respecting its scope.
 
-<span id="figure-10-3"></span>
-<span id="caption-10-3"></span>
+<StudyDiagram id="10-3" en />
 
 <div class="captioned-table" id="table-10-3" role="group" aria-labelledby="table-caption-10-3">
 

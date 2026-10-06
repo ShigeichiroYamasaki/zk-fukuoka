@@ -7,6 +7,7 @@ next: false
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 </script>
 
@@ -14,7 +15,7 @@ next: false
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 15 in the syllabus](./#session-15) · [Session 15 exercises](../exercises/session-15)
 
@@ -28,6 +29,12 @@ The three learning objectives are:
 2. Understand which practical problems of recursive proofs are addressed by folding schemes such as Nova.
 3. Understand how GKR/sumcheck-based approaches relate to the IOP framework from Session 10 and which metrics they may improve, subject to the assumptions of each construction.
 
+
+::: tip Prerequisites and route through this session
+Review arithmetization as a way to represent verification as computation ([Session 4](./session-04)), IOPs and sumcheck ([Session 10](./session-10)), and the evaluation criteria ([Session 14](./session-14)). Folding and FRI both reduce objects step by step, but they reduce different objects and rely on different security arguments.
+
+Read in this order: the new capability of recursive proofs; the accumulated relations handled by folding; checks based on GKR/sumcheck; and Ethereum applications and open research questions. Track which prover or verifier costs each approach reduces and what it assumes separately.
+:::
 ---
 
 ## 1. Recursive proofs (recursive SNARKs)
@@ -48,8 +55,7 @@ A verifier that is fast on an ordinary machine may still be expensive inside an 
 
 One useful tool is an **elliptic-curve cycle**. In a two-curve cycle, one curve's base field matches the other's scalar field, and vice versa. This helps represent group operations in circuits, including recursion without pairings. A cycle is not defined merely as a pair that makes pairing operations efficient, and not every recursive construction requires one. See the [Nova paper](https://eprint.iacr.org/2021/370).
 
-<span id="figure-15-1"></span>
-<span id="caption-15-1"></span>
+<StudyDiagram id="15-1" en />
 
 <div class="captioned-table" id="table-15-3" role="group" aria-labelledby="table-caption-15-3">
 
@@ -83,8 +89,7 @@ Folding alone does not produce a complete succinct zero-knowledge proof. Disting
 
 FRI from Session 6 also uses folding, but reduces polynomial degree for proximity testing; Nova aggregates constraint-satisfaction instances. The incremental-processing analogy does not make them the same protocol or give them the same soundness proof.
 
-<span id="figure-15-2"></span>
-<span id="caption-15-2"></span>
+<StudyDiagram id="15-2" en />
 
 <div class="captioned-table" id="table-15-4" role="group" aria-labelledby="table-caption-15-4">
 
@@ -116,8 +121,7 @@ $$\sum_{x_1, \dots, x_n \in \{0,1\}} g(x_1, \dots, x_n)$$
 
 interactively, fixing one variable at a time, without the verifier evaluating every summand. Each variable needs a degree bound, and the verifier checks degrees and sum consistency round by round. The final random-point evaluation of $g$ must also be verified, either directly or through another appropriate mechanism; without that check, the proposition that this is the correct sum is not established. Sumcheck is also central to IP = PSPACE from Session 1.
 
-<span id="figure-15-3"></span>
-<span id="caption-15-3"></span>
+<StudyDiagram id="15-3" en />
 
 <div class="captioned-table" id="table-15-5" role="group" aria-labelledby="table-caption-15-5">
 
@@ -188,8 +192,7 @@ Use the table as a set of questions for evaluating new schemes. Lower prover cos
 
 EF's May 14, 2026 article proposes inclusion in Hegotá; a proposal does not establish mainnet activation. [Hegotá proposal article](https://zkevm.ethereum.foundation/blog/eip-8025-optional-execution-proofs-hegota)
 
-<span id="figure-15-4"></span>
-<span id="caption-15-4"></span>
+<StudyDiagram id="15-4" en />
 
 <div class="captioned-table" id="table-15-6" role="group" aria-labelledby="table-caption-15-6">
 

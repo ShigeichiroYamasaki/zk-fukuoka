@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 11: Groth16
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 27, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 11 in the syllabus](./#session-11) · [Session 11 exercises](../exercises/session-11)
 
@@ -29,6 +30,12 @@ The three learning objectives are:
 2. Understand why trusted setup is necessary in Groth16 as a consequence of its construction.
 3. Compare Groth16 with the map from Session 10 and understand its direct non-interactive construction in the common reference string (CRS) model.
 
+
+::: tip Prerequisites and route through this session
+Review the R1CS-to-QAP translation ([Session 4](./session-04)), bilinearity ([Session 7](./session-07)), and trusted setup and binding ([Session 8](./session-08)). The [pairing derivation in Session 7](./session-07#groth16-pairing-derivation) helps track group types and products in the verification equation.
+
+The route is: the relation expressed by the QAP; why a product must be checked at a secret evaluation point; the roles of setup, proving and verification; and which security claims rely on which models. Groth16 uses pairings but does not use KZG openings as a component; it is constructed directly as a non-interactive system in the CRS model.
+:::
 ---
 
 ## 1. Revisiting the starting point: the QAP equation
@@ -65,8 +72,7 @@ $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
 This represents a **product** of exponents in the target group $G_T$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
 
-<span id="figure-11-1"></span>
-<span id="caption-11-1"></span>
+<StudyDiagram id="11-1" en />
 
 <div class="captioned-table" id="table-11-2" role="group" aria-labelledby="table-caption-11-2">
 
@@ -112,8 +118,7 @@ The elements $[\alpha]_1,[\beta]_2,[\gamma]_2,[\delta]_2$ in this equation are p
 
 The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]_1,[\beta]_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
 
-<span id="figure-11-2"></span>
-<span id="caption-11-2"></span>
+<StudyDiagram id="11-2" en />
 
 <div class="captioned-table" id="table-11-1" role="group" aria-labelledby="table-caption-11-1">
 
@@ -142,8 +147,7 @@ The construction depends on allowing use of public group elements while keeping 
 
 What must change when the circuit changes? Groth16’s keys contain information about its QAP, so a new circuit requires corresponding proving and verification keys. Shared preparation stages can exist, but a circuit-specific stage remains. Reducing that operational burden motivates the universal SRS studied with PLONK next time.
 
-<span id="figure-11-3"></span>
-<span id="caption-11-3"></span>
+<StudyDiagram id="11-3" en />
 
 <div class="captioned-table" id="table-11-3" role="group" aria-labelledby="table-caption-11-3">
 

@@ -10,6 +10,7 @@ next:
 
 <script setup>
 
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 import SchnorrOverview from "../.vitepress/theme/SchnorrOverview.vue";
 import GraphIsoExample from "../.vitepress/theme/GraphIsoExample.vue";
 </script>
@@ -18,7 +19,7 @@ import GraphIsoExample from "../.vitepress/theme/GraphIsoExample.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月05日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第2回](./#session-2) · [第2回の演習](../exercises/session-02)
 
@@ -318,6 +319,8 @@ Schnorr型プロトコルの，正直な検証者のシミュレーションで�
 ### 3.1 なぜ健全性だけでは足りないか
 
 **健全性**が問うのは，「偽の命題を証明者が受理させられないか」である．しかし認証では，命題が真であるだけでは足りない．「秘密を知る人がどこかにいる」だけでなく，「いま応答している証明者が秘密を知っている」ことを確かめたい．この違いを扱うのが**知識の健全性**である．
+
+<StudyDiagram id="02-3" />
 
 グラフ同型性の例で考えよう．公開グラフ $G_0,G_1$ が同型であるという命題のウィットネスは，同型写像 $\pi:G_0\to G_1$ である．
 

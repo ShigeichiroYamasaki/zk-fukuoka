@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 13: STARK
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: September 27, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 13 in the syllabus](./#session-13) · [Session 13 exercises](../exercises/session-13)
 
@@ -29,6 +30,12 @@ The three learning objectives are:
 2. Understand the overall STARK construction using the three-stage map from Session 10.
 3. Evaluate tradeoffs between transparency and other properties: proof size, verification cost, and post-quantum security.
 
+
+::: tip Prerequisites and route through this session
+Review execution traces and AIR ([Session 4](./session-04)), Reed–Solomon codes ([Session 5](./session-05)), FRI ([Session 6](./session-06)), and commitments and Fiat–Shamir ([Sessions 8](./session-08) and [9](./session-09)). Check the captions and sources to distinguish the proof-size model from measured implementation data.
+
+First identify the secret setup that transparency aims to avoid. Then distinguish the separate roles of AIR, FRI and Merkle trees, and follow the STARK’s order of operations. Finally compare proof size, verifier work, prover cost and long-term security, separating model values from measurements of a particular implementation.
+:::
 ---
 
 ## 1. Transparency as a design goal
@@ -43,8 +50,7 @@ Trusted setup retains public information while requiring secret erasure. MPC dis
 
 We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does hash collision resistance alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
 
-<span id="figure-13-1"></span>
-<span id="caption-13-1"></span>
+<StudyDiagram id="13-1" en />
 
 <div class="captioned-table" id="table-13-2" role="group" aria-labelledby="table-caption-13-2">
 
@@ -95,8 +101,7 @@ Connect the tools into a proving procedure. Pay particular attention to which ta
 
 For zero knowledge, random masking compatible with degree bounds and constraints must also prevent the opened trace evaluations and other messages from leaking witness information. Transparency and FRI do not automatically provide zero knowledge.
 
-<span id="figure-13-2"></span>
-<span id="caption-13-2"></span>
+<StudyDiagram id="13-2" en />
 
 <div class="captioned-table" id="table-13-3" role="group" aria-labelledby="table-caption-13-3">
 
@@ -192,8 +197,7 @@ Align the fixed parameters before comparing systems. With groups and security pa
 
 The FRI-based STARKs studied here avoid trusted setup while incurring communication and verification costs for evaluations and authentication paths. **Compare setup, proof size, and verification cost for specified constructions and conditions.** This is not an impossibility theorem saying that transparent proofs must be larger, and Groth16 should not be classified as a KZG-based construction.
 
-<span id="figure-13-3"></span>
-<span id="caption-13-3"></span>
+<StudyDiagram id="13-3" en />
 
 <div class="captioned-table" id="table-13-1" role="group" aria-labelledby="table-caption-13-1">
 

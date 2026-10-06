@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # 第13回:STARK
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年9月28日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第13回](./#session-13) · [第13回の演習](../exercises/session-13)
 
@@ -29,6 +30,12 @@ Groth16とKZG型PLONKでは，セットアップの秘密を適切に扱うこ�
 2. STARKの全体構成を，第10回の3段階の見取り図に沿って理解する
 3. 透明性とその他の性質(証明サイズ，検証コスト，ポスト量子安全性)とのトレードオフを評価できるようになる
 
+
+::: tip 前提知識とこの回の論点
+計算トレースとAIR（[第4回](./session-04)），Reed–Solomon符号（[第5回](./session-05)），FRI（[第6回](./session-06)），コミットメントとFiat–Shamir（[第8回](./session-08)，[第9回](./session-09)）を前提にする．証明サイズのモデルと実測値の違いは本文の各キャプションと出典を確認する．
+
+まず透明性が避けようとする秘密のセットアップを特定し，次にAIR・FRI・Merkle木が担う別々の検査を見分け，STARKの処理順を追う．最後に証明サイズ，検証量，証明者コスト，長期安全性を，モデル値と特定実装の測定値を区別して比較する．
+:::
 ---
 
 ## 1. 透明性(Transparency)という設計目標
@@ -43,8 +50,7 @@ Groth16とKZG型PLONKでは，セットアップの秘密を適切に扱うこ�
 
 本講義では，AIR・FRI・Merkle木を組み合わせる代表的なSTARKを扱う．Merkle木は評価値の表への拘束性を，FRIは低次数多項式への近接性の検査を担う．この構成はKZGのような秘密のトラップドアを必要としない．ただし，透明性だけからAIR・FRIが唯一の選択として決まるわけではない．また，証明系全体の安全性はハッシュの衝突耐性だけでは説明できず，4.2節の条件も必要になる．
 
-<span id="figure-13-1"></span>
-<span id="caption-13-1"></span>
+<StudyDiagram id="13-1" />
 
 <div class="captioned-table" id="table-13-2" role="group" aria-labelledby="table-caption-13-2">
 
@@ -95,8 +101,7 @@ AIR・FRI型STARKの代表例．透明性だけからAIRやFRIが唯一の選択
 
 ゼロ知識性を持たせる構成では，開示するトレース評価値等からウィットネスの情報が漏れないよう，次数上限や制約と整合するランダムなマスキングも必要になる．透明性やFRIの使用だけで，ゼロ知識性が自動的に得られるわけではない．
 
-<span id="figure-13-2"></span>
-<span id="caption-13-2"></span>
+<StudyDiagram id="13-2" />
 
 <div class="captioned-table" id="table-13-3" role="group" aria-labelledby="table-caption-13-3">
 
@@ -192,8 +197,7 @@ $$S \approx q(2wB+cE+2rE)+qH\left(3\log_2N+\sum_{j=1}^{r}(\log_2N-j)\right)+TE+(
 
 一方，ここで扱うFRI型STARKはトラステッドセットアップを不要にする代わりに，評価値や認証経路の通信・検証を必要とする．**比較すべきなのは，特定の構成と条件におけるセットアップ・証明サイズ・検証コストの組合せ**である．「透明な証明は必ず大きくなる」という不可能性定理ではなく，Groth16をKZG系と分類することも正確ではない．
 
-<span id="figure-13-3"></span>
-<span id="caption-13-3"></span>
+<StudyDiagram id="13-3" />
 
 <div class="captioned-table" id="table-13-1" role="group" aria-labelledby="table-caption-13-1">
 
