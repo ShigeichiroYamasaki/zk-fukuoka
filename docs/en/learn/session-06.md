@@ -16,7 +16,7 @@ import { withBase } from "vitepress";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Session 6 exercises](../exercises/session-06)
 
@@ -29,6 +29,26 @@ There are three learning objectives:
 1. Understand the low-degree testing problem and why naive approaches struggle to achieve efficiency.
 2. Understand FRI's recursive folding structure and how it enables efficient low-degree testing.
 3. Understand the general principles of soundness amplification and the ideas behind rewinding and the forking lemma as tools for cryptographic soundness arguments.
+
+::: tip Prerequisites
+You will use Session 5’s Reed–Solomon codes, relative distance, and distinction between unique and list decoding. Following the folding equations also uses Session 3’s finite-field arithmetic and even/odd polynomial decomposition. For the final section, recall special soundness and witness extraction in Session 2’s Schnorr protocol. For review, see the [finite-fields and polynomials tutorial](./finite-fields-tutorial) and the [coding-theory tutorial](./coding-theory-tutorial).
+:::
+
+### Three separate questions in this session
+
+<div class="captioned-table" id="table-06-7" role="group" aria-labelledby="table-caption-06-7">
+
+<p class="table-caption" id="table-caption-06-7"><strong>Table 06-7：Questions answered by FRI, soundness amplification, and rewinding</strong></p>
+
+| Question | Tool | Role |
+| --- | --- | --- |
+| How can a few values test proximity to a low-degree polynomial? | Low-degree testing and FRI | Check proximity and consistency between folds |
+| How can we lower the probability of accepting a false proof? | Soundness amplification | Analyze repetition conditions and false-acceptance probability |
+| How can a security proof recover a witness? | Rewinding and the forking lemma | Compare executions of the same adversary |
+
+</div>
+
+These ideas are related but are not the same operation. FRI is a low-degree proximity-testing protocol; soundness amplification is a design and analysis method for reducing false acceptance; rewinding is a technique used inside security proofs, for example to establish knowledge extraction.
 
 ---
 

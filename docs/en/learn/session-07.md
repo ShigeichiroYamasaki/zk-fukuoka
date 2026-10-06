@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Session 7 exercises](../exercises/session-07)
 
@@ -31,6 +31,27 @@ There are three learning objectives:
 3. Understand the types and relationships of hardness assumptions, including discrete logarithms and q-SDH, and the basic structure of security arguments based on reductions.
 
 Session 2 used algebraic properties to establish Schnorr special soundness and honest-verifier simulation. Hardness of recovering the secret exponent from the public key relies on discrete logarithms. Distinguish these roles. Pairings extend the available algebraic tools toward succinct systems such as Groth16.
+
+::: tip Prerequisites
+This session uses Session 3’s finite fields and multiplicative groups, the discrete-log relation and witness from Session 2’s Schnorr protocol, and the cryptographic idea of proving security under assumptions. Familiarity with point addition, scalar multiplication, group order, and generators is enough; elliptic-curve number theory and pairing algorithms are not prerequisites. Review the [finite-fields and polynomials](./finite-fields-tutorial), [vectors and matrices](./linear-algebra-tutorial), and [cryptographic security](./cryptographic-security-tutorial) tutorials as needed.
+:::
+
+### Roadmap for this session
+
+<div class="captioned-table" id="table-07-4" role="group" aria-labelledby="table-caption-07-4">
+
+<p class="table-caption" id="table-caption-07-4"><strong>Table 07-4：Learning sequence from groups to security reductions</strong></p>
+
+| Stage | Question | Connection to later sessions |
+| --- | --- | --- |
+| Elliptic-curve groups | What algebraic structure do points form? | Discrete-log assumptions and group operations |
+| Bilinear pairings | How can group elements test a product of exponents? | Groth16 verification in Session 11 |
+| Hardness assumptions | What computational task is assumed difficult? | The basis for protocol security |
+| Reduction arguments | If an attacker existed, what hard problem could it solve? | Explaining security relative to assumptions |
+
+</div>
+
+Figure 07-1 shows a learning example of points over a finite field, not a smooth real curve or a secure cryptographic curve. From pairings onward, shift from geometric intuition to the algebraic properties of group operations and maps.
 
 ---
 

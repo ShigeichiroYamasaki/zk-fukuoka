@@ -15,7 +15,7 @@ next:
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 7, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 5 in the syllabus](./#session-5) · [Session 5 exercises](../exercises/session-05)
 
@@ -31,11 +31,30 @@ There are three learning objectives:
 
 Today's material provides the foundation for low-degree testing and FRI in Session 6. It also introduces a somewhat different but important perspective within Act II: measuring the robustness of proofs in the language of information theory.
 
+The sequence is deliberate: define the allowed tables as Reed–Solomon codewords, derive correction capability from distance, distinguish probabilistic channel errors from worst-case errors, and then relax unique decoding to list decoding. Shannon capacity concerns a communication channel; the distances in Sections 2 and 3 describe worst-case properties of a code. They are not two formulas for the same error probability.
+
 ---
 
 ::: tip Probability prerequisites
-Session 5 uses the basics of random variables, events and independence. A channel model describes symbol changes as random events with specified probabilities. By contrast, error correction measured by Hamming distance counts worst-case error positions without assuming a probability distribution. Before comparing Shannon capacity with the Hamming bound, review the distinction between these models in Section 3 and the entropy-based reading of capacity in Section 3.4.
+The prerequisites are random variables, events, independence, logarithms, and binomial coefficients. A channel model represents symbol changes as random variables and uses their probabilities to calculate entropy. Hamming-distance guarantees, by contrast, assume no probability distribution and count differing positions in the worst case. No prior expertise in coding or information theory is required. Review the probability tutorial and Session 3’s finite-field and polynomial material as needed.
 :::
+
+### Roadmap for this session
+
+<div class="captioned-table" id="table-05-4" role="group" aria-labelledby="table-caption-05-4">
+
+<p class="table-caption" id="table-caption-05-4"><strong>Table 05-4：Learning sequence from code definition to list decoding</strong></p>
+
+| Question | Tool | What it provides |
+| --- | --- | --- |
+| What tables are valid evaluations? | Degree bounds and Reed–Solomon codes | The set of allowed tables |
+| How do we measure differences between tables? | Hamming and minimum distance | Correctable error and erasure ranges |
+| How does the error assumption affect the guarantee? | Shannon capacity and Hamming bound | The distinction between probabilistic channels and worst-case errors |
+| What if the answer is not unique? | List decoding | A relation between candidate lists and distance |
+
+</div>
+
+A diagram is less useful here than comparing actual evaluation tables: the tables and calculations below make distance concrete. Follow them in this order to reach Session 6’s question of testing proximity to low-degree polynomials with few queries.
 
 ## 1. Why do we need coding theory? — Motivation
 

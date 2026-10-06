@@ -16,7 +16,7 @@ import { withBase } from "vitepress";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年9月29日
+最終更新日付：2026年10月7日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第6回](./#session-6) · [第6回の演習](../exercises/session-06)
 
@@ -29,6 +29,26 @@ import { withBase } from "vitepress";
 1. Low-Degree Testingという問題設定を理解し，素朴な発想では効率化が難しいことを確認する
 2. FRIの再帰的折り畳み構造を理解し，それがどのように効率的なLow-Degree Testingを実現するかを把握する
 3. 健全性増幅の一般論，およびrewinding・forking lemmaという，健全性の議論を支える暗号学的な証明技法の考え方を理解する
+
+::: tip この回を読むための前提
+第5回のReed-Solomon符号，相対距離，一意復号とリスト復号の区別が前提になる．折り畳み式を追うには，第3回の有限体演算と多項式の偶奇分解も使う．最後の節では，第2回のSchnorrプロトコルの特殊健全性と知識の抽出を思い出そう．式の細部が不安なら，[有限体と多項式のチュートリアル](./finite-fields-tutorial)と[符号理論のチュートリアル](./coding-theory-tutorial)を先に参照できる．
+:::
+
+### この回の三つの問い
+
+<div class="captioned-table" id="table-06-7" role="group" aria-labelledby="table-caption-06-7">
+
+<p class="table-caption" id="table-caption-06-7"><strong>表 06-7：FRI・健全性増幅・rewindingが答える問い</strong></p>
+
+| 問い | 扱う道具 | 役割 |
+| --- | --- | --- |
+| 表が低次数多項式に近いか，少数の値でどう調べるか | Low-Degree Testing・FRI | 表の近接性と折り畳みの整合性を検査する |
+| 不正な証明が受理される確率をどう下げるか | 健全性増幅 | 検査を繰り返す条件と誤受理確率を評価する |
+| 安全性証明でウィットネスをどう取り出すか | Rewinding・Forking Lemma | 同じ敵対者の実行を比較する証明技法 |
+
+</div>
+
+この三つは関連するが同じ操作ではない．FRIは低次数近接性を検査するプロトコル，健全性増幅は誤受理確率を抑える設計・解析，rewindingは知識の抽出などを示すために安全性証明内で使う技法である．
 
 ---
 
