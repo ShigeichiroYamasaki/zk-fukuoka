@@ -66,6 +66,7 @@ const t = (ja, english) => (en.value ? english : ja);
         <a :href="link('learn/foundations.html')">{{ t('初学者向け・前提知識と補助教材', 'Beginner prerequisites & resources') }} ↗</a>
         <a :href="link('rollup/')">{{ t('応用編・ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }} ↗</a>
         <a :href="link('zkml/')">{{ t('応用編・入力を隠したAI推論', 'Applied course: private-input AI inference') }} ↗</a>
+        <a :href="link('tipping/')">{{ t('応用編・JPKIワレットでプライバシーを守る投げ銭', 'Applied course: privacy-preserving tips with a JPKI wallet') }} ↗</a>
         <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
       </nav>
       <p class="lesson-scroll-hint">{{ t('一覧内をスクロールして全15回を確認できます。', 'Scroll within the list to browse all 15 sessions.') }}</p>

@@ -62,6 +62,13 @@ const sidebar = (en: boolean) => {
       ],
     },
     {
+      text: en ? "APPLIED: PRIVATE MUSIC TIPS" : "応用編：プライバシーを守る投げ銭",
+      collapsed: false,
+      items: [
+        { text: en ? "JPKI wallet and stablecoin tips" : "JPKIワレットとステーブルコイン投げ銭", link: p + "tipping/" },
+      ],
+    },
+    {
       text: en ? "COMMUNITY" : "コミュニティ",
       items: [
         {
