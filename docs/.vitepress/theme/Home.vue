@@ -67,6 +67,7 @@ const t = (ja, english) => (en.value ? english : ja);
         <a :href="link('rollup/')">{{ t('応用編・ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }} ↗</a>
         <a :href="link('zkml/')">{{ t('応用編・入力を隠したAI推論', 'Applied course: private-input AI inference') }} ↗</a>
         <a :href="link('tipping/')">{{ t('応用編・JPKIワレットでプライバシーを守る投げ銭', 'Applied course: privacy-preserving tips with a JPKI wallet') }} ↗</a>
+        <a :href="link('data-minimization/')">{{ t('応用編・ZK属性証明で個人情報の保管を減らす', 'Applied course: reduce stored personal data with ZK attributes') }} ↗</a>
         <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
       </nav>
       <p class="lesson-scroll-hint">{{ t('一覧内をスクロールして全15回を確認できます。', 'Scroll within the list to browse all 15 sessions.') }}</p>
@@ -117,9 +118,22 @@ const t = (ja, english) => (en.value ? english : ja);
         <a :href="link('zkml/02-proof.html')"><span class="applied-number">02</span><span>{{ t('証明生成・検証と配布コード', 'Proving, verification and code') }}</span><span aria-hidden="true">→</span></a>
       </nav>
     </section>
+    <section id="applied-data-minimization" class="applied-section section-pad" aria-labelledby="data-minimization-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">04 / APPLIED COURSE · PRIVACY</span>
+          <h2 id="data-minimization-title">{{ t('応用編：ZK属性証明でランサムウェア被害を抑える', 'Applied course: reduce ransomware impact with ZK attributes') }}</h2>
+        </div>
+        <a class="text-link" :href="link('data-minimization/')">{{ t('教材を読む', 'Explore the lesson') }} ↗</a>
+      </div>
+      <p class="section-intro">{{ t('利用資格や年齢条件を満たすことだけを証明し，サービス側に本人確認書類や生年月日を重ねて保管しない設計を考えます。攻撃を止めるのではなく，侵入後に持ち出される個人情報を減らす演習です。', 'Prove only eligibility or an age threshold, without copying identity documents or dates of birth into every service. This exercise reduces personal data exposed after a breach; it does not stop ransomware.') }}</p>
+      <nav class="applied-chapters" :aria-label="t('個人情報最小化の応用編', 'Data-minimization applied course')">
+        <a :href="link('data-minimization/')"><span class="applied-number">START</span><span>{{ t('設計例・情報の流れ・演習', 'Design, data flows and exercise') }}</span><span aria-hidden="true">→</span></a>
+      </nav>
+    </section>
     <section class="community-section section-pad">
       <div class="community-copy">
-        <span class="section-kicker">04 / OPEN BY DESIGN</span>
+        <span class="section-kicker">05 / OPEN BY DESIGN</span>
         <h2>
           {{ t("学びも、コミュニティも。", "An open community.") }}<br />{{
             t("いっしょにつくっていく。", "Built with you.")

@@ -69,6 +69,13 @@ const sidebar = (en: boolean) => {
       ],
     },
     {
+      text: en ? "APPLIED: DATA MINIMIZATION" : "応用編：個人情報の最小化",
+      collapsed: false,
+      items: [
+        { text: en ? "ZK attributes and ransomware impact" : "ZK属性証明でランサムウェア被害を抑える", link: p + "data-minimization/" },
+      ],
+    },
+    {
       text: en ? "COMMUNITY" : "コミュニティ",
       items: [
         {
