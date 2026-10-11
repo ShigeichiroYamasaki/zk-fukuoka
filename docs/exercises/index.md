@@ -17,7 +17,7 @@ outline: [2, 3]
 | 3 | [有限体と確率的検査](./session-03) | 有限体演算，Schwartz–Zippelの誤り確率 |
 | 4 | [計算を制約へ翻訳する](./session-04) | R1CS・QAP・AIRの具体例 |
 | 5 | [Reed–Solomon符号の距離](./session-05) | 符号語，最小距離，訂正半径 |
-| 6 | [FRIの折り畳みと健全性増幅](./session-06) | 偶奇分解，次数低減，反復誤差 |
+| 6 | [FRIのフォールディングと健全性増幅](./session-06) | 偶奇分解，次数低減，反復誤差 |
 | 7 | [楕円曲線・ペアリング・仮定](./session-07) | 双線形性と困難性仮定 |
 | 8 | [多項式コミットメント](./session-08) | KZG開示とFRI/Merkleの役割 |
 | 9 | [Fiat–Shamir変換とROM](./session-09) | transcript，ランダムオラクルの限界 |
@@ -26,7 +26,7 @@ outline: [2, 3]
 | 12 | [PLONKのゲートとコピー制約](./session-12) | セレクタとpermutation argument |
 | 13 | [STARKの透明性と実行トレース](./session-13) | AIR制約と方式のトレードオフ |
 | 14 | [プロトコルを横断比較する](./session-14) | 完全性・健全性・ゼロ知識性と設計軸 |
-| 15 | [再帰・folding・応用の研究地図](./session-15) | folding，sumcheck，Ethereum応用 |
+| 15 | [再帰・フォールディング・応用の研究地図](./session-15) | フォールディング，sumcheck，Ethereum応用 |
 
 
 [応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル．

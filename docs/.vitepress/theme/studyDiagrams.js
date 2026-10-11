@@ -567,7 +567,7 @@ export const diagrams = {
       "FRI: halve the degree bound at each step"
     ],
     "note": [
-      "乗法的FRIの手順．各段階で表を固定してから新しいチャレンジを得る．近接性と折り畳みの一貫性を検査するのであって，表を半分捨てるだけではない．",
+      "乗法的FRIの手順．各段階で表を固定してから新しいチャレンジを得る．近接性とフォールディングの一貫性を検査するのであって，表を半分捨てるだけではない．",
       "Schematic multiplicative FRI. Fix each table before receiving its new challenge. Check proximity and folding consistency; this is not simply discarding half a table."
     ],
     "nodes": [
@@ -583,7 +583,7 @@ export const diagrams = {
       },
       {
         "title": [
-          "ランダムな結合で折り畳む",
+          "ランダムな結合でフォールディングする",
           "Fold with a random combination"
         ],
         "body": [
@@ -1620,7 +1620,7 @@ export const diagrams = {
           "Construct FRI"
         ],
         "body": [
-          "各表のコミット後に折り畳みチャレンジを導出",
+          "各表のコミット後にフォールディング・チャレンジを導出",
           "Derive each folding challenge after committing its table"
         ]
       },
@@ -1929,7 +1929,7 @@ export const diagrams = {
       "Separate the roles of folding, IVC and compression"
     ],
     "note": [
-      "Novaを念頭に置いた概念の整理．foldingだけで簡潔なゼロ知識証明が完成するわけではない．FRIの次数縮小とは対象も安全性の議論も異なる．",
+      "Novaを念頭に置いた概念の整理．フォールディングだけで簡潔なゼロ知識証明が完成するわけではない．FRIの次数縮小とは対象も安全性の議論も異なる．",
       "Conceptual view motivated by Nova. Folding alone is not a succinct zero-knowledge proof. Its objects and security arguments differ from FRI degree reduction."
     ],
     "nodes": [

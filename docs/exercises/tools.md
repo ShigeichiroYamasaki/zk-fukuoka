@@ -21,7 +21,7 @@ outline: [2, 3]
 | [第12回・PLONK](../learn/session-12) | 同じCircom回路＋snarkjs | 計算を揃えてセットアップと生成物の違いを見る | [PLONKの手順](./manuals#plonk) |
 | [第13回・STARK](../learn/session-13) | Anatomy of a STARK／Winterfell／Miden VM | Pythonで構造を読む／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
 | [第14回・比較](../learn/session-14) | 使った実装＋表計算またはPython＋Git | 条件と結果を記録し，比較する | [比較と考察](./manuals#comparison) |
-| [第15回・発展](../learn/session-15) | Nova，SageMath／Python | 再帰・foldingの実装と，sumcheckの小さな計算を調べる | [発展演習](./manuals#advanced) |
+| [第15回・発展](../learn/session-15) | Nova，SageMath／Python | 再帰・フォールディングの実装と，sumcheckの小さな計算を調べる | [発展演習](./manuals#advanced) |
 
 すべてを導入する必要はありません．初めてなら第11・12回をCircom＋snarkjsで進め，STARKは学びたい層に合わせて一つを選びます．Go経験者はgnark，Rust経験者は各ライブラリの例から始めても構いません．
 
@@ -72,10 +72,10 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 
 | ツール・資料 | 演習での役割 | 環境・対象 | 操作案内 |
 | --- | --- | --- | --- |
-| [Nova](https://github.com/microsoft/Nova) | 再帰的な計算の証明とfoldingを例で追う | Rust/Cargo．基本演習後の発展向け | [公式Tests and examples](https://github.com/microsoft/Nova#tests-and-examples)，[発展演習](./manuals#advanced) |
+| [Nova](https://github.com/microsoft/Nova) | 再帰的な計算の証明とフォールディングを例で追う | Rust/Cargo．基本演習後の発展向け | [公式Tests and examples](https://github.com/microsoft/Nova#tests-and-examples)，[発展演習](./manuals#advanced) |
 | SageMath／Python | 小さな多変数多項式の総和を計算し，sumcheckの手順と照合する | ブラウザーまたはローカル．計算の確認用 | [数学の計算環境](#math)，[第15回](../learn/session-15) |
 
-SageMathやPythonで総和を計算するだけでは，GKRやゼロ知識証明の実装にはなりません．Novaも，folding・再帰的な状態の引き継ぎ・圧縮の役割を区別して読んでください．zkEVM・EIP-8025の応用調査は[発展演習の資料案内](./manuals#advanced)から進めます．
+SageMathやPythonで総和を計算するだけでは，GKRやゼロ知識証明の実装にはなりません．Novaも，フォールディング・再帰的な状態の引き継ぎ・圧縮の役割を区別して読んでください．zkEVM・EIP-8025の応用調査は[発展演習の資料案内](./manuals#advanced)から進めます．
 
 ## 数学を計算する
 

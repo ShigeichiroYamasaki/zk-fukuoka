@@ -23,7 +23,7 @@ outline: [2, 3]
 | [第12回・PLONK](../learn/session-12) | 同じ計算を別の方式で証明する | [PLONK](#plonk) | 汎用SRSと回路ごとの前処理を区別できる |
 | [第13回・STARK](../learn/session-13) | 実行トレースと制約を追う | [STARK](#stark) | 遷移制約・境界制約と検証結果を対応づけられる |
 | [第14回・統合](../learn/session-14) | 条件を揃えて記録・比較する | [比較と考察](#comparison) | 実測値と理論的性質を分けて説明できる |
-| [第15回・発展](../learn/session-15) | 再帰・folding・sumcheckの役割を調べる | [発展演習](#advanced) | 何を集約し，どの負担を減らすか説明できる |
+| [第15回・発展](../learn/session-15) | 再帰・フォールディング・sumcheckの役割を調べる | [発展演習](#advanced) | 何を集約し，どの負担を減らすか説明できる |
 
 初めてなら **Circom＋snarkjsで第11・12回を続けて進める**と，回路を再利用して違いを確認できます．第13回はPythonで仕組みを読むならAnatomy of a STARK，RustでAIRを書くならWinterfell，VMの操作を学ぶならMiden VMから一つを選びます．すべての実装を導入する必要はありません．
 
@@ -121,7 +121,7 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 
 | テーマ | 操作・読み方 | 成果としてまとめること |
 | --- | --- | --- |
-| 再帰・folding | [Nova公式のTests and examples](https://github.com/microsoft/Nova#tests-and-examples)から，選んだ版の`minroot`例を実行し，ステップ数を変える | 状態の引き継ぎ，folding，最終的な証明・検証を区別する．圧縮を含む場合はそのコストも分ける |
+| 再帰・フォールディング | [Nova公式のTests and examples](https://github.com/microsoft/Nova#tests-and-examples)から，選んだ版の`minroot`例を実行し，ステップ数を変える | 状態の引き継ぎ，フォールディング，最終的な証明・検証を区別する．圧縮を含む場合はそのコストも分ける |
 | Sumcheck・GKR | [第15回の説明](../learn/session-15)と[Thalerの教科書](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html)を読み，二変数の小さな多項式の総和を手計算・Python等で確認する | 全点で直接計算する方法と，変数を一つずつ減らす検証の流れを対応づける．完成した証明実装とは区別する |
 | Ethereumへの応用 | [第15回の研究地図](../learn/session-15)にあるzkEVM・EIP-8025の一次資料を読む | 何の実行を誰が検証するか，必要な性能指標，提案の状態と参照日を整理する |
 
