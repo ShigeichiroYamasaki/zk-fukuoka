@@ -293,7 +293,7 @@ export const diagrams = {
       }
     ]
   },
-  "03-4": {
+  "03-7": {
     "section": "3.1",
     "type": "flow",
     "title": [
@@ -326,7 +326,7 @@ export const diagrams = {
       "One evaluation does not determine the whole polynomial. If the degree is at most 2, values at three distinct points determine it uniquely."
     ]
   },
-  "03-5": {
+  "03-8": {
     "section": "3.5",
     "type": "flow",
     "title": [
@@ -359,37 +359,37 @@ export const diagrams = {
       "Folding creates the next table with half as many points. Low-degree structure is established by checking consistency across rounds and the final degree condition."
     ]
   },
-  "03-6": {
-    "section": "4.3",
+  "03-9": {
+    "section": "4.1",
     "type": "flow",
     "title": [
       "ランダムな一点で多項式の違いを検査する",
       "Test whether polynomials differ at a random point"
     ],
     "note": [
-      "検査対象の多項式は点を選ぶ前に固定する．hが恒等的に0なら必ず一致し，hが0でない次数dの多項式なら，誤って一致と判定する確率は高々d/|S|．",
-      "Fix the polynomial before sampling. If h is identically zero, the test always reports equality; if h is a nonzero degree-d polynomial, the chance of falsely reporting equality is at most d/|S|."
+      "係数を全部比べれば確実だが，長い係数列を読む．評価法では先に多項式を固定し，後からrを選ぶ．h(r)≠0なら不一致が確定し，h(r)=0でも恒等的な一致とは限らない．誤判定確率の上界は次節で示す．",
+      "Comparing every coefficient is exact but reads a long list. For evaluation, fix the polynomials first and choose r afterward. If h(r)≠0, they differ; if h(r)=0, identity is not established. The next section gives the error bound."
     ],
     "nodes": [
       {
-        "title": ["比較したい式を固定", "Fix the expressions to compare"],
-        "body": ["h=f−g と置く．異なる多項式なら h≠0．", "Set h=f−g. Different polynomials imply h≠0."],
-        "formula": "deg h ≤ d"
+        "title": ["1. 差の多項式を作る", "1. Form the difference polynomial"],
+        "body": ["fとgが同じかを調べるため，h=f−gと置く．", "To test whether f and g are identical, set h=f−g."],
+        "formula": "h ≡ 0 なら恒等的に一致"
       },
       {
-        "title": ["検査点をランダムに選ぶ", "Choose a random test point"],
-        "body": ["Sから一様に r を選ぶ．", "Choose r uniformly from S."],
-        "formula": "r ← S"
+        "title": ["2. 多項式を固定してから選ぶ", "2. Sample only after fixing the polynomials"],
+        "body": ["証明者が検査点を見て式を変えられないようにする．", "Prevent the prover from changing the expressions after seeing the test point."],
+        "formula": "r を S から一様に選ぶ"
       },
       {
-        "title": ["一度だけ評価", "Evaluate once"],
-        "body": ["h(r)≠0なら異なると分かる．h(r)=0なら見逃しの可能性が残る．", "If h(r)≠0, they differ. If h(r)=0, the test may have missed the difference."],
-        "formula": "Pr[h(r)=0] ≤ d / |S|"
+        "title": ["3. 一点で差を評価", "3. Evaluate the difference once"],
+        "body": ["h(r)≠0なら不一致が確定．h(r)=0でも，一点で偶然一致しただけかもしれない．", "If h(r)≠0, they differ. If h(r)=0, this may be only a coincidence at one point."],
+        "formula": "例：h(X)=(X−1)(X−3)"
       }
     ],
     "bottom": [
-      "図は評価点の数を減らせる理由を示す．多項式の値を効率よく計算できるか，証明者が値を後から改変できないかは，別途確認が必要である．",
-      "The diagram explains why fewer evaluations can suffice. Efficient evaluation and preventing a prover from changing values afterward require separate mechanisms."
+      "次数dの0でない多項式がランダム点で0になる確率は高々d/|S|（次節）．この図は実数上の直感を示すもので，有限体での確率保証は根の個数の定理から導く．評価値の正しさを保証する方法も，証明系では別途必要になる．",
+      "For a nonzero degree-d polynomial, the chance of evaluating to zero at a random point is at most d/|S| (next section). This diagram gives real-number intuition; the finite-field guarantee follows from the root bound. Proof systems must also authenticate evaluations."
     ]
   },
   "04-1": {

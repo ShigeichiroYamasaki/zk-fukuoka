@@ -158,7 +158,7 @@ The quotient is $X+1$ and the remainder is 2, so divisibility fails. This differ
 
 The coefficient list, the formal polynomial, and an evaluation at a point are related but distinct objects. The diagram summarizes these three stages and why a degree bound plus several points is needed to recover the original polynomial from evaluations.
 
-<StudyDiagram id="03-4" :en="true" />
+<StudyDiagram id="03-7" :en="true" />
 
 ### 3.2 The basic theorem on the number of roots
 
@@ -271,7 +271,7 @@ For a low-degree input polynomial, this is the evaluation table of $f_{\mathrm{e
 
 The diagram summarizes this correspondence: two values in the original table yield the even and odd parts, which are combined with the challenge to form the next table.
 
-<StudyDiagram id="03-5" :en="true" />
+<StudyDiagram id="03-8" :en="true" />
 
 Choose a domain $D$ excluding zero and closed under negation. Squaring maps each pair $\{x,-x\}$ to one point, so $D'=\{x^2:x\in D\}$ has half as many elements. The order-eight multiplicative subgroup $\{1,2,4,8,16,15,13,9\}$ of $\mathbb F_{17}$ squares to $\{1,4,16,13\}$ and then to $\{1,16\}$.
 
@@ -290,6 +290,16 @@ Suppose we want to check whether $f(X)$ and $g(X)$ are the same polynomial. Comp
 
 **Question:** Can we determine identity with high probability by evaluating at just one random point, without inspecting the entire polynomial?
 
+Here, **identity** means equality as polynomials, including all coefficients, not merely equal values at one chosen input. For example, compare $f(X)=X^2+1$ and $g(X)=4X-2$. Comparing coefficients immediately shows that they differ: $f$ is quadratic and $g$ is linear. But when a large polynomial is represented by its coefficient list, reading the whole list takes work proportional to its length. Instead, form their difference:
+
+$$h(X)=f(X)-g(X)=X^2-4X+3=(X-1)(X-3).$$
+
+At $X=1$ or $X=3$, the difference is zero, so a test at either point misses the fact that the polynomials differ. At $X=0$, however, $h(0)=3$, and one evaluation detects the mismatch. Thus $h(r)\ne0$ proves that the polynomials differ, while $h(r)=0$ alone does not prove identity.
+
+<StudyDiagram id="03-9" :en="true" />
+
+The polynomials in the diagram must be fixed before the test point is chosen. Otherwise, a prover that sees the point could select a polynomial having that point as a root. Section 4.2 shows that for a fixed polynomial of degree at most $d$, the chance of such an accidental zero at a random point is at most $d/|S|$.
+
 ### 4.2 Statement of the lemma: the multivariate version
 
 > **Schwartz–Zippel lemma:** Let $f(X_1, \dots, X_n) \in \mathbb{F}[X_1, \dots, X_n]$ be a polynomial that is not identically zero, with total degree $d$. If the values of the variables are chosen independently and uniformly from a nonempty finite set $S \subseteq \mathbb{F}$, then
@@ -302,10 +312,6 @@ For one variable, $n=1$, this is exactly the fact from Section 3.2 that a polyno
 To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider an extension field. Independent repetition also helps when the one-test miss probability is below 1.
 
 What becomes small here is the number of points checked. Computing an evaluation is not automatically cheap. The argument also fails if polynomials can be chosen after seeing the test point. A proof system must fix them first and authenticate the required evaluations.
-
-The order is essential: first fix the polynomials, then choose a random point, and finally inspect the value at that point.
-
-<StudyDiagram id="03-6" :en="true" />
 
 Compare $f(X)=X^2+1$ with $g(X)=4X-2$. Their difference is $h(X)=(X-1)(X-3)$. Intersections with the horizontal axis are precisely the test points that miss this difference. Fix the polynomials before sampling.
 
