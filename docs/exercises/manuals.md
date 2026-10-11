@@ -8,11 +8,45 @@ outline: [2, 3]
 
 [演習トップ](./) · [実装・ツール一覧](./tools) · [前提知識・補助教材](../learn/foundations)
 
-公式資料の参照確認日：2026年9月27日．以下は公式手順への日本語の読み順・演習案内です．コマンドの詳細は利用する版の公式マニュアルで確認してください．全実装のローカル実行を検証したものではありません．
+公式資料の参照確認日：2026年10月12日．以下は公式手順への日本語の読み順・演習案内です．コマンドの詳細は利用する版の公式マニュアルで確認してください．参照先の確認は，その版を使ったローカル実行確認を意味しません．
 
 [応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル．
 
 [応用編：入力を隠したAI推論 ZKML](../zkml/) — [実行用コードと操作マニュアル](../zkml/02-proof)．
+
+[応用編：JPKIワレットによる投げ銭](../tipping/) と [ZK属性証明による個人情報の最小化](../data-minimization/) は，現状は設計・脅威分析の演習です．実動するJPKI連携，資格発行，匿名クレデンシャル，ZK属性証明の配布コードはありません．
+
+## 応用編で使うツールを選ぶ {#applied}
+
+応用編ごとに，配布済みコードと，受講者が実装する課題を分けて確認します．**すべてのツールを導入する必要はありません**．実データ・実資産・実際のJPKIを使わず，架空データとローカル環境から始めます．
+
+| 応用編 | 現在の教材で実行できる範囲 | 主なツール | 未実装・注意点 |
+| --- | --- | --- | --- |
+| [ERC-20 ZK rollup](../rollup/) | Python残高台帳モデル，送金算術のCircom入門回路 | Python 3，Circom／circomlib／snarkjs，Solidity／Foundry（Forge・Anvil），OpenZeppelin Contracts | 署名・Merkle木・バッチ証明・L1コントラクトを結んだ完成E2Eは受講者の実装課題．独立復元用TypeScriptのRPCクライアントは未指定 |
+| [入力を隠した推論 ZKML](../zkml/) | 配布コードで小さな整数分類器を学習し，証明・検証・改ざん拒否を実行 | Python 3.8以上，Node.js LTS／npm，`circom2` 0.2.22（Circom 2.2.2），`snarkjs` 0.7.5 | バージョンは配布`package.json`に固定．EZKL／ONNXは発展候補で，この教材の配布コードでは未実行 |
+| [JPKIワレットの投げ銭](../tipping/) | データフロー，公開範囲，脅威・制度上の前提を設計する | 架空データ，表計算またはMarkdown，脅威分析表．将来の試作候補はCircom／snarkjsとFoundry／Anvil | 実装コード・資格形式・署名方式・失効方式は未提供／未決定．本物のJPKI，個人番号，実資産は使わない |
+| [個人情報の最小化](../data-minimization/) | 架空利用者データで，従来方式と最小化方式の保存項目・漏えい時の露出を比較 | 表計算ソフトまたはPython標準ライブラリ（`csv`） | ZK属性証明の回路・資格署名形式・発行／失効基盤は未提供／未決定．この課題自体は設計演習 |
+
+### Rollup：参照モデルからローカルL1まで {#rollup-tools}
+
+1. [台帳モデル](../rollup/01-ledger#run)の`ledger_model.py`を保存し，`python3 ledger_model.py`と`python3 ledger_model.py --test`を実行します．まず残高保存則と異常系テストを確認します．外部Pythonパッケージは不要です．
+2. [送金回路](../rollup/03-circuit#core)の`transfer_core.circom`でCircomコンパイル，ウィットネス生成，R1CS検査を行います．署名やMerkleパスはこの入門回路には含まれません．[Circom公式導入手順](https://docs.circom.io/getting-started/installation/)と[Circomlibの回路](https://github.com/iden3/circomlib)を参照し，Node／npmとCircomの版を記録します．
+3. L1側は[Foundry公式導入](https://getfoundry.sh/introduction/installation/)の`forge`と`anvil`を使います．`forge build`でコンパイル，`forge test`で状態遷移を確認し，Anvilのローカルチェーンでだけ接続試験を行います．[Foundryのプロジェクト作成](https://getfoundry.sh/projects/creating-a-new-project/)と[OpenZeppelin ERC-20／SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20)を参照します．テストネットへの送信は基本演習に不要です．
+4. 運営者停止後の独立復元では[第6段階](../rollup/06-availability)の`operator/replay.ts`を実装します．教材はTypeScript実行環境とEthereum JSON-RPCクライアントを指定していないため，チームで選んでバージョンを固定し，RPCクライアントを使う範囲を記録してください．
+
+### ZKML：配布コードを再現する {#zkml-tools}
+
+1. [証明を動かすページ](../zkml/02-proof)から`train.py`，`classifier.circom`，`package.json`，`run.cjs`を同じ新規フォルダへ保存します．
+2. Python 3.8以上とNode.js LTS／npmを用意し，`python3 train.py`，`npm install`，`npm run demo`の順で実行します．`package.json`の指定版を使い，生成された`package-lock.json`も記録します．
+3. 正常な証明の検証と，公開分類結果を変更した場合の拒否を確認します．検証者だけに渡す手順は[単独検証の案内](../zkml/02-proof#検証者に渡すもの)を使います．
+4. より大きなニューラルネットワークを試す場合は，ONNXへ出力できるモデル作成環境と[EZKL公式ドキュメント](https://docs.ezkl.xyz/)を別途調べます．これは配布済みCircom演習とは別ルートで，量子化後の出力差・モデル対応演算・使用版を検証してください．
+
+### 投げ銭・個人情報最小化：設計演習と試作の境界 {#privacy-tools}
+
+- 投げ銭では[設計ページ](../tipping/)の段階に従い，架空の本人確認結果と資格だけを用いて，発行者・利用者端末・検証者・決済事業者が保持する情報を表にします．現在，実際のJPKI連携や匿名資格発行を実行するコードはありません．
+- 将来ローカル試作を加える場合は，偽の発行者鍵・架空資格・ローカルAnvil上のテストトークンに限定します．資格署名・失効・nullifierをどう構成するか決めてから，Circom／snarkjsで証明回路を実装します．ライブラリを入れるだけでは資格の正当性やプライバシーは実現しません．
+- 個人情報最小化では[設計演習](../data-minimization/#演習-漏えい時に見えるデータを比較する)に沿い，架空10件のデータで保存項目を比較します．表計算ソフトを使うか，Python標準の[`csv`モジュール](https://docs.python.org/ja/3/library/csv.html)でCSVを扱います．実在の氏名・生年月日・本人確認書類は入力しません．
+- 資格署名方式や失効確認を含む実装に進む場合は，現行のページに確定済みツールとして追加せず，方式・版・脅威モデルを先に設計記録へ明記します．
 
 
 ## 幕IIIの演習ルート {#route}

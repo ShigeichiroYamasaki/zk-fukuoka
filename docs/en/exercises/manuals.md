@@ -8,11 +8,45 @@ Follow the Act III exercises (Sessions 11–15): generate and verify a proof, co
 
 [Exercises](./) · [Implementations and tools](./tools) · [Prerequisites](../learn/foundations)
 
-Documentation checked: September 27, 2026. This page provides a reading order and exercise guide to official manuals. Use commands from the documentation matching your chosen version. Not every implementation has been tested locally.
+Official documentation reference check: October 12, 2026. This page provides a reading order and exercise guide to official manuals. Use commands from the documentation matching your chosen version. Checking a reference does not mean that version was tested locally.
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
 [Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
+
+[JPKI wallet tips](../tipping/) and [ZK attribute proofs for data minimization](../data-minimization/) are currently design and threat-analysis exercises. No runnable JPKI integration, credential issuance, anonymous credential or ZK attribute-proof code is provided.
+
+## Tools for applied courses {#applied}
+
+Check what code is provided and what remains an implementation task. **You do not need to install every tool.** Start with synthetic data and local environments; do not use real personal data, real assets or real JPKI credentials.
+
+| Applied course | What currently runs in the course | Main tools | Not implemented / notes |
+| --- | --- | --- | --- |
+| [ERC-20 ZK rollup](../rollup/) | Python balance-ledger model and introductory Circom transfer-arithmetic circuit | Python 3, Circom / circomlib / snarkjs, Solidity / Foundry (Forge and Anvil), OpenZeppelin Contracts | A complete E2E connecting signatures, Merkle trees, batch proofs and L1 contracts is a student implementation task. No TypeScript RPC client is selected for independent replay. |
+| [Private-input ZKML inference](../zkml/) | Run the provided small integer classifier, proof, verification and tamper-rejection code | Python 3.8+, Node.js LTS / npm, `circom2` 0.2.22 (Circom 2.2.2), `snarkjs` 0.7.5 | Versions are pinned in the provided `package.json`. EZKL / ONNX is an extension option and is not run by the provided code. |
+| [JPKI wallet tips](../tipping/) | Design data flows, public disclosures, threats and institutional assumptions | Synthetic data, spreadsheet or Markdown, threat-analysis table. Future prototype candidates: Circom / snarkjs and Foundry / Anvil | No implementation code, credential format, signature scheme or revocation scheme is provided or selected. Do not use real JPKI, My Number data or real assets. |
+| [Data minimization](../data-minimization/) | Compare stored fields and breach exposure for conventional and minimized designs using synthetic users | Spreadsheet or Python standard library (`csv`) | ZK attribute-proof circuit, credential signature format and issuance / revocation system are not provided or selected. This is currently a design exercise. |
+
+### Rollup: from reference model to a local L1 {#rollup-tools}
+
+1. Save `ledger_model.py` from the [ledger model exercise](../rollup/01-ledger#run), then run `python3 ledger_model.py` and `python3 ledger_model.py --test`. Begin with conservation of balances and failure-case tests. No external Python packages are required.
+2. Use the [`transfer_core.circom` circuit](../rollup/03-circuit#core) to compile, generate a witness and inspect the R1CS. This introductory circuit does not include signatures or Merkle paths. Consult [Circom installation](https://docs.circom.io/getting-started/installation/) and [circomlib circuits](https://github.com/iden3/circomlib); record Node/npm and Circom versions.
+3. For L1, use `forge` and `anvil` from the [official Foundry installation guide](https://getfoundry.sh/introduction/installation/). Use `forge build` to compile and `forge test` for state-transition tests; connect only to the local Anvil chain. See [creating a Foundry project](https://getfoundry.sh/projects/creating-a-new-project/) and [OpenZeppelin ERC-20 / SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20). Testnet transactions are unnecessary for the core exercise.
+4. To independently reconstruct state after operator failure, implement `operator/replay.ts` from [Stage 6](../rollup/06-availability). The course does not choose a TypeScript runtime or Ethereum JSON-RPC client; select and pin one as a team, and document where the client is used.
+
+### ZKML: reproduce the provided code {#zkml-tools}
+
+1. Save `train.py`, `classifier.circom`, `package.json` and `run.cjs` from [the proof walkthrough](../zkml/02-proof) into a new directory.
+2. With Python 3.8+ and Node.js LTS / npm, run `python3 train.py`, `npm install` and `npm run demo` in that order. Respect the versions in `package.json` and record the generated `package-lock.json`.
+3. Confirm normal proof verification and rejection after changing the public classification result. Use [standalone verification instructions](../zkml/02-proof#what-the-verifier-receives) for the verifier-only workflow.
+4. To try a larger neural network, separately investigate a model framework that exports ONNX and the [official EZKL documentation](https://docs.ezkl.xyz/). This is a separate route from the provided Circom exercise; validate quantized output differences, supported operations and tool versions.
+
+### Tips and data minimization: distinguish design work from implementation {#privacy-tools}
+
+- For tips, follow the [design exercise](../tipping/) using only fictional identity-check results and credentials. Map what the issuer, user device, verifier and payment provider retain. No code currently performs real JPKI integration or anonymous credential issuance.
+- If adding a local prototype later, limit it to a fake issuer key, fictional credentials and a test token on local Anvil. Decide how credential signatures, revocation and nullifiers work before implementing a proof circuit with Circom / snarkjs. Installing libraries alone does not establish credential validity or privacy.
+- For data minimization, follow the [breach-exposure exercise](../data-minimization/) with ten fictional records. Use a spreadsheet or Python's standard [`csv` module](https://docs.python.org/3/library/csv.html). Do not enter real names, birth dates or identity documents.
+- If implementing credential signatures or revocation, document the selected scheme, version and threat model before presenting it as a confirmed tool in this manual.
 
 
 ## Act III exercise route {#route}
