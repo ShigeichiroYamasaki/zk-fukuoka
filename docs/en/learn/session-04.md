@@ -16,7 +16,7 @@ import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverv
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 11, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Session 4 exercises](../exercises/session-04)
 
@@ -53,6 +53,16 @@ The three techniques we study today—R1CS, QAP, and AIR—are different impleme
 The diagram first expresses the existence of a valid private input and execution, for fixed public input and output, as circuit satisfiability. It then translates the circuit conditions into finite-field constraints. Distinguish this Boolean-circuit reduction from arithmetization, and checking an assignment from finding one.
 
 <ArithmetizationOverview :en="true" />
+
+### A small computation to preview the whole process
+
+Suppose the public output is $y=35$ and the private input is $x=3$, with $y=x^3+x+5$. Name the intermediate values $t=x^2$ and $s=tx$. The computation is
+
+$$x=3\;\longrightarrow\;t=3\times3=9\;\longrightarrow\;s=9\times3=27\;\longrightarrow\;y=27+3+5=35.$$
+
+R1CS expresses it as three constraints: $x\cdot x=t$, $t\cdot x=s$, and $(s+x+5)\cdot1=y$. It checks whether the assignment $(x,t,s,y)=(3,9,27,35)$ satisfies every row. Section 3.3 works this out with matrices, and Section 4.3 carries the same example into QAP polynomials. The arithmetic is over $\mathbb F_{101}$; these values happen to match ordinary integer arithmetic.
+
+AIR instead records the relationship between states at successive times, rather than organizing constraints by circuit rows. Section 5.4 uses a different short example, repeated squaring $3\to9\to13\to16$ over $\mathbb F_{17}$, to make the state transition uniform. These examples serve different purposes: R1CS/QAP constraints and AIR state transitions.
 
 ---
 
