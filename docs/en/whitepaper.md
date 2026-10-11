@@ -1,12 +1,16 @@
 # Whitepaper
 
-**Status: proposal · v0.1 · September 24, 2026**
+**Status: proposal · v0.1 · September 24, 2026 · Last updated: October 12, 2026**
 
 This document is an initial proposal for discussion, not an announcement of an established organization or confirmed events.
 
 ## Purpose
 
-ZK Fukuoka is a planned community based in Fukuoka for developing engineers who understand and build with zero-knowledge proofs. We connect mathematical understanding with implementation, peer review, and clear communication.
+ZK Fukuoka is a planned community based in Fukuoka that aims to develop engineers who can apply zero-knowledge proofs to real-world problems. Learning the technology is not an end in itself: participants should be able to understand a problem, assess whether zero-knowledge proofs are an appropriate solution compared with alternatives, and carry the work through mathematical reasoning, design, implementation, and testing.
+
+## Applying the technology to real problems
+
+We use scenarios where people need to verify a computation while protecting privacy, or where a third party must be able to check a result, to examine what zero-knowledge proofs can and cannot solve. Applications such as rollups, verification of inference over private inputs, and data minimization connect problem definition, technology selection, prototype development, testing, and evaluation of limitations. Performance, security, availability, legal, and operational requirements are part of that evaluation. The goal is sound judgment about when the technology fits, not applying it to every problem.
 
 ## What we value
 
@@ -25,7 +29,7 @@ Start with maintainers and contributors reviewing improvements through Issues an
 
 ## Learning outcomes
 
-Help participants explain proof properties, reproduce examples, write small circuits, and discuss limitations. Consider feedback such as reproducibility, learning obstacles, and peer review quality; no numerical targets are committed yet.
+Help participants explain proof properties, translate a real-world problem into technical requirements, and justify the use of zero-knowledge proofs against alternatives. Participants should also be able to reproduce examples, implement small prototypes, and evaluate test results and limitations. Use reproducibility, learning obstacles, and peer review quality to guide improvement; no numerical targets are committed yet. Implementations in the materials are for learning and require separate security, legal, and operational review before production use.
 
 ## Next decisions
 

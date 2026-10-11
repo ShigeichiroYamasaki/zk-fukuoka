@@ -98,7 +98,7 @@ export default defineConfig({
   base,
   cleanUrls: false,
   markdown: { math: true },
-  lastUpdated: false,
+  lastUpdated: true,
   head: [
     [
       "link",
@@ -124,6 +124,7 @@ export default defineConfig({
         sidebar: sidebar(false),
         outline: { label: "このページの内容" },
         docFooter: { prev: "前のページ", next: "次のページ" },
+        lastUpdated: { text: "最終更新", formatOptions: { dateStyle: "long" } },
       },
     },
     en: {
@@ -143,6 +144,7 @@ export default defineConfig({
           { text: "ADR", link: "/en/adr/" },
         ],
         sidebar: sidebar(true),
+        lastUpdated: { text: "Last updated", formatOptions: { dateStyle: "long" } },
       },
     },
   },

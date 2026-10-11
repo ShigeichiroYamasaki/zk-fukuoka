@@ -15,10 +15,16 @@ const rollupChapters = [
   { path: '05-bridge', ja: 'ERC-20とL1検証', en: 'ERC-20 and L1 verification' },
   { path: '06-availability', ja: 'データ公開・退出・総合テスト', en: 'Data availability, exits and testing' },
 ];
-const { lang } = useData();
+const { lang, page } = useData();
 const en = computed(() => lang.value === "en");
 const link = (s) => withBase((en.value ? "/en/" : "/") + s);
 const t = (ja, english) => (en.value ? english : ja);
+const lastUpdated = computed(() => {
+  if (!page.value.lastUpdated) return "";
+  return new Intl.DateTimeFormat(en.value ? "en" : "ja", { dateStyle: "long" }).format(
+    new Date(page.value.lastUpdated),
+  );
+});
 </script>
 <template>
   <main class="zk-home">
@@ -224,5 +230,8 @@ const t = (ja, english) => (en.value ? english : ja);
       }}</span
       ><span>EST. {{ t("設立準備中", "IN FORMATION") }}</span>
     </footer>
+    <p v-if="lastUpdated" class="home-last-updated">
+      {{ t("最終更新", "Last updated") }}: {{ lastUpdated }}
+    </p>
   </main>
 </template>
