@@ -40,7 +40,7 @@ $A\mathbf z=(3,9,35)^T$，$B\mathbf z=(3,3,1)^T$，$C\mathbf z=(9,27,35)^T$．�
 
 ## 次に読む
 
-[補間・消失多項式・割り切れ性](./polynomials)
+[補間・消失多項式・多項式の整除性](./polynomials)
 
 ## 参考資料
 

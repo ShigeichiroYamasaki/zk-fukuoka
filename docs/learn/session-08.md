@@ -17,7 +17,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月7日
+最終更新日付：2026年10月11日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第8回](./#session-8) · [第8回の演習](../exercises/session-08)
 
@@ -117,7 +117,7 @@ $$e(C \cdot g_1^{-y}, g_2) = e(\pi, g_2^{\tau} \cdot g_2^{-x})$$
 
 <div class="captioned-table" id="table-08-4" role="group" aria-labelledby="table-caption-08-4">
 
-<p class="table-caption" id="table-caption-08-4"><strong>表 08-4：KZG：割り切れ性をペアリングで検証する</strong></p>
+<p class="table-caption" id="table-caption-08-4"><strong>表 08-4：KZG：整除性をペアリングで検証する</strong></p>
 
 | 手順・段階 | 説明 |
 | --- | --- |
