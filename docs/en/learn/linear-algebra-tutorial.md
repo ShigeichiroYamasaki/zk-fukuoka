@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: September 29, 2026
+Last updated: October 11, 2026
 
 This tutorial defines vectors and matrices not merely as computational notation, but as elements of vector spaces and linear maps between those spaces. This perspective makes it easier to understand how matrices translate computations into constraints in Session 4’s R1CS, and how QAP turns those constraints into polynomials.
 
@@ -79,6 +79,50 @@ $$
 $$
 
 Thus, each **row** forms one output linear combination, while each **column** describes how an input variable contributes to the outputs. A matrix is a coordinate table for a linear map once bases have been chosen. Composition of maps corresponds to matrix multiplication: applying $B$ first and then $A$ gives $A(Bv)=(AB)v$.
+
+### 4.1 Basis vectors and coordinates
+
+A **basis** is a set of vectors such that every vector in the space has a unique expression as a linear combination of them. The standard basis of $\mathbb K^3$ is
+
+$$
+e_1=\begin{pmatrix}1\\0\\0\end{pmatrix},\qquad e_2=\begin{pmatrix}0\\1\\0\end{pmatrix},\qquad e_3=\begin{pmatrix}0\\0\\1\end{pmatrix}.
+$$
+
+For example, $v=(a,b,c)^T$ can be written as $v=ae_1+be_2+ce_3$. The column $(a,b,c)^T$ is the **coordinate vector** of $v$ in the basis $e_1,e_2,e_3$. Each basis vector sets one coordinate to 1 and the others to 0.
+
+The same idea applies to a polynomial space. For polynomials of degree at most 2, choose $(1,X,X^2)$ as a basis. Then the coefficient vector of $f(X)=a_0+a_1X+a_2X^2$ is $c=(a_0,a_1,a_2)^T$. The basis depends on the space, but in each case a chosen basis lets us represent an object by a column of coordinates.
+
+### 4.2 Inverse matrices and how to find them
+
+For a square matrix $A$, an **inverse** $A^{-1}$ satisfies $A^{-1}A=AA^{-1}=I$. If $y=Ac$, multiplying both sides by $A^{-1}$ recovers the original coordinates, $c=A^{-1}y$. An inverse exists exactly when the determinant of $A$ is nonzero.
+
+The basic method for finding an inverse is **Gauss–Jordan elimination**. Form the augmented matrix $[A\mid I]$. Use row swaps, multiplying a row by a nonzero scalar, and adding a multiple of one row to another until the left side becomes the identity matrix $I$. The same row operations transform the right side into $A^{-1}$, giving $[I\mid A^{-1}]$. If the left side cannot be reduced to $I$, the matrix has no inverse.
+
+For example, the matrix that evaluates a quadratic polynomial at $0,1,2$ is
+
+$$
+V=\begin{pmatrix}1&0&0\\1&1&1\\1&2&4\end{pmatrix}.
+$$
+
+Over the real numbers, row reduction gives
+
+$$
+[V\mid I]\;\longrightarrow\;
+\left[\begin{array}{ccc|ccc}
+1&0&0&1&0&0\\
+0&1&1&-1&1&0\\
+0&0&2&1&-2&1
+\end{array}\right]
+\;\longrightarrow\;
+[I\mid V^{-1}],\qquad
+V^{-1}=\begin{pmatrix}
+1&0&0\\
+-\frac32&2&-\frac12\\
+\frac12&-1&\frac12
+\end{pmatrix}.
+$$
+
+Over a finite field, use that field’s operations for the same steps. For example, in $\mathbb F_7$, dividing by 2 means multiplying by the inverse of 2, which is 4.
 
 ## 5. Dot products, componentwise products, and linear combinations
 
@@ -232,6 +276,8 @@ This is a mathematical way to organize the QAP structure; it does not mean that 
 | Linear map | A map preserving addition and scalar multiplication | Understand how matrices express the linear parts of computations |
 | Dot product and linear combination | Multiply coefficients by variables and add the results | Read each row of an R1CS constraint |
 | Matrix product | Compute many linear combinations together | Compute $(Az),(Bz),(Cz)$ |
+| Basis vectors and coordinates | Express each vector uniquely as a linear combination of basis vectors | Represent a polynomial by its coefficient vector |
+| Inverse matrix | Reverse an invertible linear transformation | Recover polynomial coefficients from evaluation values |
 | Componentwise product | Multiply entries at matching positions | Express the quadratic part of R1CS constraints |
 | Tensor product | Vector of pairwise products of entries from two vectors | View bilinear products as linear maps on a larger space and expand QAP products |
 | Dimension and rank | Matrix shape and number of independent directions | Understand rows/columns in R1CS and the name Rank-1 |

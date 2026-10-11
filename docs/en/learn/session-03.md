@@ -17,7 +17,7 @@ import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: September 29, 2026
+Last updated: October 11, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations) · [Session 3 exercises](../exercises/session-03)
 
@@ -171,6 +171,24 @@ Given $d+1$ distinct points $(x_0, y_0), \dots, (x_d, y_d)$, there is a unique p
 $$f(X) = \sum_{i=0}^{d} y_i \prod_{j \ne i} \frac{X - x_j}{x_i - x_j}.$$
 
 In this formula, each product is one at its designated point and zero at the other specified points. Weighting and adding these products gives the required values. **Given a degree bound and sufficiently many distinct points, coefficients and evaluation values specify the same polynomial.** Arithmetization will turn tables into polynomials; commitments will allow their values to be checked. Notice why both representations are useful.
+
+The same correspondence has a linear-algebra form using a **Vandermonde matrix**. Write a degree-at-most-two polynomial as $f(X)=a_0+a_1X+a_2X^2$, and collect its coefficients in $c=(a_0,a_1,a_2)^T$. Its values $y=(f(x_0),f(x_1),f(x_2))^T$ at three points are
+
+$$
+y=Vc,\qquad V=\begin{pmatrix}1&x_0&x_0^2\\1&x_1&x_1^2\\1&x_2&x_2^2\end{pmatrix}.
+$$
+
+Each row of $V$ describes evaluation at one point. Its determinant is $(x_1-x_0)(x_2-x_0)(x_2-x_1)$, which is nonzero when the three points are distinct. Therefore $V$ has an inverse and the coefficients can be recovered from the values as $c=V^{-1}y$. Lagrange interpolation expresses this inverse transformation in terms of **basis polynomials**. For more on basis vectors and row reduction, see the [vectors and matrices tutorial](./linear-algebra-tutorial).
+
+For the same three points $(0,1),(1,2),(2,5)$,
+
+$$
+V=\begin{pmatrix}1&0&0\\1&1&1\\1&2&4\end{pmatrix},\qquad
+V^{-1}=\begin{pmatrix}1&0&0\\-\frac32&2&-\frac12\\\frac12&-1&\frac12\end{pmatrix},\qquad
+y=\begin{pmatrix}1\\2\\5\end{pmatrix}.
+$$
+
+Thus $c=V^{-1}y=(1,0,1)^T$, so $f(X)=1+X^2$. Each column of $V^{-1}$ contains the coefficients of the corresponding Lagrange basis polynomial: multiplying that column by $V$ gives the standard basis vector that is 1 at its designated point and 0 at the others. Hence $c=V^{-1}y$ is the same computation as weighting each basis polynomial by its target value $y_i$ and adding the results.
 
 First view the construction as a curve over the reals. Interpolate $(0,1),(1,2),(2,5)$ with degree at most two. With $\ell_0=(X-1)(X-2)/2$, $\ell_1=-X(X-2)$ and $\ell_2=X(X-1)/2$,
 
