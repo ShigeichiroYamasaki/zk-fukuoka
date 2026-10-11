@@ -249,7 +249,13 @@ Two distinctions matter. First, $F\equiv0\pmod{Z_D}$ means zero remainder, not t
 A later random-point test checks whether $F-HZ_D$ is zero for fixed, degree-bounded $F,H$. It must not allow the quotient value to be chosen after seeing the point. Reuse this correspondence in [Session 4's QAP construction](./session-04#_4-1-from-r1cs-to-qap) and the [interpolation and divisibility guide](./terms/polynomials).
 
 
-### 3.5 Even–odd decomposition and evaluation-table folding for FRI {#fri-polynomial-folding}
+### 3.5 What “folding” means: reducing an evaluation table in FRI {#fri-polynomial-folding}
+
+The purpose of this section is not to explain the entire FRI protocol, but to make the term **folding** concrete. Folding takes two values in an evaluation table, at $x$ and $-x$, combines them using a challenge $\alpha$, and produces one value for the next table at $x^2$. We will identify the inputs, the combination, and the output through equations and an example.
+
+Section 3.4 combined conditions at several points into divisibility by a vanishing polynomial. Here we consider a different question: how can an evaluation table be handled so that it can be checked with fewer queries? FRI, introduced in Session 6, tests low-degree structure by repeatedly folding the table, reducing its size and the corresponding degree bound in stages.
+
+Folding does not mean arbitrarily discarding half the table, and it is different from convolution in signal processing. Nor does the ability to compute a folded table prove that the original table came from a low-degree polynomial. This section explains the operation itself; Session 6 covers the complete FRI protocol, including post-commitment challenges, query consistency checks, and the final degree test.
 
 In $K[X]$, separate coefficients by the parity of their exponents. For example,
 
