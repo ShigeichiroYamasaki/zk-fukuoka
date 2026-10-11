@@ -293,6 +293,105 @@ export const diagrams = {
       }
     ]
   },
+  "03-4": {
+    "section": "3.1",
+    "type": "flow",
+    "title": [
+      "係数・多項式・評価値を区別する",
+      "Distinguish coefficients, a polynomial, and an evaluation"
+    ],
+    "note": [
+      "K[X]のXは不定元であり，まだ特定の値ではない．評価点を代入すると一つの値になる．次数上限と十分な相異なる点があれば，評価表から元の多項式を復元できる．",
+      "X in K[X] is an indeterminate, not a chosen value. Substitution at a point produces one value. With a degree bound and enough distinct points, the polynomial can be recovered from its evaluation table."
+    ],
+    "nodes": [
+      {
+        "title": ["係数の列", "Coefficient list"],
+        "body": ["係数は体 K の元．", "Coefficients are elements of the field K."],
+        "formula": "(a₀, a₁, …, a_d)"
+      },
+      {
+        "title": ["多項式という設計図", "Polynomial as a blueprint"],
+        "body": ["不定元 X を含む形式的な式．", "A formal expression in the indeterminate X."],
+        "formula": "f(X) = a₀ + a₁X + … + a_dXᵈ"
+      },
+      {
+        "title": ["評価点で実行", "Evaluate at a point"],
+        "body": ["r ∈ K を代入すると，一つの体要素を得る．", "Substitute r ∈ K to obtain one field element."],
+        "formula": "f(r) ∈ K"
+      }
+    ],
+    "bottom": [
+      "一つの評価値だけでは多項式全体は決まらない．次数が高々2なら，相異なる3点での評価値から一意に復元できる．",
+      "One evaluation does not determine the whole polynomial. If the degree is at most 2, values at three distinct points determine it uniquely."
+    ]
+  },
+  "03-5": {
+    "section": "3.5",
+    "type": "flow",
+    "title": [
+      "偶奇分解からFRIのフォールディングへ",
+      "From even–odd decomposition to FRI folding"
+    ],
+    "note": [
+      "F₁₇の例，f(X)=3+2X+5X²+X³，チャレンジ α=2，x=2．評価値から計算した1は，f′(x²)=f′(4)と一致する．",
+      "Example over F₁₇: f(X)=3+2X+5X²+X³, challenge α=2, and x=2. The value 1 computed from evaluations agrees with f′(x²)=f′(4)."
+    ],
+    "nodes": [
+      {
+        "title": ["1. 対になる評価値", "1. Paired evaluations"],
+        "body": ["x=2 と −x=15 の値を使う．", "Use the values at x=2 and −x=15."],
+        "formula": "f(2)=1,  f(15)=11"
+      },
+      {
+        "title": ["2. 偶数次・奇数次を取り出す", "2. Recover even and odd parts"],
+        "body": ["和と差で二つの部分を評価する．", "Use the sum and difference to evaluate the two parts."],
+        "formula": "f_even(4)=6,  f_odd(4)=6"
+      },
+      {
+        "title": ["3. チャレンジで結合", "3. Combine with the challenge"],
+        "body": ["α=2で一つの値にまとめる．", "Combine them into one value using α=2."],
+        "formula": "f′(4)=6+2·6=1 mod 17"
+      }
+    ],
+    "bottom": [
+      "入力表の半分の点数で次の表を作る操作がフォールディングである．低次数性そのものは，後続段階との整合性や次数条件を検査して確かめる．",
+      "Folding creates the next table with half as many points. Low-degree structure is established by checking consistency across rounds and the final degree condition."
+    ]
+  },
+  "03-6": {
+    "section": "4.3",
+    "type": "flow",
+    "title": [
+      "ランダムな一点で多項式の違いを検査する",
+      "Test whether polynomials differ at a random point"
+    ],
+    "note": [
+      "検査対象の多項式は点を選ぶ前に固定する．hが恒等的に0なら必ず一致し，hが0でない次数dの多項式なら，誤って一致と判定する確率は高々d/|S|．",
+      "Fix the polynomial before sampling. If h is identically zero, the test always reports equality; if h is a nonzero degree-d polynomial, the chance of falsely reporting equality is at most d/|S|."
+    ],
+    "nodes": [
+      {
+        "title": ["比較したい式を固定", "Fix the expressions to compare"],
+        "body": ["h=f−g と置く．異なる多項式なら h≠0．", "Set h=f−g. Different polynomials imply h≠0."],
+        "formula": "deg h ≤ d"
+      },
+      {
+        "title": ["検査点をランダムに選ぶ", "Choose a random test point"],
+        "body": ["Sから一様に r を選ぶ．", "Choose r uniformly from S."],
+        "formula": "r ← S"
+      },
+      {
+        "title": ["一度だけ評価", "Evaluate once"],
+        "body": ["h(r)≠0なら異なると分かる．h(r)=0なら見逃しの可能性が残る．", "If h(r)≠0, they differ. If h(r)=0, the test may have missed the difference."],
+        "formula": "Pr[h(r)=0] ≤ d / |S|"
+      }
+    ],
+    "bottom": [
+      "図は評価点の数を減らせる理由を示す．多項式の値を効率よく計算できるか，証明者が値を後から改変できないかは，別途確認が必要である．",
+      "The diagram explains why fewer evaluations can suffice. Efficient evaluation and preventing a prover from changing values afterward require separate mechanisms."
+    ]
+  },
   "04-1": {
     "section": "3.3",
     "type": "flow",

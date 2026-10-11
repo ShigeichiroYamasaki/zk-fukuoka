@@ -31,7 +31,9 @@ for(const [id,d] of Object.entries(diagrams)){
  for(const locale of ['','en/']){
   const page=readFileSync(new URL(`../docs/${locale}learn/session-${id.slice(0,2)}.md`,import.meta.url),'utf8');
   const session = Number(id.slice(0,2));
-  const marker = (session >= 8 && session <= 15) || ['02-3'].includes(id) || ['scatter','merkle'].includes(d.type)
+  const marker = page.includes(`<StudyDiagram id="${id}"`)
+   ? `<StudyDiagram id="${id}"`
+   : (session >= 8 && session <= 15) || ['02-3'].includes(id) || ['scatter','merkle'].includes(d.type)
    ? `<StudyDiagram id="${id}"`
    : id === '02-1' ? '<GraphIsoExample'
    : id === '02-2' ? '<SchnorrOverview'
@@ -40,8 +42,8 @@ for(const [id,d] of Object.entries(diagrams)){
  }
  if(d.type==='matrix')for(const row of d.rows)assert.equal(row.length,d.headers.length,id);
 }
-assert.equal(Object.keys(diagrams).length,43);
-console.log('43 bilingual diagram definitions: coverage, RS distance, finite-field points, curve, trace, bounds and extraction verified.');
+assert.equal(Object.keys(diagrams).length,46);
+console.log('46 bilingual diagram definitions: coverage, RS distance, finite-field points, curve, trace, bounds and extraction verified.');
 
 // Session 3: real interpolation and exact Schwartz-Zippel example counts.
 const { basis, quadratic, difference, gridZeros } = await import('../docs/.vitepress/theme/polynomialExamples.js');
@@ -56,6 +58,14 @@ for(let x=0;x<7;x++)for(let y=0;y<7;y++)if(gridZeros(x,y))zeros++;
 assert.equal(zeros,13);
 assert.ok(zeros/49<=2/7);
 console.log('Session 3: interpolation identities and 2/7, 13/49 zero counts verified.');
+const f17=x=>mod(3+2*x+5*x*x+x*x*x,17);
+const inv17=n=>Array.from({length:17},(_,i)=>i).find(i=>mod(n*i,17)===1);
+const folded=mod(mod((f17(2)+f17(15))*inv17(2),17)+2*mod((f17(2)-f17(15))*inv17(4),17),17);
+assert.equal(f17(2),1);
+assert.equal(f17(15),11);
+assert.equal(folded,1);
+assert.equal(mod(7+7*4,17),folded);
+console.log('Session 3 FRI folding diagram example: paired evaluations agree with f′(x²).');
 
 // Check the displayed isomorphism on every pair, including non-edges.
 const { mapping, edges, rightEdges } = await import('../docs/.vitepress/theme/graphExample.js');

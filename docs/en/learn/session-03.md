@@ -156,6 +156,10 @@ $$X^2+1=(X-1)(X+1)+2.$$
 
 The quotient is $X+1$ and the remainder is 2, so divisibility fails. This differs from merely writing the fraction $(X^2+1)/(X-1)$.
 
+The coefficient list, the formal polynomial, and an evaluation at a point are related but distinct objects. The diagram summarizes these three stages and why a degree bound plus several points is needed to recover the original polynomial from evaluations.
+
+<StudyDiagram id="03-4" :en="true" />
+
 ### 3.2 The basic theorem on the number of roots
 
 The following fundamental fact holds for polynomials over a field:
@@ -265,6 +269,10 @@ $$\operatorname{Fold}_{\alpha}[f](x^2)
 
 For a low-degree input polynomial, this is the evaluation table of $f_{\mathrm{even}}(Y)+\alpha f_{\mathrm{odd}}(Y)$, with half the degree bound. Replacing $x$ by $-x$ gives the same value.
 
+The diagram summarizes this correspondence: two values in the original table yield the even and odd parts, which are combined with the challenge to form the next table.
+
+<StudyDiagram id="03-5" :en="true" />
+
 Choose a domain $D$ excluding zero and closed under negation. Squaring maps each pair $\{x,-x\}$ to one point, so $D'=\{x^2:x\in D\}$ has half as many elements. The order-eight multiplicative subgroup $\{1,2,4,8,16,15,13,9\}$ of $\mathbb F_{17}$ squares to $\{1,4,16,13\}$ and then to $\{1,16\}$.
 
 **Being able to fold a table does not establish that the original table has low degree.** The formula also works on arbitrary tables. FRI fixes each table before choosing a random challenge, then checks consistency between layers and the final degree condition. See the [worked example in Session 6](./session-06.md#fri-worked-example).
@@ -294,6 +302,10 @@ For one variable, $n=1$, this is exactly the fact from Section 3.2 that a polyno
 To compare two polynomials, take $h=f-g$. If they differ, $h$ is nonzero, so accidental zero evaluation has probability at most $d/|S|$. Sample coordinates independently and uniformly from $S$. The sampling set must be large enough relative to degree; if the current field is too small, consider an extension field. Independent repetition also helps when the one-test miss probability is below 1.
 
 What becomes small here is the number of points checked. Computing an evaluation is not automatically cheap. The argument also fails if polynomials can be chosen after seeing the test point. A proof system must fix them first and authenticate the required evaluations.
+
+The order is essential: first fix the polynomials, then choose a random point, and finally inspect the value at that point.
+
+<StudyDiagram id="03-6" :en="true" />
 
 Compare $f(X)=X^2+1$ with $g(X)=4X-2$. Their difference is $h(X)=(X-1)(X-3)$. Intersections with the horizontal axis are precisely the test points that miss this difference. Fix the polynomials before sampling.
 
