@@ -18,6 +18,13 @@ let minimum=5;
 for(let i=0;i<words.length;i++)for(let j=i+1;j<words.length;j++)minimum=Math.min(minimum,words[i].filter((v,k)=>v!==words[j][k]).length);
 assert.equal(minimum,4);
 assert.deepEqual(diagrams['05-1'].rows[0].slice(1).map(Number),[1,3,5,0,2]);
+const rsF=Array.from({length:5},(_,x)=>mod(x+1,7));
+const rsG=Array.from({length:5},(_,x)=>mod(2*x+1,7));
+const rsReceived=[1,2,6,4,5];
+assert.deepEqual(rsF,[1,2,3,4,5]);
+assert.deepEqual(rsG,[1,3,5,0,2]);
+assert.equal(rsF.filter((v,i)=>v!==rsG[i]).length,4);
+assert.equal(rsF.filter((v,i)=>v!==rsReceived[i]).length,1);
 const trace=diagrams['04-3'].rows.map(r=>Number(r[1]));
 for(let i=1;i<trace.length;i++)assert.equal(trace[i],mod(trace[i-1]**2,17));
 for(const [i,k] of [1,2,4,8].entries())assert.equal(diagrams['06-2'].bars[i].value,100*0.5**k);
@@ -42,8 +49,8 @@ for(const [id,d] of Object.entries(diagrams)){
  }
  if(d.type==='matrix')for(const row of d.rows)assert.equal(row.length,d.headers.length,id);
 }
-assert.equal(Object.keys(diagrams).length,46);
-console.log('46 bilingual diagram definitions: coverage, RS distance, finite-field points, curve, trace, bounds and extraction verified.');
+assert.equal(Object.keys(diagrams).length,47);
+console.log('47 bilingual diagram definitions: coverage, RS distance and correction, finite-field points, curve, trace, bounds and extraction verified.');
 
 // Session 3: real interpolation and exact Schwartz-Zippel example counts.
 const { basis, quadratic, difference, gridZeros } = await import('../docs/.vitepress/theme/polynomialExamples.js');

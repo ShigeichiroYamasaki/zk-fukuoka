@@ -9,13 +9,14 @@ next:
 ---
 
 <script setup>
+import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 </script>
 
 # Session 5: Error-correcting codes and the information-theoretic perspective
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 11, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 5 in the syllabus](./#session-5) · [Session 5 exercises](../exercises/session-05)
 
@@ -54,7 +55,7 @@ The prerequisites are random variables, events, independence, logarithms, and bi
 
 </div>
 
-A diagram is less useful here than comparing actual evaluation tables: the tables and calculations below make distance concrete. Follow them in this order to reach Session 6’s question of testing proximity to low-degree polynomials with few queries.
+The table above shows the distance between two codewords. The next diagram uses a small finite-field calculation to show why that distance permits error correction. It also leads to Session 6’s question of testing proximity to low-degree polynomials with few queries.
 
 ## 1. Why do we need coding theory? — Motivation
 
@@ -112,6 +113,8 @@ For minimum distance $\delta$, changing at most $\lfloor(\delta-1)/2\rfloor$ pos
 </div>
 
 RS code over F₇ of degree &lt;2, evaluated at 0–4. With n=5 and d=2, minimum distance is 4 and one error is uniquely correctable. The two displayed codewords differ in four positions.
+
+<StudyDiagram id="05-4" en />
 
 ### 2.4 Parameters and distances in equations {#rs-parameters}
 

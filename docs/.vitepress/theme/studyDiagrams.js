@@ -658,6 +658,48 @@ export const diagrams = {
       }
     ]
   },
+  "05-4": {
+    "section": "2.3",
+    "type": "flow",
+    "title": [
+      "F₇上のRS符号：評価表から1誤りを訂正する",
+      "A Reed–Solomon code over F₇: correct one error in an evaluation table"
+    ],
+    "top": [
+      "すべての計算は7を法として行う．評価点は D={0,1,2,3,4}．",
+      "All arithmetic is modulo 7. The evaluation set is D={0,1,2,3,4}."
+    ],
+    "nodes": [
+      {
+        "title": ["多項式を選ぶ", "Choose a polynomial"],
+        "body": ["f(X)=X+1，次数は1で2未満．", "f(X)=X+1, whose degree 1 is less than 2."],
+        "formula": "deg f < d = 2"
+      },
+      {
+        "title": ["評価して符号化", "Evaluate and encode"],
+        "body": ["各点で値を計算し，符号語を作る．", "Evaluate at each point to form a codeword."],
+        "formula": "c_f=(1,2,3,4,5)"
+      },
+      {
+        "title": ["1か所の誤りを受け取る", "Receive one corrupted symbol"],
+        "body": ["x=2の値3が6に変わったとする．", "Suppose the value 3 at x=2 is changed to 6."],
+        "formula": "r=(1,2,6,4,5),  d_H(r,c_f)=1"
+      },
+      {
+        "title": ["最小距離で復元する", "Recover using minimum distance"],
+        "body": ["n=5，d=2なので最小距離は4．一意訂正半径は1で，fが一意に定まる．", "With n=5 and d=2, the minimum distance is 4. The unique-decoding radius is 1, so f is uniquely determined."],
+        "formula": "δ=n−d+1=4,  ⌊(δ−1)/2⌋=1"
+      }
+    ],
+    "bottom": [
+      "距離4は実際にも確認できる．g(X)=2X+1の評価表は(1,3,5,0,2)で，c_fとはx=0だけで一致し，4か所で異なる．",
+      "The distance is visible directly: g(X)=2X+1 evaluates to (1,3,5,0,2), agreeing with c_f only at x=0 and differing at four positions."
+    ],
+    "note": [
+      "これは小さな有限体でRS符号の距離と一意訂正を示す例である．受信語が必ず自然な通信ノイズから来たと仮定するものではない．",
+      "This small-field example illustrates Reed–Solomon distance and unique decoding. It does not assume that a received word must come from natural channel noise."
+    ]
+  },
   "06-1": {
     "section": "2.2",
     "type": "flow",
