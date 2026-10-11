@@ -2,7 +2,7 @@
 
 著者：山崎重一郎  
 作成日：2026年9月29日  
-最終更新日：2026年9月30日
+最終更新日：2026年10月11日
 
 符号理論は，情報を冗長性のある形に符号化し，誤りが混じっても検出・訂正できる条件を調べる．ゼロ知識証明では，通信路の偶発的な雑音だけでなく，証明者が意図的に作った不正なデータを検出するために符号の距離や低次数検査の考え方を使う．ここでは，第5回のReed–Solomon符号と，第6回のLow-Degree Testing・FRIを理解するための基礎をまとめる．
 
@@ -34,6 +34,22 @@ $$
 - 最大 $t=\left\lfloor(d_{\min}-1)/2\right\rfloor$ 個の誤りを一意に訂正できる．
 
 一意訂正の理由は，受信語から距離 $t$ 以内に二つの符号語が同時にあると仮定すると，その二符号語同士の距離が $2t$ 以下となり，最小距離の条件に反するためである．したがって，半径 $t$ の「誤り近傍」が符号語ごとに重ならない．
+
+<figure class="code-neighborhood-figure" aria-labelledby="code-neighborhood-caption">
+  <figcaption id="code-neighborhood-caption"><strong>図 CT-1：最小距離3の符号で，1誤りを一意に訂正する</strong></figcaption>
+  <p>符号 <code>C = {000, 111}</code> では，二つの符号語の最小距離は3である．各符号語から距離1以内の語を集めた二つの集合は重ならない．</p>
+  <div class="code-neighborhoods" role="group" aria-label="符号語ごとの距離1以内の語の集合">
+    <section class="code-neighborhood">
+      <h3>符号語 <code>000</code> の距離1以内</h3>
+      <div class="codeword-set"><code>000</code><code>100</code><code>010</code><code>001</code></div>
+    </section>
+    <section class="code-neighborhood code-neighborhood-highlight">
+      <h3>符号語 <code>111</code> の距離1以内</h3>
+      <div class="codeword-set"><code>111</code><code>011</code><code class="received-codeword">101 ← 受信語</code><code>110</code></div>
+    </section>
+  </div>
+  <p class="code-neighborhood-conclusion">受信語 <code>101</code> は <code>111</code> から距離1，<code>000</code> から距離2である．したがって，この符号の規則では <code>111</code> に一意に復号できる．</p>
+</figure>
 
 ## 3. Reed–Solomon符号：多項式評価による符号
 

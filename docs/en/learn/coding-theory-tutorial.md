@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: September 30, 2026
+Last updated: October 11, 2026
 
 Coding theory studies how to encode information with redundancy so that errors can be detected and corrected. Zero-knowledge proofs use code distance and low-degree testing not only to handle accidental channel noise, but also to detect data deliberately crafted by a dishonest prover. This tutorial covers the foundations needed for Session 5’s Reed–Solomon codes and Session 6’s low-degree testing and FRI.
 
@@ -34,6 +34,22 @@ A larger minimum distance gives greater separation between distinct codewords.
 - Up to $t=\left\lfloor(d_{\min}-1)/2\right\rfloor$ errors can be uniquely corrected.
 
 For unique correction, suppose a received word were within distance $t$ of two different codewords. Those codewords would then be at distance at most $2t$, contradicting the minimum-distance condition. Thus the radius-$t$ error neighborhoods around codewords do not overlap.
+
+<figure class="code-neighborhood-figure" aria-labelledby="code-neighborhood-caption">
+  <figcaption id="code-neighborhood-caption"><strong>Figure CT-1: uniquely correct one error in a code with minimum distance 3</strong></figcaption>
+  <p>For the code <code>C = {000, 111}</code>, the two codewords have minimum distance 3. The sets of words within distance 1 of each codeword do not overlap.</p>
+  <div class="code-neighborhoods" role="group" aria-label="Words within distance 1 of each codeword">
+    <section class="code-neighborhood">
+      <h3>Within distance 1 of codeword <code>000</code></h3>
+      <div class="codeword-set"><code>000</code><code>100</code><code>010</code><code>001</code></div>
+    </section>
+    <section class="code-neighborhood code-neighborhood-highlight">
+      <h3>Within distance 1 of codeword <code>111</code></h3>
+      <div class="codeword-set"><code>111</code><code>011</code><code class="received-codeword">101 ← received word</code><code>110</code></div>
+    </section>
+  </div>
+  <p class="code-neighborhood-conclusion">The received word <code>101</code> is at distance 1 from <code>111</code> and distance 2 from <code>000</code>. Thus it uniquely decodes to <code>111</code> under this code.</p>
+</figure>
 
 ## 3. Reed–Solomon codes: encoding by polynomial evaluation
 

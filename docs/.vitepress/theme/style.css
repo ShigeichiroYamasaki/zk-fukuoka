@@ -773,3 +773,16 @@ button:focus-visible {
 .vp-doc .table-caption{color:var(--vp-c-text-1);font-size:16px;line-height:1.7;margin-bottom:12px;scroll-margin-top:110px}
 .vp-doc .captioned-table table{margin-top:0}
 .vp-doc span[id]{scroll-margin-top:110px}
+/* Coding theory: disjoint radius-one Hamming neighborhoods. */
+.code-neighborhood-figure{margin:28px 0;padding:22px;border:1px solid var(--vp-c-divider);border-radius:14px;background:var(--vp-c-bg-soft);color:var(--vp-c-text-1)}
+.code-neighborhood-figure figcaption{margin-bottom:12px;font-size:1.05rem;line-height:1.6}
+.code-neighborhood-figure>p{line-height:1.8}
+.code-neighborhoods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.code-neighborhood{min-width:0;padding:16px;border:1px solid var(--vp-c-divider);border-radius:10px;background:var(--vp-c-bg)}
+.code-neighborhood h3{margin:0 0 12px;font-size:1rem}
+.codeword-set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.codeword-set code{display:block;padding:9px 8px;text-align:center;border:1px solid var(--vp-c-divider);border-radius:7px;font-size:1rem}
+.code-neighborhood-highlight{border-color:var(--vp-c-brand-1)}
+.received-codeword{background:var(--vp-c-brand-soft);color:var(--vp-c-brand-1);font-weight:700}
+.code-neighborhood-conclusion{margin:14px 0 0;padding:12px 14px;border-left:4px solid var(--vp-c-brand-1);background:var(--vp-c-bg);font-weight:600}
+@media(max-width:640px){.code-neighborhood-figure{padding:16px}.code-neighborhoods{grid-template-columns:1fr}}
