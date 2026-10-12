@@ -1,6 +1,6 @@
 # Program meaning: a prerequisite for arithmetization
 
-Updated: September 30, 2026
+Updated: October 12, 2026
 
 [Prerequisites and supplementary resources](./foundations) · [Session 4: Arithmetization](./session-04) · [Execution-trace guide](./terms/execution-traces)
 
@@ -18,7 +18,24 @@ A state is the collection of values needed to determine the next step of an exec
 
 For instance, starting with $s_0=0$, adding deposit $d_i$ gives $s_{i+1}=s_i+d_i$; a separate running total for withdrawals follows $t_{i+1}=t_i+w_i$. At the end, check $s_n=t_n$. Transitions alone are insufficient: the initial state and final condition must also be specified.
 
-## 3. Execution traces and AIR
+## 3. Expanding a bounded computation into a Boolean circuit
+
+To represent a program as a circuit, fix bounds on the input length, the bit width of each value, and the number of execution steps. Under these bounds, the computation can be represented as a finite network of logic gates. A Boolean circuit takes bits (0 or 1) as inputs and outputs, and computes with gates such as AND, OR, and NOT. Wires carry values between gates, including intermediate results.
+
+For the deposit-and-withdrawal example, first represent each amount as a bit string of a fixed width. Expand binary addition into full-adder logic, with wires carrying each bit sum and carry. Once both totals are computed, compare their bits and output 1 only if every bit matches. Thus, an operation written as one addition or comparison in a program becomes a finite collection of small gates in the circuit. The width must also be large enough for the totals, so overflow cannot make different totals appear equal.
+
+An if-then-else branch can be represented by a selection circuit (multiplexer) controlled by the condition bit. A loop with a fixed upper bound can be unrolled by placing one copy of its circuit for each iteration. A program with unbounded input length or runtime therefore cannot be represented directly by one fixed-size circuit. Instead, use a circuit for each chosen input-size or step bound, or represent the computation step by step with an execution trace.
+
+| Program operation | Circuit representation |
+| --- | --- |
+| Fixed-width integer addition | Per-bit adder gates and carry wires |
+| Conditional branch | A selection circuit controlled by the condition bit |
+| Loop with a fixed bound | A sequence of circuit copies, one per iteration |
+| Correctness of the result | The output bits have the required value |
+
+Circuit construction translates a program into logical gate constraints. Session 4 then expresses the relations among circuit inputs, intermediate wires, and outputs as algebraic constraints such as R1CS. For example, if a bit is represented by a finite-field element $b$, the condition that it is either 0 or 1 is $b(b-1)=0$. Gate relations are constrained as well, together with the public input and output conditions, so that only valid computations satisfy all constraints. A Boolean circuit is one intermediate representation that preserves the program's meaning on the way to arithmetization.
+
+## 4. Execution traces and AIR
 
 An execution trace is a table listing states in time order from the initial state to the final state. Each row records a state at one step, and adjacent rows must obey the transition rule.
 
@@ -30,7 +47,7 @@ An execution trace is a table listing states in time order from the initial stat
 
 AIR treats this table as evidence of a valid computation. Transition constraints check adjacent rows; boundary constraints check the initial and final values. See the [execution-trace, state, transition, and boundary guide](./terms/execution-traces).
 
-## 4. Translating meaning into constraints
+## 5. Translating meaning into constraints
 
 Arithmetization introduces variables for intermediate values and arranges that only values corresponding to valid executions satisfy the constraints. Correct translation needs both directions:
 
