@@ -6,7 +6,7 @@ outline: [2, 3]
 
 * 2026/09/07
 * Shigeichiro Yamasaki
-* Last updated: 2026/09/29
+* Last updated: 2026/10/12
 
 ::: info Draft syllabus
 A proposed three-act, 15-session curriculum. Dates, instructors, and venues are to be determined. This is an English translation of the Japanese proposal.
@@ -16,9 +16,12 @@ A proposed three-act, 15-session curriculum. Dates, instructors, and venues are 
 
 ---
 
-[Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
+The following applied materials can be taken up after or alongside the 15-session core. They are not included in the core session count or learning objectives; each uses a concrete implementation to examine security and operational limits.
 
-[Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
+- [Build an ERC-20 transfer ZK rollup](../rollup/) — six development stages and runnable reference models.
+- [Private-input AI inference with ZKML](../zkml/) — [runnable code and operation manual](../zkml/02-proof).
+- [Privacy-preserving tips with a JPKI wallet](../tipping/).
+- [Reduce stored personal data with ZK attribute proofs](../data-minimization/).
 
 
 ## Design principles
@@ -37,7 +40,7 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 
 ### Session 1: What is a proof? — Background and formalization of interactive proofs {#session-1}
 
-[Read the Session 1 lecture manuscript →](./session-01)
+[Session 1 lecture](./session-01) · [Exercise](../exercises/session-01)
 
 - Limits of the NP verifier paradigm: distinguish access to a witness from interaction and privacy. The definition does not require reading every bit or making only one pass.
 - Complexity-theoretic motivation: present Arthur–Merlin games and the IP = PSPACE theorem as results.
@@ -47,7 +50,7 @@ By linking Act I with Act III, the curriculum maintains a sense of purpose throu
 
 ### Session 2: Zero-knowledge and the generalization of witnesses {#session-2}
 
-[Read the Session 2 lecture manuscript →](./session-02)
+[Session 2 lecture](./session-02) · [Exercise](../exercises/session-02)
 
 - Define zero-knowledge formally through the simulator paradigm and introduce the hierarchy of indistinguishability notions.
 - Introduce knowledge soundness and extractors.
@@ -68,7 +71,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 3: Algebra of finite fields and polynomials; probabilistic checking {#session-3}
 
-[Read the Session 3 lecture manuscript →](./session-03)
+[Session 3 lecture](./session-03) · [Exercise](../exercises/session-03)
 
 - Distinguish finite and extension fields from polynomial rings $K[X]$. Construct extension fields from irreducible polynomials and study division, remainders, roots, and Lagrange interpolation.
 - Represent polynomials by coefficient vectors and evaluation tables; connect even/odd decomposition to FRI folding.
@@ -76,7 +79,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 4: Arithmetization techniques and complexity theory {#session-4}
 
-[Read the Session 4 lecture manuscript →](./session-04)
+[Session 4 lecture](./session-04) · [Exercise](../exercises/session-04)
 
 - Use Cook–Levin and circuit complexity (NC, P, and uniformity) as background for translating computations with public inputs, witnesses, and intermediate values into constraints.
 - Derive R1CS as linear maps plus quadratic constraints over a finite field; study matrix dimensions, sparsity, Booleanity, and range constraints.
@@ -85,7 +88,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 5: Error-correcting codes and the information-theoretic perspective {#session-5}
 
-[Read the Session 5 lecture manuscript →](./session-05)
+[Session 5 lecture](./session-05) · [Exercise](../exercises/session-05)
 
 - Define Reed–Solomon codes as polynomial evaluation maps; derive rate, minimum distance, the Singleton bound, error correction, and erasure recovery.
 - **Information-theoretic perspective:** Compute the capacity of a q-ary symmetric channel using entropy and compare it with the Hamming sphere-packing bound for worst-case errors.
@@ -93,7 +96,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 6: Low-degree testing and soundness amplification {#session-6}
 
-[Read the Session 6 lecture manuscript →](./session-06)
+[Session 6 lecture](./session-06) · [Exercise](../exercises/session-06)
 
 - Formalize low-degree testing as proximity to a Reed–Solomon code. Use examples to see why interpolation or a Merkle commitment alone does not establish low degree.
 - Trace FRI’s even/odd decomposition, finite-field folds, consistency checks between layers, and final degree test. Distinguish query counts, proof communication, and authentication paths.
@@ -101,7 +104,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 7: Elliptic curves and pairings {#session-7}
 
-[Read the Session 7 lecture manuscript →](./session-07)
+[Session 7 lecture](./session-07) · [Exercise](../exercises/session-07)
 
 - Study elliptic-curve groups and bilinear pairings $e:G_1\times G_2\to G_T$, then connect the pairing’s product-checking capability to Groth16.
 - **Cryptographic perspective:** Distinguish the problem statements and models for discrete logarithm, q-SDH, and KEA; understand what a reduction proves and what remains an assumption.
@@ -109,7 +112,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 8: Polynomial commitments and the theory of cryptographic commitments {#session-8}
 
-[Read the Session 8 lecture manuscript →](./session-08)
+[Session 8 lecture](./session-08) · [Exercise](../exercises/session-08)
 
 - Define binding and hiding separately and introduce opening a polynomial evaluation.
 - Work through KZG’s SRS, quotient polynomial, and pairing verification with a small-field example; confirm that the basic construction does not automatically provide hiding or zero knowledge.
@@ -117,7 +120,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 9: The Fiat–Shamir transform and the strengths and weaknesses of the ROM {#session-9}
 
-[Read the Session 9 lecture manuscript →](./session-09)
+[Session 9 lecture](./session-09) · [Exercise](../exercises/session-09)
 
 - Derive Fiat–Shamir challenges from a transcript hash; study hash inputs, challenge derivation, and message order.
 - **Cryptographic perspective:** Examine ROM proofs, query-driven search, and the CGH counterexample; explain why interactive IP soundness does not automatically carry over to a non-interactive protocol.
@@ -125,11 +128,11 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 10: The PCP theorem and the IOP framework — a complexity-theoretic synthesis {#session-10}
 
-[Read the Session 10 lecture manuscript →](./session-10)
+[Session 10 lecture](./session-10) · [Exercise](../exercises/session-10)
 
 - Read the PCP theorem with its random-bit, query, completeness, and soundness parameters; note that notation varies across sources.
 - Compare the proof-access models of PCP, IP, and IOP; position FRI as an IOPP and polynomial commitments as an implementation of oracle access.
-- **Complexity-theoretic perspective:** Survey the gap reductions from local PCP tests to hardness of approximation, and organize arithmetization, IOPs, commitments, and Fiat–Shamir by role and scope.
+- **Complexity-theoretic perspective:** Survey the gap reductions from local PCP tests to hardness of approximation, and organize arithmetization, IOPs, commitments, and Fiat–Shamir by role and scope. Sumcheck is previewed in Session 1 and treated in detail in Session 15.
 
 ---
 
@@ -137,7 +140,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 11: Groth16 {#session-11}
 
-[Read the Session 11 lecture manuscript →](./session-11)
+[Session 11 lecture](./session-11) · [Exercise](../exercises/session-11)
 
 - Follow the QAP divisibility relation through Groth16 proof generation and verification; understand how pairings check multiplicative relations.
 - Distinguish circuit-specific trusted setup, proof-time randomness, and public-input processing. The proof has three group elements, while public-input processing still has cost.
@@ -145,7 +148,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 12: PLONK {#session-12}
 
-[Read the Session 12 lecture manuscript →](./session-12)
+[Session 12 lecture](./session-12) · [Exercise](../exercises/session-12)
 
 - Contrast Groth16’s circuit-specific keys with a universal, updatable SRS and circuit-specific preprocessing.
 - Introduce PLONKish selector polynomials and gate constraints, then study copy constraints, the permutation/grand-product check, and its random challenges.
@@ -153,7 +156,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 13: STARK {#session-13}
 
-[Read the Session 13 lecture manuscript →](./session-13)
+[Session 13 lecture](./session-13) · [Exercise](../exercises/session-13)
 
 - Read an AIR/FRI/Merkle/Fiat–Shamir construction as a sequence: transition and boundary constraints, composition polynomial, low-degree proximity, authenticated openings, and non-interactivity.
 - **Security and cost:** Separate proximity, table consistency, binding to public inputs, and any masking; study a model for estimating proof size and verifier work.
@@ -161,7 +164,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 14: An integrated perspective — moving between Acts I–III {#session-14}
 
-[Read the Session 14 lecture manuscript →](./session-14)
+[Session 14 lecture](./session-14) · [Exercise](../exercises/session-14)
 
 - Treat completeness, soundness, knowledge soundness, and zero knowledge as separate guarantees; compare the construction and assumptions needed by each system.
 - Compare arithmetization, commitments, non-interactivity, setup, and public-input costs; identify the conditions behind proof-size and verification-cost claims.
@@ -169,10 +172,10 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 ### Session 15: Directions for further development {#session-15}
 
-[Read the Session 15 lecture manuscript →](./session-15)
+[Session 15 lecture](./session-15) · [Exercise](../exercises/session-15)
 - Study recursive proof composition and curve cycles; distinguish Nova’s relaxed-R1CS folding, IVC, and compression.
-- Study sumcheck and GKR’s layer-by-layer reductions; assess verifier and prover cost benefits under construction-specific conditions.
-- **Applications and research directions:** Distinguish Ethereum L2 ZK rollups from L1 execution proofs and locate EIP-8025’s optional execution proofs. Date any cited status snapshot.
+- Study how GKR uses sumcheck to reduce propositions layer by layer. Distinguish the verifier-cost result of the original GKR protocol from prover-cost improvements that depend on the specific construction.
+- **Applications and research directions:** Distinguish Ethereum L2 ZK rollups from L1 zkEVM goals and execution proofs. Treat EIP-8025 as a dated proposal snapshot, distinguishing optional supplementary proofs from continued re-execution.
 - Organize research across expressiveness, proof size, verification cost, prover cost, setup, and security.
 
 ---

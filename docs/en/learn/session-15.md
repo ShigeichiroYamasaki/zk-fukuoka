@@ -15,7 +15,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 12, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 15 in the syllabus](./#session-15) · [Session 15 exercises](../exercises/session-15)
 
@@ -31,7 +31,7 @@ The three learning objectives are:
 
 
 ::: tip Prerequisites and route through this session
-Review arithmetization as a way to represent verification as computation ([Session 4](./session-04)), IOPs and sumcheck ([Session 10](./session-10)), and the evaluation criteria ([Session 14](./session-14)). Folding and FRI both reduce objects step by step, but they reduce different objects and rely on different security arguments.
+Review arithmetization as a way to represent verification as computation ([Session 4](./session-04)), IOPs ([Session 10](./session-10)), and the evaluation criteria ([Session 14](./session-14)). Sumcheck was previewed in [Session 1](./session-01) and is explained in this session. Folding and FRI both reduce objects step by step, but they reduce different objects and rely on different security arguments.
 
 Read in this order: the new capability of recursive proofs; the accumulated relations handled by folding; checks based on GKR/sumcheck; and Ethereum applications and open research questions. Track which prover or verifier costs each approach reduces and what it assumes separately.
 :::

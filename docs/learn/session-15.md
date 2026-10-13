@@ -15,7 +15,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年10月11日
+最終更新日付：2026年10月12日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第15回](./#session-15) · [第15回の演習](../exercises/session-15)
 
@@ -31,7 +31,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 
 ::: tip 前提知識とこの回の論点
-証明の検証を計算として扱う算術化（[第4回](./session-04)），IOPとsumcheck（[第10回](./session-10)），各方式の評価軸（[第14回](./session-14)）を前提にする．フォールディングとFRIはどちらも段階的な縮約を行うが，縮約する対象も安全性の根拠も異なる．
+証明の検証を計算として扱う算術化（[第4回](./session-04)），IOP（[第10回](./session-10)），各方式の評価軸（[第14回](./session-14)）を前提にする．sumcheckは[第1回で予告](./session-01)し，この回で仕組みを説明する．フォールディングとFRIはどちらも段階的な縮約を行うが，縮約する対象も安全性の根拠も異なる．
 
 再帰的証明が増やす能力→フォールディングが扱う累積関係→GKR/sumcheckによる検査→Ethereumの応用例と研究課題の順に読む．各方式が証明者・検証者のどのコストを減らし，何を別途仮定するかを意識しよう．
 :::
