@@ -8,9 +8,9 @@ import { withBase } from 'vitepress'
 
 # 2. 入力を隠した推論の証明を動かす
 
-更新日：2026年10月13日
+更新日：2026年10月14日
 
-[応用編の全体像](./) · [モデルと算術化](./01-model)
+[応用編の全体像](./) · [モデルと算術化](./01-model) · [Docker実行環境](../exercises/manuals#docker)
 
 ## 配布ファイル
 

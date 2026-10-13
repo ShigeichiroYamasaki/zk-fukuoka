@@ -8,9 +8,9 @@ import { withBase } from 'vitepress'
 
 # 2. Run private-input inference proofs
 
-Updated: October 13, 2026
+Updated: October 14, 2026
 
-[Overview](./) · [Model and arithmetization](./01-model)
+[Overview](./) · [Model and arithmetization](./01-model) · [Docker environment](../exercises/manuals#docker)
 
 ## Download and run
 

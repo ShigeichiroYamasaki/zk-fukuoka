@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 基本操作マニュアル集
 
-更新日：2026年10月13日
+更新日：2026年10月14日
 
 幕III（第11〜15回）の演習を進めるための操作案内です．第11回で証明の生成・検証を一巡し，第12回でセットアップの違い，第13回で実行トレース，第14回で方式の比較，第15回で発展的な構成を確認します．
 
@@ -17,6 +17,24 @@ outline: [2, 3]
 [応用編：入力を隠したAI推論 ZKML](../zkml/) — [実行用コードと操作マニュアル](../zkml/02-proof)．
 
 [応用編：JPKIワレットによる投げ銭](../tipping/) と [ZK属性証明による個人情報の最小化](../data-minimization/) は，現状は設計・脅威分析の演習です．実動するJPKI連携，資格発行，匿名クレデンシャル，ZK属性証明の配布コードはありません．
+
+## Dockerで実行環境を揃える {#docker}
+
+リポジトリの[`compose.yaml`](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/compose.yaml)は，Ruby 3.4，Node.js 24，および任意のFoundry／Anvil環境を別々のコンテナとして起動します．教材と生成物はローカルの作業ディレクトリに保存され，AnvilのポートはこのPC内からのみ接続できます．Docker DesktopまたはDocker EngineとCompose v2が必要です．
+
+リポジトリのルートで次を実行します．macOS／LinuxではUIDとGIDを合わせ，コンテナが作成したファイルをホスト側でも編集できるようにします．Windowsではこの2行を省略してください．
+
+```sh
+export LOCAL_UID="$(id -u)" LOCAL_GID="$(id -g)"
+docker compose pull ruby node
+docker compose run --rm ruby ruby docs/public/examples/rollup/ledger_model.rb --test
+docker compose run --rm node npm --prefix docs/public/examples/zkml install
+docker compose run --rm node npm --prefix docs/public/examples/zkml run demo
+```
+
+ZKMLの`node_modules`は名前付きDocker volumeに置かれます．Circomの単独コマンドはNode.jsコンテナ内で`npx --yes circom2@0.2.22 --version`のように実行できます．Foundry／Anvilを使う場合は，別のターミナルで`docker compose --profile evm run --rm --service-ports foundry`を起動します．ローカルRPCは`http://127.0.0.1:8545`です．Forgeコマンドは，たとえば`docker compose --profile evm run --rm --entrypoint forge foundry --version`で確認できます．実際のコントラクト課題は各応用編の手順に従ってください．
+
+終了時はAnvilを起動したターミナルで`Ctrl+C`を押します．RubyとNode.jsはメジャー／マイナー版のタグを使い，パッチ更新に追随します．Foundryは`v1.8.5`に固定しています．実験を再現可能にする場合は`docker compose images`の結果と`docker compose config`を記録し，必要なら利用したイメージをダイジェストで固定してください．ここでのAnvilはローカル学習用であり，テストネットや本番環境へ接続する設定は含みません．
 
 ## 応用編で使うツールを選ぶ {#applied}
 

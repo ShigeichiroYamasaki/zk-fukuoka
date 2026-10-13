@@ -4,7 +4,9 @@ outline: [2, 3]
 
 # Applied course: verify private-input AI inference with ZKML
 
-Updated: October 13, 2026
+Updated: October 14, 2026
+
+Use the [shared Docker instructions](../exercises/manuals#docker) to start the execution environment.
 
 How can someone check an AI result without seeing the data used to compute it? In this working example, train a small classifier in Ruby, express its inference as a Circom circuit, and generate a Groth16 proof locally. Ruby is the default for off-chain learning scripts; Circom and snarkjs (Node.js) remain the proving tools. The verifier receives the classification and proof; the input remains with the prover.
 

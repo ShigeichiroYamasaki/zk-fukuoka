@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Basic operation manuals
 
-Updated: October 13, 2026
+Updated: October 14, 2026
 
 Follow the Act III exercises (Sessions 11–15): generate and verify a proof, compare setup requirements, inspect execution traces, compare results, and explore advanced constructions.
 
@@ -17,6 +17,24 @@ Official documentation reference check: October 12, 2026. This page provides a r
 [Applied course: private-input ZKML inference](../zkml/) — [Runnable code and manual](../zkml/02-proof).
 
 [JPKI wallet tips](../tipping/) and [ZK attribute proofs for data minimization](../data-minimization/) are currently design and threat-analysis exercises. No runnable JPKI integration, credential issuance, anonymous credential or ZK attribute-proof code is provided.
+
+## Run the tools in Docker {#docker}
+
+The repository's [`compose.yaml`](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/compose.yaml) provides separate containers for Ruby 3.4, Node.js 24, and optional Foundry / Anvil. Exercise files remain in your local checkout, and the Anvil port is bound to this computer only. Docker Desktop or Docker Engine with Compose v2 is required.
+
+Run these commands from the repository root. On macOS / Linux, match the container UID and GID so files created by a container remain editable on the host. Omit the first line on Windows.
+
+```sh
+export LOCAL_UID="$(id -u)" LOCAL_GID="$(id -g)"
+docker compose pull ruby node
+docker compose run --rm ruby ruby docs/public/examples/rollup/ledger_model.rb --test
+docker compose run --rm node npm --prefix docs/public/examples/zkml install
+docker compose run --rm node npm --prefix docs/public/examples/zkml run demo
+```
+
+ZKML's `node_modules` are stored in a named Docker volume. Run standalone Circom commands in the Node.js container, for example `npx --yes circom2@0.2.22 --version`. To use Foundry / Anvil, start `docker compose --profile evm run --rm --service-ports foundry` in another terminal. The local RPC endpoint is `http://127.0.0.1:8545`. Check Forge with `docker compose --profile evm run --rm --entrypoint forge foundry --version`. Follow each applied-course guide for the actual contract exercise.
+
+Stop Anvil with `Ctrl+C` in its terminal. Ruby and Node.js use major / minor tags that follow patch updates; Foundry is pinned to `v1.8.5`. To reproduce an experiment, record `docker compose images` and `docker compose config`, and pin image digests if needed. Anvil is for local exercises; this configuration does not connect to a testnet or production environment.
 
 ## Tools for applied courses {#applied}
 

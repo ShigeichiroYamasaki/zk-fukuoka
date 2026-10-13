@@ -6,9 +6,9 @@ outline: [2, 3]
 
 A six-stage development course connects Sessions 1–15 to deposits, L2 transfers, withdrawals and L1 verification of state transitions for one ERC-20 token.
 
-Updated: October 13, 2026
+Updated: October 14, 2026
 
-[Lectures](../learn/sessions) · [Balance arithmetization](../exercises/session-04#program) · [Exercises](../exercises/)
+[Lectures](../learn/sessions) · [Balance arithmetization](../exercises/session-04#program) · [Exercises](../exercises/) · [Docker environment](../exercises/manuals#docker)
 
 ::: info Course scope and supplied artifacts
 These pages provide specifications, implementation steps and acceptance tests. Ruby is the default language for off-chain reference models and learning scripts; downloads include a Ruby ledger/Merkle model and an introductory Circom arithmetic circuit. The integrated signature/Merkle rollup circuit, L1 bridge and operator-failure exits are learner implementation tasks. Solidity, Circom and Node.js remain in use where required by EVM contracts and proving tools. This is not a completed rollup or a deployed testnet system.

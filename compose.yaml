@@ -1,0 +1,40 @@
+services:
+  ruby:
+    image: ruby:3.4-bookworm
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      HOME: /tmp
+    init: true
+    command: ["sleep", "infinity"]
+
+  node:
+    image: node:24-bookworm
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - zkml_node_modules:/workspace/docs/public/examples/zkml/node_modules
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      HOME: /tmp
+      npm_config_cache: /tmp/.npm
+    init: true
+    command: ["sleep", "infinity"]
+
+  foundry:
+    image: ghcr.io/foundry-rs/foundry:v1.8.5
+    profiles: ["evm"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      HOME: /tmp
+    ports:
+      - "127.0.0.1:8545:8545"
+    entrypoint: ["anvil", "--host", "0.0.0.0"]
+
+volumes:
+  zkml_node_modules:

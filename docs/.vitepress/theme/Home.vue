@@ -151,7 +151,7 @@ const lastUpdated = computed(() => {
         </div>
         <a class="text-link" :href="link('zkml/')">{{ t('ZKMLの実装例を見る', 'Explore the ZKML implementation') }} ↗</a>
       </div>
-      <p class="section-intro">{{ t('小さな分類モデルを学習し、入力を公開せずに推論結果の正しさを証明します。Python・Circom・Groth16で動かすコードと、改ざんを拒否するテストを用意しました。', 'Train a small classifier and prove its inference without revealing the input. Run the Python, Circom and Groth16 example, including tampering tests.') }}</p>
+      <p class="section-intro">{{ t('小さな分類モデルを学習し、入力を公開せずに推論結果の正しさを証明します。Ruby・Circom・Groth16で動かすコードと、改ざんを拒否するテストを用意しました。', 'Train a small classifier and prove its inference without revealing the input. Run the Ruby, Circom and Groth16 example, including tampering tests.') }}</p>
       <nav class="applied-chapters" :aria-label="t('ZKML応用編', 'ZKML applied course')">
         <a :href="link('zkml/')"><span class="applied-number">START</span><span>{{ t('何を隠し、何を証明するか', 'What is private, what is proven') }}</span><span aria-hidden="true">→</span></a>
         <a :href="link('zkml/01-model.html')"><span class="applied-number">01</span><span>{{ t('モデルの学習と算術化', 'Training and arithmetization') }}</span><span aria-hidden="true">→</span></a>
