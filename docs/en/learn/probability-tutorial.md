@@ -107,7 +107,31 @@ $$
 
 This is **Chebyshev's inequality**. It follows by applying Markov's inequality to $Y=(X-\mu)^2$; it bounds the probability of a large deviation using the variance. For example, after 100 fair coin tosses, the observed fraction of heads $\widehat p$ has expectation $0.5$ and variance $0.25/100=0.0025$. Thus $\Pr[|\widehat p-0.5|\ge0.1]\le0.0025/0.1^2=0.25$. For an average of independent, identically distributed samples, the variance decreases in proportion to $1/n$, improving this bound as the sample count grows.
 
-**Hoeffding's inequality** adds the assumptions that samples are independent and bounded, and in return gives an exponentially small bound on deviations of their average. The later section on statistical identification applies it to the distinguisher's 0/1 outputs. The three inequalities form a useful progression: Markov uses the mean, Chebyshev uses the variance, and Hoeffding uses independence and boundedness.
+**Hoeffding's inequality** uses independence and boundedness to give an exponentially small bound on additive deviations of a sample average. The later section on statistical identification applies it to the distinguisher's 0/1 outputs. Chernoff bounds apply to sums of independent Bernoulli variables and control relative deviations from the mean. Thus Markov (mean only), Chebyshev (variance), Chernoff (sums of independent Bernoulli variables), and Hoeffding (sums of independent bounded variables) have different assumptions and deviation measures.
+
+### Chernoff bounds: controlling relative deviations in independent trials
+
+Let $X_1,\ldots,X_n$ be independent Bernoulli random variables (each taking value 0 or 1), let $X=\sum_i X_i$, and write $\mu=\mathbb{E}[X]$. For every $\delta>0$, the upper tail satisfies
+
+$$
+\Pr[X\ge(1+\delta)\mu]\le\left(\frac{e^\delta}{(1+\delta)^{1+\delta}}\right)^\mu\le\exp\!\left(-\frac{\mu\delta^2}{2+\delta}\right).
+$$
+
+For $0<\delta<1$, the lower tail satisfies
+
+$$
+\Pr[X\le(1-\delta)\mu]\le\exp\!\left(-\frac{\mu\delta^2}{2}\right).
+$$
+
+These are **Chernoff bounds**. The proof applies Markov's inequality to $e^{\lambda X}$, factors the expectation using independence of the $X_i$, and chooses a suitable $\lambda$. The bounds control a **relative (multiplicative) deviation** from the mean $\mu$.
+
+For example, run 100 independent trials, each succeeding with probability $0.1$. The success count $X$ has mean $\mu=10$. At least 20 successes means $X\ge2\mu$, so the upper-tail bound with $\delta=1$ gives
+
+$$
+\Pr[X\ge20]\le e^{-10/3}\approx0.036.
+$$
+
+This is an upper bound, not the actual probability. In this example, Hoeffding's additive bound gives $\Pr[X-\mu\ge10]\le e^{-2}\approx0.135$. Chernoff is sharper here, but which bound is useful depends on the variables' ranges, the mean, and the deviation size. Chernoff bounds are suited to sums of independent Bernoulli variables; Hoeffding applies to sums of general independent bounded random variables.
 
 ## 5. Distinguishing probability distributions
 
