@@ -41,10 +41,23 @@ const lastUpdated = computed(() => {
       <span>LEARN THE MATH</span><b>✳</b><span>WRITE THE CODE</span><b>✳</b
       ><span>SHARE THE PROOF</span><b>✳</b><span>BUILD WITH FRIENDS</span>
     </div>
+    <section class="foundation-section section-pad" aria-labelledby="foundation-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">01 / START HERE</span>
+          <h2 id="foundation-title">{{ t('前提知識・補助教材', 'Prerequisites & supplementary resources') }}</h2>
+        </div>
+      </div>
+      <p class="section-intro">{{ t('授業に入る前に，必要な数学・計算理論・暗号学の基礎を分野別に確認できます。', 'Review the mathematical, computational and cryptographic foundations by topic before starting the lectures.') }}</p>
+      <a class="foundation-link" :href="link('learn/foundations.html')">
+        <span><strong>{{ t('分野から教材を探す', 'Browse foundations by topic') }}</strong><span>{{ t('有限体と多項式，確率論，線形代数，符号理論など', 'Finite fields, polynomials, probability, linear algebra, coding theory and more') }}</span></span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </section>
     <section id="lesson-materials" class="learn-section section-pad">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">01 / LEARNING PATH</span>
+          <span class="section-kicker">02 / LEARNING PATH</span>
           <h2>
             {{
               t("各回の授業資料", "Lecture materials")
@@ -66,16 +79,6 @@ const lastUpdated = computed(() => {
           t("カリキュラム案", "DRAFT CURRICULUM")
         }}</span>
       </p>
-      <nav class="lesson-shortcuts" :aria-label="t('学習コンテンツの索引', 'Learning indexes')">
-        <a :href="link('learn/')">{{ t('シラバス', 'Syllabus') }} ↗</a>
-        <a :href="link('learn/topics.html')">{{ t('トピック別インデックス', 'Topic index') }} ↗</a>
-        <a :href="link('learn/foundations.html')">{{ t('初学者向け・前提知識と補助教材', 'Beginner prerequisites & resources') }} ↗</a>
-        <a :href="link('rollup/')">{{ t('応用編・ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }} ↗</a>
-        <a :href="link('zkml/')">{{ t('応用編・入力を隠したAI推論', 'Applied course: private-input AI inference') }} ↗</a>
-        <a :href="link('tipping/')">{{ t('応用編・JPKIワレットでプライバシーを守る投げ銭', 'Applied course: privacy-preserving tips with a JPKI wallet') }} ↗</a>
-        <a :href="link('data-minimization/')">{{ t('応用編・ZK属性証明で個人情報の保管を減らす', 'Applied course: reduce stored personal data with ZK attributes') }} ↗</a>
-        <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
-      </nav>
       <p class="lesson-scroll-hint">{{ t('一覧内をスクロールして全15回を確認できます。', 'Scroll within the list to browse all 15 sessions.') }}</p>
       <div class="lesson-directory" tabindex="0" role="region" :aria-label="t('全15回の授業資料一覧', 'All 15 lecture sessions')">
         <section v-for="act in acts" :key="act.start" class="lesson-act">
@@ -91,11 +94,16 @@ const lastUpdated = computed(() => {
           </ul>
         </section>
       </div>
+      <nav class="lesson-browse-links" :aria-label="t('授業資料の別の探し方', 'Other ways to browse the course')">
+        <span>{{ t('別の入口', 'Browse by') }}</span>
+        <a :href="link('learn/topics.html')">{{ t('トピック別', 'Topic') }} ↗</a>
+        <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
+      </nav>
     </section>
     <section id="applied-course" class="applied-section section-pad" aria-labelledby="applied-title">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">02 / APPLIED COURSE</span>
+          <span class="section-kicker">03 / APPLIED COURSE</span>
           <h2 id="applied-title">{{ t('応用編：ERC-20のZK rollupを作る', 'Applied course: build an ERC-20 ZK rollup') }}</h2>
         </div>
         <a class="text-link" :href="link('rollup/')">{{ t('応用編の全体像を見る', 'Explore the applied course') }} ↗</a>
@@ -112,7 +120,7 @@ const lastUpdated = computed(() => {
     <section id="applied-zkml" class="applied-section section-pad" aria-labelledby="zkml-title">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">03 / APPLIED COURSE · ZKML</span>
+          <span class="section-kicker">04 / APPLIED COURSE · ZKML</span>
           <h2 id="zkml-title">{{ t('応用編：入力を隠したAI推論を検証する', 'Applied course: verify private-input AI inference') }}</h2>
         </div>
         <a class="text-link" :href="link('zkml/')">{{ t('ZKMLの実装例を見る', 'Explore the ZKML implementation') }} ↗</a>
@@ -124,10 +132,23 @@ const lastUpdated = computed(() => {
         <a :href="link('zkml/02-proof.html')"><span class="applied-number">02</span><span>{{ t('証明生成・検証と配布コード', 'Proving, verification and code') }}</span><span aria-hidden="true">→</span></a>
       </nav>
     </section>
+    <section id="applied-tipping" class="applied-section section-pad" aria-labelledby="tipping-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">05 / APPLIED COURSE · PRIVATE TIPPING</span>
+          <h2 id="tipping-title">{{ t('応用編：JPKIワレットでプライバシーを守る投げ銭', 'Applied course: privacy-preserving tips with a JPKI wallet') }}</h2>
+        </div>
+        <a class="text-link" :href="link('tipping/')">{{ t('設計演習を読む', 'Explore the design exercise') }} ↗</a>
+      </div>
+      <p class="section-intro">{{ t('本人確認を前提にしながら，支援者の氏名やウォレットとの対応を一般公開しない投げ銭の設計を考えます。法令上の義務を免れる仕組みではなく，実運用には専門家による確認が必要な教材です。', 'Explore a tipping design that avoids publicly linking supporters’ identities to wallets while retaining identity checks. This is not a way to evade legal duties; production use requires professional review.') }}</p>
+      <nav class="applied-chapters" :aria-label="t('JPKIワレット投げ銭の応用編', 'JPKI wallet tipping applied course')">
+        <a :href="link('tipping/')"><span class="applied-number">START</span><span>{{ t('情報の流れ・証明する条件・演習', 'Data flows, proof conditions and exercises') }}</span><span aria-hidden="true">→</span></a>
+      </nav>
+    </section>
     <section id="applied-data-minimization" class="applied-section section-pad" aria-labelledby="data-minimization-title">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">04 / APPLIED COURSE · PRIVACY</span>
+          <span class="section-kicker">06 / APPLIED COURSE · PRIVACY</span>
           <h2 id="data-minimization-title">{{ t('応用編：ZK属性証明でランサムウェア被害を抑える', 'Applied course: reduce ransomware impact with ZK attributes') }}</h2>
         </div>
         <a class="text-link" :href="link('data-minimization/')">{{ t('教材を読む', 'Explore the lesson') }} ↗</a>
@@ -139,7 +160,7 @@ const lastUpdated = computed(() => {
     </section>
     <section class="community-section section-pad">
       <div class="community-copy">
-        <span class="section-kicker">05 / OPEN BY DESIGN</span>
+        <span class="section-kicker">07 / OPEN BY DESIGN</span>
         <h2>
           {{ t("学びも、コミュニティも。", "An open community.") }}<br />{{
             t("いっしょにつくっていく。", "Built with you.")
