@@ -1406,6 +1406,59 @@ export const diagrams = {
       }
     ]
   },
+  "10-4": {
+    "section": "全体",
+    "type": "overview",
+    "title": [
+      "第10回の議論を俯瞰する：PCPからIOP，応用へ",
+      "Session 10 at a glance: from PCPs to IOPs and applications"
+    ],
+    "core": {
+      "title": [
+        "PCP定理：長い証明を少数のランダムな問い合わせで検査できる",
+        "PCP theorem: check a long proof with a few random queries"
+      ],
+      "body": [
+        "証明の符号化と局所検査を組み合わせ，完全性と健全性を保つ．",
+        "Encode the proof and design local tests while preserving completeness and soundness."
+      ]
+    },
+    "branches": [
+      {
+        "title": ["計算量理論への帰結", "Complexity-theoretic consequence"],
+        "body": [
+          "局所検査を制約として読む → YES/NOの最適値ギャップ → 近似困難性（具体的な結論は帰着と仮定に依存）",
+          "Read local tests as constraints → a YES/NO optimum gap → hardness of approximation (specific results depend on reductions and assumptions)"
+        ]
+      },
+      {
+        "title": ["対話型オラクル証明へ", "Toward interactive oracle proofs"],
+        "body": [
+          "PCPの少数箇所へのアクセスとIPの複数ラウンドを組み合わせ，IOPとして整理する．",
+          "Combine PCP-style query access with multiple IP rounds in the IOP framework."
+        ]
+      }
+    ],
+    "pipelineTitle": [
+      "IOPを暗号プロトコルとして構成する代表的な流れ",
+      "A representative path from IOPs to cryptographic protocols"
+    ],
+    "pipeline": [
+      { "title": ["算術化", "Arithmetization"], "body": ["計算を制約・多項式関係へ", "Represent computation as constraints and polynomial relations"] },
+      { "title": ["IOP検査", "IOP checks"], "body": ["関係・次数・整合性を検査", "Check relations, degree and consistency"] },
+      { "title": ["コミットメント", "Commitments"], "body": ["オラクルへのアクセスを実装", "Implement oracle access"] },
+      { "title": ["Fiat–Shamir", "Fiat–Shamir"], "body": ["条件を満たす構成を非対話化", "Make a suitable construction non-interactive"] }
+    ],
+    "examplesTitle": ["方式ごとの位置づけ", "Where representative protocols fit"],
+    "examples": [
+      { "title": ["PLONK・STARK", "PLONK and STARK"], "body": ["IOP系の見取り図を使える代表例．算術化やコミットメントの選択は異なる．", "Representative protocols that can be read through the IOP map, with different arithmetizations and commitments."] },
+      { "title": ["Groth16", "Groth16"], "body": ["QAPとペアリングによるCRSモデルの直接構成．上のIOP変換列そのものではない．", "A direct QAP-and-pairing construction in the CRS model; it does not follow the IOP compilation path above."] }
+    ],
+    "note": [
+      "PCP定理は計算量理論上の結果であり，それだけでゼロ知識性や暗号プロトコルが得られるわけではない．",
+      "The PCP theorem is a complexity-theoretic result; by itself it does not provide zero-knowledge or a cryptographic protocol."
+    ]
+  },
   "11-1": {
     "section": "2.3",
     "type": "flow",

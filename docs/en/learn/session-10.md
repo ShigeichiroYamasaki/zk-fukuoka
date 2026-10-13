@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 13, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 10 in the syllabus](./#session-10) · [Session 10 exercises](../exercises/session-10)
 
@@ -36,6 +36,11 @@ Review NP, propositions and witnesses ([Session 1](./session-01)), randomized ch
 
 First use the PCP theorem to understand how a long proof can be checked with few queries, then see its connection to hardness of approximation, and distinguish the access models of PCP, IP and IOP. Finally use IOP as a map for reading the protocols in Act III.
 :::
+
+The discussion branches in two directions from the PCP theorem: its connection to hardness of approximation, and the IOP framework that combines PCP-style query access with interactive proofs. Use the diagram to see the overall route and how it relates to the protocols in Act III.
+
+<StudyDiagram id="10-4" en />
+
 ---
 
 ::: tip How to read the mathematics in this session
