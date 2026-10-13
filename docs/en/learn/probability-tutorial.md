@@ -55,13 +55,15 @@ Random variables are independent exactly when their joint probability distributi
 
 ### Distinguishing probability distributions
 
-To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample $z$ from one of them and decide which one generated it. Let a distinguisher $D$ receive $z$ and output $1$ if it thinks the sample came from $P_0$, and $0$ otherwise. Define its distinguishing gap by
+To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample $z$ from one of them and decide which one generated it. Let a distinguisher $D$ receive $z$ and output $1$ if it thinks the sample came from $P_0$, and $0$ otherwise. Let $q_i$ be the probability that $D$ outputs $1$ when its input is sampled from $P_i$, including both the sample-generation randomness and $D$'s own random coins. What matters is not whether $D$ is always right on one sample, but how differently its output behaves on the two distributions. Define the absolute difference between those output probabilities—called the **distinguishing gap** here—by
 
 $$
 \operatorname{Adv}_D(P_0,P_1)=\left|\Pr_{z\sim P_0}[D(z)=1]-\Pr_{z\sim P_1}[D(z)=1]\right|.
 $$
 
-If $D$ is randomized, these probabilities also include its own random coins. For processes A and B above, the test “output $1$ exactly when the bits are equal” has distinguishing gap $1$.
+This is not a statistical hypothesis-test significance level or a $p$-value; it is the distance between the distinguisher's output probabilities. A gap of $0$ means this distinguisher's output does not help separate the distributions; a gap of $1$ means perfect separation. For processes A and B above, the test “output $1$ exactly when the bits are equal” has $q_A=1$ and $q_B=0$, hence gap $1$. By contrast, testing only the first bit gives probability $1/2$ of outputting 1 on either process, hence gap $0$.
+
+If the source distribution is selected uniformly from $P_0,P_1$ and $D$'s output is used directly as its guess, its success probability is $\frac12(q_0+1-q_1)$. When $q_0\ge q_1$, this is $\frac12+\frac12\operatorname{Adv}_D(P_0,P_1)$. If the ordering is reversed, swapping the output labels gives the same formula with the absolute gap. Thus a zero gap means chance-level accuracy $1/2$, while gap $1$ means accuracy $1$ under the best label assignment.
 
 When the distinguisher’s computational power is unrestricted, the maximum distinguishing gap over a finite sample space equals the **total variation distance**
 
