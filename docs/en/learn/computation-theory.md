@@ -6,7 +6,7 @@ outline: [2, 3]
 
 This page organizes the language and computation theory needed for ZK Fukuoka through core terms, examples, and self-checks. Topics include formal languages, automata, Turing machines, complexity, and reductions.
 
-Updated: September 29, 2026
+Updated: October 13, 2026
 
 [Prerequisites and supplementary resources](./foundations) · [Session 1](./session-01) · [Session 4](./session-04) · [Session 10](./session-10) · [Topic index](./topics)
 
@@ -37,13 +37,30 @@ $$L_R=\{x\mid \exists w,\ R(x,w)=1\}.$$
 
 In other words, $x\in L_R$ exactly when at least one witness $w$ satisfies the relation. A verifier receives $w$ and computes $R(x,w)$. In the NP model, the witness is supplied to the verifier; zero-knowledge proofs study how to establish the relation without revealing the witness itself.
 
-### Example: a satisfiable circuit
+### Example: evaluate a Boolean circuit and check satisfiability
 
-Let $C$ be a Boolean circuit and $w$ an assignment to its inputs. Define $R(C,w)=1$ when evaluating $C$ on $w$ gives output 1. Then
+A **Boolean circuit** is a directed acyclic graph of logical gates such as AND, OR, and NOT. Its gates apply fixed truth tables to input bits and produce an output bit. The circuit below computes
+
+$$C(a,b,c)=(a\land b)\lor c.$$
+
+```mermaid
+flowchart LR
+  a["Input a"] --> gateAnd{"AND"}
+  b["Input b"] --> gateAnd
+  gateAnd --> gateOr{"OR"}
+  c["Input c"] --> gateOr
+  gateOr --> out["Output C(a,b,c)"]
+```
+
+Figure 1. Gate connections for $C(a,b,c)=(a\land b)\lor c$.
+
+For input $(a,b,c)=(1,0,1)$, first compute $a\land b=1\land0=0$, then output $0\lor1=1$. For $(1,0,0)$, the output is 0. The circuit structure is fixed, but its output depends on the input assignment.
+
+CircuitSAT asks whether there is an assignment $w$ to the inputs of a given circuit $C$ that makes its output 1. Define $R(C,w)=1$ when $C(w)=1$. Then
 
 $$\mathrm{CircuitSAT}=\{\langle C\rangle\mid \exists w,\ C(w)=1\}.$$
 
-The statement is “circuit $C$ is satisfiable”; the witness is an input assignment that makes its output 1. A verifier can evaluate the circuit on the supplied assignment. Sessions 1 and 2 ask how this direct check can be extended to interactive and zero-knowledge verification.
+For the circuit above, $(1,0,1)$ is a concrete witness. The statement is “circuit $C$ is satisfiable”; the witness is an input assignment that makes its output 1. A verifier evaluates the supplied assignment gate by gate and checks the output. Sessions 1 and 2 ask how this direct check can be extended to interactive and zero-knowledge verification.
 
 ## 3. Recognizers: from finite automata to Turing machines
 
@@ -53,7 +70,27 @@ A **recognizer** is a model of computation that reads strings and accepts some o
 
 A deterministic finite automaton (DFA) has finitely many states, an input alphabet, a transition function, a start state, and accepting states. A state is finite memory: it retains only the information from the input read so far that is needed for future decisions.
 
-For example, a machine that checks whether a bit string contains an even number of ones needs just two states: “even so far” and “odd so far.” Reading 0 leaves the state unchanged; reading 1 switches states. Languages accepted by DFAs are called **regular languages**.
+For example, a machine that checks whether a bit string contains an even number of ones needs just two states: $E$ (“an even number read”) and $O$ (“an odd number read”). It starts in $E$, since it has read no ones. Reading 0 leaves the parity unchanged; reading 1 switches between $E$ and $O$. The input is accepted if the machine ends in $E$.
+
+```mermaid
+flowchart LR
+  start([Start]) --> E(("E: even number of ones<br/>start and accept"))
+  E -->|0| E
+  E -->|1| O(("O: odd number of ones"))
+  O -->|0| O
+  O -->|1| E
+```
+
+Figure 2. A DFA that checks the parity of the number of ones. Each edge label is the input symbol read.
+
+On input $1010$, the state sequence is $E\to O\to O\to E\to E$, so it is accepted. On $1011$, the sequence ends in $O$, so it is rejected.
+
+| Current state | After reading 0 | After reading 1 |
+| --- | --- | --- |
+| $E$ (even) | $E$ | $O$ |
+| $O$ (odd) | $O$ | $E$ |
+
+Languages accepted by DFAs are called **regular languages**.
 
 This model helps describe simple input formats and finite-state conditions. It does not mean that arbitrary programs or arithmetic circuits are themselves finite automata.
 
@@ -83,7 +120,37 @@ The “N” in NP does not mean randomness. One can define NP by nondeterministi
 
 A **polynomial-time reduction** efficiently maps inputs of one problem to inputs of another while preserving yes/no answers. If problem $A$ reduces to $B$, an algorithm for $B$ can be used to solve $A$.
 
-The Cook–Levin theorem shows that every language in NP reduces to CircuitSAT in polynomial time. CircuitSAT is therefore NP-complete, and circuits provide a common representation for computations from NP. The course uses this result rather than reproving it: it justifies translating a general computation into a circuit and checking whether that circuit is satisfied.
+The **Cook–Levin theorem** states that **SAT is NP-complete**: SAT belongs to NP, and every language in NP can be transformed to SAT in polynomial time while preserving yes/no answers. Boolean circuit satisfiability, CircuitSAT, is also NP-complete because SAT and CircuitSAT can be transformed into each other in polynomial time. For this reason, courses often state the Cook–Levin result directly as a reduction to CircuitSAT.
+
+The theorem means that we can reduce every NP problem to the satisfiability of a common Boolean representation instead of designing a separate method for each problem. Its construction idea is to encode the computation of a nondeterministic polynomial-time machine as a table of configurations over time and tape position. A polynomial-time computation has polynomially many steps and uses only polynomially many tape cells, so this history has polynomial size.
+
+| Condition on the computation history | Constraint in the formula or circuit |
+| --- | --- |
+| The first row encodes input $x$ and the initial state | Initial-configuration constraint |
+| Each row follows legally from the previous row | Transition-rule constraint |
+| Some row reaches an accepting state | Acceptance constraint |
+
+The formula is constructed so that its satisfying assignments correspond to valid accepting computation histories. Thus it is satisfiable exactly when the machine accepts, and its size and construction time are polynomial. This is the correspondence made precise by the theorem.
+
+The reduction can be viewed as follows. For an NP language $L$ and input $x$, compile the computation that verifies a witness into a circuit $C_x$.
+
+```mermaid
+flowchart LR
+  x["Input x"] --> build["Encode the verifier computation"]
+  build --> C["Construct circuit Cₓ"]
+  w["Candidate witness w"] --> C
+  C --> check["Cₓ(w)=1?"]
+  check -->|Yes| member["x ∈ L"]
+  check -->|No| reject["This w does not verify"]
+```
+
+Figure 3. The reduction from witness verification to CircuitSAT. For fixed $x$, circuit $C_x$ is satisfiable exactly when $x\in L$.
+
+In symbols,
+
+$$x\in L\quad\Longleftrightarrow\quad\exists w,\ C_x(w)=1.$$
+
+“Constructing the circuit” does not mean evaluating its output in advance. It means building, in polynomial time, the computation structure of the verifier with $x$ fixed as a constant. Session 4 translates the correctness of each gate into R1CS or QAP constraints. Cook–Levin itself is not a theorem about arithmetization or zero knowledge; it provides the complexity-theoretic foundation for applying those techniques to general NP computations.
 
 ## 6. From interactive proofs to arithmetization
 
@@ -104,16 +171,16 @@ Arithmetization replaces the input, intermediate values, and output of a circuit
 
 1. For $\Sigma=\{0,1\}$, give an element of $\Sigma^*$ and explain how it differs from a language $L$.
 2. Identify the input, membership condition, and witness for CircuitSAT.
-3. Why are two states enough for a finite automaton to track whether it has read an even number of ones?
+3. For the DFA in Figure 2, list the states visited on input $1010$ and explain why it accepts.
 4. Explain using witness verification why NP is not “computation that tries random answers.”
-5. Why is a reduction to CircuitSAT useful before studying R1CS and QAP?
+5. In the computation-history table for Cook–Levin, explain why omitting any one of the initial, transition, or acceptance conditions could permit an invalid history.
 
 ::: details Sample answers
 1. `010` is in $\Sigma^*$. The set $\Sigma^*$ contains all finite strings, while $L$ selects only strings satisfying a particular condition.
 2. The input is an encoding of circuit $C$; it belongs if a satisfying assignment exists; that assignment is the witness.
-3. The exact count is unnecessary; only its parity matters, so “even” and “odd” suffice.
+3. The state sequence is $E\to O\to O\to E\to E$. The final state $E$ is accepting because the number of ones is even.
 4. The NP verifier deterministically checks a supplied candidate witness. Randomness is not part of the NP definition.
-5. Since CircuitSAT is NP-complete, reducing general NP computations to circuit satisfiability gives a common route to arithmetizing the circuit’s constraints.
+5. Without the initial condition, a history could start from the wrong input; without transition conditions, it could contain illegal steps; without an acceptance condition, a non-accepting computation could satisfy the formula. All three are needed to make satisfiability equivalent to an accepting computation.
 :::
 
 ## References
