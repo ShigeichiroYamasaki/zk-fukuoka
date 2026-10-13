@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # Basic operation manuals
 
+Updated: October 13, 2026
+
 Follow the Act III exercises (Sessions 11–15): generate and verify a proof, compare setup requirements, inspect execution traces, compare results, and explore advanced constructions.
 
 [Exercises](./) · [Implementations and tools](./tools) · [Prerequisites](../learn/foundations)
@@ -22,22 +24,22 @@ Check what code is provided and what remains an implementation task. **You do no
 
 | Applied course | What currently runs in the course | Main tools | Not implemented / notes |
 | --- | --- | --- | --- |
-| [ERC-20 ZK rollup](../rollup/) | Python balance-ledger model and introductory Circom transfer-arithmetic circuit | Python 3, Circom / circomlib / snarkjs, Solidity / Foundry (Forge and Anvil), OpenZeppelin Contracts | A complete E2E connecting signatures, Merkle trees, batch proofs and L1 contracts is a student implementation task. No TypeScript RPC client is selected for independent replay. |
-| [Private-input ZKML inference](../zkml/) | Run the provided small integer classifier, proof, verification and tamper-rejection code | Python 3.8+, Node.js LTS / npm, `circom2` 0.2.22 (Circom 2.2.2), `snarkjs` 0.7.5 | Versions are pinned in the provided `package.json`. EZKL / ONNX is an extension option and is not run by the provided code. |
+| [ERC-20 ZK rollup](../rollup/) | Ruby balance-ledger model and introductory Circom transfer-arithmetic circuit | Ruby, Circom / circomlib / snarkjs, Solidity / Foundry (Forge and Anvil), OpenZeppelin Contracts | Ruby is the default for off-chain reference models. A complete E2E connecting signatures, Merkle trees, batch proofs and L1 contracts is a student implementation task. |
+| [Private-input ZKML inference](../zkml/) | Train the small integer classifier in Ruby; run proof, verification and tamper-rejection with Circom / snarkjs | Ruby, Node.js LTS / npm, `circom2` 0.2.22 (Circom 2.2.2), `snarkjs` 0.7.5 | Ruby is the default for off-chain learning scripts. Proving tool versions are pinned in the provided `package.json`. EZKL / ONNX is an extension option and is not run by the provided code. |
 | [JPKI wallet tips](../tipping/) | Design data flows, public disclosures, threats and institutional assumptions | Synthetic data, spreadsheet or Markdown, threat-analysis table. Future prototype candidates: Circom / snarkjs and Foundry / Anvil | No implementation code, credential format, signature scheme or revocation scheme is provided or selected. Do not use real JPKI, My Number data or real assets. |
-| [Data minimization](../data-minimization/) | Compare stored fields and breach exposure for conventional and minimized designs using synthetic users | Spreadsheet or Python standard library (`csv`) | ZK attribute-proof circuit, credential signature format and issuance / revocation system are not provided or selected. This is currently a design exercise. |
+| [Data minimization](../data-minimization/) | Compare stored fields and breach exposure for conventional and minimized designs using synthetic users | Spreadsheet or Ruby standard library (`csv`) | Ruby is the default for helper scripts. ZK attribute-proof circuit, credential signature format and issuance / revocation system are not provided or selected. This is currently a design exercise. |
 
 ### Rollup: from reference model to a local L1 {#rollup-tools}
 
-1. Save `ledger_model.py` from the [ledger model exercise](../rollup/01-ledger#run), then run `python3 ledger_model.py` and `python3 ledger_model.py --test`. Begin with conservation of balances and failure-case tests. No external Python packages are required.
+1. Save `ledger_model.rb` from the [ledger model exercise](../rollup/01-ledger#run), then run `ruby ledger_model.rb` and `ruby ledger_model.rb --test`. Begin with conservation of balances and failure-case tests. No external gems are required.
 2. Use the [`transfer_core.circom` circuit](../rollup/03-circuit#core) to compile, generate a witness and inspect the R1CS. This introductory circuit does not include signatures or Merkle paths. Consult [Circom installation](https://docs.circom.io/getting-started/installation/) and [circomlib circuits](https://github.com/iden3/circomlib); record Node/npm and Circom versions.
 3. For L1, use `forge` and `anvil` from the [official Foundry installation guide](https://getfoundry.sh/introduction/installation/). Use `forge build` to compile and `forge test` for state-transition tests; connect only to the local Anvil chain. See [creating a Foundry project](https://getfoundry.sh/projects/creating-a-new-project/) and [OpenZeppelin ERC-20 / SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20). Testnet transactions are unnecessary for the core exercise.
 4. To independently reconstruct state after operator failure, implement `operator/replay.ts` from [Stage 6](../rollup/06-availability). The course does not choose a TypeScript runtime or Ethereum JSON-RPC client; select and pin one as a team, and document where the client is used.
 
 ### ZKML: reproduce the provided code {#zkml-tools}
 
-1. Save `train.py`, `classifier.circom`, `package.json` and `run.cjs` from [the proof walkthrough](../zkml/02-proof) into a new directory.
-2. With Python 3.8+ and Node.js LTS / npm, run `python3 train.py`, `npm install` and `npm run demo` in that order. Respect the versions in `package.json` and record the generated `package-lock.json`.
+1. Save `train.rb`, `classifier.circom`, `package.json` and `run.cjs` from [the proof walkthrough](../zkml/02-proof) into a new directory.
+2. With Ruby and Node.js LTS / npm, run `ruby train.rb`, `npm install` and `npm run demo` in that order. Respect the versions in `package.json` and record the generated `package-lock.json`.
 3. Confirm normal proof verification and rejection after changing the public classification result. Use [standalone verification instructions](../zkml/02-proof#what-the-verifier-receives) for the verifier-only workflow.
 4. To try a larger neural network, separately investigate a model framework that exports ONNX and the [official EZKL documentation](https://docs.ezkl.xyz/). This is a separate route from the provided Circom exercise; validate quantized output differences, supported operations and tool versions.
 
@@ -45,7 +47,7 @@ Check what code is provided and what remains an implementation task. **You do no
 
 - For tips, follow the [design exercise](../tipping/) using only fictional identity-check results and credentials. Map what the issuer, user device, verifier and payment provider retain. No code currently performs real JPKI integration or anonymous credential issuance.
 - If adding a local prototype later, limit it to a fake issuer key, fictional credentials and a test token on local Anvil. Decide how credential signatures, revocation and nullifiers work before implementing a proof circuit with Circom / snarkjs. Installing libraries alone does not establish credential validity or privacy.
-- For data minimization, follow the [breach-exposure exercise](../data-minimization/) with ten fictional records. Use a spreadsheet or Python's standard [`csv` module](https://docs.python.org/3/library/csv.html). Do not enter real names, birth dates or identity documents.
+- For data minimization, follow the [breach-exposure exercise](../data-minimization/) with ten fictional records. Use a spreadsheet or Ruby's standard `csv` library. Do not enter real names, birth dates or identity documents.
 - If implementing credential signatures or revocation, document the selected scheme, version and threat model before presenting it as a confirmed tool in this manual.
 
 
@@ -59,7 +61,7 @@ Check what code is provided and what remains an implementation task. **You do no
 | [14: Integration](../learn/session-14) | Record comparable experiments | [Comparison](#comparison) | Separate measurements from theoretical properties |
 | [15: Further directions](../learn/session-15) | Explore recursion, folding and sumcheck | [Advanced exercises](#advanced) | Explain what is combined and which costs are reduced |
 
-Start Sessions 11–12 with **Circom + snarkjs** to reuse a circuit. For Session 13, choose Anatomy of a STARK to study Python code, Winterfell to write AIR in Rust, or Miden VM to prove program execution. Installing every implementation is unnecessary.
+Ruby is the default for off-chain ledger, training and aggregation models in the applied courses. Circom is used for proof circuits, Solidity for L1 contracts, and Node.js where required by proving tools. Start Sessions 11–12 with **Circom + snarkjs** to reuse a circuit. Anatomy of a STARK is an external Python resource; Winterfell is an external Rust implementation for writing AIR; Miden VM is an external VM exercise. Installing every implementation is unnecessary.
 
 ## Common preparation and circuit creation {#circuits}
 
@@ -72,7 +74,8 @@ Create an exercise directory and record the implementation release or commit and
 | Circom + snarkjs | [snarkjs README](https://github.com/iden3/snarkjs#readme), [Circom installation](https://docs.circom.io/getting-started/installation/) | Node.js, Circom and snarkjs run; help is available |
 | Go | [gnark getting started](https://docs.gnark.consensys.io/HowTo/get_started) | Example and dependency versions match |
 | Rust | [Rust installation](https://doc.rust-lang.org/book/ch01-01-installation.html) and the selected implementation README | Record Rust/Cargo versions and feature flags |
-| Python | [Python tutorial](https://docs.python.org/3/tutorial/), [Anatomy code](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Check the Python version and required dependencies |
+| Ruby | [Installing Ruby](https://www.ruby-lang.org/en/documentation/installation/), [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/), [Ruby reference](https://docs.ruby-lang.org/en/) | Use a maintained stable release, not a preview. The provided Ruby code uses standard libraries only |
+| External Python resource | [Anatomy code](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | This language choice belongs to the external resource, not the site's applied-course default |
 
 ### Prepare shared Circom inputs
 
@@ -122,7 +125,7 @@ Choose one implementation and start with a small official example.
 
 | Approach | Implementation and manuals | Inspect |
 | --- | --- | --- |
-| Follow Python code | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Prime, traces, constraints, proving and verification. Jekyll instructions serve the website, not the Python exercise |
+| Read an external Python implementation | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Prime, traces, constraints, proving and verification. This external resource uses Python. Jekyll instructions serve its website, not the code exercise |
 | Write AIR in Rust | [Winterfell usage](https://github.com/facebook/winterfell#usage), [examples](https://github.com/facebook/winterfell/tree/main/examples), [API](https://docs.rs/winterfell/latest/winterfell/) | Trace construction, transitions, boundary assertions, proving and verification |
 | Prove VM execution | [Miden VM CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | Instructions, inputs, outputs and execution proof. Match `next` documentation to your release |
 
@@ -156,7 +159,7 @@ Choose an extension after finishing the basic exercises.
 | Topic | Procedure and references | Deliverable |
 | --- | --- | --- |
 | Recursion and folding | Follow [Nova's Tests and examples](https://github.com/microsoft/Nova#tests-and-examples); run the version-matched `minroot` example and vary steps | Distinguish state continuity, folding and final proving/verification. Account for compression separately when included |
-| Sumcheck and GKR | Read [Session 15](../learn/session-15) and [Thaler's textbook](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html); calculate a small bivariate polynomial sum by hand or in Python | Compare exhaustive evaluation with reducing one variable at a time. Distinguish this exercise from a complete proof implementation |
+| Sumcheck and GKR | Read [Session 15](../learn/session-15) and [Thaler's textbook](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html); calculate a small bivariate polynomial sum by hand or in Ruby | Compare exhaustive evaluation with reducing one variable at a time. Distinguish this exercise from a complete proof implementation |
 | Ethereum applications | Follow the primary zkEVM/EIP-8025 references in [Session 15](../learn/session-15) | Identify the computation, verifier, performance requirements, proposal status and access date |
 
 ## Save and share results {#git}

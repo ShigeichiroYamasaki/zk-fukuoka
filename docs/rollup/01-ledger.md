@@ -7,6 +7,8 @@ import { withBase } from "vitepress";
 
 # 1. 残高台帳と保存則
 
+更新日：2026年10月13日
+
 [応用編の全体像](./) · [第4回](../learn/session-04) · [次：Merkle木](./02-state)
 
 ## 何を作るか
@@ -50,11 +52,11 @@ $$V=U+B+W$$
 
 ## 実行する {#run}
 
-<a :href="withBase('/examples/rollup/ledger_model.py')" download>ledger_model.pyを保存</a>し，Python 3.8以降で実行します．
+<a :href="withBase('/examples/rollup/ledger_model.rb')" download>ledger_model.rbを保存</a>し，保守中の安定版Rubyで実行します（プレビュー版は使いません）．標準ライブラリのみを使います．
 
 ```sh
-python3 ledger_model.py
-python3 ledger_model.py --test
+ruby ledger_model.rb
+ruby ledger_model.rb --test
 ```
 
 <a :href="withBase('/examples/rollup/expected-demo.json')" download>期待する出力JSON</a>と比較できます．出金請求直前は `vault=100, balances=70, pending_withdrawals=30`，請求後は `vault=70, balances=70, pending_withdrawals=0` です．

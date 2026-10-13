@@ -18,13 +18,13 @@ Start at $w=(0,0),b=0$. Predict $\hat y=[w\cdot x+b\geq0]$, compute $\Delta=y-\h
 
 $$w_i\leftarrow w_i+\Delta x_i,\qquad b\leftarrow b+\Delta$$
 
-`train.py` processes both coordinates in ascending order until an entire pass makes no updates. On pass 59 it confirms convergence:
+`train.rb` processes both coordinates in ascending order until an entire pass makes no updates. On pass 59 it confirms convergence:
 
 $$w=(19,19),\qquad b=-296$$
 
-```python
+```ruby
 score = 19 * x[0] + 19 * x[1] - 296
-label = int(score >= 0)
+label = score >= 0 ? 1 : 0
 ```
 
 | Input | Score | Label |

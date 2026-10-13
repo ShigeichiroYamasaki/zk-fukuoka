@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Applied course: privacy-preserving stablecoin tips with a JPKI wallet
 
-Updated: October 7, 2026
+Updated: October 13, 2026
 
 This design combines JPKI-based identity verification with zero-knowledge proofs so a supporter’s name and wallet mapping need not be published when tipping a musician with a stablecoin. The goal is **not to evade legal obligations through anonymity**. We study how to improve privacy from the general public while allowing regulated service providers to perform required identity checks, retain transaction records and respond to lawful requests.
 
@@ -13,6 +13,8 @@ This is a system-design example for learning about regulatory and implementation
 :::
 
 This page is a **design-exercise specification**. It does not include executable JPKI integration, anonymous-credential issuance, stablecoin settlement code, or a service whose legal compliance has been reviewed.
+
+If learners implement the design, Ruby is the default for off-chain ledger, credential-checking and aggregation models. Proof circuits may use Circom or a comparable circuit tool; EVM settlement uses Solidity and any necessary Node.js tooling. This lesson does not yet provide those implementations.
 
 ## What we build
 

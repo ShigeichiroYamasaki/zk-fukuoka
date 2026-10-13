@@ -1,6 +1,6 @@
 # Program meaning: a prerequisite for arithmetization
 
-Updated: October 13, 2026
+Updated: October 14, 2026
 
 [Prerequisites and supplementary resources](./foundations) · [Session 4: Arithmetization](./session-04) · [Execution-trace guide](./terms/execution-traces)
 
@@ -16,11 +16,11 @@ In a proof, let $R(x,w)$ express that auxiliary data $w$ satisfies the required 
 
 **Denotational semantics** represents a program's meaning as a mathematical object describing which output it returns for an input. Let $X$ be the input set and $Y$ the output set. A deterministic program $P$ can be represented as a **partial function**
 
-$$\llbracket P\rrbracket:X\rightharpoonup Y.$$
+$$\langle\!\langle P\rangle\!\rangle:X\rightharpoonup Y.$$
 
-The partial arrow means that the function may be undefined for some inputs. The equation $\llbracket P\rrbracket(x)=y$ means that $P$ halts on input $x$ and returns output $y$. For inputs where it does not halt, the function is undefined.
+The partial arrow means that the function may be undefined for some inputs. The equation $\langle\!\langle P\rangle\!\rangle(x)=y$ means that $P$ halts on input $x$ and returns output $y$. For inputs where it does not halt, the function is undefined.
 
-For example, the meaning of `t := x*x; y := t+1` is $\llbracket P\rrbracket(x)=x^2+1$ under integer arithmetic, once the input domain has been specified. Real programs also depend on value ranges, overflow, division and exception behavior. A specification must therefore state not just a formula, but also which inputs are allowed and which arithmetic rules apply.
+For example, the meaning of `t := x*x; y := t+1` is $\langle\!\langle P\rangle\!\rangle(x)=x^2+1$ under integer arithmetic, once the input domain has been specified. Real programs also depend on value ranges, overflow, division and exception behavior. A specification must therefore state not just a formula, but also which inputs are allowed and which arithmetic rules apply.
 
 A specification can be represented by a relation $S\subseteq X\times Y$. Program correctness then means that, for allowed inputs, each execution result $(x,y)$ satisfies $S$. In a ZK proof, $R(x,w)$ further checks whether public input $x$ and witness $w$ provide an output, secret data or intermediate values satisfying the specification. Even a correct proof system proves the wrong thing if the definition of $R$ omits part of the intended specification.
 
@@ -32,7 +32,7 @@ $$c\longrightarrow_P c'$$
 
 when program $P$ can move from state $c$ to state $c'$ in one step. A multi-step execution is a sequence of these transitions. When it reaches a halted state $c_{\mathrm{halt}}$, the output is read from that state.
 
-For `t := x*x; y := t+1`, execution starts in a state containing input $x$, moves to a state where $t=x^2$ is stored, and then to a halted state where $y=t+1$ is stored. This transition sequence realizes the denotational meaning $\llbracket P\rrbracket(x)=x^2+1$. For deposit and withdrawal totals, use a state containing two running sums $(s_i,t_i)$ and the transition rules
+For `t := x*x; y := t+1`, execution starts in a state containing input $x$, moves to a state where $t=x^2$ is stored, and then to a halted state where $y=t+1$ is stored. This transition sequence realizes the denotational meaning $\langle\!\langle P\rangle\!\rangle(x)=x^2+1$. For deposit and withdrawal totals, use a state containing two running sums $(s_i,t_i)$ and the transition rules
 
 $$s_0=t_0=0,\qquad s_{i+1}=s_i+d_i,\qquad t_{i+1}=t_i+w_i.$$
 
@@ -75,7 +75,7 @@ AIR encodes the state-transition sequence from operational semantics as a table 
 
 Arithmetization introduces variables for intermediate values and arranges that only values corresponding to valid executions satisfy the constraints. The constraints must represent both the valid executions from operational semantics and the input-output meaning from denotational semantics. If $C_P(x,y,w)$ means that input $x$, output $y$ and auxiliary values $w$ satisfy all arithmetized constraints, verify both directions:
 
-- If $\llbracket P\rrbracket(x)=y$, then there is a $w$ containing suitable intermediate values such that $C_P(x,y,w)=1$.
+- If $\langle\!\langle P\rangle\!\rangle(x)=y$, then there is a $w$ containing suitable intermediate values such that $C_P(x,y,w)=1$.
 - If some $w$ satisfies $C_P(x,y,w)=1$, then $y$ is the correct output of $P$ on $x$, and the intermediate values describe an allowed execution.
 
 These are correctness conditions for translating program meaning into arithmetization. SNARK completeness and soundness are properties of a proof system for the relation $C_P$. Thus, even a sound proof system does not guarantee the intended program's correctness if the translation from the specification into $C_P$ is inaccurate.

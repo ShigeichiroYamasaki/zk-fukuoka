@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # 2. Merkle木と状態ルート
 
+更新日：2026年10月13日
+
 [応用編](./) · [前：台帳](./01-ledger) · [次：送金回路](./03-circuit)
 
 ## 何をL1に残すか
@@ -40,19 +42,19 @@ node = Poseidon(TAG_NODE, left, right)
 
 ## 参照モデルで試す
 
-```python
-from ledger_model import Ledger
-l = Ledger()
+```ruby
+require_relative 'ledger_model'
+l = Ledger.new
 l.apply('receive', 0, 100)
 l.apply('consume', 0)
 old = l.root()
-a = l.accounts[0].copy()
-assert l.verify(a, 0, l.path(0), old)
+a = l.accounts[0].dup
+raise 'membership check failed' unless Ledger.verify(a, 0, l.path(0), old)
 a['balance'] += 1
-assert not l.verify(a, 0, l.path(0), old)
+raise 'tampering was accepted' if Ledger.verify(a, 0, l.path(0), old)
 ```
 
-Pythonモデルは構造を学ぶためSHA-256とJSONを使用します．回路版のPoseidonとは**ルート値が一致しません**．両者を接続する段階で共通のフィールド符号化へ置き換え，別途ゴールデンベクトルを作ります．
+Ruby参照モデルは構造を学ぶためSHA-256とJSONを使用します．回路版のPoseidonとは**ルート値が一致しません**．両者を接続する段階で共通のフィールド符号化へ置き換え，別途ゴールデンベクトルを作ります．
 
 ## 実装課題と合格条件
 

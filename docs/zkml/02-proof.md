@@ -8,15 +8,17 @@ import { withBase } from 'vitepress'
 
 # 2. 入力を隠した推論の証明を動かす
 
+更新日：2026年10月13日
+
 [応用編の全体像](./) · [モデルと算術化](./01-model)
 
 ## 配布ファイル
 
-Python 3.8以上とNode.jsのLTS環境，npmを使います．次の4ファイルを，同じ新しい演習用ディレクトリへ保存してください．
+保守中の安定版RubyとNode.jsのLTS環境，npmを使います．次の4ファイルを，同じ新しい演習用ディレクトリへ保存してください．
 
 | ファイル | 役割 |
 | --- | --- |
-| <a :href="withBase('/examples/zkml/train.py')" download>train.py</a> | 整数パーセプトロンの学習と全256組の確認 |
+| <a :href="withBase('/examples/zkml/train.rb')" download>train.rb</a> | 整数パーセプトロンの学習と全256組の確認 |
 | <a :href="withBase('/examples/zkml/classifier.circom')" download>classifier.circom</a> | 公開モデル・非公開入力・公開分類結果の回路 |
 | <a :href="withBase('/examples/zkml/package.json')" download>package.json</a> | circom2 0.2.22，snarkjs 0.7.5を指定 |
 | <a :href="withBase('/examples/zkml/run.cjs')" download>run.cjs</a> | コンパイル・全入力確認・セットアップ・証明・拒否テスト |
@@ -24,7 +26,7 @@ Python 3.8以上とNode.jsのLTS環境，npmを使います．次の4ファイ�
 `circom2` はCircomコンパイラのWASM配布で，この版はコンパイラ2.2.2を使います．推移依存はnpmが解決するため，実行時に生成される `package-lock.json` も成果物として保存してください．
 
 ```sh
-python3 train.py
+ruby train.rb
 npm install
 npm run demo
 ```

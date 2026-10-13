@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Applied course: reduce stored personal data with ZK attribute proofs
 
-Updated: October 10, 2026
+Updated: October 13, 2026
 
 ## The problem this lesson addresses
 
@@ -76,6 +76,20 @@ Even with ZK proofs, users may be inferred from IP addresses, timestamps, device
 4. Compare the fields and number of people directly exposed in each simulated database dump.
 5. Specify tests that reject an expired or revoked credential, a credential below the age threshold, and a modified proof.
 6. Separately consider compromise of the issuer, the user’s device, logs and backups.
+
+Use Ruby as the default language when scripting the comparison. This helper counts directly exposed identity fields in fictional CSV rows; it does not implement ZK attribute proofs.
+
+Use the header `alias,name,birth_date,document_image` and fictional values only.
+
+```ruby
+require 'csv'
+
+fields = %w[name birth_date document_image]
+CSV.foreach('fictional-members.csv', headers: true) do |row|
+  exposed = fields.count { |field| !row[field].to_s.empty? }
+  puts "#{row['alias']}: #{exposed} directly exposed fields"
+end
+```
 
 Success is not “we used ZK.” It is **showing that the service’s function still works while its copies of personal data and the direct exposure in a breach have actually decreased**.
 

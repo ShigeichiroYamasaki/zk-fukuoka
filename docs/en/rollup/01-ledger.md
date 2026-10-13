@@ -7,6 +7,8 @@ import { withBase } from "vitepress";
 
 # 1. Ledger and conservation
 
+Updated: October 13, 2026
+
 [Overview](./) · [Session 4](../learn/session-04) · [Next: Merkle state](./02-state)
 
 ## Establish the reference behavior
@@ -50,11 +52,11 @@ Failed operations must leave state unchanged. The model's `apply` checks a copy 
 
 ## Run it {#run}
 
-<a :href="withBase('/examples/rollup/ledger_model.py')" download>Download ledger_model.py</a>; run with Python 3.8+:
+<a :href="withBase('/examples/rollup/ledger_model.rb')" download>Download ledger_model.rb</a>; run with a maintained stable Ruby release (not a preview) and the standard library:
 
 ```sh
-python3 ledger_model.py
-python3 ledger_model.py --test
+ruby ledger_model.rb
+ruby ledger_model.rb --test
 ```
 
 Compare against the <a :href="withBase('/examples/rollup/expected-demo.json')" download>expected JSON</a>. Before the claim: `vault=100, balances=70, pending_withdrawals=30`. After: `vault=70, balances=70, pending_withdrawals=0`.

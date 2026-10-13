@@ -18,15 +18,15 @@ outline: [2, 3]
 
 $$w_i\leftarrow w_i+\Delta x_i,\qquad b\leftarrow b+\Delta$$
 
-配布する `train.py` は $x_0$，$x_1$ の昇順で各組を処理し，更新がなくなったところで停止します．59巡目に収束を確認し，次の係数を得ます．
+配布する `train.rb` は $x_0$，$x_1$ の昇順で各組を処理し，更新がなくなったところで停止します．59巡目に収束を確認し，次の係数を得ます．
 
 $$w=(19,19),\qquad b=-296$$
 
 したがって推論は，次の短いプログラムです．
 
-```python
+```ruby
 score = 19 * x[0] + 19 * x[1] - 296
-label = int(score >= 0)
+label = score >= 0 ? 1 : 0
 ```
 
 | 入力 | score | label |

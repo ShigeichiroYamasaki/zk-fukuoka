@@ -4,6 +4,10 @@ outline: [2, 3]
 
 # Available tools
 
+Updated: October 13, 2026
+
+New off-chain ledger, training and aggregation models in the applied courses use Ruby by default. Circom, Solidity and Node.js are used where required for proof circuits, EVM contracts and proving tools. Follow the language requirements of external implementations.
+
 Choose implementations and computation environments for Act III (Sessions 11–15) according to your objective and experience. Then follow the matching [operation manual](./manuals#route).
 
 [Exercises](./) · [Basic operation manuals](./manuals) · [Prerequisites](../learn/foundations)

@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # 2. Merkle state and roots
 
+Updated: October 13, 2026
+
 [Overview](./) · [Previous: ledger](./01-ledger) · [Next: circuits](./03-circuit)
 
 ## What L1 stores
@@ -36,19 +38,19 @@ Two independent updates against the old root do not guarantee a root containing 
 
 ## Try the model
 
-```python
-from ledger_model import Ledger
-l = Ledger()
+```ruby
+require_relative 'ledger_model'
+l = Ledger.new
 l.apply('receive', 0, 100)
 l.apply('consume', 0)
 old = l.root()
-a = l.accounts[0].copy()
-assert l.verify(a, 0, l.path(0), old)
+a = l.accounts[0].dup
+raise 'membership check failed' unless Ledger.verify(a, 0, l.path(0), old)
 a['balance'] += 1
-assert not l.verify(a, 0, l.path(0), old)
+raise 'tampering was accepted' if Ledger.verify(a, 0, l.path(0), old)
 ```
 
-The Python model uses SHA-256/JSON for teaching. Its roots do **not** match the Poseidon circuit format. When connecting implementations, replace this encoding and create cross-language golden vectors.
+The Ruby reference model uses SHA-256/JSON for teaching. Its roots do **not** match the Poseidon circuit format. When connecting implementations, replace this encoding and create cross-language golden vectors.
 
 ## Implementation and acceptance
 

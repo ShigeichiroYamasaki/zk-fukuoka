@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # 基本操作マニュアル集
 
+更新日：2026年10月13日
+
 幕III（第11〜15回）の演習を進めるための操作案内です．第11回で証明の生成・検証を一巡し，第12回でセットアップの違い，第13回で実行トレース，第14回で方式の比較，第15回で発展的な構成を確認します．
 
 [演習トップ](./) · [実装・ツール一覧](./tools) · [前提知識・補助教材](../learn/foundations)
@@ -22,22 +24,22 @@ outline: [2, 3]
 
 | 応用編 | 現在の教材で実行できる範囲 | 主なツール | 未実装・注意点 |
 | --- | --- | --- | --- |
-| [ERC-20 ZK rollup](../rollup/) | Python残高台帳モデル，送金算術のCircom入門回路 | Python 3，Circom／circomlib／snarkjs，Solidity／Foundry（Forge・Anvil），OpenZeppelin Contracts | 署名・Merkle木・バッチ証明・L1コントラクトを結んだ完成E2Eは受講者の実装課題．独立復元用TypeScriptのRPCクライアントは未指定 |
-| [入力を隠した推論 ZKML](../zkml/) | 配布コードで小さな整数分類器を学習し，証明・検証・改ざん拒否を実行 | Python 3.8以上，Node.js LTS／npm，`circom2` 0.2.22（Circom 2.2.2），`snarkjs` 0.7.5 | バージョンは配布`package.json`に固定．EZKL／ONNXは発展候補で，この教材の配布コードでは未実行 |
+| [ERC-20 ZK rollup](../rollup/) | Ruby残高台帳モデル，送金算術のCircom入門回路 | Ruby，Circom／circomlib／snarkjs，Solidity／Foundry（Forge・Anvil），OpenZeppelin Contracts | オフチェーン参照モデルはRubyを基本にする．署名・Merkle木・バッチ証明・L1コントラクトを結んだ完成E2Eは受講者の実装課題．独立復元用TypeScriptのRPCクライアントは未指定 |
+| [入力を隠した推論 ZKML](../zkml/) | Ruby配布コードで小さな整数分類器を学習し，Circom／snarkjsで証明・検証・改ざん拒否を実行 | Ruby，Node.js LTS／npm，`circom2` 0.2.22（Circom 2.2.2），`snarkjs` 0.7.5 | オフチェーンの学習例はRubyを基本にする．証明ツールの版は配布`package.json`に固定．EZKL／ONNXは発展候補で，この教材の配布コードでは未実行 |
 | [JPKIワレットの投げ銭](../tipping/) | データフロー，公開範囲，脅威・制度上の前提を設計する | 架空データ，表計算またはMarkdown，脅威分析表．将来の試作候補はCircom／snarkjsとFoundry／Anvil | 実装コード・資格形式・署名方式・失効方式は未提供／未決定．本物のJPKI，個人番号，実資産は使わない |
-| [個人情報の最小化](../data-minimization/) | 架空利用者データで，従来方式と最小化方式の保存項目・漏えい時の露出を比較 | 表計算ソフトまたはPython標準ライブラリ（`csv`） | ZK属性証明の回路・資格署名形式・発行／失効基盤は未提供／未決定．この課題自体は設計演習 |
+| [個人情報の最小化](../data-minimization/) | 架空利用者データで，従来方式と最小化方式の保存項目・漏えい時の露出を比較 | 表計算ソフトまたはRuby標準ライブラリ（`csv`） | Rubyを補助プログラムの基本言語にする．ZK属性証明の回路・資格署名形式・発行／失効基盤は未提供／未決定．この課題自体は設計演習 |
 
 ### Rollup：参照モデルからローカルL1まで {#rollup-tools}
 
-1. [台帳モデル](../rollup/01-ledger#run)の`ledger_model.py`を保存し，`python3 ledger_model.py`と`python3 ledger_model.py --test`を実行します．まず残高保存則と異常系テストを確認します．外部Pythonパッケージは不要です．
+1. [台帳モデル](../rollup/01-ledger#run)の`ledger_model.rb`を保存し，`ruby ledger_model.rb`と`ruby ledger_model.rb --test`を実行します．まず残高保存則と異常系テストを確認します．外部gemは不要です．
 2. [送金回路](../rollup/03-circuit#core)の`transfer_core.circom`でCircomコンパイル，ウィットネス生成，R1CS検査を行います．署名やMerkleパスはこの入門回路には含まれません．[Circom公式導入手順](https://docs.circom.io/getting-started/installation/)と[Circomlibの回路](https://github.com/iden3/circomlib)を参照し，Node／npmとCircomの版を記録します．
 3. L1側は[Foundry公式導入](https://getfoundry.sh/introduction/installation/)の`forge`と`anvil`を使います．`forge build`でコンパイル，`forge test`で状態遷移を確認し，Anvilのローカルチェーンでだけ接続試験を行います．[Foundryのプロジェクト作成](https://getfoundry.sh/projects/creating-a-new-project/)と[OpenZeppelin ERC-20／SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20)を参照します．テストネットへの送信は基本演習に不要です．
 4. 運営者停止後の独立復元では[第6段階](../rollup/06-availability)の`operator/replay.ts`を実装します．教材はTypeScript実行環境とEthereum JSON-RPCクライアントを指定していないため，チームで選んでバージョンを固定し，RPCクライアントを使う範囲を記録してください．
 
 ### ZKML：配布コードを再現する {#zkml-tools}
 
-1. [証明を動かすページ](../zkml/02-proof)から`train.py`，`classifier.circom`，`package.json`，`run.cjs`を同じ新規フォルダへ保存します．
-2. Python 3.8以上とNode.js LTS／npmを用意し，`python3 train.py`，`npm install`，`npm run demo`の順で実行します．`package.json`の指定版を使い，生成された`package-lock.json`も記録します．
+1. [証明を動かすページ](../zkml/02-proof)から`train.rb`，`classifier.circom`，`package.json`，`run.cjs`を同じ新規フォルダへ保存します．
+2. RubyとNode.js LTS／npmを用意し，`ruby train.rb`，`npm install`，`npm run demo`の順で実行します．`package.json`の指定版を使い，生成された`package-lock.json`も記録します．
 3. 正常な証明の検証と，公開分類結果を変更した場合の拒否を確認します．検証者だけに渡す手順は[単独検証の案内](../zkml/02-proof#検証者に渡すもの)を使います．
 4. より大きなニューラルネットワークを試す場合は，ONNXへ出力できるモデル作成環境と[EZKL公式ドキュメント](https://docs.ezkl.xyz/)を別途調べます．これは配布済みCircom演習とは別ルートで，量子化後の出力差・モデル対応演算・使用版を検証してください．
 
@@ -45,7 +47,7 @@ outline: [2, 3]
 
 - 投げ銭では[設計ページ](../tipping/)の段階に従い，架空の本人確認結果と資格だけを用いて，発行者・利用者端末・検証者・決済事業者が保持する情報を表にします．現在，実際のJPKI連携や匿名資格発行を実行するコードはありません．
 - 将来ローカル試作を加える場合は，偽の発行者鍵・架空資格・ローカルAnvil上のテストトークンに限定します．資格署名・失効・nullifierをどう構成するか決めてから，Circom／snarkjsで証明回路を実装します．ライブラリを入れるだけでは資格の正当性やプライバシーは実現しません．
-- 個人情報最小化では[設計演習](../data-minimization/#演習-漏えい時に見えるデータを比較する)に沿い，架空10件のデータで保存項目を比較します．表計算ソフトを使うか，Python標準の[`csv`モジュール](https://docs.python.org/ja/3/library/csv.html)でCSVを扱います．実在の氏名・生年月日・本人確認書類は入力しません．
+- 個人情報最小化では[設計演習](../data-minimization/#演習-漏えい時に見えるデータを比較する)に沿い，架空10件のデータで保存項目を比較します．表計算ソフトを使うか，Ruby標準ライブラリの`csv`でCSVを扱います．実在の氏名・生年月日・本人確認書類は入力しません．
 - 資格署名方式や失効確認を含む実装に進む場合は，現行のページに確定済みツールとして追加せず，方式・版・脅威モデルを先に設計記録へ明記します．
 
 
@@ -59,7 +61,7 @@ outline: [2, 3]
 | [第14回・統合](../learn/session-14) | 条件を揃えて記録・比較する | [比較と考察](#comparison) | 実測値と理論的性質を分けて説明できる |
 | [第15回・発展](../learn/session-15) | 再帰・フォールディング・sumcheckの役割を調べる | [発展演習](#advanced) | 何を集約し，どの負担を減らすか説明できる |
 
-初めてなら **Circom＋snarkjsで第11・12回を続けて進める**と，回路を再利用して違いを確認できます．第13回はPythonで仕組みを読むならAnatomy of a STARK，RustでAIRを書くならWinterfell，VMの操作を学ぶならMiden VMから一つを選びます．すべての実装を導入する必要はありません．
+応用編で自作するオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．証明回路にはCircom，L1コントラクトにはSolidity，証明ツールにはNode.jsが必要なため，これらは目的に応じて併用します．初めてなら **Circom＋snarkjsで第11・12回を続けて進める**と，回路を再利用して違いを確認できます．第13回のAnatomy of a STARKは外部のPython教材，WinterfellはRustでAIRを書く外部実装，Miden VMはVMの操作を学ぶ外部実装です．すべて導入する必要はありません．
 
 ## 共通の準備と回路の作成 {#circuits}
 
@@ -72,7 +74,8 @@ outline: [2, 3]
 | Circom＋snarkjs | [snarkjs公式README](https://github.com/iden3/snarkjs#readme)，[Circom導入](https://docs.circom.io/getting-started/installation/) | Node.js，Circom，snarkjsが起動し，ヘルプを参照できる |
 | Goの実装 | [gnark導入](https://docs.gnark.consensys.io/HowTo/get_started) | 例と依存モジュールの版が一致する |
 | Rustの実装 | [Rust導入（日本語）](https://doc.rust-jp.rs/book-ja/ch01-01-installation.html)と選んだ実装のREADME | Rust/Cargoの版，必要な機能フラグを記録する |
-| Pythonの実装 | [Python公式チュートリアル（日本語）](https://docs.python.org/ja/3/tutorial/)，[Anatomyのコード](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Pythonの版と例が要求する依存関係を確認する |
+| Rubyの実装 | [Rubyのインストール](https://www.ruby-lang.org/ja/documentation/installation/)，[20分ではじめるRuby](https://www.ruby-lang.org/ja/documentation/quickstart/)，[リファレンスマニュアル](https://docs.ruby-lang.org/ja/) | プレビュー版ではなく，保守中の安定版Rubyを使う．応用編の配布Rubyコードは標準ライブラリで動く |
+| 外部のPython教材 | [Anatomy of a STARKのコード](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | これは外部教材の言語選択であり，本サイトの応用編の基本言語とは区別する |
 
 ### Circomで共通の入力を用意する
 
@@ -122,7 +125,7 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 
 | 学び方 | 実装と操作マニュアル | 追いかける箇所 |
 | --- | --- | --- |
-| Pythonで仕組みを読む | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証．Jekyll起動は解説サイト用で，Python演習とは別 |
+| 外部Python実装を読む | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証．外部教材の実装言語はPython．Jekyll起動は解説サイト用で，コード演習とは別 |
 | RustでAIRを書く | [Winterfellの利用手順](https://github.com/facebook/winterfell#usage)，[実装例](https://github.com/facebook/winterfell/tree/main/examples)，[API](https://docs.rs/winterfell/latest/winterfell/) | トレースの作成，遷移制約，境界の指定，証明・検証 |
 | VMで実行を証明する | [Miden VMのCLIと例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | 命令列，入力，実行結果，実行証明．`next`の手順と利用リリースの差を確認する |
 
@@ -156,7 +159,7 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 | テーマ | 操作・読み方 | 成果としてまとめること |
 | --- | --- | --- |
 | 再帰・フォールディング | [Nova公式のTests and examples](https://github.com/microsoft/Nova#tests-and-examples)から，選んだ版の`minroot`例を実行し，ステップ数を変える | 状態の引き継ぎ，フォールディング，最終的な証明・検証を区別する．圧縮を含む場合はそのコストも分ける |
-| Sumcheck・GKR | [第15回の説明](../learn/session-15)と[Thalerの教科書](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html)を読み，二変数の小さな多項式の総和を手計算・Python等で確認する | 全点で直接計算する方法と，変数を一つずつ減らす検証の流れを対応づける．完成した証明実装とは区別する |
+| Sumcheck・GKR | [第15回の説明](../learn/session-15)と[Thalerの教科書](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html)を読み，二変数の小さな多項式の総和を手計算またはRubyで確認する | 全点で直接計算する方法と，変数を一つずつ減らす検証の流れを対応づける．完成した証明実装とは区別する |
 | Ethereumへの応用 | [第15回の研究地図](../learn/session-15)にあるzkEVM・EIP-8025の一次資料を読む | 何の実行を誰が検証するか，必要な性能指標，提案の状態と参照日を整理する |
 
 ## 結果を保存し，共有する {#git}

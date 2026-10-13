@@ -6,12 +6,12 @@ outline: [2, 3]
 
 A six-stage development course connects Sessions 1–15 to deposits, L2 transfers, withdrawals and L1 verification of state transitions for one ERC-20 token.
 
-Updated: September 27, 2026
+Updated: October 13, 2026
 
 [Lectures](../learn/sessions) · [Balance arithmetization](../exercises/session-04#program) · [Exercises](../exercises/)
 
 ::: info Course scope and supplied artifacts
-These pages provide specifications, implementation steps and acceptance tests. Downloads include a Python ledger/Merkle reference model and an introductory Circom arithmetic circuit. The integrated signature/Merkle rollup circuit, L1 bridge and operator-failure exits are learner implementation tasks. This is not a completed rollup or a deployed testnet system.
+These pages provide specifications, implementation steps and acceptance tests. Ruby is the default language for off-chain reference models and learning scripts; downloads include a Ruby ledger/Merkle model and an introductory Circom arithmetic circuit. The integrated signature/Merkle rollup circuit, L1 bridge and operator-failure exits are learner implementation tasks. Solidity, Circom and Node.js remain in use where required by EVM contracts and proving tools. This is not a completed rollup or a deployed testnet system.
 :::
 
 ## Target user journey {#goal}
@@ -62,10 +62,10 @@ zk-token-lab/
   fixtures/        # canonical input and expected output
 ```
 
-Review Python/CLI basics, Solidity storage/events/reverts, ERC-20 approve/transferFrom, JavaScript BigInt, and hashing versus signing. Do not convert amounts to JavaScript Number.
+Review Ruby/CLI basics, Solidity storage/events/reverts, ERC-20 approve/transferFrom, JavaScript BigInt, and hashing versus signing. Do not convert amounts to JavaScript Number.
 
 Complete the [Groth16 operation manual](../exercises/manuals#groth16) first. Record compiler, dependency and verification-key versions. Circuit changes require rebuilding the R1CS, keys and verifier.
 
 ## Run the first artifact
 
-[Stage 1's model](./01-ledger#run) needs only Python's standard library. Run the 100 → 70/30 → withdrawal example, then divide its responsibilities between circuits and L1 contracts.
+[Stage 1's model](./01-ledger#run) needs only Ruby's standard library. Run the 100 → 70/30 → withdrawal example, then divide its responsibilities between circuits and L1 contracts.

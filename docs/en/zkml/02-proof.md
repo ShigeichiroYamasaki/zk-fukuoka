@@ -8,15 +8,17 @@ import { withBase } from 'vitepress'
 
 # 2. Run private-input inference proofs
 
+Updated: October 13, 2026
+
 [Overview](./) · [Model and arithmetization](./01-model)
 
 ## Download and run
 
-Use Python 3.8 or newer, a Node.js LTS environment and npm. Save these four files in one new exercise directory.
+Use a maintained stable Ruby release, a Node.js LTS environment and npm. Save these four files in one new exercise directory.
 
 | File | Purpose |
 | --- | --- |
-| <a :href="withBase('/examples/zkml/train.py')" download>train.py</a> | Train and check all 256 examples |
+| <a :href="withBase('/examples/zkml/train.rb')" download>train.rb</a> | Train and check all 256 examples |
 | <a :href="withBase('/examples/zkml/classifier.circom')" download>classifier.circom</a> | Fixed public model, private input, public label |
 | <a :href="withBase('/examples/zkml/package.json')" download>package.json</a> | circom2 0.2.22 and snarkjs 0.7.5 |
 | <a :href="withBase('/examples/zkml/run.cjs')" download>run.cjs</a> | Compile, test, set up, prove and verify |
@@ -24,7 +26,7 @@ Use Python 3.8 or newer, a Node.js LTS environment and npm. Save these four file
 `circom2` is a WASM distribution of the compiler; this package version uses compiler 2.2.2. npm resolves transitive dependencies, so retain the generated `package-lock.json` with your results.
 
 ```sh
-python3 train.py
+ruby train.rb
 npm install
 npm run demo
 ```
