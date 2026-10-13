@@ -90,7 +90,7 @@ Let a sample be one of $z\in\{0,1,2,3\}$. In this example, $P_0$ tends to produc
   <g font-family="system-ui, sans-serif" font-size="13" fill="#111827"><rect x="408" y="22" width="14" height="14" rx="2" fill="#6d4aff"/><text x="428" y="34">P₀</text><rect x="476" y="22" width="14" height="14" rx="2" fill="#168aad"/><text x="496" y="34">P₁</text></g>
   <line x1="92" y1="280" x2="590" y2="280" stroke="#4b5563" stroke-width="1.5"/><line x1="92" y1="55" x2="92" y2="280" stroke="#4b5563" stroke-width="1.5"/>
 </svg>
-<figcaption>Figure: compare the probability masses of the sample values $z\in\{2,3\}$ for which $D(z)=1$ to classify the sample as coming from $P_1$.</figcaption>
+<figcaption>Figure: compare the probability masses assigned to sample values 2 and 3, for which the distinguisher outputs 1.</figcaption>
 </figure>
 
 Choose $D(z)=1$ when $z\ge2$ (classifying the sample as coming from $P_1$), and $D(z)=0$ otherwise. The shaded region contains exactly the values for which $D$ outputs 1. Under $P_0$, this event has probability $q_0=P_0(2)+P_0(3)=0.15+0.05=0.20$. Under $P_1$, it has probability $q_1=P_1(2)+P_1(3)=0.30+0.40=0.70$. Therefore, this distinguisher's gap is $|q_1-q_0|=|0.70-0.20|=0.50$. The distinguisher first chooses the set of samples on which it outputs 1, then compares how much probability each distribution assigns to that set.
