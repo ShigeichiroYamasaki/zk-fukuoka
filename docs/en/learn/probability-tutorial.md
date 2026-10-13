@@ -4,7 +4,7 @@ Author: Shigeichiro Yamasaki
 Created: September 29, 2026  
 Last updated: October 13, 2026
 
-Zero-knowledge proofs repeatedly use ideas such as “find an error at a random point,” “make the probability of accepting a false proof small,” and “reduce the error probability by repeating a protocol.” This page develops the probability needed to understand those arguments: events, random variables, conditional probability, independence, expectation, and probability bounds.
+Zero-knowledge proofs repeatedly use ideas such as “find an error at a random point,” “make the probability of accepting a false proof small,” and “reduce the error probability by repeating a protocol.” This page starts with events and random variables, then develops conditional probability, independence, expectation, and probability inequalities. It next applies them to distinguishing distributions from samples, randomized checks, and soundness amplification.
 
 The explanations and examples are original to this site. For systematic study of probability, see Sheldon M. Ross’s [A First Course in Probability (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589). This tutorial does not reproduce or adapt that textbook; it selects foundational ideas used in this course.
 
@@ -51,9 +51,65 @@ $$
 
 Equal marginals do not imply equal joint distributions. Consider two processes that output a pair of bits. Process A outputs $00$ and $11$, each with probability $1/2$. Process B outputs $01$ and $10$, each with probability $1/2$. In either process, each bit individually is $0$ or $1$ with probability $1/2$, but the joint distributions differ. Testing whether the two bits are equal distinguishes the processes perfectly.
 
-Random variables are independent exactly when their joint probability distribution factors into the product of their marginals: $p_{X,Y}(x,y)=p_X(x)p_Y(y)$. Thus individual probability distributions may fail to capture dependence or information in the complete record. Zero-knowledge compares the verifier’s complete view as a random variable.
+Thus individual probability distributions may fail to capture dependence or information in the complete record. Zero-knowledge compares the verifier’s complete view as a random variable.
 
-### Distinguishing probability distributions
+## 3. Conditional probability and independence
+
+When $\Pr[B]>0$, the probability of $A$ given that $B$ has occurred is the **conditional probability**
+
+$$
+\Pr[A\mid B]=\frac{\Pr[A\cap B]}{\Pr[B]}.
+$$
+
+It describes whether knowing that $B$ occurred changes the chance of $A$.
+
+Events $A$ and $B$ are **independent** if knowing that $B$ occurred does not change the probability of $A$; that is,
+
+$$
+\Pr[A\mid B]=\Pr[A]
+$$
+
+(equivalently, $\Pr[A\cap B]=\Pr[A]\Pr[B]$). For independent repeated trials, the probability that every trial fails can be computed as a product. Do not multiply probabilities without establishing independence.
+
+Random variables $X,Y$ are independent exactly when their joint probability distribution factors into the product of their marginal distributions: $p_{X,Y}(x,y)=p_X(x)p_Y(y)$.
+
+In cryptographic protocols, the order of choices can matter. For example, a prover may commit first and the verifier may choose a random challenge afterward. This differs from a setting where the prover sees the challenge before choosing its commitment. The probability analysis depends on what is fixed first and which random choices are visible to whom.
+
+## 4. Expectation and probability inequalities
+
+If a discrete random variable $X$ takes value $x$ with probability $p_x$, its **expectation** is
+
+$$
+\mathbb{E}[X]=\sum_x x\,p_x.
+$$
+
+Expectation is a long-run average; it does not mean that every individual trial produces that value.
+
+For a uniformly random bit $X$, for example, $\mathbb{E}[X]=0\cdot\frac12+1\cdot\frac12=\frac12$. If $F$ counts failures in $k$ trials, it can be written as the sum of failure-indicator variables, which lets us calculate the expected number of failures. The linearity of expectation, $\mathbb{E}[X_1+\cdots+X_k]=\sum_i\mathbb{E}[X_i]$, does not require independent variables. However, a small expectation alone does not prove that a particular execution will never fail.
+
+### Markov's inequality: bounding an upper tail from the mean
+
+Let $X$ be a nonnegative random variable with finite expectation, and let $a>0$. On the event $X\ge a$, the value of $X$ is at least $a$, so its expectation is at least $a$ times the probability of that event. Therefore,
+
+$$
+\Pr[X\ge a]\leq\frac{\mathbb{E}[X]}{a}.
+$$
+
+This is **Markov's inequality**. It uses only the expectation, with no assumption about the distribution's shape or independence. For example, let $F$ count failures in 20 checks, each with failure probability $0.01$. Linearity of expectation gives $\mathbb{E}[F]=0.2$, even without independence. Hence the probability of at least four failures is at most $\Pr[F\ge4]\le0.2/4=0.05$. This bound can be conservative and larger than the actual probability.
+
+### Chebyshev's inequality: bounding deviations from the mean
+
+If a random variable $X$ has expectation $\mu$ and finite variance $\sigma^2=\mathbb{E}[(X-\mu)^2]$, then for every $t>0$,
+
+$$
+\Pr[|X-\mu|\ge t]\leq\frac{\sigma^2}{t^2}.
+$$
+
+This is **Chebyshev's inequality**. It follows by applying Markov's inequality to $Y=(X-\mu)^2$; it bounds the probability of a large deviation using the variance. For example, after 100 fair coin tosses, the observed fraction of heads $\widehat p$ has expectation $0.5$ and variance $0.25/100=0.0025$. Thus $\Pr[|\widehat p-0.5|\ge0.1]\le0.0025/0.1^2=0.25$. For an average of independent, identically distributed samples, the variance decreases in proportion to $1/n$, improving this bound as the sample count grows.
+
+**Hoeffding's inequality** adds the assumptions that samples are independent and bounded, and in return gives an exponentially small bound on deviations of their average. The later section on statistical identification applies it to the distinguisher's 0/1 outputs. The three inequalities form a useful progression: Markov uses the mean, Chebyshev uses the variance, and Hoeffding uses independence and boundedness.
+
+## 5. Distinguishing probability distributions
 
 To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample $z$ from one of them and decide which one generated it. Let a distinguisher $D$ receive $z$ and output $1$ when it classifies the sample as coming from $P_1$, and $0$ when it classifies it as coming from $P_0$. Let $q_i$ be the probability that $D$ outputs $1$ when its input is sampled from $P_i$, including both the sample-generation randomness and $D$'s own random coins. What matters is not whether $D$ is always right on one sample, but how differently its output behaves on the two distributions. Define the absolute difference between those output probabilities—called the **distinguishing gap** here—by
 
@@ -154,39 +210,7 @@ $$
 
 For precision, specify which random choices (such as the verifier’s or adversary’s coins) the probability is taken over.
 
-## 3. Conditional probability and independence
-
-When $\Pr[B]>0$, the probability of $A$ given that $B$ has occurred is the **conditional probability**
-
-$$
-\Pr[A\mid B]=\frac{\Pr[A\cap B]}{\Pr[B]}.
-$$
-
-It describes whether knowing that $B$ occurred changes the chance of $A$.
-
-Events $A$ and $B$ are **independent** if knowing that $B$ occurred does not change the probability of $A$; that is,
-
-$$
-\Pr[A\mid B]=\Pr[A]
-$$
-
-(equivalently, $\Pr[A\cap B]=\Pr[A]\Pr[B]$). For independent repeated trials, the probability that every trial fails can be computed as a product. Do not multiply probabilities without establishing independence.
-
-In cryptographic protocols, the order of choices can matter. For example, a prover may commit first and the verifier may choose a random challenge afterward. This differs from a setting where the prover sees the challenge before choosing its commitment. The probability analysis depends on what is fixed first and which random choices are visible to whom.
-
-## 4. Expectation: estimating an average
-
-If a discrete random variable $X$ takes value $x$ with probability $p_x$, its **expectation** is
-
-$$
-\mathbb{E}[X]=\sum_x x\,p_x.
-$$
-
-Expectation is a long-run average; it does not mean that every individual trial produces that value.
-
-For a uniformly random bit $X$, for example, $\mathbb{E}[X]=0\cdot\frac12+1\cdot\frac12=\frac12$. If $F$ counts failures in $k$ trials, it can be written as the sum of failure-indicator variables, which lets us calculate the expected number of failures. The linearity of expectation, $\mathbb{E}[X_1+\cdots+X_k]=\sum_i\mathbb{E}[X_i]$, does not require independent variables. However, a small expectation alone does not prove that a particular execution will never fail.
-
-## 5. Randomized checks and the Schwartz–Zippel lemma
+## 6. Randomized checks and the Schwartz–Zippel lemma
 
 The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable argument. Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. Since a polynomial has at most $d$ roots,
 
@@ -198,7 +222,7 @@ This bounds the probability that an incorrect polynomial happens to evaluate to 
 
 Crucially, the test polynomial $h$ is fixed before the random variable $R$ is chosen. If a prover can see $R$ and then freely choose $h$, it can make $h(R)=0$, and the bound cannot be applied as stated. Protocols enforce the relevant order by fixing a commitment before the challenge is sampled.
 
-## 6. Soundness amplification by repetition
+## 7. Soundness amplification by repetition
 
 Suppose one test misses a dishonest proof with probability at most $\epsilon$. If we run $k$ tests using independent randomness and accept only when all tests pass, the probability of missing the dishonesty in every test is at most
 
@@ -216,7 +240,7 @@ $$
 
 The events need not be independent. This is a basic method for bounding the probability that any of several protocol checks fails.
 
-## 7. Where these ideas appear in the course
+## 8. Where these ideas appear in the course
 
 | Course topic | Probability tool | What to check |
 | --- | --- | --- |
@@ -227,7 +251,7 @@ The events need not be independent. This is a basic method for bounding the prob
 
 When calculating a probability, first write down what is randomized, how success or failure is defined as an event, and which random choices the probability ranges over. Then check assumptions such as uniformity, independence, and order of selection before applying a formula.
 
-## 8. Exercises
+## 9. Exercises
 
 **Exercise 1.** Choose $R$ uniformly from $S=\{0,1,\ldots,15\}$. What upper bound does Schwartz–Zippel give for $\Pr[h(R)=0]$ when $h$ is a nonzero polynomial of degree at most $3$?
 
@@ -240,6 +264,14 @@ When calculating a probability, first write down what is randomized, how success
 **Exercise 3.** Failure events $A$ and $B$ each have probability at most $0.02$ and $0.03$. Bound the probability that at least one occurs without assuming independence.
 
 **Answer.** $\Pr[A\cup B]\leq\Pr[A]+\Pr[B]\leq0.05$.
+
+**Exercise 4.** A nonnegative random variable $X$ has expectation $3$. Use Markov’s inequality to bound $\Pr[X\ge12]$.
+
+**Answer.** $\Pr[X\ge12]\leq\mathbb{E}[X]/12=3/12=1/4$.
+
+**Exercise 5.** A random variable $X$ has expectation $10$ and variance $9$. Use Chebyshev’s inequality to bound $\Pr[|X-10|\ge6]$.
+
+**Answer.** $\Pr[|X-10|\ge6]\leq9/6^2=1/4$.
 
 ## Continue learning
 
