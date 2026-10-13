@@ -1,6 +1,6 @@
 # Session 13: STARK cost data
 
-`model.csv`: educational accounting from `scripts/stark-cost-model.py`, not measurements and not security estimates. n=2^10..2^24; q=20,30,40,60; b=8; w=8; one composition column; base/extension/digest widths=8/16/32 bytes; binary FRI; terminal evaluation table of 256 elements; independent, uncompressed Merkle paths. Excludes protocol metadata, out-of-domain openings, masking overhead and other scheme-specific messages. KiB = 1024 bytes.
+`model.csv`: educational accounting from `scripts/stark-cost-model.rb`, not measurements and not security estimates. n=2^10..2^24; q=20,30,40,60; b=8; w=8; one composition column; base/extension/digest widths=8/16/32 bytes; binary FRI; terminal evaluation table of 256 elements; independent, uncompressed Merkle paths. Excludes protocol metadata, out-of-domain openings, masking overhead and other scheme-specific messages. KiB = 1024 bytes.
 
 `winterfell-lamport.csv`: published Winterfell README data, inspected September 28, 2026. Snapshot:
 https://github.com/facebook/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance
@@ -13,4 +13,4 @@ The byte model counts, for each query, three committed-table authentication path
 
 The matching hash-work count is the digest count in the second term; FRI fold checks are `q·r`. These are operation counts, not wall-clock verifier time. This deliberately simplified model omits protocol-specific openings, deduplication, transcript/serialization metadata, zero-knowledge masking overhead, and optimizations. It is a teaching aid, not a general STARK proof-size estimator.
 
-Generate the CSV and graphs, with Python standard library only: `python3 scripts/stark-cost-model.py && python3 scripts/generate-stark-cost-plots.py`. Numerical model generation includes independent serialization checks.
+Regenerate the CSV with Ruby's standard library: `ruby scripts/stark-cost-model.rb`. The script checks its byte counts against an independent traversal of the Merkle paths before writing the file. The checked-in SVG graphs are derived from this CSV; the separate plotting utility is a repository-maintenance script, not a learner-facing example.

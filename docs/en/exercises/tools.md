@@ -23,9 +23,9 @@ Choose implementations and computation environments for Act III (Sessions 11–1
 | --- | --- | --- | --- |
 | [11: Groth16](../learn/session-11) | Circom + snarkjs | Complete a circuit-to-proof workflow | [Groth16](./manuals#groth16) |
 | [12: PLONK](../learn/session-12) | Same Circom circuit + snarkjs | Compare setup and artifacts for the same computation | [PLONK](./manuals#plonk) |
-| [13: STARK](../learn/session-13) | Anatomy of a STARK / Winterfell / Miden VM | Read Python internals / write AIR in Rust / prove VM execution | [STARK](./manuals#stark) |
-| [14: Comparison](../learn/session-14) | Selected implementations + spreadsheet or Python + Git | Record conditions and compare results | [Comparison](./manuals#comparison) |
-| [15: Extensions](../learn/session-15) | Nova; SageMath / Python | Explore recursion/folding and small sumcheck calculations | [Advanced exercises](./manuals#advanced) |
+| [13: STARK](../learn/session-13) | Anatomy of a STARK / Winterfell / Miden VM | Read the external Python resource / write AIR in Rust / prove VM execution | [STARK](./manuals#stark) |
+| [14: Comparison](../learn/session-14) | Selected implementations + spreadsheet or Ruby + Git | Record conditions and compare results | [Comparison](./manuals#comparison) |
+| [15: Extensions](../learn/session-15) | Nova; SageMath / Ruby | Explore recursion/folding and small sumcheck calculations | [Advanced exercises](./manuals#advanced) |
 
 You do not need every tool. Beginners can complete Sessions 11–12 with Circom + snarkjs, then choose a STARK implementation at the desired level. Go programmers may start with gnark; Rust programmers may prefer library examples.
 
@@ -67,7 +67,7 @@ The [STARK manual](./manuals#stark) guides normal execution, changed-public-outp
 | Tool | Purpose | Instructions |
 | --- | --- | --- |
 | Selected proof implementation and logs | Record proof size, proving/verification time and acceptance/rejection | [Conditions and recording fields](./manuals#comparison) |
-| [Python](https://www.python.org/) or your usual spreadsheet | Store measurements in CSV or similar and aggregate repeated runs under matching conditions | [Programming resources](https://docs.python.org/3/tutorial/) |
+| [Ruby](https://www.ruby-lang.org/en/) or your usual spreadsheet | Store measurements in CSV or similar and aggregate repeated runs under matching conditions | [Ruby quickstart](https://www.ruby-lang.org/en/documentation/quickstart/) |
 | [Git](https://git-scm.com/) | Record code, settings, versions and reproduction steps | [Save and share results](./manuals#git) |
 
 Record serialization formats and security settings. Distinguish JSON from binary sizes and setup from proving time. Measurements of different computations or conditions do not establish a ranking of proof systems.
@@ -77,9 +77,9 @@ Record serialization formats and security settings. Distinguish JSON from binary
 | Tool or resource | Exercise role | Environment and audience | Instructions |
 | --- | --- | --- | --- |
 | [Nova](https://github.com/microsoft/Nova) | Follow recursive computation proofs and folding in examples | Rust/Cargo; after basic exercises | [Tests and examples](https://github.com/microsoft/Nova#tests-and-examples), [advanced exercises](./manuals#advanced) |
-| SageMath / Python | Calculate small multivariate polynomial sums and compare with sumcheck | Browser or local; calculation support | [Math environments](#math), [Session 15](../learn/session-15) |
+| Ruby or SageMath | Calculate small multivariate polynomial sums and compare with sumcheck | Local Ruby or browser-based SageMath; calculation support | [Math environments](#math), [Session 15](../learn/session-15) |
 
-Computing a sum in SageMath or Python is not a GKR or zero-knowledge proof implementation. When reading Nova, distinguish folding, recursive state continuity and compression. Follow the [advanced reading guide](./manuals#advanced) for zkEVM/EIP-8025 applications.
+Computing a sum in Ruby or SageMath is not a GKR or zero-knowledge proof implementation. When reading Nova, distinguish folding, recursive state continuity and compression. Follow the [advanced reading guide](./manuals#advanced) for zkEVM/EIP-8025 applications.
 
 ## Mathematical computation
 

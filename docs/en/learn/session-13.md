@@ -150,7 +150,7 @@ For an example, set $b=8,w=8,c=1,B=8,E=16,H=32,T=256,q=30$. KiB means 1024 bytes
 
 </div>
 
-The [model CSV](/data/stark-cost/model.csv) contains additional query counts. The assumptions, formula, and code are in the [model notes](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/data/stark-cost/README.md) and [accounting script](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/scripts/stark-cost-model.py).
+The [model CSV](/data/stark-cost/model.csv) contains additional query counts. The assumptions, formula, and Ruby script are in the [model notes](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/data/stark-cost/README.md) and [accounting script](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/scripts/stark-cost-model.rb).
 
 <figure id="figure-13-4" aria-labelledby="caption-13-4">
 <figcaption id="caption-13-4"><strong>Figure 13-4: Trace length, query count, and proof payload in a simplified model</strong></figcaption>

@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 利用可能なツール
 
-更新日：2026年10月13日
+更新日：2026年10月14日
 
 応用編で新たに書くオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．Circom・Solidity・Node.jsなどは，証明回路やEVM，証明ツールに必要な範囲で併用します．外部実装の言語は各教材の説明に従います．
 
@@ -23,9 +23,9 @@ outline: [2, 3]
 | --- | --- | --- | --- |
 | [第11回・Groth16](../learn/session-11) | Circom＋snarkjs | 回路から証明生成・検証まで一巡する | [Groth16の手順](./manuals#groth16) |
 | [第12回・PLONK](../learn/session-12) | 同じCircom回路＋snarkjs | 計算を揃えてセットアップと生成物の違いを見る | [PLONKの手順](./manuals#plonk) |
-| [第13回・STARK](../learn/session-13) | Anatomy of a STARK／Winterfell／Miden VM | Pythonで構造を読む／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
-| [第14回・比較](../learn/session-14) | 使った実装＋表計算またはPython＋Git | 条件と結果を記録し，比較する | [比較と考察](./manuals#comparison) |
-| [第15回・発展](../learn/session-15) | Nova，SageMath／Python | 再帰・フォールディングの実装と，sumcheckの小さな計算を調べる | [発展演習](./manuals#advanced) |
+| [第13回・STARK](../learn/session-13) | Anatomy of a STARK／Winterfell／Miden VM | 外部Python教材で構造を読む／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
+| [第14回・比較](../learn/session-14) | 使った実装＋表計算またはRuby＋Git | 条件と結果を記録し，比較する | [比較と考察](./manuals#comparison) |
+| [第15回・発展](../learn/session-15) | Nova，SageMath／Ruby | 再帰・フォールディングの実装と，sumcheckの小さな計算を調べる | [発展演習](./manuals#advanced) |
 
 すべてを導入する必要はありません．初めてなら第11・12回をCircom＋snarkjsで進め，STARKは学びたい層に合わせて一つを選びます．Go経験者はgnark，Rust経験者は各ライブラリの例から始めても構いません．
 
@@ -67,7 +67,7 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 | ツール | 用途 | 操作案内 |
 | --- | --- | --- |
 | 選んだ証明実装とそのログ | 証明サイズ，生成時間，検証時間，受理・拒否を記録する | [比較条件と記録項目](./manuals#comparison) |
-| [Python](https://www.python.org/) または普段使っている表計算ソフト | 測定値をCSV等にまとめ，同じ条件の反復結果を集計する | [Python入門などの補助教材](https://docs.python.org/3/tutorial/) |
+| [Ruby](https://www.ruby-lang.org/ja/) または普段使っている表計算ソフト | 測定値をCSV等にまとめ，同じ条件の反復結果を集計する | [Ruby入門](https://www.ruby-lang.org/ja/documentation/quickstart/) |
 | [Git](https://git-scm.com/) | ソース・設定・使用版・再実行手順を記録する | [結果の保存・共有](./manuals#git) |
 
 ツールの出力形式や安全性設定を記録し，JSONとバイナリのサイズ，セットアップ時間と証明生成時間を混同しないようにします．異なる計算・条件の測定値は，方式の優劣を示す比較には使えません．
@@ -77,9 +77,9 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 | ツール・資料 | 演習での役割 | 環境・対象 | 操作案内 |
 | --- | --- | --- | --- |
 | [Nova](https://github.com/microsoft/Nova) | 再帰的な計算の証明とフォールディングを例で追う | Rust/Cargo．基本演習後の発展向け | [公式Tests and examples](https://github.com/microsoft/Nova#tests-and-examples)，[発展演習](./manuals#advanced) |
-| SageMath／Python | 小さな多変数多項式の総和を計算し，sumcheckの手順と照合する | ブラウザーまたはローカル．計算の確認用 | [数学の計算環境](#math)，[第15回](../learn/session-15) |
+| Ruby または SageMath | 小さな多変数多項式の総和を計算し，sumcheckの手順と照合する | ローカルのRuby，またはブラウザーのSageMath．計算の確認用 | [数学の計算環境](#math)，[第15回](../learn/session-15) |
 
-SageMathやPythonで総和を計算するだけでは，GKRやゼロ知識証明の実装にはなりません．Novaも，フォールディング・再帰的な状態の引き継ぎ・圧縮の役割を区別して読んでください．zkEVM・EIP-8025の応用調査は[発展演習の資料案内](./manuals#advanced)から進めます．
+RubyやSageMathで総和を計算するだけでは，GKRやゼロ知識証明の実装にはなりません．Novaも，フォールディング・再帰的な状態の引き継ぎ・圧縮の役割を区別して読んでください．zkEVM・EIP-8025の応用調査は[発展演習の資料案内](./manuals#advanced)から進めます．
 
 ## 数学を計算する
 

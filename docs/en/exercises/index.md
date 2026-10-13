@@ -93,7 +93,7 @@ Official documentation checked on **September 27, 2026**. Manuals are primarily 
 
 ## STARK implementations and operation manuals {#stark}
 
-These external examples accompany [Session 13: STARK](../learn/session-13). Choose **Anatomy of a STARK to follow the construction in Python, Winterfell to write AIR constraints, or Miden VM to prove program execution**. Each implementation is paired with instructions and examples from its author or development team.
+These external examples accompany [Session 13: STARK](../learn/session-13). Choose **Anatomy of a STARK to follow its external Python tutorial, Winterfell to write AIR constraints, or Miden VM to prove program execution**. The site's own arithmetic and applied examples use Ruby by default; external implementations use their native languages. Each implementation is paired with instructions and examples from its author or development team.
 
 | Implementation | Example and learning objective | Environment and level | Operation manuals and examples |
 | --- | --- | --- | --- |

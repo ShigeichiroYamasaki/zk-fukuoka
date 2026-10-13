@@ -16,7 +16,7 @@ import { withBase } from "vitepress";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 14, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Session 6 exercises](../exercises/session-06)
 
@@ -242,7 +242,7 @@ Could we fix the first challenge to 3 in advance? Consider $\widetilde h_0(X)=f_
 
 This explains why tables must be fixed before unpredictable challenges, and why the final degree condition and inter-layer consistency are both needed. The soundness theorem addresses arbitrary tables far from the code and adversarial strategies, not just these examples. FRI and Merkle commitments alone also do not establish zero-knowledge.
 
-<a :href="withBase('/examples/fri_folding.py')" download>Download the Python arithmetic example</a> and run `python3 fri_folding.py` to check both tables and the invalid examples. No extra libraries are required. This is an arithmetic teaching example, not a proof-system implementation with Merkle trees and cryptographic randomness.
+<a :href="withBase('/examples/fri_folding.rb')" download>Download the Ruby arithmetic example</a> and run `ruby fri_folding.rb` to check both tables and the invalid examples. No extra gems are required. This is an arithmetic teaching example, not a proof-system implementation with Merkle trees and cryptographic randomness.
 
 
 ---

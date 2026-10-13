@@ -16,7 +16,7 @@ import ArithmetizationOverview from "../.vitepress/theme/ArithmetizationOverview
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月11日
+最終更新日付：2026年10月14日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第4回](./#session-4) · [第4回の演習](../exercises/session-04)
 
@@ -26,7 +26,7 @@ import ArithmetizationOverview from "../.vitepress/theme/ArithmetizationOverview
 NP関係，回路，制約などは[第4回の用語ガイド](./terms/)から詳しく読めます．8つの説明ページに具体例と確認問題を用意しました．本文中の用語からも該当ページへ移動できます．
 :::
 
-[具体例：入金と出金の一致をR1CS・QAP・AIRへ変換する](../exercises/session-04#program) — 行列，多項式，実行トレースを数値で追い，Pythonでも再現できます．
+[具体例：入金と出金の一致をR1CS・QAP・AIRへ変換する](../exercises/session-04#program) — 行列，多項式，実行トレースを数値で追い，Rubyで再現できます．
 
 ## 本講義の位置づけと到達目標
 

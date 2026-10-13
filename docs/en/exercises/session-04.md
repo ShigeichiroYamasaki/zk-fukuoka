@@ -21,7 +21,7 @@ Use deposits $(4,3)$ and withdrawals $(2,5)$. Before reading the worked steps, w
 3. The AIR initial boundary, input bindings, transitions, and final boundary for the same program.
 4. Why field arithmetic needs range constraints to imply equality of integer amounts.
 
-The sections below provide the derivations, counterexamples, and runnable Python code.
+The sections below provide the derivations, counterexamples, and runnable Ruby code.
 
 | Starting computation | Representation | What is checked |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ The sections below provide the derivations, counterexamples, and runnable Python
 
 Use deposits $d_0=4,d_1=3$ and withdrawals $w_0=2,w_1=5$. There are exactly two entries on each side, each an integer from zero to seven. Use an arbitrary smallest unit, without floating-point amounts.
 
-```python
+```ruby
 def balanced(deposits, withdrawals):
     if len(deposits) != 2 or len(withdrawals) != 2:
         return False
@@ -252,14 +252,14 @@ Why ranges? Deposits $4+3=7$ and withdrawals $60+48=108$ differ as integers but 
 
 Private values also need to be tied to the intended transaction data, for example through a public commitment. Otherwise choosing every amount to be zero satisfies equality. Range, data binding and zero knowledge are distinct requirements.
 
-## 7. Run the Python example {#run}
+## 7. Run the Ruby example {#run}
 
-<a :href="withBase('/examples/balance_arithmetization.py')" download>Download the Python file</a>. It uses only the Python 3.8+ standard library. In the directory containing the saved file, run:
+<a :href="withBase('/examples/balance_arithmetization.rb')" download>Download the Ruby file</a>. It uses only Ruby 2.6+ built-in features. In the directory containing the saved file, run:
 
 ```sh
-python3 balance_arithmetization.py
-python3 balance_arithmetization.py 4 3 2 6
-python3 balance_arithmetization.py --self-test
+ruby balance_arithmetization.rb
+ruby balance_arithmetization.rb 4 3 2 6
+ruby balance_arithmetization.rb --self-test
 ```
 
 The first accepts all three representations; the second rejects all three. Coefficient lists are constant-first: `[0, 61, 47]` means $47X^2+61X$.

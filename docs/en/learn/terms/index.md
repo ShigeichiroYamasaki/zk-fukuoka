@@ -23,7 +23,7 @@ The shared arithmetic example uses $x^3+x+5=35$ over $\mathbb F_{101}$. Integer 
 
 ## Work through one program
 
-[Balanced deposits and withdrawals → R1CS / QAP / AIR](../../exercises/session-04). Apply these terms to one program and reproduce the calculation in Python.
+[Balanced deposits and withdrawals → R1CS / QAP / AIR](../../exercises/session-04). Apply these terms to one program and reproduce the calculation in Ruby.
 
 ## Before Session 1
 

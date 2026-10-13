@@ -21,7 +21,7 @@ import { withBase } from "vitepress";
 3. 同じ処理をAIRの状態遷移として表し，初期境界・入力との対応・遷移・最終境界を区別する．
 4. 金額を有限体で扱うとき，範囲制約がないと整数の一致を誤って受理しうる理由を述べる．
 
-以下に各段階の計算，反例，実行可能なPythonコードを示します．
+以下に各段階の計算，反例，実行可能なRubyコードを示します．
 
 | 出発点 | 表現の変換 | 最後に確認するもの |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ import { withBase } from "vitepress";
 
 入金を $d_0=4,d_1=3$，出金を $w_0=2,w_1=5$ とする．件数はそれぞれ2件，金額は0〜7の整数に限定する．単位は任意の最小単位とし，小数点は使わない．
 
-```python
+```ruby
 def balanced(deposits, withdrawals):
     if len(deposits) != 2 or len(withdrawals) != 2:
         return False
@@ -270,14 +270,14 @@ AIRでも，金額を処理する行にビット列を持たせ，ビット性�
 
 さらに，非公開の金額が実際の取引データであることを示したいなら，公開されたコミットメントなどとの対応も必要になる．どんな金額でも自由に選べるなら，たとえばすべて0にするだけで一致を満たせる．範囲・データとの対応・ゼロ知識性は，それぞれ別の要求である．
 
-## 7. Pythonで再現する {#run}
+## 7. Rubyで再現する {#run}
 
-<a :href="withBase('/examples/balance_arithmetization.py')" download>実行用Pythonファイルをダウンロードする</a>．Python 3.8以降の標準ライブラリだけで動く．保存した場所で次を実行する．
+<a :href="withBase('/examples/balance_arithmetization.rb')" download>実行用Rubyファイルをダウンロードする</a>．Ruby 2.6以降の標準機能だけで動く．保存した場所で次を実行する．
 
 ```sh
-python3 balance_arithmetization.py
-python3 balance_arithmetization.py 4 3 2 6
-python3 balance_arithmetization.py --self-test
+ruby balance_arithmetization.rb
+ruby balance_arithmetization.rb 4 3 2 6
+ruby balance_arithmetization.rb --self-test
 ```
 
 最初はR1CS・QAP・AIRすべてが `True`，2番目はすべて `False` になる．係数リストは**定数項から順**である．たとえばQAPの `[0, 61, 47]` は $47X^2+61X$ を表す．

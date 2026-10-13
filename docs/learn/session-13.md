@@ -150,7 +150,7 @@ $$S \approx q(2wB+cE+2rE)+qH\left(3\log_2N+\sum_{j=1}^{r}(\log_2N-j)\right)+TE+(
 
 </div>
 
-問い合わせ回数などを変えた全データは[概算モデルのCSV](/data/stark-cost/model.csv)で確認できる．算定条件・式・スクリプトは[モデルの説明](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/data/stark-cost/README.md)と[算定スクリプト](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/scripts/stark-cost-model.py)に掲載．
+問い合わせ回数などを変えた全データは[概算モデルのCSV](/data/stark-cost/model.csv)で確認できる．算定条件・式・Rubyスクリプトは[モデルの説明](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/data/stark-cost/README.md)と[算定スクリプト](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/scripts/stark-cost-model.rb)に掲載．
 
 <figure id="figure-13-4" aria-labelledby="caption-13-4">
 <figcaption id="caption-13-4"><strong>図 13-4：単純化したモデルにおける，トレース長・問い合わせ数と証明通信量</strong></figcaption>
