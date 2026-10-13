@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 270" role="img" aria-labelledby="title desc">
+  <title id="title">Boolean circuit example</title>
+  <desc id="desc">Inputs a and b go through an AND gate; its output and input c go through an OR gate.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="#2456a6"/></marker></defs>
+  <rect width="900" height="270" rx="18" fill="#f5f8ff"/>
+  <g font-family="system-ui, sans-serif" fill="#17243a" text-anchor="middle">
+    <text x="450" y="36" font-size="22" font-weight="700">C(a,b,c) = (a AND b) OR c</text>
+    <text x="70" y="105" font-size="20">Input a</text><text x="70" y="190" font-size="20">Input b</text>
+    <text x="485" y="224" font-size="20">Input c</text><text x="820" y="150" font-size="20">Output</text>
+    <rect x="280" y="85" width="145" height="78" rx="16" fill="#dce9ff" stroke="#2456a6" stroke-width="3"/>
+    <text x="352" y="132" font-size="23" font-weight="700">AND</text>
+    <rect x="620" y="105" width="130" height="78" rx="16" fill="#e5f5ed" stroke="#28744b" stroke-width="3"/>
+    <text x="685" y="152" font-size="23" font-weight="700">OR</text>
+  </g>
+  <g fill="none" stroke="#2456a6" stroke-width="4" marker-end="url(#arrow)">
+    <path d="M112 100H205Q240 100 280 105"/><path d="M112 185H205Q240 185 280 145"/>
+    <path d="M425 124H620"/><path d="M485 205V185Q485 165 525 165H620"/><path d="M750 144H790"/>
+  </g>
+</svg>

@@ -43,14 +43,7 @@ A **Boolean circuit** is a directed acyclic graph of logical gates such as AND, 
 
 $$C(a,b,c)=(a\land b)\lor c.$$
 
-```mermaid
-flowchart LR
-  a["Input a"] --> gateAnd{"AND"}
-  b["Input b"] --> gateAnd
-  gateAnd --> gateOr{"OR"}
-  c["Input c"] --> gateOr
-  gateOr --> out["Output C(a,b,c)"]
-```
+<img src="/figures/computation-boolean-circuit-en.svg" alt="Boolean circuit that sends inputs a and b through an AND gate, then combines the result with input c in an OR gate">
 
 Figure 1. Gate connections for $C(a,b,c)=(a\land b)\lor c$.
 
@@ -72,14 +65,7 @@ A deterministic finite automaton (DFA) has finitely many states, an input alphab
 
 For example, a machine that checks whether a bit string contains an even number of ones needs just two states: $E$ (“an even number read”) and $O$ (“an odd number read”). It starts in $E$, since it has read no ones. Reading 0 leaves the parity unchanged; reading 1 switches between $E$ and $O$. The input is accepted if the machine ends in $E$.
 
-```mermaid
-flowchart LR
-  start([Start]) --> E(("E: even number of ones<br/>start and accept"))
-  E -->|0| E
-  E -->|1| O(("O: odd number of ones"))
-  O -->|0| O
-  O -->|1| E
-```
+<img src="/figures/computation-even-ones-dfa-en.svg" alt="DFA with accepting state E for an even number of ones and state O for an odd number; 0 preserves the state and 1 switches between E and O">
 
 Figure 2. A DFA that checks the parity of the number of ones. Each edge label is the input symbol read.
 
@@ -134,15 +120,7 @@ The formula is constructed so that its satisfying assignments correspond to vali
 
 The reduction can be viewed as follows. For an NP language $L$ and input $x$, compile the computation that verifies a witness into a circuit $C_x$.
 
-```mermaid
-flowchart LR
-  x["Input x"] --> build["Encode the verifier computation"]
-  build --> C["Construct circuit Cₓ"]
-  w["Candidate witness w"] --> C
-  C --> check["Cₓ(w)=1?"]
-  check -->|Yes| member["x ∈ L"]
-  check -->|No| reject["This w does not verify"]
-```
+<img src="/figures/computation-cook-levin-en.svg" alt="Fix input x and compile its witness verifier into circuit C_x; x belongs to L exactly when some witness w makes C_x output 1">
 
 Figure 3. The reduction from witness verification to CircuitSAT. For fixed $x$, circuit $C_x$ is satisfiable exactly when $x\in L$.
 

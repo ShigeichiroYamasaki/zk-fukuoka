@@ -45,14 +45,7 @@ $$C(a,b,c)=(a\land b)\lor c$$
 
 を計算する．
 
-```mermaid
-flowchart LR
-  a["入力 a"] --> gateAnd{"AND"}
-  b["入力 b"] --> gateAnd
-  gateAnd --> gateOr{"OR"}
-  c["入力 c"] --> gateOr
-  gateOr --> out["出力 C(a,b,c)"]
-```
+<img src="/figures/computation-boolean-circuit-ja.svg" alt="入力aとbをANDゲートに通し，その結果と入力cをORゲートに通して出力するブール回路">
 
 図1．回路 $C(a,b,c)=(a\land b)\lor c$ のゲート接続図．
 
@@ -74,14 +67,7 @@ $$\mathrm{CircuitSAT}=\{\langle C\rangle\mid \exists w,\ C(w)=1\}$$
 
 例として，0と1の列に含まれる1の個数が偶数かを判定する機械は，「偶数個を読んだ状態 $E$」と「奇数個を読んだ状態 $O$」の2状態で足りる．開始時はまだ1を読んでいないので $E$ にいる．0を読むと偶奇は変わらず，1を読むと $E$ と $O$ の間を移動する．入力を最後まで読んだ時点で $E$ にいれば受理する．
 
-```mermaid
-flowchart LR
-  start([開始]) --> E(("E：1の個数が偶数<br/>受理状態"))
-  E -->|0| E
-  E -->|1| O(("O：1の個数が奇数"))
-  O -->|0| O
-  O -->|1| E
-```
+<img src="/figures/computation-even-ones-dfa-ja.svg" alt="1の個数が偶数の受理状態Eと奇数の状態OからなるDFA。0では状態を保ち，1ではEとOを切り替える">
 
 図2．1の個数の偶奇を判定するDFA．各矢印のラベルが読んだ記号を表す．
 
@@ -136,15 +122,7 @@ Cook–Levinの定理は，**SATがNP完全である**という定理である�
 
 変換の流れは次のように見られる．NP言語 $L$ に属する入力 $x$ ごとに，ウィットネスを受け取って検証する計算を回路 $C_x$ にする．
 
-```mermaid
-flowchart LR
-  x["入力 x"] --> build["検証計算を符号化"]
-  build --> C["回路 Cₓ を構成"]
-  w["候補ウィットネス w"] --> C
-  C --> check["Cₓ(w)=1 ?"]
-  check -->|Yes| member["x ∈ L"]
-  check -->|No| reject["この w は不適合"]
-```
+<img src="/figures/computation-cook-levin-ja.svg" alt="入力xを固定したウィットネス検証手続きを回路C_xに変換し，候補wで出力1となる場合に限りxが言語Lに属することを示す図">
 
 図3．ウィットネス検証をCircuitSATへ移す還元の概略．固定した $x$ に対し，$C_x$ が充足可能であることと $x\in L$ が同値になる．
 
