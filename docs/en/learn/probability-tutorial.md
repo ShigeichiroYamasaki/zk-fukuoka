@@ -55,15 +55,15 @@ Random variables are independent exactly when their joint probability distributi
 
 ### Distinguishing probability distributions
 
-To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample $z$ from one of them and decide which one generated it. Let a distinguisher $D$ receive $z$ and output $1$ if it thinks the sample came from $P_0$, and $0$ otherwise. Let $q_i$ be the probability that $D$ outputs $1$ when its input is sampled from $P_i$, including both the sample-generation randomness and $D$'s own random coins. What matters is not whether $D$ is always right on one sample, but how differently its output behaves on the two distributions. Define the absolute difference between those output probabilities—called the **distinguishing gap** here—by
+To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample $z$ from one of them and decide which one generated it. Let a distinguisher $D$ receive $z$ and output $1$ when it classifies the sample as coming from $P_1$, and $0$ when it classifies it as coming from $P_0$. Let $q_i$ be the probability that $D$ outputs $1$ when its input is sampled from $P_i$, including both the sample-generation randomness and $D$'s own random coins. What matters is not whether $D$ is always right on one sample, but how differently its output behaves on the two distributions. Define the absolute difference between those output probabilities—called the **distinguishing gap** here—by
 
 $$
-\operatorname{Adv}_D(P_0,P_1)=\left|\Pr_{z\sim P_0}[D(z)=1]-\Pr_{z\sim P_1}[D(z)=1]\right|.
+\operatorname{Adv}_D(P_0,P_1)=\left|\Pr_{z\sim P_1}[D(z)=1]-\Pr_{z\sim P_0}[D(z)=1]\right|=|q_1-q_0|.
 $$
 
-This is not a statistical hypothesis-test significance level or a $p$-value; it is the distance between the distinguisher's output probabilities. A gap of $0$ means this distinguisher's output does not help separate the distributions; a gap of $1$ means perfect separation. For processes A and B above, the test “output $1$ exactly when the bits are equal” has $q_A=1$ and $q_B=0$, hence gap $1$. By contrast, testing only the first bit gives probability $1/2$ of outputting 1 on either process, hence gap $0$.
+This is not a statistical hypothesis-test significance level or a $p$-value; it is the distance between the distinguisher's output probabilities. A gap of $0$ means this distinguisher's output does not help separate the distributions; a gap of $1$ means perfect separation. For processes A and B above, the test “output $1$ exactly when the bits differ” has $q_A=0$ and $q_B=1$, hence gap $1$. By contrast, testing only whether the first bit is 0 gives probability $1/2$ of outputting 1 on either process, hence gap $0$.
 
-If the source distribution is selected uniformly from $P_0,P_1$ and $D$'s output is used directly as its guess, its success probability is $\frac12(q_0+1-q_1)$. When $q_0\ge q_1$, this is $\frac12+\frac12\operatorname{Adv}_D(P_0,P_1)$. If the ordering is reversed, swapping the output labels gives the same formula with the absolute gap. Thus a zero gap means chance-level accuracy $1/2$, while gap $1$ means accuracy $1$ under the best label assignment.
+If the source distribution is selected uniformly from $P_0,P_1$ and $D$'s output is used directly as its guess, its success probability is $\frac12(1-q_0+q_1)$. When $q_1\ge q_0$, this is $\frac12+\frac12\operatorname{Adv}_D(P_0,P_1)$. If the ordering is reversed, swapping the output labels gives the same formula with the absolute gap. Thus a zero gap means chance-level accuracy $1/2$, while gap $1$ means accuracy $1$ under the best label assignment.
 
 ### Example: distinguishing distributions on four values
 
@@ -79,9 +79,9 @@ Let a sample be one of $z\in\{0,1,2,3\}$. In this example, $P_0$ tends to produc
 <figure>
 <svg viewBox="0 0 640 350" role="img" aria-labelledby="dist-chart-title dist-chart-desc" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:720px;height:auto;margin:0 auto;background:#fff;border:1px solid #d1d5db;border-radius:12px">
   <title id="dist-chart-title">Two probability distributions and the region where the distinguisher outputs one</title>
-  <desc id="dist-chart-desc">Probability mass at values zero through three, with P0 in purple and P1 in blue. The pale orange region contains values zero and one. The probability of this region is 0.8 under P0 and 0.3 under P1.</desc>
-  <rect x="92" y="55" width="239" height="225" fill="#fff4d6"/>
-  <text x="211" y="73" text-anchor="middle" font-size="14" fill="#7c4a03" font-family="system-ui, sans-serif">D(z)=1 region: z&lt;2</text>
+  <desc id="dist-chart-desc">Probability mass at values zero through three, with P0 in purple and P1 in blue. The pale orange region contains values two and three, where the distinguisher outputs 1 to classify the sample as coming from P1. The probability of this region is 0.2 under P0 and 0.7 under P1.</desc>
+  <rect x="342" y="55" width="248" height="225" fill="#fff4d6"/>
+  <text x="466" y="73" text-anchor="middle" font-size="14" fill="#7c4a03" font-family="system-ui, sans-serif">D(z)=1 region: z≥2</text>
   <g stroke="#d1d5db" stroke-width="1"><line x1="92" y1="280" x2="590" y2="280"/><line x1="92" y1="240" x2="590" y2="240"/><line x1="92" y1="200" x2="590" y2="200"/><line x1="92" y1="160" x2="590" y2="160"/><line x1="92" y1="120" x2="590" y2="120"/><line x1="92" y1="80" x2="590" y2="80"/></g>
   <g font-family="system-ui, sans-serif" font-size="12" fill="#374151" text-anchor="end"><text x="82" y="284">0.0</text><text x="82" y="244">0.1</text><text x="82" y="204">0.2</text><text x="82" y="164">0.3</text><text x="82" y="124">0.4</text><text x="82" y="84">0.5</text></g>
   <g fill="#6d4aff"><rect x="128" y="80" width="32" height="200" rx="3"/><rect x="253" y="160" width="32" height="120" rx="3"/><rect x="378" y="220" width="32" height="60" rx="3"/><rect x="503" y="260" width="32" height="20" rx="3"/></g>
@@ -90,10 +90,10 @@ Let a sample be one of $z\in\{0,1,2,3\}$. In this example, $P_0$ tends to produc
   <g font-family="system-ui, sans-serif" font-size="13" fill="#111827"><rect x="408" y="22" width="14" height="14" rx="2" fill="#6d4aff"/><text x="428" y="34">P₀</text><rect x="476" y="22" width="14" height="14" rx="2" fill="#168aad"/><text x="496" y="34">P₁</text></g>
   <line x1="92" y1="280" x2="590" y2="280" stroke="#4b5563" stroke-width="1.5"/><line x1="92" y1="55" x2="92" y2="280" stroke="#4b5563" stroke-width="1.5"/>
 </svg>
-<figcaption>Figure: compare the probability masses of the sample values $z\in\{0,1\}$ for which $D(z)=1$.</figcaption>
+<figcaption>Figure: compare the probability masses of the sample values $z\in\{2,3\}$ for which $D(z)=1$ to classify the sample as coming from $P_1$.</figcaption>
 </figure>
 
-Choose $D(z)=1$ when $z<2$, and $D(z)=0$ otherwise. The shaded region contains exactly the values for which $D$ outputs 1. Under $P_0$, this event has probability $q_0=P_0(0)+P_0(1)=0.50+0.30=0.80$. Under $P_1$, it has probability $q_1=P_1(0)+P_1(1)=0.10+0.20=0.30$. Therefore, this distinguisher's gap is $|q_0-q_1|=|0.80-0.30|=0.50$. The distinguisher first chooses the set of samples on which it outputs 1, then compares how much probability each distribution assigns to that set.
+Choose $D(z)=1$ when $z\ge2$ (classifying the sample as coming from $P_1$), and $D(z)=0$ otherwise. The shaded region contains exactly the values for which $D$ outputs 1. Under $P_0$, this event has probability $q_0=P_0(2)+P_0(3)=0.15+0.05=0.20$. Under $P_1$, it has probability $q_1=P_1(2)+P_1(3)=0.30+0.40=0.70$. Therefore, this distinguisher's gap is $|q_1-q_0|=|0.70-0.20|=0.50$. The distinguisher first chooses the set of samples on which it outputs 1, then compares how much probability each distribution assigns to that set.
 
 We can also estimate the gap from finite samples. Suppose ten samples from $P_0$ are $0,1,0,2,1,0,3,0,1,0$, and ten from $P_1$ are $0,1,2,3,2,3,1,3,0,3$.
 
@@ -104,7 +104,7 @@ We can also estimate the gap from finite samples. Suppose ten samples from $P_0$
 | 2 | 1 (0.10) | 2 (0.20) |
 | 3 | 1 (0.10) | 4 (0.40) |
 
-In these observations, $D=1$ on $\widehat q_0=(5+3)/10=0.80$ of the $P_0$ samples and $\widehat q_1=(2+2)/10=0.40$ of the $P_1$ samples. The estimated gap is $|0.80-0.40|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
+In these observations, $D=1$ on $\widehat q_0=(1+1)/10=0.20$ of the $P_0$ samples and $\widehat q_1=(2+4)/10=0.60$ of the $P_1$ samples. The estimated gap is $|0.60-0.20|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
 
 When the distinguisher’s computational power is unrestricted, the maximum distinguishing gap over a finite sample space equals the **total variation distance**
 
@@ -122,7 +122,7 @@ $$
 \widehat q_i=\frac{1}{n_i}\sum_{j=1}^{n_i}\mathbf{1}[D(z_{i,j})=1].
 $$
 
-The estimated gap from the observations is $\widehat{\operatorname{Adv}}_D=|\widehat q_0-\widehat q_1|$. In the four-value example above, the observed frequencies give $\widehat q_0=0.80$ and $\widehat q_1=0.40$, hence an estimated gap of $0.40$ for a theoretical gap of $0.50$. This keeps the theoretical distinguishing gap separate from its finite-sample estimate.
+The estimated gap from the observations is $\widehat{\operatorname{Adv}}_D=|\widehat q_1-\widehat q_0|$. In the four-value example above, the observed frequencies give $\widehat q_0=0.20$ and $\widehat q_1=0.60$, hence an estimated gap of $0.40$ for a theoretical gap of $0.50$. This keeps the theoretical distinguishing gap separate from its finite-sample estimate.
 
 Hoeffding’s inequality gives a simple uncertainty bound. For independent samples, with confidence at least $1-\alpha$, both estimates simultaneously satisfy
 
