@@ -15,6 +15,15 @@ const rollupChapters = [
   { path: '05-bridge', ja: 'ERC-20とL1検証', en: 'ERC-20 and L1 verification' },
   { path: '06-availability', ja: 'データ公開・退出・総合テスト', en: 'Data availability, exits and testing' },
 ];
+const implementationSources = [
+  { file: 'balance_arithmetization.rb', path: '/examples/balance_arithmetization.rb', ja: '第4回：R1CS・QAP・AIR', en: 'Session 4: R1CS, QAP and AIR', lang: 'Ruby' },
+  { file: 'fri_folding.rb', path: '/examples/fri_folding.rb', ja: '第6回：FRIの算術例', en: 'Session 6: FRI arithmetic example', lang: 'Ruby' },
+  { file: 'ledger_model.rb', path: '/examples/rollup/ledger_model.rb', ja: 'ZK rollup：残高台帳', en: 'ZK rollup: ledger model', lang: 'Ruby' },
+  { file: 'transfer_core.circom', path: '/examples/rollup/transfer_core.circom', ja: 'ZK rollup：送金回路', en: 'ZK rollup: transfer circuit', lang: 'Circom' },
+  { file: 'train.rb', path: '/examples/zkml/train.rb', ja: 'ZKML：モデル学習', en: 'ZKML: model training', lang: 'Ruby' },
+  { file: 'classifier.circom', path: '/examples/zkml/classifier.circom', ja: 'ZKML：推論回路', en: 'ZKML: inference circuit', lang: 'Circom' },
+  { file: 'run.cjs', path: '/examples/zkml/run.cjs', ja: 'ZKML：証明の実行', en: 'ZKML: proof runner', lang: 'Node.js' },
+];
 const { lang, page } = useData();
 const en = computed(() => lang.value === "en");
 const link = (s) => withBase((en.value ? "/en/" : "/") + s);
@@ -98,6 +107,23 @@ const lastUpdated = computed(() => {
         <span>{{ t('別の入口', 'Browse by') }}</span>
         <a :href="link('learn/topics.html')">{{ t('トピック別', 'Topic') }} ↗</a>
         <a :href="link('exercises/')">{{ t('演習・ツール・マニュアル', 'Exercises, tools & manuals') }} ↗</a>
+      </nav>
+    </section>
+    <section id="implementation-sources" class="applied-section section-pad" aria-labelledby="source-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">SOURCE CODE / DOWNLOADS</span>
+          <h2 id="source-title">{{ t('実装例のソースコード', 'Implementation source code') }}</h2>
+        </div>
+        <a class="text-link" :href="link('exercises/manuals.html')">{{ t('実行環境と操作マニュアル', 'Setup and operation manuals') }} ↗</a>
+      </div>
+      <p class="section-intro">{{ t('講義の計算例と応用編で使うコードを直接開くか，ダウンロードできます．Rubyを基本に，回路はCircom，証明の実行はNode.jsを使います．', 'Open or download the code used in lecture examples and applied courses. Ruby is the default; circuits use Circom, and proof workflows use Node.js.') }}</p>
+      <nav class="applied-chapters" :aria-label="t('実装例のソースコード一覧', 'Implementation source code files')">
+        <a v-for="source in implementationSources" :key="source.file" :href="withBase(source.path)" :download="source.file">
+          <span class="applied-number">{{ source.lang }}</span>
+          <span>{{ t(source.ja, source.en) }}<small class="source-file">{{ source.file }}</small></span>
+          <span aria-hidden="true">↓</span>
+        </a>
       </nav>
     </section>
     <section id="applied-course" class="applied-section section-pad" aria-labelledby="applied-title">
