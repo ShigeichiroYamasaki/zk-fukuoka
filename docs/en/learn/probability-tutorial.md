@@ -131,7 +131,23 @@ $$
 
 This is **Chebyshev's inequality**. It follows by applying Markov's inequality to $Y=(X-\mu)^2$; it bounds the probability of a large deviation using the variance. For example, after 100 fair coin tosses, the observed fraction of heads $\widehat p$ has expectation $0.5$ and variance $0.25/100=0.0025$. Thus $\Pr[|\widehat p-0.5|\ge0.1]\le0.0025/0.1^2=0.25$. For an average of independent, identically distributed samples, the variance decreases in proportion to $1/n$, improving this bound as the sample count grows.
 
-**Hoeffding's inequality** uses independence and boundedness to give an exponentially small bound on additive deviations of a sample average. The later section on statistical identification applies it to the distinguisher's 0/1 outputs. Chernoff bounds apply to sums of independent Bernoulli variables and control relative deviations from the mean. Thus Markov (mean only), Chebyshev (variance), Chernoff (sums of independent Bernoulli variables), and Hoeffding (sums of independent bounded variables) have different assumptions and deviation measures.
+### Hoeffding's inequality: bounding additive deviations of bounded variables
+
+Suppose independent random variables $X_1,\ldots,X_n$ satisfy $a_i\le X_i\le b_i$. For their sum $S=\sum_i X_i$ and any $t>0$, the upper-tail probability is bounded by
+
+$$
+\Pr[S-\mathbb{E}[S]\ge t]\le\exp\!\left(-\frac{2t^2}{\sum_i(b_i-a_i)^2}\right).
+$$
+
+For deviations in either direction, multiply the right-hand side by $2$. This is **Hoeffding's inequality**. It needs independence and bounds on the variables, but not their detailed distributions. Since it measures deviation by a specified absolute amount $t$, it is useful for **additive deviations**.
+
+For example, in 100 independent trials with success probability $0.1$, the success count $S$ has expectation 10. Reaching at least 20 successes means exceeding the expectation by 10. Since each indicator $X_i$ lies in $[0,1]$, Hoeffding gives
+
+$$
+\Pr[S\ge20]\le\exp\!\left(-\frac{2\cdot10^2}{100}\right)=e^{-2}\approx0.135.
+$$
+
+The later section on statistical identification uses this inequality to bound how far the average of a distinguisher's 0/1 outputs can be from its true output probability.
 
 ### Chernoff bounds: controlling relative deviations in independent trials
 
@@ -155,7 +171,7 @@ $$
 \Pr[X\ge20]\le e^{-10/3}\approx0.036.
 $$
 
-This is an upper bound, not the actual probability. In this example, Hoeffding's additive bound gives $\Pr[X-\mu\ge10]\le e^{-2}\approx0.135$. Chernoff is sharper here, but which bound is useful depends on the variables' ranges, the mean, and the deviation size. Chernoff bounds are suited to sums of independent Bernoulli variables; Hoeffding applies to sums of general independent bounded random variables.
+This is an upper bound, not the actual probability. Hoeffding's inequality gives $e^{-2}\approx0.135$ for the same event. Chernoff uses the Bernoulli setting and the mean to bound a relative deviation more tightly here, yielding $e^{-10/3}\approx0.036$. Hoeffding applies more broadly to sums of independent bounded variables. Markov uses only the expectation, while Chebyshev also uses the variance; choose among them by balancing assumptions against the tightness of the bound.
 
 ## 5. Distinguishing probability distributions
 
