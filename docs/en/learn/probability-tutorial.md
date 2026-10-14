@@ -175,30 +175,42 @@ This is an upper bound, not the actual probability. Hoeffding's inequality gives
 
 ## 5. Distinguishing probability distributions
 
-To **distinguish** two probability distributions $P_0,P_1$, a distinguisher $D$ receives one sample $z$ from one of them and returns one predicted label. Output $1$ means “the sample came from $P_1”; output $0$ means “the sample came from $P_0.” The prediction may be wrong, and the distinguisher may use its own randomness.
+This section applies the random variables and expectations from the previous sections to comparing probability distributions. A sample $z$ is drawn from one of two distributions $P_0,P_1$, and a distinguisher $D$ predicts its source. Output $1$ means “from $P_1,” and output $0$ means “from $P_0.” The prediction may be wrong, and $D$ may use internal randomness.
 
-The comparison uses **two separate experiments**, not two classifications of the same sample: one draws samples from $P_0$, and the other draws samples from $P_1$. Define $q_i$ as the probability that $D$ outputs $1$ on a sample drawn from $P_i$, including both sample-generation randomness and the distinguisher's random coins. Thus,
+### Original definition: compare output probabilities in two experiments
+
+Cryptography defines this comparison using **two separate experiments**, not two decisions on one sample. For distribution ensembles $X_n,Y_n$ indexed by a security parameter $n$, Goldreich defines the difference for an algorithm $A$ as
+
+$$
+d_A(n)=\left|\Pr[A(X_n)=1]-\Pr[A(Y_n)=1]\right|
+$$
+
+([Goldreich, *Foundations of Modern Cryptography*, Definition 1.2, §1.2.2](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf)). In each probability, a sample is drawn from the indicated ensemble and the algorithm is run; if it is randomized, its coins are included. Goldreich calls the ensembles computationally indistinguishable when this difference is negligible in $n$ for every probabilistic polynomial-time algorithm.
+
+Now fix $n$ and write the corresponding pair of distributions as $P_0,P_1$. Let $q_i$ be the probability that $D$ outputs $1$ in the separate experiment using $P_i$:
 
 $$
 q_0=\Pr_{z\sim P_0}[D(z)=1],\qquad q_1=\Pr_{z\sim P_1}[D(z)=1].
 $$
 
-The quantity $q_0$ is the probability that a sample actually from $P_0$ is incorrectly labeled as coming from $P_1$ (**false-positive rate**). The quantity $q_1$ is the probability that a sample actually from $P_1$ is correctly labeled as coming from $P_1$ (**true-positive rate**). Each individual sample gets only one output, 0 or 1; $q_0$ and $q_1$ are probabilities measured over separate repeated experiments.
+In this notation, Goldreich’s definition becomes the **output-probability difference**
+
+$$
+d_D(P_0,P_1)=|q_0-q_1|=\left|\Pr_{z\sim P_0}[D(z)=1]-\Pr_{z\sim P_1}[D(z)=1]\right|.
+$$
+
+Here $q_0$ is the false-positive rate (a sample from $P_0$ is labeled as $P_1$), and $q_1$ is the true-positive rate (a sample from $P_1$ is labeled as $P_1$). Thus the output-probability difference is their absolute difference.
 
 | Actual source of sample | Probability that the distinguisher outputs 1 | Meaning |
 | --- | --- | --- |
 | $P_0$ | $q_0$ | False-positive rate: incorrectly classifies $P_0$ as $P_1$ |
 | $P_1$ | $q_1$ | True-positive rate: correctly classifies $P_1$ as $P_1$ |
 
-The **distinguishing gap** is the absolute difference between the true-positive and false-positive rates:
+A difference of $0$ means that this distinguisher’s output alone cannot distinguish the two experiments. A difference of $1$ means it outputs $1$ with certainty in one experiment and $0$ with certainty in the other, so it separates them perfectly. This quantity is not a statistical significance level or a $p$-value, nor is it itself a classification accuracy. If the source $P_0$ or $P_1$ is selected uniformly and the labels are assigned in the favorable direction, the best accuracy is $1/2+d_D(P_0,P_1)/2$.
 
-$$
-\operatorname{Adv}_D(P_0,P_1)=|q_1-q_0|
-$$
+### Example: compare distributions through a distinguisher’s output
 
-It is not a statistical hypothesis-test significance level or a $p$-value. A gap of $0$ means output 1 gives no information about which distribution generated the sample. A gap of $1$ means the distinguisher always outputs 1 under one distribution and always 0 under the other, so it separates them perfectly. Repeated samples let us estimate $q_0$ and $q_1$ from the fraction of output-1 labels in each experiment.
-
-Consider a sample consisting of two bits. Let probability distribution $P_0$ output $00$ and $11$ with probability $1/2$ each, and let probability distribution $P_1$ output $01$ and $10$ with probability $1/2$ each.
+Consider a sample consisting of two bits. Let $P_0$ output $00$ and $11$ with probability $1/2$ each, and let $P_1$ output $01$ and $10$ with probability $1/2$ each.
 
 | Sample $z$ | $P_0(z)$ | $P_1(z)$ |
 | --- | ---: | ---: |
@@ -207,9 +219,7 @@ Consider a sample consisting of two bits. Let probability distribution $P_0$ out
 | $10$ | $0$ | $1/2$ |
 | $11$ | $1/2$ | $0$ |
 
-Let distinguisher $D_{\ne}$ output 1 exactly when the two bits differ. A sample from $P_0$ always has equal bits, so $q_0=\Pr_{z\sim P_0}[D_{\ne}(z)=1]=0$. A sample from $P_1$ always has different bits, so $q_1=\Pr_{z\sim P_1}[D_{\ne}(z)=1]=1$. Thus the distinguishing gap is $|q_1-q_0|=1$, and this distinguisher perfectly separates the distributions. By contrast, distinguisher $D_{\mathrm{first}}$ outputs 1 only when the first bit is 0. Under either distribution, this happens with probability $1/2$, so $q_0=q_1=1/2$ and the gap is 0. The same pair of probability distributions can therefore produce different distinguishing gaps depending on which feature the distinguisher tests.
-
-If the source distribution is selected uniformly from $P_0,P_1$ and $D$'s output is used directly as its guess, its success probability is $\frac12(1-q_0+q_1)$. When $q_1\ge q_0$, this is $\frac12+\frac12\operatorname{Adv}_D(P_0,P_1)$. If the ordering is reversed, swapping the output labels gives the same formula with the absolute gap. Thus a zero gap means chance-level accuracy $1/2$, while gap $1$ means accuracy $1$ under the best label assignment.
+Let distinguisher $D_{\ne}$ output 1 exactly when the two bits differ. A sample from $P_0$ always has equal bits, so $q_0=\Pr_{z\sim P_0}[D_{\ne}(z)=1]=0$. A sample from $P_1$ always has different bits, so $q_1=\Pr_{z\sim P_1}[D_{\ne}(z)=1]=1$. Thus the output-probability difference is $|q_1-q_0|=1$, and this distinguisher perfectly separates the distributions. By contrast, distinguisher $D_{\mathrm{first}}$ outputs 1 only when the first bit is 0. Under either distribution, this happens with probability $1/2$, so $q_0=q_1=1/2$ and the difference is 0. The same pair of probability distributions can therefore produce different output-probability differences depending on which feature the distinguisher tests.
 
 ### Example: distinguishing distributions on four values
 
@@ -239,9 +249,9 @@ Let a sample be one of $z\in\{0,1,2,3\}$. In this example, $P_0$ tends to produc
 <figcaption>Figure: compare the probability masses assigned to sample values 2 and 3, for which the distinguisher outputs 1.</figcaption>
 </figure>
 
-Choose $D(z)=1$ when $z\ge2$ (classifying the sample as coming from $P_1$), and $D(z)=0$ otherwise. The shaded region contains exactly the values for which $D$ outputs 1. Under $P_0$, this event has probability $q_0=P_0(2)+P_0(3)=0.15+0.05=0.20$. Under $P_1$, it has probability $q_1=P_1(2)+P_1(3)=0.30+0.40=0.70$. Therefore, this distinguisher's gap is $|q_1-q_0|=|0.70-0.20|=0.50$. The distinguisher first chooses the set of samples on which it outputs 1, then compares how much probability each distribution assigns to that set.
+Choose $D(z)=1$ when $z\ge2$ (classifying the sample as coming from $P_1$), and $D(z)=0$ otherwise. The shaded region contains exactly the values for which $D$ outputs 1. Under $P_0$, this event has probability $q_0=P_0(2)+P_0(3)=0.15+0.05=0.20$. Under $P_1$, it has probability $q_1=P_1(2)+P_1(3)=0.30+0.40=0.70$. Therefore, this distinguisher's output-probability difference is $|q_1-q_0|=|0.70-0.20|=0.50$. The distinguisher first chooses the set of samples on which it outputs 1, then compares how much probability each distribution assigns to that set.
 
-We can also estimate the gap from finite samples. Suppose ten samples from $P_0$ are $0,1,0,2,1,0,3,0,1,0$, and ten from $P_1$ are $0,1,2,3,2,3,1,3,0,3$.
+We can also estimate the difference from finite samples. Suppose ten samples from $P_0$ are $0,1,0,2,1,0,3,0,1,0$, and ten from $P_1$ are $0,1,2,3,2,3,1,3,0,3$.
 
 | Sample value | Count from $P_0$ (relative frequency) | Count from $P_1$ (relative frequency) |
 | ---: | ---: | ---: |
@@ -250,25 +260,25 @@ We can also estimate the gap from finite samples. Suppose ten samples from $P_0$
 | 2 | 1 (0.10) | 2 (0.20) |
 | 3 | 1 (0.10) | 4 (0.40) |
 
-In these observations, $D=1$ on $\widehat q_0=(1+1)/10=0.20$ of the $P_0$ samples and $\widehat q_1=(2+4)/10=0.60$ of the $P_1$ samples. The estimated gap is $|0.60-0.20|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
+In these observations, $D=1$ on $\widehat q_0=(1+1)/10=0.20$ of the $P_0$ samples and $\widehat q_1=(2+4)/10=0.60$ of the $P_1$ samples. The estimated output-probability difference is $|0.60-0.20|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
 
-When the distinguisher’s computational power is unrestricted, the maximum distinguishing gap over a finite sample space equals the **total variation distance**
+When the distinguisher’s computational power is unrestricted, the maximum output-probability difference over a finite sample space equals the **total variation distance**
 
 $$
 \Delta(P_0,P_1)=\frac12\sum_z|P_0(z)-P_1(z)|.
 $$
 
-A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires every such distinguisher’s gap to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
+A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires the output-probability difference of every such distinguisher to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
 
-### Statistical testing with samples
+### Estimating from samples: separate theoretical probabilities from observations
 
-An experiment observes finitely many samples, not the probability distributions themselves. Collect independent samples from each process under the same experimental conditions, then apply a distinguisher $D$ chosen in advance. If process $i$ supplies $n_i$ samples, estimate its probability of outputting $1$ by
+An experiment observes finitely many samples, not the distributions themselves. Collect independent samples from $P_0$ and $P_1$ under the same conditions, then apply a distinguisher $D$ chosen in advance. If $D$ uses randomness, draw fresh independent coins for each sample. If $P_i$ supplies $n_i$ samples, estimate its probability of outputting $1$ by
 
 $$
 \widehat q_i=\frac{1}{n_i}\sum_{j=1}^{n_i}\mathbf{1}[D(z_{i,j})=1].
 $$
 
-The estimated gap from the observations is $\widehat{\operatorname{Adv}}_D=|\widehat q_1-\widehat q_0|$. In the four-value example above, the observed frequencies give $\widehat q_0=0.20$ and $\widehat q_1=0.60$, hence an estimated gap of $0.40$ for a theoretical gap of $0.50$. This keeps the theoretical distinguishing gap separate from its finite-sample estimate.
+The estimated difference from the observations is $\widehat d_D=|\widehat q_1-\widehat q_0|$. In the four-value example above, the observed frequencies give $\widehat q_0=0.20$ and $\widehat q_1=0.60$, hence an estimated difference of $0.40$ for a theoretical difference of $0.50$. This keeps the theoretical output-probability difference separate from its finite-sample estimate.
 
 Hoeffding’s inequality gives a simple uncertainty bound. For independent samples, with confidence at least $1-\alpha$, both estimates simultaneously satisfy
 
@@ -276,7 +286,7 @@ $$
 |\widehat q_i-q_i|\le r_i,\qquad r_i=\sqrt{\frac{\log(4/\alpha)}{2n_i}},
 $$
 
-where $q_i=\Pr_{z\sim P_i}[D(z)=1]$. Thus the error in the estimated gap is at most $r_0+r_1$ at that confidence level. Increasing the sample count narrows this range at roughly the rate $1/\sqrt{n_i}$. For finite-valued random variables, empirical frequencies estimate the probability mass functions; one can also compare the empirical total variation $\frac12\sum_z|\widehat P_0(z)-\widehat P_1(z)|$, while remembering that it too is only a finite-sample estimate.
+where $q_i=\Pr_{z\sim P_i}[D(z)=1]$. Thus the estimation error for the output-probability difference is at most $r_0+r_1$ at that confidence level. Increasing the sample count narrows this range at roughly the rate $1/\sqrt{n_i}$. For finite-valued random variables, empirical frequencies estimate the probability mass functions; one can also compare the empirical total variation $\frac12\sum_z|\widehat P_0(z)-\widehat P_1(z)|$, while remembering that it too is only a finite-sample estimate.
 
 Here is why the inequality applies. For each sample, set $X_{i,j}=\mathbf{1}[D(z_{i,j})=1]$. This is a Bernoulli random variable taking values 0 or 1, with expectation $q_i$. For the average $\widehat q_i$ of $n_i$ independent samples, Hoeffding’s inequality states
 
@@ -284,13 +294,17 @@ $$
 \Pr\!\left[|\widehat q_i-q_i|>r\right]\le 2e^{-2n_i r^2}.
 $$
 
-It bounds the probability that the sample average differs from the true probability by more than $r$; that probability decreases exponentially with the sample count. To make the bound hold for both the $P_0$ and $P_1$ samples simultaneously, assign at most $\alpha/2$ failure probability to each and use the union bound. This gives $r_i=\sqrt{\log(4/\alpha)/(2n_i)}$. The reverse triangle inequality then gives $\bigl||\widehat q_1-\widehat q_0|-|q_1-q_0|\bigr|\le |\widehat q_1-q_1|+|\widehat q_0-q_0|$, so the two error margins bound the error in the estimated distinguishing gap.
+It bounds the probability that the sample average differs from the true probability by more than $r$; that probability decreases exponentially with the sample count. To make the bound hold for both the $P_0$ and $P_1$ samples simultaneously, assign at most $\alpha/2$ failure probability to each and use the union bound. This gives $r_i=\sqrt{\log(4/\alpha)/(2n_i)}$. The reverse triangle inequality then gives $\bigl||\widehat q_1-\widehat q_0|-|q_1-q_0|\bigr|\le |\widehat q_1-q_1|+|\widehat q_0-q_0|$, so the two error margins bound the error in the estimated output-probability difference.
 
-For example, let $\alpha=0.05$ (95% simultaneous confidence) and take $n_i=1000$ independent samples from each distribution. Then each $r_i\approx0.047$, so the observed gap is guaranteed to be within about $0.094$ of the true gap. This is a conservative upper bound; it does not mean the actual error will be that large. With fewer samples the margin is wider: at 10 samples per distribution, each $r_i\approx0.468$, so this inequality alone gives little useful precision.
+For example, let $\alpha=0.05$ (95% simultaneous confidence) and take $n_i=1000$ independent samples from each distribution. Then each $r_i\approx0.047$, so the observed output-probability difference is guaranteed to be within about $0.094$ of the true value. This is a conservative upper bound; it does not mean the actual error will be that large. With fewer samples the margin is wider: at 10 samples per distribution, each $r_i\approx0.468$, so this inequality alone gives little useful precision.
 
 Such an experiment asks whether a particular distinguisher detects a difference with the available samples. Failing to detect one does not prove that the distributions are equal or computationally indistinguishable to every efficient distinguisher. The latter requires a theoretical security proof that accounts for the security parameter, sample budget, and computational resources.
 
-Zero-knowledge requires that, for a fixed public input, a distinguisher cannot tell the probability distribution of the real interaction’s view from the probability distribution output by a simulator. Session 2 develops the perfect, statistical, and computational versions in detail; see its [formal definition and tables](./session-02#_2-2-a-formal-definition).
+### Connection to zero-knowledge
+
+For a fixed public input, zero-knowledge requires that an allowed distinguisher cannot tell the probability distribution of the real interaction’s view from the probability distribution output by a simulator. Session 2 develops the perfect, statistical, and computational versions in detail; see its [formal definition and tables](./session-02#_2-2-a-formal-definition). Here $d_D$ can be read as the output-probability difference for those two distributions.
+
+### Connection to soundness error and randomized checks
 
 In protocol analysis, distinguish “the verifier’s random challenge $R$,” “the adversary’s random coins $A$,” and “the acceptance indicator $Y$.” If we encode acceptance as $Y=1$ and rejection as $Y=0$, the soundness error can, for example, be expressed as the conditional probability
 
@@ -298,7 +312,7 @@ $$
 \Pr[Y=1\mid \text{the fixed statement is false}].
 $$
 
-For precision, specify which random choices (such as the verifier’s or adversary’s coins) the probability is taken over.
+For precision, specify which random choices (such as the verifier’s or adversary’s coins) the probability is taken over. The next section applies this way of tracking randomness to the Schwartz–Zippel lemma, where a random field element can expose an incorrect polynomial identity.
 
 ## 6. Randomized checks and the Schwartz–Zippel lemma
 
