@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 13, 2026
+Last updated: October 14, 2026
 
 Zero-knowledge proofs repeatedly use ideas such as “find an error at a random point,” “make the probability of accepting a false proof small,” and “reduce the error probability by repeating a protocol.” This page starts with events and random variables, then develops conditional probability, independence, expectation, and probability inequalities. It next applies them to distinguishing distributions from samples, randomized checks, and soundness amplification.
 
@@ -85,7 +85,31 @@ $$
 
 Expectation is a long-run average; it does not mean that every individual trial produces that value.
 
-For a uniformly random bit $X$, for example, $\mathbb{E}[X]=0\cdot\frac12+1\cdot\frac12=\frac12$. If $F$ counts failures in $k$ trials, it can be written as the sum of failure-indicator variables, which lets us calculate the expected number of failures. The linearity of expectation, $\mathbb{E}[X_1+\cdots+X_k]=\sum_i\mathbb{E}[X_i]$, does not require independent variables. However, a small expectation alone does not prove that a particular execution will never fail.
+For a uniformly random bit $X$, for example, $\mathbb{E}[X]=0\cdot\frac12+1\cdot\frac12=\frac12$.
+
+### Representing the number of failures with indicator variables
+
+A **Bernoulli trial** is an experiment whose outcome is classified as either success or failure. Its success probability may be $p$ and its failure probability $1-p$. Calling an experiment a Bernoulli trial does not, by itself, mean that multiple trials are independent; independence must be stated separately when an argument needs it.
+
+Let $I_i=1$ if trial $i$ fails, and $I_i=0$ if it succeeds. This random variable is an **indicator variable** for failure and is a Bernoulli random variable taking values 0 and 1. If the failure probability on trial $i$ is $p_i$, then
+
+$$
+\mathbb{E}[I_i]=0\cdot(1-p_i)+1\cdot p_i=p_i=\Pr[\text{trial $i$ fails}].
+$$
+
+The number of failures $F$ in $k$ trials is the sum of these individual 0/1 counts:
+
+$$
+F=I_1+I_2+\cdots+I_k.
+$$
+
+Therefore, by linearity of expectation,
+
+$$
+\mathbb{E}[F]=\sum_{i=1}^{k}\mathbb{E}[I_i]=\sum_{i=1}^{k}p_i.
+$$
+
+For example, if three checks have failure probabilities $0.1$, $0.02$, and $0.01$, their expected number of failures is $0.1+0.02+0.01=0.13$. This calculation does not require the trials to be independent. By contrast, calculating the probability of at least one failure as $1-\prod_i(1-p_i)$ does require independence of the failure events. A small expected number of failures alone does not prove that a particular execution will never fail.
 
 ### Markov's inequality: bounding an upper tail from the mean
 
