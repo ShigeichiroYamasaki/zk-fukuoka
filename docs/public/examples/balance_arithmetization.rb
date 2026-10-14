@@ -5,6 +5,8 @@ require 'optparse'
 
 P = 101
 
+# Polynomials are arrays of coefficients in ascending degree order:
+# [c0, c1, c2] represents c0 + c1*X + c2*X^2 over F_101.
 def trim(a)
   a = a.map { |v| v % P }
   a = [0] if a.empty?
@@ -47,6 +49,7 @@ def pdivmod(a, b)
   [trim(q), a]
 end
 
+# Horner's method evaluates the coefficient list without expanding powers.
 def peval(a, x)
   a.reverse.reduce(0) { |v, c| (v * x + c) % P }
 end
@@ -64,6 +67,8 @@ def pinterp(xs, ys)
   end
 end
 
+# Replace each X in f(X) with X + 1. AIR uses this to express a
+# next-row value as a polynomial in the current-row variables.
 def pshift_one(a)
   result = [0]; power = [1]
   a.each do |coefficient|
@@ -77,6 +82,8 @@ def valid_inputs?(xs)
   xs.length == 4 && xs.all? { |x| x.is_a?(Integer) && x.between?(0, 7) }
 end
 
+# The toy program accepts when two deposit amounts equal two withdrawal
+# amounts. The 0..7 bound keeps the example inside the field without wraparound.
 def program?(xs)
   valid_inputs?(xs) && xs[0, 2].sum == xs[2, 2].sum
 end
@@ -91,6 +98,7 @@ Z = pmul(pmul([-1, 1], [-2, 1]), [-3, 1])
 ZT = pmul([-1, 1], [-2, 1])
 
 def assignment(xs)
+  # z = [1, d0, d1, w0, w1, deposit_sum, withdrawal_sum].
   [1, *xs, xs[0, 2].sum % P, xs[2, 2].sum % P]
 end
 
@@ -99,6 +107,7 @@ def matvec(m, z)
 end
 
 def r1cs_rows(z)
+  # Each row checks (A_i . z) * (B_i . z) - (C_i . z) = 0.
   matvec(A, z).zip(matvec(B, z), matvec(C, z)).map { |a, b, c| (a * b - c) % P }
 end
 
@@ -115,6 +124,8 @@ def combine(polys, z)
 end
 
 def qap(z)
+  # Interpolate the R1CS columns, then check whether A(X)B(X)-C(X)
+  # is divisible by the vanishing polynomial Z(X) of the constraint points.
   a, b, c = [AP, BP, CP].map { |ps| combine(ps, z) }
   h, rem = pdivmod(psub(pmul(a, b), c), Z)
   [a, b, c, h, rem]
@@ -125,11 +136,15 @@ def qap_accept?(xs, z)
 end
 
 def trace_for(xs)
+  # Rows store [deposit, withdrawal, running_deposits, running_withdrawals].
+  # The last row contains the totals that AIR compares.
   d0, d1, w0, w1 = xs
   [[d0, w0, 0, 0], [d1, w1, d0 % P, w0 % P], [0, 0, (d0 + d1) % P, (w0 + w1) % P]]
 end
 
 def air_accept?(xs, trace)
+  # AIR checks the initial values, each running-sum transition, and the
+  # equality of final totals, in addition to the trace's fixed shape.
   return false unless valid_inputs?(xs) && trace.length == 3 && trace.all? { |row| row.length == 4 }
   return false unless [trace[0][0], trace[1][0], trace[0][1], trace[1][1]] == xs
   return false unless trace[2][0, 2] == [0, 0] && trace[0][2, 2] == [0, 0]
@@ -140,12 +155,15 @@ def air_accept?(xs, trace)
 end
 
 def air_polynomials(trace)
+  # Interpolate each trace column. A valid transition residual vanishes on
+  # the transition rows, so it is divisible by their vanishing polynomial ZT.
   d, w, s, t = trace.transpose.map { |col| pinterp([1, 2, 3], col) }
   residuals = [psub(psub(pshift_one(s), s), d), psub(psub(pshift_one(t), t), w)]
   [ [d, w, s, t], residuals, residuals.map { |r| pdivmod(r, ZT) } ]
 end
 
 def self_test
+  # Exhaust all 8^4 inputs and compare the three encodings with the source rule.
   (0..7).to_a.repeated_permutation(4) do |xs|
     z = assignment(xs); expected = program?(xs)
     raise 'R1CS check failed' unless r1cs_accept?(xs, z) == expected

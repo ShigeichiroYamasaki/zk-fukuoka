@@ -1,13 +1,17 @@
 #!/usr/bin/env ruby
 # FRI arithmetic lesson over F_17; not a cryptographic proof implementation.
 P = 17
+# The eight nonzero elements form a multiplicative subgroup of F_17.
+# Folding pairs x with -x, then stores the result at y = x^2.
 DOMAIN = [1, 2, 4, 8, 16, 15, 13, 9].freeze
 
+# Fermat's little theorem gives a^-1 = a^(p-2) for nonzero a in F_p.
 def inverse(a)
   a.pow(P - 2, P)
 end
 
 def evaluate(coefficients, x)
+  # Coefficients are in ascending order; powers are computed modulo 17.
   coefficients.each_with_index.sum { |a, i| a * x.pow(i, P) } % P
 end
 
@@ -18,6 +22,8 @@ end
 def fold(values, alpha, verbose: false)
   result = {}
   values.each do |x, u|
+    # Write f(X) = f_even(X^2) + X*f_odd(X^2). Values at x and -x
+    # isolate the even and odd parts; alpha combines them into half-degree f'.
     y = x * x % P
     next if result.key?(y)
     v = values.fetch(-x % P)
@@ -29,6 +35,8 @@ def fold(values, alpha, verbose: false)
   result
 end
 
+# This four-degree example is folded twice. The equalities below are exact
+# arithmetic checks for this toy domain, not Merkle authentication or a FRI proof.
 original = table([3, 2, 5, 1])
 puts 'x -x x^2 value(x) value(-x) folded_value'
 first = fold(original, 3, verbose: true)

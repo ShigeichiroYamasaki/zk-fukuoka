@@ -6,8 +6,12 @@ require 'json'
 require 'fileutils'
 
 ROOT = File.expand_path('..', __dir__)
-OUT = File.join(ROOT, 'docs/public/data/stark-cost')
+# Tests can redirect generated files to a temporary directory; normal runs
+# continue to regenerate the data consumed by the course charts.
+OUT = ENV['STARK_COST_OUTPUT_DIR'] ? File.expand_path(ENV['STARK_COST_OUTPUT_DIR']) : File.join(ROOT, 'docs/public/data/stark-cost')
 
+# Estimate an illustrative proof encoding. These assumptions describe byte
+# accounting and verifier work; this is not a measured STARK implementation.
 def estimate(n: 2**16, q: 30, b: 8, w: 8, base_bytes: 8, extension_bytes: 16,
              digest_bytes: 32, terminal_size: 256, composition_columns: 1)
   { 'n' => n, 'b' => b, 'terminal_size' => terminal_size }.each do |name, value|
@@ -18,10 +22,13 @@ def estimate(n: 2**16, q: 30, b: 8, w: 8, base_bytes: 8, extension_bytes: 16,
   [q, w, base_bytes, extension_bytes, digest_bytes, composition_columns].each do |value|
     raise ArgumentError, 'counts and byte widths must be positive integers' unless value.is_a?(Integer) && value.positive?
   end
+  # LDE domain and FRI round count follow powers of two from N through the
+  # selected terminal polynomial size.
   size = n * b
   raise ArgumentError, 'N must exceed terminal_size' unless size > terminal_size
   k = size.bit_length - 1
   rounds = k - (terminal_size.bit_length - 1)
+  # Count Merkle authentication hashes for initial queries and every fold layer.
   path_hashes = q * (3 * k + rounds * k - rounds * (rounds + 1) / 2)
   evaluation_bytes = q * (2 * w * base_bytes + composition_columns * extension_bytes + 2 * rounds * extension_bytes)
   authentication_bytes = path_hashes * digest_bytes
@@ -37,6 +44,8 @@ def estimate(n: 2**16, q: 30, b: 8, w: 8, base_bytes: 8, extension_bytes: 16,
 end
 
 def verify_model
+  # Independently traverse Merkle paths and serialize each query to ensure the
+  # closed-form byte/hash counts in estimate agree with explicit accounting.
   [1024, 65_536, 2**24].each do |n|
     [1, 30, 60].each do |q|
       e = estimate(n: n, q: q); size = n * 8

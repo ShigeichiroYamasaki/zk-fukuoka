@@ -14,8 +14,11 @@ ARGV.clear if TEST_MODE
 require 'minitest/autorun' if TEST_MODE
 
 MAX = (2**64) - 1
+# Fixed names make the four-leaf tree and example transitions easy to inspect.
 OWNERS = %w[Alice Bob Carol Dave].freeze
 
+# Domain-separate the two kinds of hashes so account leaves and internal nodes
+# cannot be confused just because their JSON encodings happen to match.
 def digest(tag, value)
   Digest::SHA256.hexdigest(JSON.generate([tag, value]))
 end
@@ -43,6 +46,8 @@ class Ledger
   end
 
   def check
+    # Every deposited token must be in exactly one of these places:
+    # unprocessed deposit queue, L2 balances, or an unclaimed withdrawal.
     unprocessed = @deposits[@cursor..].sum { |deposit| deposit['amount'] }
     balances = @accounts.sum { |account| account['balance'] }
     pending = @exits.reject { |exit| exit['claimed'] }.sum { |exit| exit['amount'] }
@@ -63,6 +68,7 @@ class Ledger
   end
 
   def consume(deposit_id)
+    # Deposits are consumed in order exactly once; cursor is the queue position.
     unless deposit_id.is_a?(Integer) && deposit_id == @cursor && @cursor < @deposits.length
       raise ArgumentError, 'deposit order/replay'
     end
@@ -122,7 +128,8 @@ class Ledger
       raise ArgumentError, 'unknown operation'
     end
 
-    # Transactional wrapper: failure never commits a partial mutation.
+    # Apply each operation to a deep copy, check the conservation invariant,
+    # then copy the validated state back. A rejected operation changes nothing.
     candidate = Marshal.load(Marshal.dump(self))
     candidate.public_send(operation, *args)
     candidate.check
@@ -137,11 +144,13 @@ class Ledger
   end
 
   def root
+    # This teaching tree has four leaves and exactly two hashing levels.
     leaf_hashes = leaves
     digest('node', [digest('node', leaf_hashes[0, 2]), digest('node', leaf_hashes[2, 2])])
   end
 
   def path(index)
+    # Return one sibling at each level, ordered from leaf to root.
     account(index)
     leaf_hashes = leaves
     [leaf_hashes[index ^ 1], index < 2 ? digest('node', leaf_hashes[2, 2]) : digest('node', leaf_hashes[0, 2])]
@@ -159,6 +168,7 @@ class Ledger
   end
 
   def self.replay(receipts)
+    # Rebuild the state by applying the recorded public operations in order.
     result = new
     receipts.each { |operation, args| result.apply(operation, *args) }
     result
@@ -166,6 +176,7 @@ class Ledger
 end
 
 def demo
+  # Demonstrate deposit -> consume -> transfer -> withdraw -> claim.
   ledger = Ledger.new
   ledger.apply('receive', 0, 100)
   ledger.apply('consume', 0)
