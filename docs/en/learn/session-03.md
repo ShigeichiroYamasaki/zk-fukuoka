@@ -17,7 +17,7 @@ import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 11, 2026
+Last updated: October 14, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations) · [Session 3 exercises](../exercises/session-03)
 
@@ -354,7 +354,11 @@ Schwartz–Zippel bounds for a fixed nonzero polynomial of total degree d=2, wit
 
 ### 4.4 The complexity-theoretic significance
 
-As an algorithm, this test always recognizes an identically zero polynomial and may err only on a nonzero one. Given an efficiently evaluable representation and a suitable sampling space, PIT admits a one-sided-error randomized algorithm. It is also in BPP; identifying the direction of error clarifies the connection to soundness.
+As an algorithm, choose a random point $r$ and answer “identically zero” exactly when $h(r)=0$. This is the **polynomial identity testing** problem (**PIT**).
+
+Before naming the complexity classes, examine the error direction. If $h$ is the zero polynomial, every sample gives the right answer. If it is nonzero, the answer can be wrong only when the sample happens to be a root; the Schwartz–Zippel lemma bounds that probability. Thus, for the question “Is $h$ identically zero?”, the algorithm can answer Yes incorrectly only on a No instance. If we reverse the question to “Is $h$ nonzero?”, the error direction reverses: it can answer No incorrectly only on a Yes instance.
+
+Randomized polynomial-time decision algorithms with these one-sided error directions are called **coRP** (for “Is $h$ identically zero?”) and **RP** (for “Is $h$ nonzero?”), respectively. **BPP** allows bounded error on either answer, for example at most $1/3$. “Polynomial time” is measured against the input description length, not just the polynomial's degree. With an efficiently evaluable representation and a suitable sampling space, PIT for identity is in coRP, and coRP is contained in BPP. The direction of error is what connects this analysis to soundness.
 
 For this course, its crucial role is as **the theoretical foundation for polynomial identity testing, a core technique in PCPs and IOPs**. In many SNARK and STARK protocols, the prover asserts that a polynomial relation holds. Rather than checking the entire relation, the verifier checks evaluations at random points, or random linear combinations. The Schwartz–Zippel lemma provides the mathematical justification for this idea of checking at a random point without examining the whole object.
 
@@ -470,7 +474,7 @@ The first approach evaluates repeatedly in a small field; the second evaluates o
 
 ### 5.8 Locating the algorithm in complexity theory
 
-For the decision problem “Is $h$ identically zero?”, a Yes instance is always accepted. Only a No instance can be accepted incorrectly, with probability bounded by, say, $1/2$. A **randomized polynomial-time decision algorithm** with this error direction defines **coRP**, a class contained in BPP. Reversing the question to “Is $h$ nonzero?” gives the RP direction. This classification assumes that field arithmetic, sampling, and the required field representation or construction can all be handled in polynomial time in the input length. For example, a sufficiently large field and an efficiently generated power-of-two sampling set avoid the variable running time of rejection sampling.
+Applying the classes defined in Section 4.4, the PIT question “Is $h$ identically zero?” is in coRP; the complementary question “Is $h$ nonzero?” is in RP. Also, coRP is contained in BPP. This classification assumes that field arithmetic, sampling, and the required field representation or construction can all be handled in polynomial time in the input length. For example, a sufficiently large field and an efficiently generated power-of-two sampling set avoid the variable running time of rejection sampling.
 
 Polynomial time is measured against the **input description length**, not just the polynomial's degree. A circuit with $L$ binary multiplication gates can reach degree $2^L$ through repeated squaring. But the point representation needed for $m\ge2d$ uses only $O(\log d)$ bits, which is $O(L)$ when $d\le2^L$. Evaluating the circuit directly over a suitable finite field avoids reading the expanded coefficient list. Conversely, a small query count alone does not imply polynomial running time for a black box without an efficient evaluation procedure.
 
