@@ -280,13 +280,15 @@ $$
 
 The estimated difference from the observations is $\widehat d_D=|\widehat q_1-\widehat q_0|$. In the four-value example above, the observed frequencies give $\widehat q_0=0.20$ and $\widehat q_1=0.60$, hence an estimated difference of $0.40$ for a theoretical difference of $0.50$. This keeps the theoretical output-probability difference separate from its finite-sample estimate.
 
-Hoeffding’s inequality gives a simple uncertainty bound. For independent samples, with confidence at least $1-\alpha$, both estimates simultaneously satisfy
+Finite samples fluctuate by chance, so an error margin should be accompanied by a statement of how reliably it covers the true value. Here $\alpha$ ($0<\alpha<1$) is a chosen upper bound on the probability that the guarantee fails. For example, setting $\alpha=0.05$ limits that probability to 5%; its complement, $1-\alpha=0.95$, is called a **95% confidence level**. This is not a probability assigned to the unknown $q_i$. It is a guarantee about the proportion of repeated sampling runs in which the method’s error ranges contain the true values.
+
+Hoeffding’s inequality lets us choose error margins $r_i$ so that the two estimates $\widehat q_0,\widehat q_1$ simultaneously fall within the following ranges with confidence at least $1-\alpha$:
 
 $$
 |\widehat q_i-q_i|\le r_i,\qquad r_i=\sqrt{\frac{\log(4/\alpha)}{2n_i}},
 $$
 
-where $q_i=\Pr_{z\sim P_i}[D(z)=1]$. Thus the estimation error for the output-probability difference is at most $r_0+r_1$ at that confidence level. Increasing the sample count narrows this range at roughly the rate $1/\sqrt{n_i}$. For finite-valued random variables, empirical frequencies estimate the probability mass functions; one can also compare the empirical total variation $\frac12\sum_z|\widehat P_0(z)-\widehat P_1(z)|$, while remembering that it too is only a finite-sample estimate.
+where $q_i=\Pr_{z\sim P_i}[D(z)=1]$ and $n_i$ is the number of samples drawn from $P_i$. To guarantee both estimates together at level $1-\alpha$, allocate at most $\alpha/2$ failure probability to each one. Thus the estimation error for the output-probability difference is at most $r_0+r_1$ with confidence at least $1-\alpha$. Increasing the sample count narrows this range at roughly the rate $1/\sqrt{n_i}$. For finite-valued random variables, empirical frequencies estimate the probability mass functions; one can also compare the empirical total variation $\frac12\sum_z|\widehat P_0(z)-\widehat P_1(z)|$, while remembering that it too is only a finite-sample estimate.
 
 Here is why the inequality applies. For each sample, set $X_{i,j}=\mathbf{1}[D(z_{i,j})=1]$. This is a Bernoulli random variable taking values 0 or 1, with expectation $q_i$. For the average $\widehat q_i$ of $n_i$ independent samples, Hoeffding’s inequality states
 
@@ -296,7 +298,7 @@ $$
 
 It bounds the probability that the sample average differs from the true probability by more than $r$; that probability decreases exponentially with the sample count. To make the bound hold for both the $P_0$ and $P_1$ samples simultaneously, assign at most $\alpha/2$ failure probability to each and use the union bound. This gives $r_i=\sqrt{\log(4/\alpha)/(2n_i)}$. The reverse triangle inequality then gives $\bigl||\widehat q_1-\widehat q_0|-|q_1-q_0|\bigr|\le |\widehat q_1-q_1|+|\widehat q_0-q_0|$, so the two error margins bound the error in the estimated output-probability difference.
 
-For example, let $\alpha=0.05$ (95% simultaneous confidence) and take $n_i=1000$ independent samples from each distribution. Then each $r_i\approx0.047$, so the observed output-probability difference is guaranteed to be within about $0.094$ of the true value. This is a conservative upper bound; it does not mean the actual error will be that large. With fewer samples the margin is wider: at 10 samples per distribution, each $r_i\approx0.468$, so this inequality alone gives little useful precision.
+For example, set $\alpha=0.05$, allowing at most a 5% chance that the guarantee fails, and take $n_i=1000$ independent samples from each distribution. The simultaneous confidence level is 95%, and each $r_i\approx0.047$. Thus, with 95% confidence, the observed output-probability difference is within about $0.094$ of the true value. This is a conservative upper bound; it does not mean the actual error will be that large. With fewer samples the margin is wider: at 10 samples per distribution, each $r_i\approx0.468$, so this inequality alone gives little useful precision.
 
 Such an experiment asks whether a particular distinguisher detects a difference with the available samples. Failing to detect one does not prove that the distributions are equal or computationally indistinguishable to every efficient distinguisher. The latter requires a theoretical security proof that accounts for the security parameter, sample budget, and computational resources.
 
