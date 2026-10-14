@@ -175,13 +175,30 @@ This is an upper bound, not the actual probability. Hoeffding's inequality gives
 
 ## 5. Distinguishing probability distributions
 
-To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample $z$ from one of them and decide which one generated it. Let a distinguisher $D$ receive $z$ and output $1$ when it classifies the sample as coming from $P_1$, and $0$ when it classifies it as coming from $P_0$. Let $q_i$ be the probability that $D$ outputs $1$ when its input is sampled from $P_i$, including both the sample-generation randomness and $D$'s own random coins. What matters is not whether $D$ is always right on one sample, but how differently its output behaves on the two distributions. Define the absolute difference between those output probabilities—called the **distinguishing gap** here—by
+To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample from one of them and decide which one generated it. The comparison is not between two classifications of the same sample. Instead, consider **two separate experiments**, one drawing a sample from $P_0$ and the other drawing from $P_1$. A distinguisher $D$ outputs $1$ when it classifies its input as coming from $P_1$, and $0$ when it classifies it as coming from $P_0$. Let $q_i$ be the probability that $D$ outputs $1$ on a sample from $P_i$, accounting for both sample-generation randomness and the distinguisher's own random coins. Thus,
 
 $$
-\operatorname{Adv}_D(P_0,P_1)=\left|\Pr_{z\sim P_1}[D(z)=1]-\Pr_{z\sim P_0}[D(z)=1]\right|=|q_1-q_0|.
+q_0=\Pr_{z\sim P_0}[D(z)=1],\qquad q_1=\Pr_{z\sim P_1}[D(z)=1].
 $$
 
-This is not a statistical hypothesis-test significance level or a $p$-value; it is the distance between the distinguisher's output probabilities. A gap of $0$ means this distinguisher's output does not help separate the distributions; a gap of $1$ means perfect separation. For processes A and B above, the test “output $1$ exactly when the bits differ” has $q_A=0$ and $q_B=1$, hence gap $1$. By contrast, testing only whether the first bit is 0 gives probability $1/2$ of outputting 1 on either process, hence gap $0$.
+In other words, $q_0$ is the probability that $D$ outputs 1 in the $P_0$ experiment, and $q_1$ is the probability it outputs 1 in the $P_1$ experiment. In each experiment the distinguisher returns just one of 0 or 1; we compare the probabilities of output 1 across the two experiments. The absolute difference
+
+$$
+\operatorname{Adv}_D(P_0,P_1)=|q_1-q_0|
+$$
+
+is called the **distinguishing gap** here. It is not a statistical hypothesis-test significance level or a $p$-value; it measures how far apart the probabilities of output 1 are in the two experiments. A gap of $0$ means the output tendencies are the same under both distributions. A gap of $1$ means the distinguisher always outputs 1 under one distribution and always 0 under the other, so it separates them perfectly. If samples are generated repeatedly, the observed fractions of 1s in each experiment estimate $q_0$ and $q_1$.
+
+Consider a sample consisting of two bits. Let probability distribution $P_0$ output $00$ and $11$ with probability $1/2$ each, and let probability distribution $P_1$ output $01$ and $10$ with probability $1/2$ each.
+
+| Sample $z$ | $P_0(z)$ | $P_1(z)$ |
+| --- | ---: | ---: |
+| $00$ | $1/2$ | $0$ |
+| $01$ | $0$ | $1/2$ |
+| $10$ | $0$ | $1/2$ |
+| $11$ | $1/2$ | $0$ |
+
+Let distinguisher $D_{\ne}$ output 1 exactly when the two bits differ. A sample from $P_0$ always has equal bits, so $q_0=\Pr_{z\sim P_0}[D_{\ne}(z)=1]=0$. A sample from $P_1$ always has different bits, so $q_1=\Pr_{z\sim P_1}[D_{\ne}(z)=1]=1$. Thus the distinguishing gap is $|q_1-q_0|=1$, and this distinguisher perfectly separates the distributions. By contrast, distinguisher $D_{\mathrm{first}}$ outputs 1 only when the first bit is 0. Under either distribution, this happens with probability $1/2$, so $q_0=q_1=1/2$ and the gap is 0. The same pair of probability distributions can therefore produce different distinguishing gaps depending on which feature the distinguisher tests.
 
 If the source distribution is selected uniformly from $P_0,P_1$ and $D$'s output is used directly as its guess, its success probability is $\frac12(1-q_0+q_1)$. When $q_1\ge q_0$, this is $\frac12+\frac12\operatorname{Adv}_D(P_0,P_1)$. If the ordering is reversed, swapping the output labels gives the same formula with the absolute gap. Thus a zero gap means chance-level accuracy $1/2$, while gap $1$ means accuracy $1$ under the best label assignment.
 
