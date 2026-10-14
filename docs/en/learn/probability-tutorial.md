@@ -175,19 +175,28 @@ This is an upper bound, not the actual probability. Hoeffding's inequality gives
 
 ## 5. Distinguishing probability distributions
 
-To **distinguish** two probability distributions $P_0,P_1$ is to inspect a sample from one of them and decide which one generated it. The comparison is not between two classifications of the same sample. Instead, consider **two separate experiments**, one drawing a sample from $P_0$ and the other drawing from $P_1$. A distinguisher $D$ outputs $1$ when it classifies its input as coming from $P_1$, and $0$ when it classifies it as coming from $P_0$. Let $q_i$ be the probability that $D$ outputs $1$ on a sample from $P_i$, accounting for both sample-generation randomness and the distinguisher's own random coins. Thus,
+To **distinguish** two probability distributions $P_0,P_1$, a distinguisher $D$ receives one sample $z$ from one of them and returns one predicted label. Output $1$ means “the sample came from $P_1”; output $0$ means “the sample came from $P_0.” The prediction may be wrong, and the distinguisher may use its own randomness.
+
+The comparison uses **two separate experiments**, not two classifications of the same sample: one draws samples from $P_0$, and the other draws samples from $P_1$. Define $q_i$ as the probability that $D$ outputs $1$ on a sample drawn from $P_i$, including both sample-generation randomness and the distinguisher's random coins. Thus,
 
 $$
 q_0=\Pr_{z\sim P_0}[D(z)=1],\qquad q_1=\Pr_{z\sim P_1}[D(z)=1].
 $$
 
-In other words, $q_0$ is the probability that $D$ outputs 1 in the $P_0$ experiment, and $q_1$ is the probability it outputs 1 in the $P_1$ experiment. In each experiment the distinguisher returns just one of 0 or 1; we compare the probabilities of output 1 across the two experiments. The absolute difference
+The quantity $q_0$ is the probability that a sample actually from $P_0$ is incorrectly labeled as coming from $P_1$ (**false-positive rate**). The quantity $q_1$ is the probability that a sample actually from $P_1$ is correctly labeled as coming from $P_1$ (**true-positive rate**). Each individual sample gets only one output, 0 or 1; $q_0$ and $q_1$ are probabilities measured over separate repeated experiments.
+
+| Actual source of sample | Probability that the distinguisher outputs 1 | Meaning |
+| --- | --- | --- |
+| $P_0$ | $q_0$ | False-positive rate: incorrectly classifies $P_0$ as $P_1$ |
+| $P_1$ | $q_1$ | True-positive rate: correctly classifies $P_1$ as $P_1$ |
+
+The **distinguishing gap** is the absolute difference between the true-positive and false-positive rates:
 
 $$
 \operatorname{Adv}_D(P_0,P_1)=|q_1-q_0|
 $$
 
-is called the **distinguishing gap** here. It is not a statistical hypothesis-test significance level or a $p$-value; it measures how far apart the probabilities of output 1 are in the two experiments. A gap of $0$ means the output tendencies are the same under both distributions. A gap of $1$ means the distinguisher always outputs 1 under one distribution and always 0 under the other, so it separates them perfectly. If samples are generated repeatedly, the observed fractions of 1s in each experiment estimate $q_0$ and $q_1$.
+It is not a statistical hypothesis-test significance level or a $p$-value. A gap of $0$ means output 1 gives no information about which distribution generated the sample. A gap of $1$ means the distinguisher always outputs 1 under one distribution and always 0 under the other, so it separates them perfectly. Repeated samples let us estimate $q_0$ and $q_1$ from the fraction of output-1 labels in each experiment.
 
 Consider a sample consisting of two bits. Let probability distribution $P_0$ output $00$ and $11$ with probability $1/2$ each, and let probability distribution $P_1$ output $01$ and $10$ with probability $1/2$ each.
 
