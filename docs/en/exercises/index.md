@@ -50,6 +50,16 @@ New exercise materials will be added here as they become available.
 
 For Sessions 11–15, follow the [Act III operation guide](./manuals#route) from proving and verification to comparison and advanced exercises.
 
+## Test the distributed source code
+
+The [Ruby exercise test suite](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/test/ruby/test_examples.rb) checks the Session 4 arithmetic example, FRI folding example, rollup ledger, ZKML training example, and STARK cost model together. Run it from the repository root. If Ruby is installed locally, use:
+
+```sh
+ruby test/ruby/test_examples.rb
+```
+
+To use Docker, run `docker compose run --rm ruby ruby test/ruby/test_examples.rb`. See the [basic operation manuals](./manuals#ruby-tests) for test coverage and caveats. These tests check the educational code's behavior; they do not prove zero knowledge or cryptographic security.
+
 ## Groth16 implementations and operation manuals {#groth16}
 
 These external examples accompany [Session 11: Groth16](../learn/session-11). Each implementation is paired with its official instructions. We suggest starting with the **Circom + snarkjs circuit example** to follow the complete path from writing a circuit to generating and verifying a proof.

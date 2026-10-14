@@ -50,6 +50,16 @@ outline: [2, 3]
 
 第11〜15回の演習は，[幕IIIの操作ガイド](./manuals#route)で，証明生成・検証から比較・発展演習まで順に進められます．
 
+## 配布ソースコードのテスト
+
+[Ruby演習のテストコード](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/test/ruby/test_examples.rb)で，第4回の算術化例，FRIのフォールディング例，rollup台帳，ZKML学習例，STARK概算モデルをまとめて確認できます．リポジトリのルートで実行してください．Rubyを直接使う場合は次のコマンドです．
+
+```sh
+ruby test/ruby/test_examples.rb
+```
+
+Dockerを使う場合は `docker compose run --rm ruby ruby test/ruby/test_examples.rb` を実行します．テストの対象と注意点は[基本操作マニュアル集](./manuals#ruby-tests)にまとめています．これらは教材コードの動作確認であり，ゼロ知識性や暗号学的安全性を証明するものではありません．
+
 ## Groth16の実装例と操作マニュアル {#groth16}
 
 [第11回・Groth16](../learn/session-11)に対応する外部の実装例です．実装サイトと公式の操作マニュアルを対にしてまとめました．まずは **Circom＋snarkjsの回路例** で，回路作成から証明の生成・検証までを一巡するのがおすすめです．

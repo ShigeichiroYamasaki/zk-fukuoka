@@ -36,6 +36,17 @@ ZKMLの`node_modules`は名前付きDocker volumeに置かれます．Circomの�
 
 終了時はAnvilを起動したターミナルで`Ctrl+C`を押します．RubyとNode.jsはメジャー／マイナー版のタグを使い，パッチ更新に追随します．Foundryは`v1.8.5`に固定しています．実験を再現可能にする場合は`docker compose images`の結果と`docker compose config`を記録し，必要なら利用したイメージをダイジェストで固定してください．ここでのAnvilはローカル学習用であり，テストネットや本番環境へ接続する設定は含みません．
 
+### Rubyの実装例をまとめてテストする {#ruby-tests}
+
+[`test/ruby/test_examples.rb`](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/test/ruby/test_examples.rb)は，配布しているRubyの計算例・台帳モデル・学習コードとSTARK概算モデルを，標準ライブラリのMinitestで確認します．Rubyをローカルに用意している場合はリポジトリのルートで次を実行します．Dockerを使う場合は後者を実行してください．
+
+```sh
+ruby test/ruby/test_examples.rb
+docker compose run --rm ruby ruby test/ruby/test_examples.rb
+```
+
+このテストはコードの振る舞いを確認するもので，ゼロ知識性や暗号学的安全性を証明するものではありません．
+
 ## 応用編で使うツールを選ぶ {#applied}
 
 応用編ごとに，配布済みコードと，受講者が実装する課題を分けて確認します．**すべてのツールを導入する必要はありません**．実データ・実資産・実際のJPKIを使わず，架空データとローカル環境から始めます．

@@ -36,6 +36,17 @@ ZKML's `node_modules` are stored in a named Docker volume. Run standalone Circom
 
 Stop Anvil with `Ctrl+C` in its terminal. Ruby and Node.js use major / minor tags that follow patch updates; Foundry is pinned to `v1.8.5`. To reproduce an experiment, record `docker compose images` and `docker compose config`, and pin image digests if needed. Anvil is for local exercises; this configuration does not connect to a testnet or production environment.
 
+### Test the Ruby examples {#ruby-tests}
+
+[`test/ruby/test_examples.rb`](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/test/ruby/test_examples.rb) uses standard-library Minitest to check the distributed arithmetic examples, ledger model, training script and STARK cost model. From the repository root, run either command:
+
+```sh
+ruby test/ruby/test_examples.rb
+docker compose run --rm ruby ruby test/ruby/test_examples.rb
+```
+
+These tests check program behavior; they do not prove zero knowledge or cryptographic security.
+
 ## Tools for applied courses {#applied}
 
 Check what code is provided and what remains an implementation task. **You do not need to install every tool.** Start with synthetic data and local environments; do not use real personal data, real assets or real JPKI credentials.
