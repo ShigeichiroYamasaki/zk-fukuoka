@@ -33,7 +33,33 @@ In particular, $\Pr[A\cup B]\leq\Pr[A]+\Pr[B]$. This **union bound** applies eve
 
 A **random variable** $X$ is a function that assigns a numerical value $X(\omega)$ to each experiment outcome $\omega\in\Omega$. The variable itself is not moving randomly; it is a tool for describing a quantity whose value depends on the random outcome.
 
-For example, choose $r$ uniformly from $S=\{0,1,\ldots,9\}$ and define $X=r\bmod 2$. Then $X$ takes values $0$ and $1$, each with probability $1/2$. The assignment of probabilities $\Pr[X=x]$ to possible values $x$ is the **probability distribution** of $X$. For a discrete random variable, it can be written as the probability mass function $p_X(x)=\Pr[X=x]$. These probabilities are nonnegative and sum to $1$ over all possible values. In this example, $p_X(0)=p_X(1)=1/2$.
+The **probability distribution** of a random variable $X$ is the probability law specifying how likely its values or sets of values are. It is the general concept; a probability mass function, probability density function, or cumulative distribution function is a way to represent that law.
+
+For a discrete random variable, the distribution can be represented by the **probability mass function (PMF)**, which lists the probability of each value:
+
+$$
+p_X(x)=\Pr[X=x].
+$$
+
+The values of a PMF are nonnegative and sum to $1$. For example, choose $r$ uniformly from $S=\{0,1,\ldots,9\}$ and define $X=r\bmod 2$. Then $p_X(0)=p_X(1)=1/2$.
+
+When probability distributions are represented by functions, distinguish which function is meant. A continuous random variable with a density is described by a **probability density function (PDF)** $f_X$, and interval probabilities are obtained by integration:
+
+$$
+\Pr[a\le X\le b]=\int_a^b f_X(x)\,dx.
+$$
+
+The value $f_X(x)$ is not the probability that $X=x$. For example, the density of the uniform distribution $U[0,1]$ is 1 on $[0,1]$, while the probability of any single point is 0.
+
+For any real-valued random variable, discrete or continuous, the **cumulative distribution function (CDF)** is defined by
+
+$$
+F_X(x)=\Pr[X\le x].
+$$
+
+It provides a uniform way to represent a probability distribution. For $U[0,1]$, $F_X(x)=0$ for $x<0$, $F_X(x)=x$ for $0\le x\le1$, and $F_X(x)=1$ for $x>1$. A probability distribution uniquely determines its CDF, and the CDF determines the distribution. For a discrete distribution, the CDF is a step function that accumulates the point masses.
+
+This page follows a consistent terminology policy: **probability distribution** names the general law; PMF, PDF, and CDF are called the **probability mass function**, **probability density function**, and **cumulative distribution function**, respectively. The phrase **“probability distribution function”** is avoided because some sources use it for the CDF while others use it more broadly. When the CDF is meant, say “cumulative distribution function.”
 
 ### Joint and marginal distributions
 
@@ -75,7 +101,36 @@ Random variables $X,Y$ are independent exactly when their joint probability dist
 
 In cryptographic protocols, the order of choices can matter. For example, a prover may commit first and the verifier may choose a random challenge afterward. This differs from a setting where the prover sees the challenge before choosing its commitment. The probability analysis depends on what is fixed first and which random choices are visible to whom.
 
-## 4. Expectation and probability inequalities
+## 4. The order of random choices in cryptographic protocols
+
+Section 3 defined conditional probability as the probability of one event given that another has occurred. In a cryptographic protocol, we must also specify **who chooses each value, when it is chosen, and what information is available at that point**. Changing the order lets a later chooser adapt to earlier values, which can change the success probability.
+
+### Example: fixing a value before the challenge or responding afterward
+
+Suppose a verifier chooses a fair bit $C\in\{0,1\}$ and a prover supplies a bit $A$. If the prover fixes $A$ before the verifier samples $C$ independently, then for either fixed value of $A$,
+
+$$
+\Pr[A=C]=\frac12.
+$$
+
+If the prover can see $C$ before choosing $A$, it can set $A=C$ and succeed with probability $1$. The difference is not in the bits or the test, but in the **order of choices and the information available to the prover**.
+
+| Procedure | Order of choices | What the prover knows when choosing | Probability of $A=C$ |
+| --- | --- | --- | ---: |
+| Commit first | Prover chooses $A$, then verifier independently chooses $C$ | It does not yet know $C$ | $1/2$ |
+| Respond after seeing challenge | Verifier chooses $C$, then prover chooses $A$ | It knows $C$ | $1$ (by choosing $A=C$) |
+
+### Representing a protocol as a probability experiment
+
+A typical interactive proof proceeds as follows: the prover sends an initial message, the verifier samples a random challenge, and the prover responds. Let $R_P$ and $R_V$ be the prover’s and verifier’s random coins. Write the first message as $M=\mathsf{Commit}(x,w;R_P)$, the challenge as $C=\mathsf{Challenge}(x,M;R_V)$, and the response as $Z=\mathsf{Response}(x,w,M,C;R_P)$, where $x$ is the public input and $w$ is the witness. The verifier’s accept/reject result can be represented by a random variable $Y\in\{0,1\}$ determined by this record.
+
+If the verifier samples fresh randomness for $C$ after receiving $M$, we analyze the challenge law conditioned on the fixed message $M$. For example, if $C$ is a uniform $k$-bit string, each value still has conditional probability $2^{-k}$ after fixing $M$. Requiring the prover to fix its first message before seeing the challenge prevents it from rewriting that message to fit the challenge.
+
+This order alone does not prove protocol security. The analysis must also establish how the initial message is fixed, whether the challenge can be predicted, and whether the prover can prepare multiple responses. In a Fiat–Shamir transform, where the challenge is derived from a hash, security also depends on which messages enter the hash and how the prover can choose its queries.
+
+When writing a probability, state, for example, the challenge distribution conditioned on a fixed first message, or the probability that a false statement is accepted over both verifier and adversary randomness. The order of choices connects conditional probability and independence with the information available to an adversary. Keep asking “what was fixed first, and what could each party see before choosing?” when reading later sections on randomized checks and soundness error.
+
+## 5. Expectation and probability inequalities
 
 If a discrete random variable $X$ takes value $x$ with probability $p_x$, its **expectation** is
 
@@ -173,7 +228,7 @@ $$
 
 This is an upper bound, not the actual probability. Hoeffding's inequality gives $e^{-2}\approx0.135$ for the same event. Chernoff uses the Bernoulli setting and the mean to bound a relative deviation more tightly here, yielding $e^{-10/3}\approx0.036$. Hoeffding applies more broadly to sums of independent bounded variables. Markov uses only the expectation, while Chebyshev also uses the variance; choose among them by balancing assumptions against the tightness of the bound.
 
-## 5. Distinguishing probability distributions
+## 6. Distinguishing probability distributions
 
 This section applies the random variables and expectations from the previous sections to comparing probability distributions. A sample $z$ is drawn from one of two distributions $P_0,P_1$, and a distinguisher $D$ predicts its source. Output $1$ means “from $P_1,” and output $0$ means “from $P_0.” The prediction may be wrong, and $D$ may use internal randomness.
 
@@ -343,7 +398,7 @@ $$
 
 For precision, specify which random choices (such as the verifier’s or adversary’s coins) the probability is taken over. The next section applies this way of tracking randomness to the Schwartz–Zippel lemma, where a random field element can expose an incorrect polynomial identity.
 
-## 6. Randomized checks and the Schwartz–Zippel lemma
+## 7. Randomized checks and the Schwartz–Zippel lemma
 
 The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable argument. Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. Since a polynomial has at most $d$ roots,
 
@@ -355,7 +410,7 @@ This bounds the probability that an incorrect polynomial happens to evaluate to 
 
 Crucially, the test polynomial $h$ is fixed before the random variable $R$ is chosen. If a prover can see $R$ and then freely choose $h$, it can make $h(R)=0$, and the bound cannot be applied as stated. Protocols enforce the relevant order by fixing a commitment before the challenge is sampled.
 
-## 7. Soundness amplification by repetition
+## 8. Soundness amplification by repetition
 
 Suppose one test misses a dishonest proof with probability at most $\epsilon$. If we run $k$ tests using independent randomness and accept only when all tests pass, the probability of missing the dishonesty in every test is at most
 
@@ -373,7 +428,7 @@ $$
 
 The events need not be independent. This is a basic method for bounding the probability that any of several protocol checks fails.
 
-## 8. Where these ideas appear in the course
+## 9. Where these ideas appear in the course
 
 | Course topic | Probability tool | What to check |
 | --- | --- | --- |
@@ -384,7 +439,7 @@ The events need not be independent. This is a basic method for bounding the prob
 
 When calculating a probability, first write down what is randomized, how success or failure is defined as an event, and which random choices the probability ranges over. Then check assumptions such as uniformity, independence, and order of selection before applying a formula.
 
-## 9. Exercises
+## 10. Exercises
 
 **Exercise 1.** Choose $R$ uniformly from $S=\{0,1,\ldots,15\}$. What upper bound does Schwartz–Zippel give for $\Pr[h(R)=0]$ when $h$ is a nonzero polynomial of degree at most $3$?
 
