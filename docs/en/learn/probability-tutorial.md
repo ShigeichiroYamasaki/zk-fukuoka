@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 14, 2026
+Last updated: October 15, 2026
 
 Zero-knowledge proofs repeatedly use ideas such as “find an error at a random point,” “make the probability of accepting a false proof small,” and “reduce the error probability by repeating a protocol.” This page starts with events and random variables, then develops conditional probability, independence, expectation, and probability inequalities. It next applies them to distinguishing distributions from samples, randomized checks, and soundness amplification.
 
@@ -270,6 +270,33 @@ $$
 
 A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires the output-probability difference of every such distinguisher to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
 
+### Separate identity, observation, and distinguishing power
+
+To read these claims precisely, separate “Are these two things identical?” from “Can a particular observer tell them apart?” The first asks about the objects themselves. The second can be answered only after specifying what information is observable and how it may be judged. Leibniz’s Identity of Indiscernibles—the philosophical idea that things sharing every property are identical—can introduce this distinction. But indistinguishability in probability and cryptography is not a claim of identity: it compares objects only through specified observations and distinguishers. [The philosophical principle and its context](https://plato.stanford.edu/entries/identity-indiscernible/)
+
+Even in probability, “the same” has several meanings. For random variables $X,Y$ on the same probability space $(\Omega,\mathcal{F},\Pr)$, $X=Y$ means that they take equal values at every outcome. If $\Pr[X=Y]=1$, they are **equal almost surely**. By contrast, $X\overset{d}=Y$ means that they have the same probability distribution. Equal distributions do not require equal values outcome by outcome; the variables may even be defined on different probability spaces. Thus equality of distributions does not imply identity of random variables. [Equality of random variables and equality in distribution](https://textbook.prob140.org/notebooks-md/3_03_Equality.html)
+
+| What is compared | Condition | What follows |
+| --- | --- | --- |
+| Pointwise equality of random variables | $X(\omega)=Y(\omega)$ for every $\omega$ | Their values agree on each outcome |
+| Almost-sure equality | $\Pr[X=Y]=1$ | Their values agree except on a probability-zero event |
+| Equality of distributions | The probability assigned to every value or event is the same | The law of a single sample is the same |
+| Indistinguishability for a distinguisher | Its output-probability difference is small | That observer’s specified view and computational power reveal little difference |
+
+Next specify **what is observed**. Let $T$ be an object and let an observation procedure $O$ produce a record $Z=O(T)$. A distinguisher usually receives this record, not the object itself. If the observation procedure discards information, distinct objects may look the same in the record. Conversely, two individual values may have the same marginal distributions while a joint observation reveals a difference in their dependence. In the earlier A/B example, each bit has the same marginal distribution, but observing the pair distinguishes the methods perfectly. Therefore, state whether the observation consists of one sample, multiple samples, auxiliary information, or an entire interaction transcript.
+
+A **distinguisher** $D$ is a randomized procedure that receives an observation $z$ and outputs a bit predicting its source. If its internal random coins are $R_D$, its output is $D(z;R_D)\in\{0,1\}$. Adopt the convention that output $1$ means “from $P_1$,” and set $q_i=\Pr_{z\sim P_i,\,R_D}[D(z;R_D)=1]$. The distinguisher’s **distinguishing power** can be measured by the difference between its output probabilities in the two experiments:
+
+$$
+d_D(P_0,P_1)=|q_1-q_0|.
+$$
+
+If the difference is zero, this distinguisher’s output follows the same probability law for both sources. A larger difference means that it detects more information about the source. When the source is selected uniformly, and output labels are assigned in the favorable direction, its success probability is $1/2+d_D/2$. This measures the distinguisher’s performance; it does not say that the two objects are identical.
+
+If computation is unrestricted and any subset of the sample space can be used as a decision rule, the maximum distinguishing power equals the total variation distance $\Delta(P_0,P_1)$. Restricting computation or the number of observations narrows the set of available tests. Computational indistinguishability in cryptography typically says that every probabilistic polynomial-time distinguisher has negligible distinguishing advantage as the security parameter grows. Standard cryptography lecture notes formalize the concept by defining the distinguisher’s output-probability difference and restricting its computational power. [CMU cryptography lecture notes](https://www.cs.cmu.edu/~goyal/15356/lecture_notes.pdf)
+
+The order of reasoning is therefore: specify the objects, specify the observation procedure, specify the distinguisher’s resources, measure the output-probability difference, and then state whether that difference is small. A failure to detect a difference in one experiment does not prove that the distributions are equal or that every distinguisher is unable to tell them apart. Always state which observation and which class of distinguishers the conclusion covers.
+
 ### Estimating from samples: separate theoretical probabilities from observations
 
 An experiment observes finitely many samples, not the distributions themselves. Collect independent samples from $P_0$ and $P_1$ under the same conditions, then apply a distinguisher $D$ chosen in advance. If $D$ uses randomness, draw fresh independent coins for each sample. If $P_i$ supplies $n_i$ samples, estimate its probability of outputting $1$ by
@@ -304,7 +331,7 @@ Such an experiment asks whether a particular distinguisher detects a difference 
 
 ### Connection to zero-knowledge
 
-For a fixed public input, zero-knowledge requires that an allowed distinguisher cannot tell the probability distribution of the real interaction’s view from the probability distribution output by a simulator. Session 2 develops the perfect, statistical, and computational versions in detail; see its [formal definition and tables](./session-02#_2-2-a-formal-definition). Here $d_D$ can be read as the output-probability difference for those two distributions.
+For a fixed public input and verifier, compare the **view the verifier obtains in the real interaction** with the record generated by a simulator that does not use the witness. The view includes information the verifier obtains through the interaction, such as its random coins and the messages it receives. Write the two records as random variables $V_{\mathrm{real}}$ and $V_{\mathrm{sim}}$. The question is not whether the records are identical in each individual run, but whether a distinguisher can tell their probability distributions apart. If the distributions are exactly equal, the protocol is perfect zero-knowledge; if their statistical distance is small, it is statistical zero-knowledge; if every allowed efficient distinguisher has negligible advantage, it is computational zero-knowledge. The simulator need not reproduce each real transcript one by one; it must match the required distribution or indistinguishability notion. This is the core of the **simulator paradigm**. For standard definitions and the Session 2 diagrams, see [Session 2’s formal definition](./session-02#_2-2-a-formal-definition).
 
 ### Connection to soundness error and randomized checks
 
