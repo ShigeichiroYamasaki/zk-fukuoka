@@ -2,9 +2,9 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 15, 2026
+Last updated: October 16, 2026
 
-Zero-knowledge proofs repeatedly use ideas such as “find an error at a random point,” “make the probability of accepting a false proof small,” and “reduce the error probability by repeating a protocol.” This page starts with events and random variables, then develops conditional probability, independence, expectation, and probability inequalities. It next applies them to distinguishing distributions from samples, randomized checks, and soundness amplification.
+Understanding zero-knowledge proofs requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a distinguisher’s advantage measures its ability to tell two probability distributions apart, both theoretically and through sample experiments. This leads to the simulator paradigm for zero-knowledge: comparing the verifier’s view in a real interaction with the simulator’s output, and asking whether their distributions can be distinguished. The final sections apply these ideas to randomized checks, soundness error, and soundness amplification.
 
 The explanations and examples are original to this site. For systematic study of probability, see Sheldon M. Ross’s [A First Course in Probability (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589). This tutorial does not reproduce or adapt that textbook; it selects foundational ideas used in this course.
 
