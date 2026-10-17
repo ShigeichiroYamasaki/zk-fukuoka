@@ -62,7 +62,7 @@ T\begin{pmatrix}x\\y\end{pmatrix}
 \begin{pmatrix}x\\y\end{pmatrix}.
 $$
 
-By contrast, $T(x,y)=(x+y+1,2x-y)$ is not linear because it includes a constant term. If we augment the vector with a constant $1$, writing $z=(1,x,y)^T$, such an affine expression can also be written as a matrix times a vector. One reason R1CS places $1$ at the start of its variable vector is to include constant terms among linear combinations.
+By contrast, $T(x,y)=(x+y+1,2x-y)$ is not linear because it includes a constant term. A linear expression plus a constant is called **affine**. If we augment the vector with a constant $1$, writing $z=(1,x,y)^T$, such an expression can also be written as a matrix times a vector. One reason R1CS places $1$ at the start of its variable vector is to include constant terms among linear combinations.
 
 ## 4. A matrix represents a linear map between vector spaces
 

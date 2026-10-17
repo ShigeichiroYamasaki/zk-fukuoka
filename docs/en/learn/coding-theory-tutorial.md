@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 11, 2026
+Last updated: October 17, 2026
 
 Coding theory studies how to encode information with redundancy so that errors can be detected and corrected. Zero-knowledge proofs use code distance and low-degree testing not only to handle accidental channel noise, but also to detect data deliberately crafted by a dishonest prover. This tutorial covers the foundations needed for Session 5’s Reed–Solomon codes and Session 6’s low-degree testing and FRI.
 
@@ -115,7 +115,7 @@ Narrowing the possibilities to a small list can be useful even when there is no 
 
 The set of evaluation vectors of degree-<$k$ polynomials over a finite field, on fixed evaluation points, is an RS code. Checking whether a supplied table exactly equals such an evaluation vector is a **membership test**. Checking whether some such vector lies within a specified Hamming distance is a **proximity test**. These are different questions; FRI tests low-degree structure and proximity rather than performing channel decoding.
 
-Reading every evaluation value would be expensive. FRI combines commitments to evaluations with interactive random queries to test whether a supplied function is close to a low-degree polynomial; it is an IOP of Proximity. Some constructions are made non-interactive using Fiat–Shamir. Its goal is not to recover the original codeword from a noisy channel; it is to test low-degree structure with a small number of queries.
+Reading every evaluation value would be expensive. FRI (Fast Reed–Solomon Interactive Oracle of Proximity) combines commitments to evaluations with interactive random queries to test whether a supplied function is close to a low-degree polynomial. An IOP of Proximity (Interactive Oracle Proof of Proximity) is an interactive proof framework in which the verifier queries only part of a large data object to test whether it is close to one with a specified property. Some constructions use the Fiat–Shamir transform to derive challenges from hashes of earlier messages and remove the interaction (see the [probability tutorial](./probability-tutorial)). FRI’s goal is not to recover the original codeword from a noisy channel; it is to test low-degree structure with a small number of queries.
 
 When probability appears in FRI’s analysis, distinguish the random positions selected by the verifier after the function and commitment are fixed from the probability that the test accepts a false claim. For that probabilistic material, see the [probability tutorial](./probability-tutorial).
 

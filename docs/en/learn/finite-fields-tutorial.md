@@ -2,11 +2,11 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: September 29, 2026
+Last updated: October 17, 2026
 
 [Prerequisites and resources](./foundations) · [Session 3: Finite fields, polynomials and probabilistic testing](./session-03) · [Session 4: Arithmetization](./session-04)
 
-This tutorial introduces the finite-field and polynomial ideas used in the course. It focuses on the tools needed for interpolation and the Schwartz–Zippel lemma in Session 3, R1CS/QAP in Session 4, Reed–Solomon codes in Session 5, and FRI in Session 6. The explanations and examples are original to this page; the scope is a practical subset of a much broader subject.
+This tutorial introduces the finite-field and polynomial ideas used in the course. A zero-knowledge proof lets someone check a statement without revealing the secret information behind it. The tools here support interpolation and the Schwartz–Zippel lemma in Session 3, R1CS (Rank-1 Constraint System) and QAP (Quadratic Arithmetic Program, a polynomial encoding of constraints) in Session 4, Reed–Solomon codes in Session 5, and FRI (Fast Reed–Solomon Interactive Oracle of Proximity, a protocol for testing closeness to low-degree polynomials) in Session 6. The explanations and examples are original to this page; the scope is a practical subset of a much broader subject.
 
 ## 1. What can we do in a finite field?
 

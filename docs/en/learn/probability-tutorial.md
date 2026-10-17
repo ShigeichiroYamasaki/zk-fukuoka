@@ -2,11 +2,27 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 16, 2026
+Last updated: October 17, 2026
 
-Understanding zero-knowledge proofs requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a distinguisher’s advantage measures its ability to tell two probability distributions apart, both theoretically and through sample experiments. This leads to the simulator paradigm for zero-knowledge: comparing the verifier’s view in a real interaction with the simulator’s output, and asking whether their distributions can be distinguished. The final sections apply these ideas to randomized checks, soundness error, and soundness amplification.
+Understanding a zero-knowledge proof (a way to check a statement without revealing the secret information behind it) requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a procedure that tries to tell two probability distributions apart (a distinguisher) is evaluated by comparing its output probabilities, both theoretically and through sample experiments. This leads to comparing the verifier’s record of a real interaction with a record generated without the secret information. The final sections apply these ideas to randomized checks and to limiting the chance that a false statement is accepted.
 
 The explanations and examples are original to this site. For systematic study of probability, see Sheldon M. Ross’s [A First Course in Probability (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589). This tutorial does not reproduce or adapt that textbook; it selects foundational ideas used in this course.
+
+### Proof terminology used on this page
+
+Before turning to probability, here are the proof-related terms used later. A **statement** is a sentence that can be true or false; “91 is composite” is an example. The number 7 lets us check that statement because it divides 91. In cryptography, private information that can be used to verify a statement is called a **witness**. The witness is information separate from the statement itself.
+
+A **prover** tries to demonstrate that a statement is true. A **verifier** checks the explanation by following specified steps. A sequence of messages exchanged between them is an **interactive proof**. A random question or value sent by the verifier is a **challenge**. A **commitment** is a mechanism for fixing a value so it cannot later be changed.
+
+In zero-knowledge proofs, the record of what the verifier observes during an interaction is called its **view**. A **simulator** is an algorithm that generates a record without using the witness. The **simulator paradigm** defines zero-knowledge by asking whether a real verifier’s view can be distinguished from the simulator’s record.
+
+A **zero-knowledge proof** lets a verifier check that a statement is true without revealing information about the witness itself. The comparison between a real view and a simulator’s record, explained later, gives a precise way to express “revealing no information.”
+
+The **Fiat–Shamir transform**, mentioned later, replaces an interactive verifier’s challenge with a value computed from a hash of earlier messages, avoiding that exchange. A **hash function** maps data of arbitrary length to a fixed-length value. The **soundness error** is the probability that a verifier accepts a false statement; **soundness amplification** means reducing this probability through an appropriate method. These terms are explained again where they are used.
+
+A **distinguisher** is a procedure that tries to tell two records or probability distributions apart. It observes an input and outputs, for example, 0 for “from source 0” or 1 for “from source 1.” Its **distinguishing advantage** here is the absolute difference between the probabilities of output 1 in the two experiments; this page explains the definition in detail.
+
+The **Random Oracle Model (ROM)**, named in the Session 9 link, is a security-analysis model that treats a hash function as an ideal function returning consistent random values for its inputs.
 
 ## 1. Experiments, sample spaces, and events
 
@@ -99,7 +115,7 @@ $$
 
 Random variables $X,Y$ are independent exactly when their joint probability distribution factors into the product of their marginal distributions: $p_{X,Y}(x,y)=p_X(x)p_Y(y)$.
 
-In cryptographic protocols, the order of choices can matter. For example, a prover may commit first and the verifier may choose a random challenge afterward. This differs from a setting where the prover sees the challenge before choosing its commitment. The probability analysis depends on what is fixed first and which random choices are visible to whom.
+Section 4 compares the case where a prover fixes a value before the challenge with the case where it chooses after seeing the challenge. Conditional probability and the order of available information explain why their success probabilities differ.
 
 ## 4. The order of random choices in cryptographic protocols
 
@@ -122,11 +138,11 @@ If the prover can see $C$ before choosing $A$, it can set $A=C$ and succeed with
 
 ### Representing a protocol as a probability experiment
 
-A typical interactive proof proceeds as follows: the prover sends an initial message, the verifier samples a random challenge, and the prover responds. Let $R_P$ and $R_V$ be the prover’s and verifier’s random coins. Write the first message as $M=\mathsf{Commit}(x,w;R_P)$, the challenge as $C=\mathsf{Challenge}(x,M;R_V)$, and the response as $Z=\mathsf{Response}(x,w,M,C;R_P)$, where $x$ is the public input and $w$ is the witness. The verifier’s accept/reject result can be represented by a random variable $Y\in\{0,1\}$ determined by this record.
+A typical interactive proof proceeds as follows: the prover sends an initial message, the verifier samples a random challenge, and the prover responds. Let $R_P$ and $R_V$ be the prover’s and verifier’s random coins. Write the public statement as $x$ and the private information used to verify it (the witness) as $w$. Denote the first message by $M=\mathsf{First}(x,w;R_P)$, the challenge by $C=\mathsf{Challenge}(x,M;R_V)$, and the response by $Z=\mathsf{Response}(x,w,M,C;R_P)$. These function names are shorthand for the prescribed step at each stage. Some protocols make the first message a commitment, but this is not true of every protocol. The verifier’s accept/reject result can be represented by a random variable $Y\in\{0,1\}$ determined by this record.
 
 If the verifier samples fresh randomness for $C$ after receiving $M$, we analyze the challenge law conditioned on the fixed message $M$. For example, if $C$ is a uniform $k$-bit string, each value still has conditional probability $2^{-k}$ after fixing $M$. Requiring the prover to fix its first message before seeing the challenge prevents it from rewriting that message to fit the challenge.
 
-This order alone does not prove protocol security. The analysis must also establish how the initial message is fixed, whether the challenge can be predicted, and whether the prover can prepare multiple responses. In a Fiat–Shamir transform, where the challenge is derived from a hash, security also depends on which messages enter the hash and how the prover can choose its queries.
+This order alone does not prove protocol security. The analysis must also establish how the initial message is fixed, whether the challenge can be predicted, and whether the prover can prepare multiple responses. In the Fiat–Shamir transform, the verifier’s challenge is computed from a hash of earlier messages. Security depends on which messages enter the hash and how the prover can choose its queries.
 
 When writing a probability, state, for example, the challenge distribution conditioned on a fixed first message, or the probability that a false statement is accepted over both verifier and adversary randomness. The order of choices connects conditional probability and independence with the information available to an adversary. Keep asking “what was fixed first, and what could each party see before choosing?” when reading later sections on randomized checks and soundness error.
 
@@ -234,13 +250,15 @@ This section applies the random variables and expectations from the previous sec
 
 ### Original definition: compare output probabilities in two experiments
 
-Cryptography defines this comparison using **two separate experiments**, not two decisions on one sample. For distribution ensembles $X_n,Y_n$ indexed by a security parameter $n$, Goldreich defines the difference for an algorithm $A$ as
+Cryptography defines this comparison using **two separate experiments**, not two decisions on one sample. The following terms help make the definition precise. A **security parameter** $n$ is a positive integer specifying the scale at which security is evaluated; larger values usually require more computation. A **probabilistic polynomial-time algorithm** may use random bits and has running time bounded by a polynomial in $n$. A function is **negligible** if, for every positive polynomial $p(n)$, it is eventually smaller than $1/p(n)$. Intuitively, it shrinks too quickly to be detected with polynomially bounded computational resources as $n$ grows.
+
+A pair of distribution ensembles $X_n,Y_n$ means a pair of probability distributions for each parameter $n$. Goldreich defines the difference for an algorithm $A$ as
 
 $$
 d_A(n)=\left|\Pr[A(X_n)=1]-\Pr[A(Y_n)=1]\right|
 $$
 
-([Goldreich, *Foundations of Modern Cryptography*, Definition 1.2, §1.2.2](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf)). In each probability, a sample is drawn from the indicated ensemble and the algorithm is run; if it is randomized, its coins are included. Goldreich calls the ensembles computationally indistinguishable when this difference is negligible in $n$ for every probabilistic polynomial-time algorithm.
+([Goldreich, *Foundations of Modern Cryptography*, Definition 1.2, §1.2.2](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf)). In each probability, a sample is drawn from the indicated distribution and the algorithm is run; if it is randomized, its coins are included. This difference measures the algorithm’s ability to tell the two sources apart. If it is negligible for every probabilistic polynomial-time algorithm, the ensembles are called **computationally indistinguishable**.
 
 Now fix $n$ and write the corresponding pair of distributions as $P_0,P_1$. Let $q_i$ be the probability that $D$ outputs $1$ in the separate experiment using $P_i$:
 
@@ -386,21 +404,21 @@ Such an experiment asks whether a particular distinguisher detects a difference 
 
 ### Connection to zero-knowledge
 
-For a fixed public input and verifier, compare the **view the verifier obtains in the real interaction** with the record generated by a simulator that does not use the witness. The view includes information the verifier obtains through the interaction, such as its random coins and the messages it receives. Write the two records as random variables $V_{\mathrm{real}}$ and $V_{\mathrm{sim}}$. The question is not whether the records are identical in each individual run, but whether a distinguisher can tell their probability distributions apart. If the distributions are exactly equal, the protocol is perfect zero-knowledge; if their statistical distance is small, it is statistical zero-knowledge; if every allowed efficient distinguisher has negligible advantage, it is computational zero-knowledge. The simulator need not reproduce each real transcript one by one; it must match the required distribution or indistinguishability notion. This is the core of the **simulator paradigm**. For standard definitions and the Session 2 diagrams, see [Session 2’s formal definition](./session-02#_2-2-a-formal-definition).
+For a fixed public statement and verifier procedure, compare the **view obtained by the verifier in a real interaction** (its random coins and the messages it receives) with a record generated by a simulator that does not use the witness. The question is not whether the records are identical in each run, but whether a distinguisher can tell their probability distributions apart. If the distributions are exactly equal, the protocol is **perfect zero-knowledge**; if their total variation distance (the largest possible difference between the probabilities assigned to the same event) is small, it is **statistical zero-knowledge**; if every probabilistic polynomial-time distinguisher has negligible output-probability difference, it is **computational zero-knowledge**. The simulator need not reproduce each real interaction one by one; it must match the distribution or indistinguishability condition required by the definition. This is the **simulator paradigm**. For formal definitions and diagrams, see [Session 2’s formal definition](./session-02#_2-2-a-formal-definition).
 
 ### Connection to soundness error and randomized checks
 
-In protocol analysis, distinguish “the verifier’s random challenge $R$,” “the adversary’s random coins $A$,” and “the acceptance indicator $Y$.” If we encode acceptance as $Y=1$ and rejection as $Y=0$, the soundness error can, for example, be expressed as the conditional probability
+In protocol analysis, distinguish “the verifier’s random challenge $R$,” “the random coins $R_A$ of the party trying to cheat (called an adversary in cryptography),” and “the acceptance indicator $Y$.” If we encode acceptance as $Y=1$ and rejection as $Y=0$, the soundness error can, for example, be expressed as the conditional probability
 
 $$
 \Pr[Y=1\mid \text{the fixed statement is false}].
 $$
 
-For precision, specify which random choices (such as the verifier’s or adversary’s coins) the probability is taken over. The next section applies this way of tracking randomness to the Schwartz–Zippel lemma, where a random field element can expose an incorrect polynomial identity.
+For precision, specify which random choices (such as the verifier’s or cheating party’s coins) the probability is taken over. The next section applies this way of tracking randomness to the Schwartz–Zippel lemma, where a random field element can expose an incorrect polynomial identity.
 
 ## 7. Randomized checks and the Schwartz–Zippel lemma
 
-The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable argument. Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. Since a polynomial has at most $d$ roots,
+The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable argument. A **finite field** is a finite number system in which addition, subtraction, multiplication, and division by nonzero elements are possible. Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. A nonzero polynomial of degree at most $d$ has at most $d$ roots (inputs where its value is zero), so
 
 $$
 \Pr[h(R)=0]\leq\frac{d}{|S|}.
@@ -411,6 +429,8 @@ This bounds the probability that an incorrect polynomial happens to evaluate to 
 Crucially, the test polynomial $h$ is fixed before the random variable $R$ is chosen. If a prover can see $R$ and then freely choose $h$, it can make $h(R)=0$, and the bound cannot be applied as stated. Protocols enforce the relevant order by fixing a commitment before the challenge is sampled.
 
 ## 8. Soundness amplification by repetition
+
+**Soundness amplification** means reducing the probability that a false statement is accepted (the soundness error), for example by repeating a test appropriately.
 
 Suppose one test misses a dishonest proof with probability at most $\epsilon$. If we run $k$ tests using independent randomness and accept only when all tests pass, the probability of missing the dishonesty in every test is at most
 
@@ -466,5 +486,5 @@ When calculating a probability, first write down what is randomized, how success
 - [Session 3: Finite fields, polynomial algebra, and randomized testing](./session-03): the Schwartz–Zippel lemma and error probability
 - [Session 5: Error-correcting codes and information-theoretic perspective](./session-05): random errors versus adversarial errors
 - [Session 6: Low-degree testing and soundness amplification](./session-06): repetition and soundness error
-- [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): adaptive queries and the Random Oracle Model
+- [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): deriving challenges from hash values and the model that treats a hash as an ideal random function
 - Further reading: [A First Course in Probability, Sheldon M. Ross (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)

@@ -2,9 +2,9 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: September 29, 2026
+Last updated: October 17, 2026
 
-This tutorial introduces the logic and proof techniques needed to follow the zero-knowledge course. It proceeds from statements and conditionals to quantifiers and proof methods. The goal is to help readers interpret phrases such as “there exists a witness” and “the probability that a false proof is accepted.”
+This tutorial introduces the logic and proof techniques needed to follow the zero-knowledge (ZK) course. It proceeds from statements and conditionals to quantifiers and proof methods. The goal is to help readers interpret phrases such as “there exists a witness” and “the probability that a false proof is accepted.” A **witness** is the concrete information that makes a statement true; for example, a satisfying assignment is a witness that a Boolean circuit can output 1. The next sections define this idea using relations and languages.
 
 The structure and examples here were written specifically for this site. For a broader systematic treatment, see Richard H. Hammack’s open textbook [Book of Proof](https://richardhammack.github.io/BookOfProof/).
 
@@ -58,7 +58,7 @@ Thus, the negation of “it holds for every candidate” is “there is a candid
 
 ### NP relations and witnesses
 
-An NP statement is often expressed as the existence of a witness satisfying a check. If a language $L$ is the set of accepted inputs, then
+NP (nondeterministic polynomial time) is the class of problems whose yes-instances have short candidate information that can be checked in polynomial time. An NP statement is often expressed as the existence of a witness satisfying a check. If a language $L$ is the set of accepted inputs, then
 
 $$
 u\in L\quad\Longleftrightarrow\quad \exists w\;R(u,w)=1.

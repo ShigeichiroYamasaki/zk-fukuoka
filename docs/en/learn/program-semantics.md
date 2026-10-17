@@ -1,10 +1,10 @@
 # Program meaning: a prerequisite for arithmetization
 
-Updated: October 14, 2026
+Updated: October 17, 2026
 
 [Prerequisites and supplementary resources](./foundations) · [Session 4: Arithmetization](./session-04) · [Execution-trace guide](./terms/execution-traces)
 
-This page introduces only the program-semantics ideas needed before Session 4. You do not need a formal-semantics course. The goal is to distinguish what a program computes from the steps by which it computes it, and to understand what must be preserved when translating that meaning into a circuit or algebraic constraints.
+This page introduces only the program-semantics ideas needed before Session 4. ZK means zero-knowledge: a proof technique that lets someone check a statement without revealing the secret information behind it. You do not need a formal-semantics course. The goal is to distinguish what a program computes from the steps by which it computes it, and to understand what must be preserved when translating that meaning into a circuit or algebraic constraints.
 
 ## 1. Read a program as an input-output relation
 
@@ -55,7 +55,7 @@ An if-then-else branch can be represented by a selection circuit (multiplexer) c
 | Loop with a fixed bound | A sequence of circuit copies, one per iteration |
 | Correctness of the result | The output bits have the required value |
 
-Circuit construction expands the operational steps of a program into a finite set of logic gates, while making the circuit's output agree with the denotationally specified function. For example, `t := x*x; y := t+1` returns $y=x^2+1$ denotationally; operationally, it computes $t$ with a multiplication and then adds 1. A circuit represents this with a multiplier, an adder and intermediate wires. Session 4 expresses relations among circuit inputs, intermediate wires and outputs as algebraic constraints such as R1CS. Over a finite field, the simple relations are $x\cdot x=t$ and $t+1=y$. If a bit is represented by a finite-field element $b$, the condition that it is either 0 or 1 is $b(b-1)=0$. Gate relations and public input/output conditions are constrained together so that only the intended computations satisfy all constraints.
+Circuit construction expands the operational steps of a program into a finite set of logic gates, while making the circuit's output agree with the denotationally specified function. For example, `t := x*x; y := t+1` returns $y=x^2+1$ denotationally; operationally, it computes $t$ with a multiplication and then adds 1. A circuit represents this with a multiplier, an adder and intermediate wires. Session 4 expresses relations among circuit inputs, intermediate wires and outputs as algebraic constraints such as R1CS (Rank-1 Constraint System). A finite field is a finite number system where addition, subtraction, multiplication, and division by nonzero elements are possible. Over a finite field, the simple relations are $x\cdot x=t$ and $t+1=y$. If a bit is represented by a finite-field element $b$, the condition that it is either 0 or 1 is $b(b-1)=0$. Gate relations and public input/output conditions are constrained together so that only the intended computations satisfy all constraints.
 
 These equations do not automatically have the same meaning as integer arithmetic. Finite-field operations wrap around modulo the field size. To prove an integer specification, the constraints must also enforce appropriate ranges and bit representations for inputs and intermediate values. Without those conditions, a field equation may describe a different function than the integer specification. Missing branch or termination conditions can also admit executions that the operational semantics does not allow. Arithmetization must preserve the source program's meaning; it is not merely a rewrite of equations.
 
@@ -69,7 +69,7 @@ An execution trace is a table listing states in time order from the initial stat
 | 1 | $d_0=4,\ w_0=2$ | 4 | 2 |
 | 2 | $d_1=3,\ w_1=5$ | 7 | 7 |
 
-AIR encodes the state-transition sequence from operational semantics as a table and checks that the rows form a valid execution. Transition constraints check whether adjacent rows obey one step of the operational rules; boundary constraints check whether the initial and final states meet the specification. The constraints must imply the input-output condition specified denotationally. Transition equations alone may permit arbitrary starting states or traces that stop too early, so the initial condition, input correspondence, stopping point and final condition matter too. See the [execution-trace, state, transition, and boundary guide](./terms/execution-traces).
+AIR (Algebraic Intermediate Representation) encodes the state-transition sequence from operational semantics as a table and checks that the rows form a valid execution. Transition constraints check whether adjacent rows obey one step of the operational rules; boundary constraints check whether the initial and final states meet the specification. The constraints must imply the input-output condition specified denotationally. Transition equations alone may permit arbitrary starting states or traces that stop too early, so the initial condition, input correspondence, stopping point and final condition matter too. See the [execution-trace, state, transition, and boundary guide](./terms/execution-traces).
 
 ## 6. Translating meaning into constraints
 
@@ -97,4 +97,4 @@ To establish both directions, do not omit required input, output, range, branch,
 
 </details>
 
-This is a short preparation resource. Session 4 develops how these meanings are preserved when translating into R1CS, QAP, and AIR.
+This is a short preparation resource. Session 4 develops how these meanings are preserved when translating into R1CS, QAP (Quadratic Arithmetic Program, a polynomial representation that combines arithmetic constraints), and AIR.

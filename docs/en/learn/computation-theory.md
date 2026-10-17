@@ -6,7 +6,7 @@ outline: [2, 3]
 
 This page organizes the language and computation theory needed for ZK Fukuoka through core terms, examples, and self-checks. Topics include formal languages, automata, Turing machines, complexity, and reductions.
 
-Updated: October 13, 2026
+Updated: October 17, 2026
 
 [Prerequisites and supplementary resources](./foundations) · [Session 1](./session-01) · [Session 4](./session-04) · [Session 10](./session-10) · [Topic index](./topics)
 
@@ -106,7 +106,7 @@ The “N” in NP does not mean randomness. One can define NP by nondeterministi
 
 A **polynomial-time reduction** efficiently maps inputs of one problem to inputs of another while preserving yes/no answers. If problem $A$ reduces to $B$, an algorithm for $B$ can be used to solve $A$.
 
-The **Cook–Levin theorem** states that **SAT is NP-complete**: SAT belongs to NP, and every language in NP can be transformed to SAT in polynomial time while preserving yes/no answers. Boolean circuit satisfiability, CircuitSAT, is also NP-complete because SAT and CircuitSAT can be transformed into each other in polynomial time. For this reason, courses often state the Cook–Levin result directly as a reduction to CircuitSAT.
+The **Cook–Levin theorem** states that **SAT (the Boolean satisfiability problem) is NP-complete**. SAT asks whether a Boolean formula has a 0/1 assignment that makes it true. **NP-complete** means that the problem belongs to NP and every problem in NP can be transformed to it in polynomial time while preserving yes/no answers. SAT is therefore a representative problem for NP. Boolean circuit satisfiability, CircuitSAT, is also NP-complete because SAT and CircuitSAT can be transformed into each other in polynomial time. For this reason, courses often state the Cook–Levin result directly as a reduction to CircuitSAT.
 
 The theorem means that we can reduce every NP problem to the satisfiability of a common Boolean representation instead of designing a separate method for each problem. Its construction idea is to encode the computation of a nondeterministic polynomial-time machine as a table of configurations over time and tape position. A polynomial-time computation has polynomially many steps and uses only polynomially many tape cells, so this history has polynomial size.
 
@@ -132,7 +132,7 @@ $$x\in L\quad\Longleftrightarrow\quad\exists w,\ C_x(w)=1.$$
 
 ## 6. From interactive proofs to arithmetization
 
-In the classical NP verifier model, the verifier receives a candidate witness and computes $R(x,w)$. In an interactive proof, the verifier can ask a prover questions; completeness, soundness, and zero knowledge are defined separately. The Session 1 result IP = PSPACE shows what interaction and randomized verification can achieve in complexity theory. It does not claim that every problem has a short non-interactive proof.
+In the classical NP verifier model, the verifier receives a candidate witness and computes $R(x,w)$. In an interactive proof, the verifier can ask a prover questions; completeness, soundness, and zero knowledge are defined separately. **IP (the class of problems with interactive proofs)** = PSPACE is the Session 1 result about what interaction and randomized verification can achieve in complexity theory. It does not claim that every problem has a short non-interactive proof.
 
 Arithmetization replaces the input, intermediate values, and output of a circuit with constraints over a finite field. Session 4 uses R1CS, QAP, and AIR for this purpose. Keep the stages distinct: the system does not directly encode an arbitrary Turing-machine configuration sequence as a cryptographic proof; it represents a target computation as a circuit or execution trace, then proves the required constraints.
 

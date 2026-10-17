@@ -2,9 +2,9 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: September 29, 2026
+Last updated: October 17, 2026
 
-Cryptographic security is not established by an impression that a scheme “looks secure.” We first define **what is protected, what an attacker can do, and how likely a failure may be**. This tutorial introduces the security parameter, probabilistic polynomial-time adversaries, security games, computational assumptions, and reduction proofs, then connects them to properties of zero-knowledge proofs and polynomial commitments.
+Cryptographic security is not established by an impression that a scheme “looks secure.” We first define **what is protected, what an attacker can do, and how likely a failure may be**. This tutorial introduces the security parameter, probabilistic polynomial-time adversaries, security games, computational assumptions, and reduction proofs, then connects them to properties of zero-knowledge (ZK) proofs—proofs that reveal no secret witness—and polynomial commitments.
 
 The explanations and examples are original to this site. For systematic study, see Jonathan Katz and Yehuda Lindell’s [*Introduction to Modern Cryptography* (authors’ course page)](https://www.cs.umd.edu/~jkatz/imc.html). The book treats modern cryptography from a computer-science perspective through definitions, assumptions, and rigorous security proofs. This tutorial does not reproduce or adapt its text; it presents course-relevant concepts in original explanations.
 
@@ -18,7 +18,7 @@ When discussing a cryptographic scheme’s security, make at least the following
 4. **Success condition:** Which output counts as a successful attack?
 5. **Resources and probability:** How are running time and query counts bounded, and how is success probability measured?
 
-A formal experiment describing these rules is often called a **security game**. The attacker’s success probability is defined over the random choices made during the game, including its own coins. Without a defined winning condition, a security claim cannot be assessed.
+A formal experiment describing these rules is often called a **security game**. An **oracle** is an interface an attacker can query to obtain specified answers, without seeing the internal implementation; for example, a hash oracle returns a hash value for a supplied input. The attacker’s success probability is defined over the random choices made during the game, including its own coins. Without a defined winning condition, a security claim cannot be assessed.
 
 ## 2. Security parameters and efficient attackers
 
@@ -30,7 +30,7 @@ Thus, a claim that scheme $\Pi$ is secure is usually read as: “For the specifi
 
 ## 3. Computational assumptions and reductions
 
-Security often relies on a **computational assumption** that a particular problem is hard for PPT algorithms. For example, the discrete-logarithm assumption says it is hard to recover exponent $x$ from a group generator $g$ and $g^x$. An assumption is not an established mathematical theorem; it is a premise adopted for specified groups and parameters.
+Security often relies on a **computational assumption** that a particular problem is hard for PPT algorithms. A **group** is a set with an operation satisfying identity, inverse, and associativity rules; in cryptography, its elements and operation are chosen so computations are feasible while certain inverse problems are believed hard. For example, the discrete-logarithm assumption says it is hard to recover exponent $x$ from a group generator $g$ and $g^x$. An assumption is not an established mathematical theorem; it is a premise adopted for specified groups and parameters.
 
 The basic form of a **reduction proof** is:
 
@@ -53,11 +53,11 @@ A commitment is a way to fix a value now and reveal it later. Its security is di
 
 These properties are defined by separate attack games. Their strengths can vary by scheme; for example, a scheme may provide computational hiding rather than perfect hiding. Neither property follows automatically from the other, so check the construction and its assumptions.
 
-A polynomial commitment lets a prover commit to a polynomial $f$ and later verify whether a claimed value $y$ at a point $x$ satisfies $f(x)=y$. In KZG, binding is related to algebraic hardness assumptions and setup; in FRI/Merkle-based schemes, it is related to hash-function properties and the soundness of low-degree testing. The security basis depends on the construction, even when both are called commitments.
+A polynomial commitment lets a prover commit to a polynomial $f$ and later verify whether a claimed value $y$ at a point $x$ satisfies $f(x)=y$. **KZG** is the Kate–Zaverucha–Goldberg polynomial commitment, which uses elliptic-curve pairings and a structured setup. **FRI** (Fast Reed–Solomon Interactive Oracle of Proximity) is a protocol for checking that a table is close to evaluations of a low-degree polynomial; a **Merkle tree** is a hash-based tree that lets a party commit to a table and later prove that a particular entry was included. In FRI/Merkle-based schemes, security is related to hash-function properties and the soundness of low-degree testing. The security basis depends on the construction, even when both are called commitments.
 
 ## 6. Read the three ZK properties as security definitions
 
-For public input $u$ and relation $R(u,w)$, a prover demonstrates knowledge of a witness $w$ satisfying the condition. Three representative properties of protocol $\Pi$ are:
+For public input $u$ and relation $R(u,w)$ (a check that returns true when $u$ and auxiliary information $w$ satisfy the stated condition), a prover demonstrates knowledge of a witness $w$ (the information that makes the check true). Three representative properties of protocol $\Pi$ are:
 
 | Property | What it guarantees | Question to ask |
 | --- | --- | --- |
@@ -67,11 +67,11 @@ For public input $u$ and relation $R(u,w)$, a prover demonstrates knowledge of a
 
 These properties impose separate conditions; one does not automatically imply the other two. In particular, completeness says “a correct proof passes,” while soundness addresses whether a false statement can pass. Zero-knowledge limits information leakage, not the truth of the statement itself.
 
-A protocol claiming **knowledge soundness** requires more than preventing false statements from being accepted: it requires that a witness can be extracted from an accepting prover. The definition specifies a model in which an extractor runs the prover and may control or rewind randomness or challenges when needed.
+A protocol claiming **knowledge soundness** requires more than preventing false statements from being accepted: it requires that a witness can be extracted from an accepting prover. An **extractor** is a theoretical algorithm that interacts with that prover and tries to recover such a witness; depending on the definition, it may repeat the prover's execution with controlled randomness or challenges (rewinding). A **simulator** is a separate theoretical algorithm used in a zero-knowledge definition: it produces a verifier's view without being given the witness. These are proof-analysis tools, not necessarily components implemented in a deployed protocol.
 
 ## 7. Assumption strength and model boundaries
 
-When reading a security proof, list the assumptions and models it uses. A computational assumption such as discrete logarithm, a stronger structured assumption such as q-SDH, a knowledge assumption, and an idealized model such as the Random Oracle Model (ROM) are different kinds of foundations. Do not collapse them into a generic label like “cryptographically secure”; identify the actual premise of the proof.
+When reading a security proof, list the assumptions and models it uses. A computational assumption such as discrete logarithm, a stronger structured assumption such as q-SDH (**q-Strong Diffie–Hellman**, an assumption about the difficulty of computing a particular group element from a structured sequence of powers), a knowledge assumption (which says that an algorithm producing certain outputs must also possess specified information), and an idealized model such as the Random Oracle Model (ROM) are different kinds of foundations. Do not collapse them into a generic label like “cryptographically secure”; identify the actual premise of the proof.
 
 ROM treats a hash function as an ideal random function. A proof in ROM is not itself a proof about the concrete hash function used in an implementation. Distinguish a ROM security result from the security analysis of the hash function selected for deployment. Session 9 examines the benefits and limits of this model in the Fiat–Shamir transform.
 

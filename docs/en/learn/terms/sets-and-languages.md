@@ -6,7 +6,7 @@ outline: [2, 3]
 
 [Back to Session 1](../session-01) · [Prerequisites](../foundations) · [Topic index](../topics)
 
-Updated: September 28, 2026
+Updated: October 17, 2026
 
 ## 1. Sets and elements
 
@@ -39,7 +39,7 @@ For an example closer to this course, let L contain encodings of satisfiable Boo
 
 ## 4. x ∈ L and L ∈ NP refer to different levels
 
-An input x is one string; L is a set of strings; NP is a collection of languages satisfying a verifier condition.
+An input $x$ is one string; $L$ is a set of strings; NP is a collection of languages satisfying a verifier condition. NP comes from “nondeterministic polynomial time”; here we use the equivalent verifier view: a short witness for a yes-input can be checked in polynomial time. For the computation-model meaning of nondeterminism, see [Language and Computation Theory](../computation-theory).
 
 - $x\in L$: this input has answer Yes.
 - $L\in\mathrm{NP}$: Yes inputs of this decision problem have short witnesses that can be checked efficiently.

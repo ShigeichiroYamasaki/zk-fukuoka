@@ -2,15 +2,15 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: September 29, 2026
+Last updated: October 17, 2026
 
 [Prerequisites and resources](./foundations) · [Session 4](./session-04) · [Linear algebra terms](./terms/linear-algebra) · [Polynomial terms](./terms/polynomials)
 
 ## What does a QAP do?
 
-R1CS describes a computation using several constraints. A QAP (Quadratic Arithmetic Program) represents those constraints as a polynomial relation. This short guide follows one example from Session 4: knowing an $x$ such that $x^3+x+5=35$.
+R1CS (Rank-1 Constraint System) represents each computation row as a constraint saying that the product of two linear combinations equals a third linear combination. A QAP (Quadratic Arithmetic Program) combines those constraints into a polynomial relation. This short guide follows one example from Session 4: knowing an $x$ such that $x^3+x+5=35$.
 
-All calculations below take place in the finite field $\mathbb F_{101}$. Unless a range restriction is added, arithmetic wraps modulo 101.
+All calculations below take place in the finite field $\mathbb F_{101}$. A finite field is a finite number system where addition, subtraction, multiplication, and division by nonzero elements are possible. Unless a range restriction is added, arithmetic wraps modulo 101.
 
 ## 1. Split the computation into three constraints
 
@@ -57,7 +57,7 @@ Define the polynomial that has these three points as roots:
 
 $$Z(X)=(X-1)(X-2)(X-3).$$
 
-By the factor theorem, $F$ vanishes at all three points exactly when $Z$ divides $F$. Thus the three row constraints can be represented together by asking whether some polynomial $H(X)$ satisfies
+By the factor theorem (if $F(a)=0$, then $(X-a)$ divides $F(X)$), $F$ vanishes at all three points exactly when $Z$ divides $F$. Thus the three row constraints can be represented together by asking whether some polynomial $H(X)$ satisfies
 
 $$L(X)R(X)-O(X)=H(X)Z(X).$$
 

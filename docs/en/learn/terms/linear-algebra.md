@@ -6,7 +6,7 @@ outline: [2, 3]
 
 [Back to Session 4](../session-04) · [Term guide](./) · [Prerequisites](../foundations)
 
-Updated: October 13, 2026
+Updated: October 17, 2026
 
 This page connects examples to the general definitions: what an R1CS matrix computes, and what “Rank-1” refers to. Unless stated otherwise, all operations are over a field $K$. ZK arithmetization commonly uses a finite field such as $K=\mathbb F_p$.
 

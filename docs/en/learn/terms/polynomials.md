@@ -6,9 +6,9 @@ outline: [2, 3]
 
 [Session 4](../session-04) · [Term guide](./) · [Prerequisites](../foundations)
 
-Updated: September 28, 2026
+Updated: October 17, 2026
 
-For the underlying algebra, start with [polynomial ring basics in Session 3](../session-03#_3-1-definitions-and-basic-operations), then read [roots, vanishing polynomials, and QAP divisibility](../session-03#qap-polynomial-prerequisites).
+For the underlying algebra, start with [polynomial ring basics in Session 3](../session-03#_3-1-definitions-and-basic-operations), then read [roots, vanishing polynomials, and QAP divisibility](../session-03#qap-polynomial-prerequisites). A field $K$ is a number system where addition, subtraction, multiplication, and division by nonzero elements are possible; QAP uses a finite field.
 
 ## Read a table as a polynomial
 
@@ -22,11 +22,11 @@ For $D=\{1,2\}$, the vanishing polynomial is
 
 $$Z_D(X)=(X-1)(X-2)=X^2-3X+2.$$
 
-A polynomial vanishing at both distinct points is divisible by $Z_D$, by the factor theorem. For example, $F(X)=3X^2-9X+6=3Z_D(X)$ has quotient 3. But $G=F+1$ equals one at both points and is not divisible. All operations are over the field.
+The factor theorem says that if $F(a)=0$, then $(X-a)$ divides $F(X)$. If a polynomial is zero at several distinct points, it is divisible by the product of the corresponding linear factors. For example, $F(X)=3X^2-9X+6=3Z_D(X)$ has quotient 3. But $G=F+1$ equals one at both points and is not divisible. All operations are over the field.
 
 ## Connection to QAP
 
-Interpolate the R1CS columns as $A_i,B_i,C_i$ and combine them using assignment values $z_i$:
+R1CS (Rank-1 Constraint System) represents each computation row as the product of two linear combinations equaling a third linear combination. QAP (Quadratic Arithmetic Program) combines those constraints into a polynomial relation. Interpolate the R1CS columns as $A_i,B_i,C_i$ and combine them using assignment values $z_i$:
 
 $$F(X)=\left(\sum_i z_iA_i(X)\right)\left(\sum_i z_iB_i(X)\right)-\sum_i z_iC_i(X).$$
 
