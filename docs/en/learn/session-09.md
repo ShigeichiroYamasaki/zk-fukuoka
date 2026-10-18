@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 9 in the syllabus](./#session-9) · [Session 9 exercises](../exercises/session-09)
 
@@ -34,7 +34,7 @@ There are three learning objectives:
 ::: tip Prerequisites and route through this session
 Recall challenges in interactive proofs ([Session 2](./session-02)), rewinding and soundness amplification ([Session 6](./session-06)), and commitments ([Session 8](./session-08)). The [cryptographic security tutorial](./cryptographic-security-tutorial) also reviews randomized adversaries and security experiments relevant to ROM.
 
-The route is: why remove interaction; how Fiat–Shamir derives challenges; how proofs work in the ROM; and what is lost when an ideal oracle is replaced by a concrete hash. Keep the transform separate from the model used to prove its security.
+The route is: why remove interaction; how Fiat–Shamir derives challenges; how proofs work in the ROM; and what is lost when an ideal oracle is replaced by a concrete cryptographic hash function. Keep the transform separate from the model used to prove its security.
 :::
 ---
 
@@ -54,19 +54,19 @@ Schnorr uses commitment, challenge, and response. FRI also fixes tables before r
 
 ### 2.1 The basic idea
 
-Could a reproducible rule replace the verifier’s fresh random choice? Fiat–Shamir hashes information already fixed in the exchange to obtain a challenge that anyone can recompute. The idea is:
+Could a reproducible rule replace the verifier’s fresh random choice? Fiat–Shamir applies a cryptographic hash function to information already fixed in the exchange to obtain a challenge that anyone can recompute. The idea is:
 
-> Replace the verifier's random challenge with a value that the prover computes by hashing the transcript so far.
+> Replace the verifier's random challenge with a value that the prover computes by applying a cryptographic hash function to the transcript so far.
 
 For a Σ-protocol-style protocol, instead of receiving challenge $c$ from the verifier, the prover computes
 
 $$c = H(\text{commitment}, x)$$
 
-The prover is not the only party computing this hash. The verifier recomputes the challenge from the same input and checks the response. Actual constructions unambiguously encode the proposition being proved, public parameters, preceding messages, protocol identifiers, and other required context. Choosing what enters the hash is part of the protocol.
+The prover is not the only party computing this cryptographic hash function. The verifier recomputes the challenge from the same input and checks the response. Actual constructions unambiguously encode the proposition being proved, public parameters, preceding messages, protocol identifiers, and other required context. Choosing what enters the function is part of the protocol.
 
 ### 2.2 Security intuition
 
-The prover can choose commitments and inspect their hashes, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
+The prover can choose commitments and inspect the outputs of the cryptographic hash function, so it is inaccurate to say it cannot search for favorable values. We need to bound the probability of producing an invalid proof even after an efficient adversary makes repeated attempts. One-wayness alone does not give this conclusion. ROM makes queries and success probabilities explicit for analysis.
 
 <StudyDiagram id="09-1" en />
 
@@ -81,25 +81,25 @@ The prover can choose commitments and inspect their hashes, so it is inaccurate 
 
 </div>
 
-Conceptual overview. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the hash alone does not establish security.
+Conceptual overview. Encode public inputs, protocol identifiers and the prior transcript unambiguously. One-wayness of the cryptographic hash function alone does not establish security.
 
-### 2.3 Mapping a hash output to a finite-field challenge
+### 2.3 Mapping a cryptographic hash-function output to a finite-field challenge
 
-An implementation must map the hash output to an element of the protocol's field $\mathbb F_p$. If a hash yields a uniform $k$-bit integer $u$ and the implementation simply uses $u\bmod p$, residues do not occur equally often when $2^k$ is not divisible by $p$. For example, mapping 3-bit values modulo 7 gives residues 0 and 1 two preimages each, while every other residue has one; the result is biased.
+An implementation must map the cryptographic hash function's output to an element of the protocol's field $\mathbb F_p$. If the function yields a uniform $k$-bit integer $u$ and the implementation simply uses $u\bmod p$, residues do not occur equally often when $2^k$ is not divisible by $p$. For example, mapping 3-bit values modulo 7 gives residues 0 and 1 two preimages each, while every other residue has one; the result is biased.
 
-For a small teaching implementation, rejection sampling—discarding candidates at least $p$ and advancing a hash counter to generate the next candidate—avoids this bias. Real protocols should use the specified hash-to-field method or a reduction with analyzed uniformity, and unambiguously bind the protocol identifier, round, public input and prior transcript into the hash input. Do not invent an ad hoc conversion; check the selected protocol's specification and implementation.
+For a small teaching implementation, rejection sampling—discarding candidates at least $p$ and advancing a cryptographic hash-function counter to generate the next candidate—avoids this bias. Real protocols should use the specified hash-to-field method or a reduction with analyzed uniformity, and unambiguously bind the protocol identifier, round, public input and prior transcript into the function's input. Do not invent an ad hoc conversion; check the selected protocol's specification and implementation.
 
 ---
 
 ::: tip Connection to PLONK: derive challenges from the transcript
-The original PLONK applies Fiat–Shamir to make its interactive polynomial checks non-interactive. Challenges such as $\beta,\gamma$ for the permutation argument are derived from a transcript containing prior commitments, including the wire polynomials. If the prover could choose those challenges before committing, it could tailor values to them; ordering and binding challenges to the transcript therefore matter. Security is analyzed under a model such as the ROM and its assumptions, not from hash one-wayness alone. See the check sequence in [Session 12](./session-12).
+The original PLONK applies Fiat–Shamir to make its interactive polynomial checks non-interactive. Challenges such as $\beta,\gamma$ for the permutation argument are derived from a transcript containing prior commitments, including the wire polynomials. If the prover could choose those challenges before committing, it could tailor values to them; ordering and binding challenges to the transcript therefore matter. Security is analyzed under a model such as the ROM and its assumptions, not from the one-wayness of a cryptographic hash function alone. See the check sequence in [Session 12](./session-12).
 :::
 
 ## 3. The Random Oracle Model (ROM)
 
 ### 3.1 Definition of the model
 
-To model how responses to inputs are determined, treat the hash as an ideal random function: the Random Oracle Model. “Random” does not mean that repeated queries to the same input receive different answers. The model has all three properties below.
+To model how responses to inputs are determined, treat the cryptographic hash function as an ideal random function: the Random Oracle Model. “Random” does not mean that repeated queries to the same input receive different answers. The model has all three properties below.
 
 - A query on a previously unseen input receives a uniformly random output.
 - Repeated queries on the same input always receive the same output, ensuring consistency.
@@ -135,7 +135,7 @@ After proving security in ROM, ask exactly what was proved. The theorem concerns
 
 ### 4.2 Theoretical counterexamples
 
-Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete hash instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
+Canetti, Goldreich, and Halevi show that this distinction has mathematical consequences. There are artificial constructions secure in ROM but insecure under concrete cryptographic hash-function instantiations, discussed in their 2004 JACM paper. This is not a blanket attack on practical schemes; it rules out a general implication from ROM security to implementation security.
 
 <StudyDiagram id="09-3" en />
 
@@ -150,7 +150,7 @@ Canetti, Goldreich, and Halevi show that this distinction has mathematical conse
 
 </div>
 
-A ROM proof alone does not justify every concrete hash instantiation
+A ROM proof alone does not justify every concrete cryptographic hash-function instantiation
 
 The CGH counterexample rules out a universal justification of this replacement; it does not show that every practical Fiat–Shamir construction is broken.
 
@@ -183,9 +183,9 @@ An unbounded prover cannot be restricted by computational search cost. Thus info
 
 ### 4.6 Public-coin protocols are not the same starting point as arbitrary IP
 
-Fiat–Shamir directly replaces public random challenges. General IP verifiers may keep private randomness and reveal only functions of it. Replacing that randomness with publicly recomputable hashes changes what the prover knows.
+Fiat–Shamir directly replaces public random challenges. General IP verifiers may keep private randomness and reveal only functions of it. Replacing that randomness with publicly recomputable outputs of a cryptographic hash function changes what the prover knows.
 
-Goldwasser–Sipser showed a [transformation from private-coin to public-coin interactive proofs](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf). This transforms the protocol; it does not authorize replacing the original messages by hashes unchanged. Zero-knowledge, knowledge extraction, round complexity, and subsequent Fiat–Shamir soundness each require their own conditions.
+Goldwasser–Sipser showed a [transformation from private-coin to public-coin interactive proofs](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf). This transforms the protocol; it does not authorize replacing the original messages with outputs of a cryptographic hash function unchanged. Zero-knowledge, knowledge extraction, round complexity, and subsequent Fiat–Shamir soundness each require their own conditions.
 
 Likewise, $\mathrm{IP}=\mathrm{PSPACE}$ does not imply safe, short non-interactive proofs for arbitrary PSPACE computations via Fiat–Shamir. It characterizes expressiveness with interaction and randomness. Succinctness, efficient proving, zero-knowledge, and secure non-interactive compilation are separate requirements.
 
@@ -195,9 +195,9 @@ Recall Schnorr's acceptance equation $g^z=aY^c$ for $Y=g^w$. Without knowing $w$
 
 After Fiat–Shamir, the transcript must additionally satisfy $c=H(x,a)$. In a programmable ROM, a simulator may arrange this by setting an as-yet-undefined oracle response. The proof must account for prior queries, consistency, and the difference from a real random-oracle distribution. This does not give a real prover permission to overwrite SHA-256 outputs.
 
-Forking an adversary with changed oracle answers is instead an operation inside a knowledge-extraction reduction. It has a different purpose from zero-knowledge simulation. Neither is an implementation API for changing a hash function.
+Forking an adversary with changed oracle answers is instead an operation inside a knowledge-extraction reduction. It has a different purpose from zero-knowledge simulation. Neither is an implementation API for changing a cryptographic hash function.
 
-Research on [definitions of zero-knowledge in ROM](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf) distinguishes these oracle-access and programming powers. Simulator existence does not imply that a real third party can produce accepting proofs under the same fixed public hash.
+Research on [definitions of zero-knowledge in ROM](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf) distinguishes these oracle-access and programming powers. Simulator existence does not imply that a real third party can produce accepting proofs under the same fixed public cryptographic hash function.
 
 ### 4.8 The barrier to non-interactive zero-knowledge without setup or oracles {#plain-model-nizk}
 
@@ -216,7 +216,7 @@ Groth16's avoidance of ROM therefore does not mean it achieves non-interactive z
 
 ### 4.9 One-wayness and collision resistance do not close the gap
 
-A concrete hash has a finite public description, such as code and a public key. An adversary may exploit that description. A random oracle is accessed through queries, without such a short usable implementation description. One-wayness or collision resistance alone may not exclude attacks exploiting particular input/output correlations.
+A concrete cryptographic hash function has a finite public description, such as code and a public key. An adversary may exploit that description. A random oracle is accessed through queries, without such a short usable implementation description. One-wayness or collision resistance alone may not exclude attacks exploiting particular input/output correlations.
 
 Beyond CGH, Goldwasser–Kalai give [secure three-round public-coin identification schemes whose Fiat–Shamir signatures are insecure for every efficient function-ensemble instantiation](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html). This does not say every Fiat–Shamir scheme is broken, nor that the same counterexample applies to all information-theoretically sound IPs. Keep the scheme class and security property in view.
 
@@ -229,8 +229,8 @@ The central question is which resources and assumptions replace the unpredictabi
 
 Today we studied a transformation removing interaction and the model used to analyze it. Review the procedure, model, and implementation separately.
 
-- Fiat–Shamir replaces interactive challenges with hash outputs to obtain non-interactivity.
-- ROM supports security proofs using an idealized hash function, with the forking lemma from Session 6 providing a concrete proof technique.
+- Fiat–Shamir replaces interactive challenges with cryptographic hash-function outputs to obtain non-interactivity.
+- ROM supports security proofs using an idealized cryptographic hash function, with the forking lemma from Session 6 providing a concrete proof technique.
 - CGH counterexamples show why a ROM proof cannot universally guarantee security after concrete instantiation.
 - ROM remains useful in practice, but its role requires critical evaluation.
 
@@ -252,7 +252,7 @@ Session 10 concludes Act II with the PCP theorem and the IOP framework. We will 
 
 ## Suggested discussion questions
 
-- Before introducing Fiat–Shamir, ask how randomness might be obtained without an online verifier, helping motivate the use of hashing.
+- Before introducing Fiat–Shamir, ask how randomness might be obtained without an online verifier, helping motivate the use of a cryptographic hash function.
 - When presenting CGH, discuss the difference between a mathematical proof and security in a concrete implementation.
 - Ask students which resources—ROM, a CRS, or interaction—a design uses, and which assumptions support its security and efficiency.
 

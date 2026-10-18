@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 12 in the syllabus](./#session-12) · [Session 12 exercises](../exercises/session-12)
 
@@ -171,7 +171,7 @@ Repeating one check to obtain $\epsilon^k$ is a different argument. Fresh challe
 
 ### 4.1 Motivation: making common patterns more efficient
 
-Expressibility with basic gates does not guarantee implementation efficiency. Repeated elliptic-curve operations or hash rounds repeat the same small operation patterns. Could a frequent pattern be expressed directly as one constraint?
+Expressibility with basic gates does not guarantee implementation efficiency. Repeated elliptic-curve operations or cryptographic hash-function rounds repeat the same small operation patterns. Could a frequent pattern be expressed directly as one constraint?
 
 **Custom gates** directly define common complex operation patterns using dedicated selector polynomials and constraints. For example, an application-specific gate can combine several multiplications and additions in a single gate.
 

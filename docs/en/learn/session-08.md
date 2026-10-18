@@ -17,7 +17,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 8 in the syllabus](./#session-8) · [Session 8 exercises](../exercises/session-08)
 
@@ -174,11 +174,11 @@ The commitment is one $G_1$ element and the single-point opening proof is also o
 
 ### 3.1 A different approach: No trusted setup
 
-Can we achieve the goal without generating a setup secret? FRI-based constructions fix a value table using hashes and test its relationship to low-degree polynomials. Merkle trees and proximity testing take the place of pairings and a secret evaluation point.
+Can we achieve the goal without generating a setup secret? FRI-based constructions fix a value table using a cryptographic hash function and test its relationship to low-degree polynomials. Merkle trees and proximity testing take the place of pairings and a secret evaluation point.
 
 ### 3.2 Construction outline
 
-The prover commits to the evaluation representation of a polynomial $f$ using a Merkle tree: evaluation values are organized into a hash tree, and its root is sent as the commitment. To open a value, the prover supplies the Merkle path for the requested evaluation point, proving that the value belongs to the committed table.
+The prover commits to the evaluation representation of a polynomial $f$ using a Merkle tree: evaluation values are organized into a tree using a cryptographic hash function, and its root is sent as the commitment. To open a value, the prover supplies the Merkle path for the requested evaluation point, proving that the value belongs to the committed table.
 
 A Merkle path establishes membership of a value in the fixed table. FRI separately tests proximity to a low-degree polynomial. Opening a polynomial at an arbitrary point also needs a mechanism, such as a quotient-polynomial check, connecting the proposition $f(x)=y$ to the table. Distinguish table membership, low-degree proximity, and correctness of the evaluation being asserted.
 
@@ -186,7 +186,7 @@ A Merkle path establishes membership of a value in the fixed table. FRI separate
 
 ### 3.3 Security foundations
 
-Hash collision resistance prevents changing the committed table; FRI soundness rejects tables far from low degree. The combined evaluation protocol must be analyzed as a whole. Non-interactive versions also introduce Fiat–Shamir and an oracle model. Assessing quantum resistance requires examining the transformed protocol, not merely the hash choice.
+Collision resistance of the cryptographic hash function prevents changing the committed table; FRI soundness rejects tables far from low degree. The combined evaluation protocol must be analyzed as a whole. Non-interactive versions also introduce Fiat–Shamir and an oracle model. Assessing quantum resistance requires examining the transformed protocol, not merely the hash-function choice.
 
 ### 3.4 Checking the same $f(3)=1$ using tables and a quotient {#fri-pcs-worked-example}
 
@@ -213,7 +213,7 @@ The opening point 3 lies outside this domain. This example separates table authe
 
 </div>
 
-**Fix the table.** Build a Merkle tree of the eight $f$ values and send its root $R_f$. Fix the order and bind each leaf to its position, for example with $h_i=\operatorname{Hash}(\text{leaf},i,f(t_i))$ and internal nodes $\operatorname{Hash}(\text{node},\text{left},\text{right})$, using distinct tags and unambiguous encodings. To open value 11 at $t=2$ in this eight-leaf tree, send 11 and three sibling hashes. The verifier reconstructs the root using the left/right positions.
+**Fix the table.** Build a Merkle tree of the eight $f$ values and send its root $R_f$. Fix the order and bind each leaf to its position, for example with $h_i=\operatorname{Hash}(\text{leaf},i,f(t_i))$ and internal nodes $\operatorname{Hash}(\text{node},\text{left},\text{right})$, where $\operatorname{Hash}$ denotes a cryptographic hash function, using distinct tags and unambiguous encodings. To open value 11 at $t=2$ in this eight-leaf tree, send 11 and three sibling digests. The verifier reconstructs the root using the left/right positions.
 
 This establishes membership of value 11 at position $t=2$ in the fixed table. **There is no leaf for point 3, so a Merkle path alone cannot prove $f(3)=1$.**
 
@@ -273,7 +273,7 @@ Today we fixed polynomials before checking their values. Review the following wh
 - The general security definitions for commitments: binding prevents changing the committed value, while hiding protects its secrecy.
 - Polynomial commitments extend ordinary commitments with efficient openings of evaluations at specific points.
 - KZG uses pairings and the q-SDH assumption and requires trusted setup.
-- FRI-based commitments use FRI and hash collision resistance, without trusted setup.
+- FRI-based commitments use FRI and cryptographic hash-function collision resistance, without trusted setup.
 - Comparing the two approaches highlights differences in the cryptographic assumptions underlying SNARK and STARK protocols.
 
 In Session 9, we will study the Fiat–Shamir transform: how to turn the interactive protocols developed so far into practical non-interactive proofs. We will also discuss the Random Oracle Model used in security proofs and its theoretical limitations.

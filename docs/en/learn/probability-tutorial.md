@@ -20,11 +20,11 @@ In zero-knowledge proofs, the record of what the verifier observes during an int
 
 A **zero-knowledge proof** lets a verifier check that a proposition is true without revealing information about the witness itself. The comparison between a real view and a simulator’s record, explained later, gives a precise way to express “revealing no information.”
 
-The **Fiat–Shamir transform**, mentioned later, replaces an interactive verifier’s challenge with a value computed from a hash of earlier messages, avoiding that exchange. A **hash function** maps data of arbitrary length to a fixed-length value. The **soundness error** is the probability that a verifier accepts a false statement; **soundness amplification** means reducing this probability through an appropriate method. These terms are explained again where they are used.
+The **Fiat–Shamir transform**, mentioned later, replaces an interactive verifier’s challenge with a value computed by applying a **cryptographic hash function** to earlier messages, avoiding that exchange. A general **hash function** maps data of arbitrary length to a fixed-length value. A hash function used in a cryptographic protocol is called a cryptographic hash function because security properties such as collision resistance are expected of it. The **soundness error** is the probability that a verifier accepts a false statement; **soundness amplification** means reducing this probability through an appropriate method. These terms are explained again where they are used.
 
 A **distinguisher** is a procedure that tries to tell two records or probability distributions apart. It observes an input and outputs, for example, 0 for “from source 0” or 1 for “from source 1.” Its **distinguishing advantage** here is the absolute difference between the probabilities of output 1 in the two experiments; this page explains the definition in detail.
 
-The **Random Oracle Model (ROM)**, named in the Session 9 link, is a security-analysis model that treats a hash function as an ideal function returning consistent random values for its inputs.
+The **Random Oracle Model (ROM)**, named in the Session 9 link, is a security-analysis model that idealizes a cryptographic hash function as a function returning consistent random values for its inputs.
 
 ## 1. Experiments, sample spaces, and events
 
@@ -144,7 +144,7 @@ A typical interactive proof proceeds as follows: the prover sends an initial mes
 
 If the verifier samples fresh randomness for $C$ after receiving $M$, we analyze the challenge law conditioned on the fixed message $M$. For example, if $C$ is a uniform $k$-bit string, each value still has conditional probability $2^{-k}$ after fixing $M$. Requiring the prover to fix its first message before seeing the challenge prevents it from rewriting that message to fit the challenge.
 
-This order alone does not prove protocol security. The analysis must also establish how the initial message is fixed, whether the challenge can be predicted, and whether the prover can prepare multiple responses. In the Fiat–Shamir transform, the verifier’s challenge is computed from a hash of earlier messages. Security depends on which messages enter the hash and how the prover can choose its queries.
+This order alone does not prove protocol security. The analysis must also establish how the initial message is fixed, whether the challenge can be predicted, and whether the prover can prepare multiple responses. In the Fiat–Shamir transform, the verifier’s challenge is computed by applying a cryptographic hash function to earlier messages. Security depends on which messages enter the hash input and how the prover can choose its queries.
 
 When writing a probability, state, for example, the challenge distribution conditioned on a fixed first message, or the probability that a false statement is accepted over both verifier and adversary randomness. The order of choices connects conditional probability and independence with the information available to an adversary. Keep asking “what was fixed first, and what could each party see before choosing?” when reading later sections on randomized checks and soundness error.
 
@@ -488,5 +488,5 @@ When calculating a probability, first write down what is randomized, how success
 - [Session 3: Finite fields, polynomial algebra, and randomized testing](./session-03): the Schwartz–Zippel lemma and error probability
 - [Session 5: Error-correcting codes and information-theoretic perspective](./session-05): random errors versus adversarial errors
 - [Session 6: Low-degree testing and soundness amplification](./session-06): repetition and soundness error
-- [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): deriving challenges from hash values and the model that treats a hash as an ideal random function
+- [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): deriving challenges from cryptographic hash-function outputs and the model that idealizes such a function as random
 - Further reading: [A First Course in Probability, Sheldon M. Ross (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)

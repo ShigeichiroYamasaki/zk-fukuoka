@@ -6,7 +6,7 @@ outline: [2, 3]
 
 A six-stage development course connects Sessions 1–15 to deposits, L2 transfers, withdrawals and L1 verification of state transitions for one ERC-20 token.
 
-Updated: October 14, 2026
+Updated: October 18, 2026
 
 [Lectures](../learn/sessions) · [Balance arithmetization](../exercises/session-04#program) · [Exercises](../exercises/) · [Docker environment](../exercises/manuals#docker)
 
@@ -62,7 +62,7 @@ zk-token-lab/
   fixtures/        # canonical input and expected output
 ```
 
-Review Ruby/CLI basics, Solidity storage/events/reverts, ERC-20 approve/transferFrom, JavaScript BigInt, and hashing versus signing. Do not convert amounts to JavaScript Number.
+Review Ruby/CLI basics, Solidity storage/events/reverts, ERC-20 approve/transferFrom, JavaScript BigInt, and the difference between cryptographic hash functions and digital signatures. Do not convert amounts to JavaScript Number.
 
 Complete the [Groth16 operation manual](../exercises/manuals#groth16) first. Record compiler, dependency and verification-key versions. Circuit changes require rebuilding the R1CS, keys and verifier.
 

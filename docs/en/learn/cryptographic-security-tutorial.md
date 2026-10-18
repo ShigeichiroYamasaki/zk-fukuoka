@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 17, 2026
+Last updated: October 18, 2026
 
 Cryptographic security is not established by an impression that a scheme “looks secure.” We first define **what is protected, what an attacker can do, and how likely a failure may be**. This tutorial introduces the security parameter, probabilistic polynomial-time adversaries, security games, computational assumptions, and reduction proofs, then connects them to properties of zero-knowledge (ZK) proofs—proofs that reveal no secret witness—and polynomial commitments.
 
@@ -18,7 +18,7 @@ When discussing a cryptographic scheme’s security, make at least the following
 4. **Success condition:** Which output counts as a successful attack?
 5. **Resources and probability:** How are running time and query counts bounded, and how is success probability measured?
 
-A formal experiment describing these rules is often called a **security game**. An **oracle** is an interface an attacker can query to obtain specified answers, without seeing the internal implementation; for example, a hash oracle returns a hash value for a supplied input. The attacker’s success probability is defined over the random choices made during the game, including its own coins. Without a defined winning condition, a security claim cannot be assessed.
+A formal experiment describing these rules is often called a **security game**. An **oracle** is an interface an attacker can query to obtain specified answers, without seeing the internal implementation; for example, a cryptographic hash-function oracle returns an output for a supplied input. The attacker’s success probability is defined over the random choices made during the game, including its own coins. Without a defined winning condition, a security claim cannot be assessed.
 
 ## 2. Security parameters and efficient attackers
 
@@ -53,7 +53,7 @@ A commitment is a way to fix a value now and reveal it later. Its security is di
 
 These properties are defined by separate attack games. Their strengths can vary by scheme; for example, a scheme may provide computational hiding rather than perfect hiding. Neither property follows automatically from the other, so check the construction and its assumptions.
 
-A polynomial commitment lets a prover commit to a polynomial $f$ and later verify whether a claimed value $y$ at a point $x$ satisfies $f(x)=y$. **KZG** is the Kate–Zaverucha–Goldberg polynomial commitment, which uses elliptic-curve pairings and a structured setup. **FRI** (Fast Reed–Solomon Interactive Oracle of Proximity) is a protocol for checking that a table is close to evaluations of a low-degree polynomial; a **Merkle tree** is a hash-based tree that lets a party commit to a table and later prove that a particular entry was included. In FRI/Merkle-based schemes, security is related to hash-function properties and the soundness of low-degree testing. The security basis depends on the construction, even when both are called commitments.
+A polynomial commitment lets a prover commit to a polynomial $f$ and later verify whether a claimed value $y$ at a point $x$ satisfies $f(x)=y$. **KZG** is the Kate–Zaverucha–Goldberg polynomial commitment, which uses elliptic-curve pairings and a structured setup. **FRI** (Fast Reed–Solomon Interactive Oracle of Proximity) is a protocol for checking that a table is close to evaluations of a low-degree polynomial; a **Merkle tree** is a tree that uses a cryptographic hash function to let a party commit to a table and later prove that a particular entry was included. In FRI/Merkle-based schemes, security is related to cryptographic hash-function properties and the soundness of low-degree testing. The security basis depends on the construction, even when both are called commitments.
 
 ## 6. Read the three ZK properties as security definitions
 
@@ -73,7 +73,7 @@ A protocol claiming **knowledge soundness** requires more than preventing false 
 
 When reading a security proof, list the assumptions and models it uses. A computational assumption such as discrete logarithm, a stronger structured assumption such as q-SDH (**q-Strong Diffie–Hellman**, an assumption about the difficulty of computing a particular group element from a structured sequence of powers), a knowledge assumption (which says that an algorithm producing certain outputs must also possess specified information), and an idealized model such as the Random Oracle Model (ROM) are different kinds of foundations. Do not collapse them into a generic label like “cryptographically secure”; identify the actual premise of the proof.
 
-ROM treats a hash function as an ideal random function. A proof in ROM is not itself a proof about the concrete hash function used in an implementation. Distinguish a ROM security result from the security analysis of the hash function selected for deployment. Session 9 examines the benefits and limits of this model in the Fiat–Shamir transform.
+ROM treats a cryptographic hash function as an ideal random function. A proof in ROM is not itself a proof about the concrete cryptographic hash function used in an implementation. Distinguish a ROM security result from the security analysis of the cryptographic hash function selected for deployment. Session 9 examines the benefits and limits of this model in the Fiat–Shamir transform.
 
 ## 8. A checklist for this course
 

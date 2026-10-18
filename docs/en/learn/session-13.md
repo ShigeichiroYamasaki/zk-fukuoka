@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 13 in the syllabus](./#session-13) · [Session 13 exercises](../exercises/session-13)
 
@@ -48,7 +48,7 @@ Trusted setup retains public information while requiring secret erasure. MPC dis
 
 **Transparency** removes the need to generate, retain, or erase a secret setup trapdoor. Parameters follow public procedures, with public generation of any needed randomness. The point is removing dependence on a secret, not making every parameter random.
 
-We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does hash collision resistance alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
+We study representative STARKs combining AIR, FRI, and Merkle trees. Merkle trees bind evaluation tables, while FRI tests proximity to low-degree polynomials. This avoids KZG-style secret trapdoors, but transparency alone does not uniquely require AIR or FRI. Nor does collision resistance of the cryptographic hash function used by the Merkle tree alone explain security of the complete proof system; Section 4.2 addresses the additional requirements.
 
 <StudyDiagram id="13-1" en />
 
@@ -122,7 +122,7 @@ Non-interactive construction outline. Choose queries only after the required com
 
 Does fewer FRI stages mean proportionally smaller proofs? Besides values opened at each stage, the prover sends Merkle paths authenticating their membership in committed tables. Folding depth alone therefore does not determine proof size or verification cost.
 
-With fixed security and coding parameters, representative constructions target polylogarithmic proof size and verification cost in trace length. Concrete costs depend on query counts, hash lengths, folding choices, aggregation, and compression. Public-input reading and processing must also be accounted for. Size comparisons in kilobytes need specified circuits, inputs, implementations, and security parameters.
+With fixed security and coding parameters, representative constructions target polylogarithmic proof size and verification cost in trace length. Concrete costs depend on query counts, cryptographic hash-function output lengths, folding choices, aggregation, and compression. Public-input reading and processing must also be accounted for. Size comparisons in kilobytes need specified circuits, inputs, implementations, and security parameters.
 
 ### 3.3 A simple model for constructing an estimate
 
@@ -134,7 +134,7 @@ $$S \approx q(2wB+cE+2rE)+qH\left(3\log_2N+\sum_{j=1}^{r}(\log_2N-j)\right)+TE+(
 
 The second term is the number of Merkle sibling digests across the tables, multiplied by digest width. This model does not compress shared path segments and omits protocol-specific openings, metadata, zero-knowledge masking, and path-compression optimizations. It is therefore not a predictor for a particular implementation, nor does it derive a security-sound query count. For FRI communication analysis and the distinction from protocol-specific optimizations, see [concrete security analysis of non-interactive FRI](https://eprint.iacr.org/2024/1161).
 
-For an example, set $b=8,w=8,c=1,B=8,E=16,H=32,T=256,q=30$. KiB means 1024 bytes. Merkle digest counts and folding checks below are **operation counts, not verifier time**; elapsed time depends on the CPU, hash implementation, parallelization, and other factors.
+For an example, set $b=8,w=8,c=1,B=8,E=16,H=32,T=256,q=30$. KiB means 1024 bytes. Merkle digest counts and folding checks below are **operation counts, not verifier time**; elapsed time depends on the CPU, cryptographic hash-function implementation, parallelization, and other factors.
 
 <div class="captioned-table" id="table-13-4" role="group" aria-labelledby="table-caption-13-4">
 
@@ -215,15 +215,15 @@ Schematic comparison, not measurements or a speed ranking. Fix security paramete
 
 ### 4.2 Post-quantum security
 
-Long-term security also requires revisiting the adversary’s computational model. Against large-scale quantum computers running Shor’s algorithm, elliptic-curve discrete logarithms cannot be assumed hard. This affects Groth16 and KZG-based PLONK. Hash-based STARKs matter because they can avoid that algebraic assumption.
+Long-term security also requires revisiting the adversary’s computational model. Against large-scale quantum computers running Shor’s algorithm, elliptic-curve discrete logarithms cannot be assumed hard. This affects Groth16 and KZG-based PLONK. STARKs based on cryptographic hash functions matter because they can avoid that algebraic assumption.
 
-However, collision resistance for Merkle binding is distinct from security of the complete non-interactive proof system. The latter also needs soundness-error analysis for FRI and other components, together with Fiat–Shamir security. Quantum adversaries require analysis in an appropriate quantum random-oracle model, suitable hash lengths and parameters, and verification of the applicable theorem's conditions. **Using hashes does not automatically establish post-quantum security.**
+However, collision resistance of the cryptographic hash function used for Merkle binding is distinct from security of the complete non-interactive proof system. The latter also needs soundness-error analysis for FRI and other components, together with Fiat–Shamir security. Quantum adversaries require analysis in an appropriate quantum random-oracle model, suitable cryptographic hash-function output lengths and parameters, and verification of the applicable theorem's conditions. **Using a cryptographic hash function does not automatically establish post-quantum security.**
 
 The research on [Fiat–Shamir in the quantum random-oracle model](https://arxiv.org/abs/1902.07556) illustrates this distinction. Its theorem must not be applied to arbitrary multi-round STARKs without checking its conditions.
 
 ### 4.3 Prover computation cost
 
-For fixed trace width, constraint degree, and security parameters, STARK designs often achieve quasi-linear prover complexity in trace length $n$, roughly $O(n \log n)$, through AIR arithmetization and FFT-like polynomial operations (NTTs). The multiplicative-group structure discussed in [Session 3](./session-03) becomes practically important here. Constraint evaluation, hashing, memory use, and hardware also affect wall-clock time. This does not establish universal superiority over R1CS/QAP or other systems; compare the same computation and security conditions.
+For fixed trace width, constraint degree, and security parameters, STARK designs often achieve quasi-linear prover complexity in trace length $n$, roughly $O(n \log n)$, through AIR arithmetization and FFT-like polynomial operations (NTTs). The multiplicative-group structure discussed in [Session 3](./session-03) becomes practically important here. Constraint evaluation, cryptographic hash-function computations, memory use, and hardware also affect wall-clock time. This does not establish universal superiority over R1CS/QAP or other systems; compare the same computation and security conditions.
 
 ---
 
@@ -260,7 +260,7 @@ Next time (Session 14), we integrate Act III. We compare how Groth16, PLONK, and
 
 - Recall KZG’s structure from Session 8 and discuss what restrictions arise when building a protocol without any trusted setup, motivating the choice of FRI.
 - Revisit the Session 8 comparison table and ask students to summarize what STARKs gain and give up.
-- Ask why elliptic-curve assumptions are vulnerable to quantum computers while suitable hashes are currently believed to resist them. Briefly introduce the period-finding intuition behind Shor’s algorithm.
+- Ask why elliptic-curve assumptions are vulnerable to quantum computers while suitably selected cryptographic hash functions are currently believed to resist them. Briefly introduce the period-finding intuition behind Shor’s algorithm.
 
 ---
 

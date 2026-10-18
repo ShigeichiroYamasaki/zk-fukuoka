@@ -6,7 +6,7 @@ outline: [2, 3]
 
 * 2026/09/07
 * Shigeichiro Yamasaki
-* Last updated: 2026/10/12
+* Last updated: October 18, 2026
 
 ::: info Draft syllabus
 A proposed three-act, 15-session curriculum. Dates, instructors, and venues are to be determined. This is an English translation of the Japanese proposal.
@@ -122,7 +122,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 [Session 9 lecture](./session-09) · [Exercise](../exercises/session-09)
 
-- Derive Fiat–Shamir challenges from a transcript hash; study hash inputs, challenge derivation, and message order.
+- Derive Fiat–Shamir challenges from cryptographic hash-function outputs on the transcript; study hash inputs, challenge derivation, and message order.
 - **Cryptographic perspective:** Examine ROM proofs, query-driven search, and the CGH counterexample; explain why interactive IP soundness does not automatically carry over to a non-interactive protocol.
 - Distinguish public-coin and private-coin IPs, and why IP = PSPACE does not imply arbitrary short non-interactive proofs.
 
@@ -160,7 +160,7 @@ Each session makes explicit both the cryptographic perspective (connections to s
 
 - Read an AIR/FRI/Merkle/Fiat–Shamir construction as a sequence: transition and boundary constraints, composition polynomial, low-degree proximity, authenticated openings, and non-interactivity.
 - **Security and cost:** Separate proximity, table consistency, binding to public inputs, and any masking; study a model for estimating proof size and verifier work.
-- Distinguish transparency, setup assumptions, and quantum-security assumptions. Hash-based construction alone does not automatically provide zero knowledge or post-quantum security.
+- Distinguish transparency, setup assumptions, and quantum-security assumptions. A construction using cryptographic hash functions alone does not automatically provide zero knowledge or post-quantum security.
 
 ### Session 14: An integrated perspective — moving between Acts I–III {#session-14}
 

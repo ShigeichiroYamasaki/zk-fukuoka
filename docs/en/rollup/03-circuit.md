@@ -7,6 +7,8 @@ import { withBase } from "vitepress";
 
 # 3. Signatures and transfer circuits
 
+Updated: October 18, 2026
+
 [Overview](./) · [Previous: state](./02-state) · [Next: batches](./04-batches)
 
 ## Start with arithmetic {#core}
@@ -53,7 +55,7 @@ Implement `circuits/transfer.circom` with all of these constraints:
 | Immutable fields | Preserve ID, L1 owner and L2 key |
 | Receiver | Update from the intermediate sender-updated root |
 
-Hash a canonical domain containing fixed version, L1 chain ID, rollup address and token address. Fix the chain ID encoding width. This separates signatures across networks and deployments.
+Apply a cryptographic hash function to a canonical domain containing the fixed version, L1 chain ID, rollup address and token address. Fix the chain ID encoding width. This separates signatures across networks and deployments.
 
 ```text
 message = Poseidon(domain, TAG_TRANSFER, senderId, receiverId, amount, nonce)

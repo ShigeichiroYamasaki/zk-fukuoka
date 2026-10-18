@@ -6,7 +6,7 @@ outline: [2, 3]
 
 第1〜15回で学んだ証明系を，入金・送金・出金のあるシステムへつなげる6段階の開発教材です．単一のERC-20をL1に預託し，L2で送金し，状態遷移の証明をL1で検証する小さな構成を目指します．
 
-更新日：2026年10月14日
+更新日：2026年10月18日
 
 [講義一覧](../learn/sessions) · [入出金の算術化](../exercises/session-04#program) · [演習](../exercises/) · [Docker実行環境](../exercises/manuals#docker)
 
@@ -62,7 +62,7 @@ zk-token-lab/
   fixtures/        # 正規化した入力と期待値
 ```
 
-Rubyとコマンドラインに加え，Solidityの状態変数・イベント・revert，ERC-20のapprove/transferFrom，JavaScriptのBigInt，ハッシュと署名の違いを確認してください．金額をJavaScriptのNumberへ変換しないようにします．
+Rubyとコマンドラインに加え，Solidityの状態変数・イベント・revert，ERC-20のapprove/transferFrom，JavaScriptのBigInt，暗号学的ハッシュ関数と電子署名の違いを確認してください．金額をJavaScriptのNumberへ変換しないようにします．
 
 [基本操作マニュアル](../exercises/manuals#groth16)で証明生成まで一巡してから進むと読みやすくなります．使用したコンパイラ・ライブラリ・検証鍵の版を記録し，回路を変えたらR1CS・鍵・検証コントラクトを作り直します．
 

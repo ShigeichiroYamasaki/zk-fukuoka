@@ -7,6 +7,8 @@ import { withBase } from "vitepress";
 
 # 3. 署名と送金回路
 
+更新日：2026年10月18日
+
 [応用編](./) · [前：状態ルート](./02-state) · [次：バッチ証明](./04-batches)
 
 ## 最初に算術だけを動かす {#core}
@@ -53,7 +55,7 @@ node build/transfer_core_js/generate_witness.js build/transfer_core_js/transfer_
 | 葉の不変部分 | ID，L1所有者，L2鍵を維持 |
 | 受取人の更新 | 送金者更新後の中間ルートから更新 |
 
-ドメインは，固定バージョン，L1 chainId，rollupコントラクトアドレス，トークンアドレスを正規化してハッシュします．別ネットワークや別コントラクトで署名を使い回せないようにします．chainIdの表現幅も仕様で固定してください．
+ドメインは，固定バージョン，L1 chainId，rollupコントラクトアドレス，トークンアドレスを正規化して暗号学的ハッシュ関数に入力します．別ネットワークや別コントラクトで署名を使い回せないようにします．chainIdの表現幅も仕様で固定してください．
 
 ```text
 message = Poseidon(domain, TAG_TRANSFER, senderId, receiverId, amount, nonce)

@@ -8,7 +8,7 @@ import { withBase } from 'vitepress'
 
 # 2. Run private-input inference proofs
 
-Updated: October 14, 2026
+Updated: October 18, 2026
 
 [Overview](./) · [Model and arithmetization](./01-model) · [Docker environment](../exercises/manuals#docker)
 
@@ -81,7 +81,7 @@ Functional tests do not experimentally prove zero knowledge. That property relie
 
 | Requirement | Additional design |
 | --- | --- |
-| Bind a particular input | Check $C=\mathrm{Com}(x;r)$ and inference in the same circuit. Use sufficient secret randomness: an unsalted hash of this tiny domain is brute-forceable |
+| Bind a particular input | Check $C=\mathrm{Com}(x;r)$ and inference in the same circuit. Use sufficient secret randomness: an unsalted cryptographic hash function output for this tiny domain is brute-forceable |
 | Authenticate the input | Verify an issuer or measurement signature, trusted origin, time and purpose. A commitment alone does not establish truth |
 | Control reuse | Bind request ID and purpose to the proven relation; enforce expiry and reuse policy in the application |
 | Real data and neural networks | Separate training and evaluation; check quantized accuracy and circuit equivalence. Consider EZKL with ONNX |

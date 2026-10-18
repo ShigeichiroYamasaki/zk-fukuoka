@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # 5. ERC-20 and L1 verification
 
+Updated: October 18, 2026
+
 [Overview](./) · [Previous: batches](./04-batches) · [Next: availability/exits](./06-availability)
 
 ## Separate responsibilities
@@ -57,7 +59,7 @@ increment nextBatchNumber
 emit BatchAccepted(batchNumber, newRoot, data)
 ```
 
-Validate hash-limb bounds and public field-element ranges. Enforce queue bounds on L1 so nonexistent deposits cannot be created. Commit updates only after all checks pass.
+Validate digest-limb bounds and public field-element ranges. Enforce queue bounds on L1 so nonexistent deposits cannot be created. Commit updates only after all checks pass.
 
 ## Withdrawal claims
 

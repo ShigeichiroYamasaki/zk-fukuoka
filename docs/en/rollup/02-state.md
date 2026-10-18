@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 2. Merkle state and roots
 
-Updated: October 13, 2026
+Updated: October 18, 2026
 
 [Overview](./) · [Previous: ledger](./01-ledger) · [Next: circuits](./03-circuit)
 
@@ -14,7 +14,7 @@ Store an account-tree root rather than the entire ledger in contract storage. A 
 
 ## Fix the leaf format
 
-The circuit version hashes ordered fields:
+The circuit version applies a cryptographic hash function to these ordered fields:
 
 ```text
 leaf = Poseidon(TAG_ACCOUNT, id, l1Owner, l2KeyX, l2KeyY, balance, nonce)

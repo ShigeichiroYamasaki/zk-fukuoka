@@ -4,13 +4,15 @@ outline: [2, 3]
 
 # 6. Availability, failure exits and integration
 
+Updated: October 18, 2026
+
 [Overview](./) · [Previous: L1](./05-bridge) · [Session 14](../learn/session-14)
 
 ## Roots and proofs are not enough
 
 Reconstruct state independently from genesis registrations, L1 deposits, accepted 540-byte batches and finalized/claimed withdrawals. Recompute each root and stop on mismatch.
 
-Initially publish data in calldata and events, binding its hash in both the circuit and L1. Moving data to IPFS and posting only a hash does not retain the same availability guarantee. See [Ethereum's rollup explanation](https://ethereum.org/developers/docs/scaling/zk-rollups/).
+Initially publish data in calldata and events, binding the output of a cryptographic hash function in both the circuit and L1. Moving data to IPFS and posting only a digest does not retain the same availability guarantee. See [Ethereum's rollup explanation](https://ethereum.org/developers/docs/scaling/zk-rollups/).
 
 ## Independent replay
 
@@ -55,6 +57,6 @@ Implement `requestExit(accountId)`, `cancelExit(requestId)`, `resolveEmptyAccoun
 
 ## Submission
 
-Provide source, dependency versions, circuit hash, verification key, setup provenance, positive/negative test results, replay logs and outage tests. Record testnet chain ID, deployment addresses, token and transaction references.
+Provide source, dependency versions, circuit digest, verification key, setup provenance, positive/negative test results, replay logs and outage tests. Record testnet chain ID, deployment addresses, token and transaction references.
 
 Publishing this course does not establish that a learner's full-system tests passed. Before real assets, separately review and audit circuits, bridge and exits, and validate setup, keys and operation.

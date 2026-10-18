@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Basic operation manuals
 
-Updated: October 14, 2026
+Updated: October 18, 2026
 
 Follow the Act III exercises (Sessions 11–15): generate and verify a proof, compare setup requirements, inspect execution traces, compare results, and explore advanced constructions.
 
@@ -173,7 +173,7 @@ Connect experiments to [Session 14](../learn/session-14). If you cannot implemen
 | --- | --- |
 | Environment | Implementation/commit, OS, CPU, RAM, language version, build configuration |
 | Computation | Circuit/program, number of public inputs, constraint count or trace length |
-| Security settings | Curve, field, hash, SRS origin and FRI parameters as applicable |
+| Security settings | Curve, field, cryptographic hash function, SRS origin and FRI parameters as applicable |
 | Verification | Acceptance/rejection, modified public values and logs |
 | Proof size | Bytes and serialization format; distinguish JSON from binary |
 | Timing | Separate setup, witness/trace generation, proving and verification; record repetitions and aggregation method |

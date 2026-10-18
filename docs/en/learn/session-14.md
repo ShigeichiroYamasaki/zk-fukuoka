@@ -17,7 +17,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 14 in the syllabus](./#session-14) · [Session 14 exercises](../exercises/session-14)
 
@@ -59,7 +59,7 @@ Next consider an adversary trying to make a false proposition be accepted. Groth
 | --- | --- |
 | Groth16 | Given correctly generated CRS parameters, the original paper proves knowledge soundness in the generic bilinear group model, not simply by reduction to q-SDH |
 | KZG-based PLONK | Polynomial-IOP soundness, commitment security of KZG, and Fiat–Shamir analysis in the ROM; knowledge soundness also requires the applicable extraction conditions |
-| AIR/FRI-based STARK | AIR constraint/consistency checks, FRI soundness, hash collision resistance for Merkle binding, and Fiat–Shamir analysis in the ROM |
+| AIR/FRI-based STARK | AIR constraint/consistency checks, FRI soundness, collision resistance of the cryptographic hash function used for Merkle binding, and Fiat–Shamir analysis in the ROM |
 
 </div>
 
@@ -156,12 +156,12 @@ Fix groups and security parameters when considering scaling with circuit or trac
 | Proof size | Three group elements | Constant numbers of group and field elements | Includes queried values and Merkle paths; polylogarithmic in representative constructions |
 | Verification cost | Public-input processing plus constant pairing count | Public-input processing plus verification of constant numbers of openings and related checks | Queries, authentication paths, and FRI checks; polylogarithmic for representative constructions with fixed parameters |
 | Setup | Circuit-specific keys and trusted setup | Universal, updatable SRS plus circuit-specific public preprocessing | No secret trapdoor required |
-| Post-quantum security | Not secure against sufficiently large quantum computers | Not secure against sufficiently large quantum computers | Requires suitable hashes, parameters, and security analysis in a quantum model |
-| Assessing prover cost | Measure QAP processing, group operations, and related work | Measure polynomial processing, commitments, and related work | Measure trace processing, low-degree extension, hashing, FRI, and related work |
+| Post-quantum security | Not secure against sufficiently large quantum computers | Not secure against sufficiently large quantum computers | Requires suitable cryptographic hash functions, parameters, and security analysis in a quantum model |
+| Assessing prover cost | Measure QAP processing, group operations, and related work | Measure polynomial processing, commitments, and related work | Measure trace processing, low-degree extension, cryptographic hash-function computation, FRI, and related work |
 
 </div>
 
-STARK costs depend on query counts and authentication paths, not just FRI rounds. Prover speed depends on circuits, trace width, implementation, hardware, memory, and security parameters; this table establishes no universal speed ranking. Hashing alone does not establish post-quantum security of a non-interactive STARK (Session 13, Section 4.2).
+STARK costs depend on query counts and authentication paths, not just FRI rounds. Prover speed depends on circuits, trace width, implementation, hardware, memory, and security parameters; this table establishes no universal speed ranking. Using cryptographic hash functions alone does not establish post-quantum security of a non-interactive STARK (Session 13, Section 4.2).
 
 **State the requirements before selecting a scheme.** Identify whom the setup may trust, the security needed, and whether communication or computation is the limiting resource. In the exercises, justify choices using measurements made under aligned conditions.
 

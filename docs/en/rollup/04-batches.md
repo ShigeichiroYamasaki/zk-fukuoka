@@ -4,6 +4,8 @@ outline: [2, 3]
 
 # 4. Batch proofs and public inputs
 
+Updated: October 18, 2026
+
 [Overview](./) · [Previous: circuits](./03-circuit) · [Next: L1](./05-bridge)
 
 ## Chain four operations
@@ -46,9 +48,9 @@ recipient:u160 | R8x:u256 | R8y:u256 | S:u256
 
 Transfer recipient is zero; withdrawal receiver is zero; deposit sender, recipient and signature fields are zero. Deposits use the nonce field as deposit ID. NOP is all zero. IDs are 0–3; signature values use canonical field/group ranges.
 
-The deposit hash covers up to four `depositId:u64 | accountId:u8 | amount:u64` records, in queue order, zero-padded to 68 bytes. The active count is `depositEnd-depositStart`. Positive deposit amounts distinguish records from padding.
+The deposit digest is the output of SHA-256, a cryptographic hash function, applied to up to four `depositId:u64 | accountId:u8 | amount:u64` records in queue order, zero-padded to 68 bytes. The active count is `depositEnd-depositStart`. Positive deposit amounts distinguish records from padding.
 
-The circuit must reconstruct **the same 540 bytes from its operation fields and constrain their SHA-256**. Supplying an unrelated hash as a public input is insufficient. L1 rehashes the received data. Inspect [circomlib SHA-256](https://github.com/iden3/circomlib/blob/master/circuits/sha256/sha256.circom) and test bit ordering.
+The circuit must reconstruct **the same 540 bytes from its operation fields and constrain the SHA-256 computation**. Supplying an unrelated digest as a public input is insufficient. L1 applies the same function to the received data and compares the output. Inspect [circomlib SHA-256](https://github.com/iden3/circomlib/blob/master/circuits/sha256/sha256.circom) and test bit ordering.
 
 ## Generate proofs
 

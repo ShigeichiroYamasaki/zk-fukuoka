@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Applied course: privacy-preserving stablecoin tips with a JPKI wallet
 
-Updated: October 13, 2026
+Updated: October 18, 2026
 
 This design combines JPKI-based identity verification with zero-knowledge proofs so a supporter’s name and wallet mapping need not be published when tipping a musician with a stablecoin. The goal is **not to evade legal obligations through anonymity**. We study how to improve privacy from the general public while allowing regulated service providers to perform required identity checks, retain transaction records and respond to lawful requests.
 
@@ -51,7 +51,7 @@ $$
 N=H(s,c)
 $$
 
-$N$ is a campaign-scoped nullifier that detects reuse of the same credential. It is stable within one campaign, so a second use can be rejected. Including the campaign ID aims to prevent public records from linking the same participant across different campaigns. The credential signature and hash must be selected after evaluating circuit efficiency, security and revocation. This relation does not by itself prove that identity verification was correct, that the supporter intended the payment, or that the stablecoin is legally eligible.
+$N$ is a campaign-scoped nullifier that detects reuse of the same credential. It is stable within one campaign, so a second use can be rejected. Including the campaign ID in the input to a cryptographic hash function aims to prevent public records from linking the same participant across different campaigns. The credential signature and cryptographic hash function must be selected after evaluating circuit efficiency, security and revocation. This relation does not by itself prove that identity verification was correct, that the supporter intended the payment, or that the stablecoin is legally eligible.
 
 In a ledger exercise, verify each one-time credential and amount limit, then prove the published settlement total equals the sum of accepted tips. If each tip is sent directly on a public chain, sender and recipient addresses, amounts and timestamps remain analyzable. A zero-knowledge proof alone does not anonymize those public records.
 

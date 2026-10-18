@@ -19,7 +19,7 @@ import GraphIsoExample from "../../.vitepress/theme/GraphIsoExample.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 4, 2026
+Last updated: October 18, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2) · [Session 2 exercises](../exercises/session-02)
 
@@ -466,7 +466,7 @@ Proof systems can first be compared by asking two questions:
 - **Expressiveness:** What kinds of relations can be proved, from a specific algebraic relation to a general computation?
 - **Efficiency:** How small can the proof and verifier's workload be relative to the original computation? Prover cost and **setup** (preparing the public parameters a proof system needs) must be checked separately. Whether setup requires trust and whether it is circuit-specific or reusable depends on the system.
 
-The **Fiat–Shamir transform** is a common way to remove interaction from suitable interactive protocols: it derives the verifier's random challenge by hashing the public input and messages sent so far. The prover can then produce one proof that a verifier checks later, without a live exchange (a non-interactive proof). Applying it mechanically does not make every protocol secure; Session 9 discusses the security conditions in detail.
+The **Fiat–Shamir transform** is a common way to remove interaction from suitable interactive protocols: it derives the verifier's random challenge by applying a cryptographic hash function to the public input and messages sent so far. The prover can then produce one proof that a verifier checks later, without a live exchange (a non-interactive proof). Applying it mechanically does not make every protocol secure; Session 9 discusses the security conditions in detail.
 
 <div class="captioned-table" id="table-02-9" role="group" aria-labelledby="table-caption-02-9">
 

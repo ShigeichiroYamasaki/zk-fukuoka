@@ -20,7 +20,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: September 28, 2026
+Last updated: October 18, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1)
 
@@ -158,7 +158,7 @@ Interactive proofs in complexity theory already required protection against dish
 
 ### 3.2 Building intuition with examples
 
-**Example 1: Password authentication.** What we want to check is that the other party knows a password. Receiving the password may enable that check, but it also gives the secret to the party performing the check. If sending the same hash value suffices for authentication, someone who obtains that value may be able to reuse it. Can we check knowledge without sending either the secret or a fixed value that substitutes for it? Here we examine the motivation; the requirements for an actual authentication scheme need separate consideration.
+**Example 1: Password authentication.** What we want to check is that the other party knows a password. Receiving the password may enable that check, but it also gives the secret to the party performing the check. If sending the same cryptographic hash-function output suffices for authentication, someone who obtains that value may be able to reuse it. Can we check knowledge without sending either the secret or a fixed value that substitutes for it? Here we examine the motivation; the requirements for an actual authentication scheme need separate consideration.
 
 **Example 2: Graph isomorphism.** Suppose there are two graphs $G_1, G_2$, and the prover knows an isomorphism $\pi$. Given this mapping, the verifier could inspect the correspondence between vertices and edges to check isomorphism. But if the statement to be checked is $G_1 \cong G_2$, is handing over the mapping itself necessary? We want to consider ways to establish isomorphism through interaction.
 
