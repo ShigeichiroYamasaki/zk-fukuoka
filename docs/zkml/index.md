@@ -51,8 +51,10 @@ $$\exists x\in\{0,\ldots,15\}^2:\quad y=f(x)$$
 
 ## 参考資料
 
-- [Circom：公開・非公開のsignals](https://docs.circom.io/circom-language/signals/) — mainの出力は公開されます．入力を非公開にしても，出力にコピーすれば公開される点を確認します．
-- [snarkjs公式実装・操作手順](https://github.com/iden3/snarkjs) — Groth16のセットアップ，証明生成，検証．
-- [EZKL公式ドキュメント](https://docs.ezkl.xyz/)・[実装リポジトリ](https://github.com/zkonduit/ezkl) — ONNXのモデルを用いたZKMLへの発展．本教材のCircom実装とは別のツールです．
+[1] [Circom：公開・非公開のsignals](https://docs.circom.io/circom-language/signals/) — mainの出力は公開されます．入力を非公開にしても，出力にコピーすれば公開される点を確認します．
+
+[2] [snarkjs公式実装・操作手順](https://github.com/iden3/snarkjs) — Groth16のセットアップ，証明生成，検証．
+
+[3] [EZKL公式ドキュメント](https://docs.ezkl.xyz/)・[実装リポジトリ](https://github.com/zkonduit/ezkl) — ONNXのモデルを用いたZKMLへの発展．本教材のCircom実装とは別のツールです．
 
 [ERC-20 ZK rollupの応用編](../rollup/) · [演習トップ](../exercises/)

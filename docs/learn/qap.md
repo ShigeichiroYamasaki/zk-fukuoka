@@ -2,7 +2,7 @@
 
 著者：山崎重一郎  
 作成日：2026年9月29日  
-最終更新日：2026年10月17日
+最終更新日：2026年10月18日
 
 [前提知識と補助教材](./foundations) · [第4回の授業](./session-04) · [用語ガイド：線形代数](./terms/linear-algebra) · [用語ガイド：多項式](./terms/polynomials)
 
@@ -85,5 +85,5 @@ R1CSでは行数ぶんの条件を並べていたが，QAPではそれらを一�
 
 このページは，R1CSを列ごとに補間し，QAPの多項式関係へまとめるという考え方を参考にしつつ，例・説明・文章を独自に構成した教材である．
 
-- [RareSkills, “Quadratic Arithmetic Programs”](https://rareskills.io/post/quadratic-arithmetic-program) — 英語の詳しい解説．
+[1] [RareSkills, “Quadratic Arithmetic Programs”](https://rareskills.io/post/quadratic-arithmetic-program) — 英語の詳しい解説．
 - [第4回：算術化の技法と計算量理論](./session-04) — R1CS，QAP，AIRを含む授業資料．

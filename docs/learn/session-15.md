@@ -15,7 +15,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年10月12日
+最終更新日付：2026年10月18日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第15回](./#session-15) · [第15回の演習](../exercises/session-15)
 
@@ -244,10 +244,13 @@ GKRは，回路の出力についての命題を，前の層の値について�
 
 ## 参考文献・発展読書
 
-- Bitansky, Canetti, Chiesa, Tromer, [“Recursive Composition and Bootstrapping for SNARKs and Proof-Carrying Data,”](https://eprint.iacr.org/2012/095) STOC 2013(再帰的証明の基礎，公開PDFあり)
-- Kothapalli, Setty, Tzialla, [“Nova: Recursive Zero-Knowledge Arguments from Folding Schemes,”](https://eprint.iacr.org/2021/370) CRYPTO 2022(原論文，公開PDFあり)
-- Goldwasser, Kalai, Rothblum, [“Delegating Computation: Interactive Proofs for Muggles,”](https://www.microsoft.com/en-us/research/publication/delegating-computation-interactive-proofs-muggles/) STOC 2008(GKRプロトコルの原論文，[公開PDF](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/2008-DelegatingComputation.pdf))
-- Thaler, [*Proofs, Arguments, and Zero-Knowledge*](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html), (電子書籍，[無料公開PDF](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf))— sumcheckを中心に据えた優れた総合的教科書．本講義の復習・発展学習として推奨できる
+[1] Bitansky, Canetti, Chiesa, Tromer, [“Recursive Composition and Bootstrapping for SNARKs and Proof-Carrying Data,”](https://eprint.iacr.org/2012/095) STOC 2013(再帰的証明の基礎，公開PDFあり)
+
+[2] Kothapalli, Setty, Tzialla, [“Nova: Recursive Zero-Knowledge Arguments from Folding Schemes,”](https://eprint.iacr.org/2021/370) CRYPTO 2022(原論文，公開PDFあり)
+
+[3] Goldwasser, Kalai, Rothblum, [“Delegating Computation: Interactive Proofs for Muggles,”](https://www.microsoft.com/en-us/research/publication/delegating-computation-interactive-proofs-muggles/) STOC 2008(GKRプロトコルの原論文，[公開PDF](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/2008-DelegatingComputation.pdf))
+
+[4] Thaler, [*Proofs, Arguments, and Zero-Knowledge*](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html), (電子書籍，[無料公開PDF](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf))— sumcheckを中心に据えた優れた総合的教科書．本講義の復習・発展学習として推奨できる
 
 ---
 

@@ -240,15 +240,21 @@ Session 10 concludes Act II with the PCP theorem and the IOP framework. We will 
 
 ## References and further reading
 
-- Fiat and Shamir, [“How to Prove Yourself: Practical Solutions to Identification and Signature Problems,” CRYPTO 1986](https://link.springer.com/chapter/10.1007/3-540-47721-7_12) — the original paper; publisher's page. The proceedings were published in 1987.
-- Bellare and Rogaway, [“Random Oracles are Practical: A Paradigm for Designing Efficient Protocols,” CCS 1993](https://web.cs.ucdavis.edu/~rogaway/papers/ro-abstract.html) — the ROM methodology; author's publication page with links to the paper.
-- Canetti, Goldreich, and Halevi, [“The Random Oracle Methodology, Revisited,” JACM 2004](https://eprint.iacr.org/1998/011) — counterexamples demonstrating limitations of ROM; public IACR ePrint version with PDF, initially released in 1998.
-- Pointcheval and Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003) — a developed formulation of the forking lemma; publisher's page. Revisit [Session 6](./session-06).
+[1] Fiat and Shamir, [“How to Prove Yourself: Practical Solutions to Identification and Signature Problems,” CRYPTO 1986](https://link.springer.com/chapter/10.1007/3-540-47721-7_12) — the original paper; publisher's page. The proceedings were published in 1987.
 
-- Goldwasser, Sipser, [“Private Coins versus Public Coins in Interactive Proof Systems,” STOC 1986](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf)
-- Goldreich, Oren, [“Definitions and Properties of Zero-Knowledge Proof Systems,” Journal of Cryptology 1994](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf)
-- Goldwasser, Kalai, [“On the (In)security of the Fiat-Shamir Paradigm,” 2003](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html)
-- Wee, [“Zero Knowledge in the Random Oracle Model, Revisited,” ASIACRYPT 2009](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf)
+[2] Bellare and Rogaway, [“Random Oracles are Practical: A Paradigm for Designing Efficient Protocols,” CCS 1993](https://web.cs.ucdavis.edu/~rogaway/papers/ro-abstract.html) — the ROM methodology; author's publication page with links to the paper.
+
+[3] Canetti, Goldreich, and Halevi, [“The Random Oracle Methodology, Revisited,” JACM 2004](https://eprint.iacr.org/1998/011) — counterexamples demonstrating limitations of ROM; public IACR ePrint version with PDF, initially released in 1998.
+
+[4] Pointcheval and Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003) — a developed formulation of the forking lemma; publisher's page. Revisit [Session 6](./session-06).
+
+[5] Goldwasser, Sipser, [“Private Coins versus Public Coins in Interactive Proof Systems,” STOC 1986](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf)
+
+[6] Goldreich, Oren, [“Definitions and Properties of Zero-Knowledge Proof Systems,” Journal of Cryptology 1994](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf)
+
+[7] Goldwasser, Kalai, [“On the (In)security of the Fiat-Shamir Paradigm,” 2003](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html)
+
+[8] Wee, [“Zero Knowledge in the Random Oracle Model, Revisited,” ASIACRYPT 2009](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf)
 
 ## Suggested discussion questions
 

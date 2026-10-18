@@ -282,9 +282,11 @@ $$f(X)-2-(X-3)\widetilde q(X)$$
 
 ## 参考文献・発展読書
 
-- Kate, Zaverucha, Goldberg, [“Constant-Size Commitments to Polynomials and Their Applications,” ASIACRYPT 2010](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf)（KZGコミットメントの原論文．IACR掲載の公開PDF）
-- Ben-Sasson et al., [“Scalable, transparent, and post-quantum secure computational integrity,” 2018](https://eprint.iacr.org/2018/046)（FRIベースのコミットメントの整理．IACR ePrintの公開版・PDFあり）
-- Goldreich, [*Foundations of Cryptography, Volume 1*, Section 4.4](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)（コミットメントスキームの一般論，特に4.4.1節．著者の書籍案内・目次・正誤表）
+[1] Kate, Zaverucha, Goldberg, [“Constant-Size Commitments to Polynomials and Their Applications,” ASIACRYPT 2010](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf)（KZGコミットメントの原論文．IACR掲載の公開PDF）
+
+[2] Ben-Sasson et al., [“Scalable, transparent, and post-quantum secure computational integrity,” 2018](https://eprint.iacr.org/2018/046)（FRIベースのコミットメントの整理．IACR ePrintの公開版・PDFあり）
+
+[3] Goldreich, [*Foundations of Cryptography, Volume 1*, Section 4.4](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)（コミットメントスキームの一般論，特に4.4.1節．著者の書籍案内・目次・正誤表）
 
 ## 講義中に使える発問例
 

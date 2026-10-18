@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 17, 2026
+Last updated: October 18, 2026
 
 [Prerequisites and resources](./foundations) · [Session 3: Finite fields, polynomials and probabilistic testing](./session-03) · [Session 4: Arithmetization](./session-04)
 
@@ -133,6 +133,6 @@ Evaluation turns a polynomial into a vector; coding theory explains how to recog
 
 ## References
 
-- Rudolf Lidl and Harald Niederreiter, *Finite Fields*, 2nd ed., Cambridge University Press. The [publisher's book information and contents](https://www.cambridge.org/core/books/finite-fields/75BDAA74ABAE713196E718392B9E5E72) include algebraic foundations, finite-field structure, and polynomials over finite fields. This tutorial uses that scope as a guide and rebuilds the material for this course with original explanations and examples.
+[1] Rudolf Lidl and Harald Niederreiter, *Finite Fields*, 2nd ed., Cambridge University Press. The [publisher's book information and contents](https://www.cambridge.org/core/books/finite-fields/75BDAA74ABAE713196E718392B9E5E72) include algebraic foundations, finite-field structure, and polynomials over finite fields. This tutorial uses that scope as a guide and rebuilds the material for this course with original explanations and examples.
 - [Session 3: Finite fields, polynomials and probabilistic testing](./session-03)
 - [Session 4: QAP tutorial](./qap)

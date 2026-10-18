@@ -180,10 +180,13 @@ PLONKの原論文では，多項式の関係をKZGで検証する．代表的な
 
 ## 参考文献・発展読書
 
-- Arora, Safra, [“Probabilistic Checking of Proofs: A New Characterization of NP,” JACM 1998](https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf)（メリーランド大学掲載の公開PDF）
-- Arora, Lund, Motwani, Sudan, Szegedy, [“Proof Verification and the Hardness of Approximation Problems,” JACM 1998](https://people.csail.mit.edu/madhu/papers/1992/almss-journ.pdf)（著者公開の論文誌版原稿PDF）
-- Ben-Sasson, Chiesa, Spooner, [“Interactive Oracle Proofs,” TCC 2016](https://eprint.iacr.org/2016/116)（IOPの定式化．IACR ePrintの公開版・PDFあり）
-- Håstad, [“Some Optimal Inapproximability Results,” JACM 2001](https://people.kth.se/~johanh/optimalinap.pdf)（近似困難性の代表的な結果．著者公開PDF）
+[1] Arora, Safra, [“Probabilistic Checking of Proofs: A New Characterization of NP,” JACM 1998](https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf)（メリーランド大学掲載の公開PDF）
+
+[2] Arora, Lund, Motwani, Sudan, Szegedy, [“Proof Verification and the Hardness of Approximation Problems,” JACM 1998](https://people.csail.mit.edu/madhu/papers/1992/almss-journ.pdf)（著者公開の論文誌版原稿PDF）
+
+[3] Ben-Sasson, Chiesa, Spooner, [“Interactive Oracle Proofs,” TCC 2016](https://eprint.iacr.org/2016/116)（IOPの定式化．IACR ePrintの公開版・PDFあり）
+
+[4] Håstad, [“Some Optimal Inapproximability Results,” JACM 2001](https://people.kth.se/~johanh/optimalinap.pdf)（近似困難性の代表的な結果．著者公開PDF）
 
 ## 講義中に使える発問例
 

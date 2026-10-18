@@ -52,4 +52,4 @@ $$F(X)=\left(\sum_i z_iA_i(X)\right)\left(\sum_i z_iB_i(X)\right)-\sum_i z_iC_i(
 
 ## 参考資料
 
-[Gennaro et al., Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Gennaro et al., Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — 英語の発展資料．まずこのページの例を確認してから読む．

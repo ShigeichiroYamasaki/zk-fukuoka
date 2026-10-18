@@ -615,10 +615,13 @@ Schnorrでは，同じコミットに対する二つの受理応答からウィ�
 
 ## 参考文献・発展読書
 
-- Goldwasser, Micali, Rackoff, "[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012)," 1989 — SIAM・1989年版
-- Schnorr, "[Efficient Signature Generation by Smart Cards](https://link.springer.com/article/10.1007/BF00196725)," Journal of Cryptology, 1991 — Springer 文献ページ / [公開原稿PDF（ドイツ国立図書館）](https://d-nb.info/1156214580/34)
-- Goldreich, *[Foundations of Cryptography, Volume 1](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4(ゼロ知識性の定義の教科書的整理) — 著者の書籍案内・目次・正誤表
-- Cook, "[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf)," STOC 1971(Cook-Levin定理，次回以降の算術化の背景として) — 著者公開PDF
+[1] Goldwasser, Micali, Rackoff, "[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012)," 1989 — SIAM・1989年版
+
+[2] Schnorr, "[Efficient Signature Generation by Smart Cards](https://link.springer.com/article/10.1007/BF00196725)," Journal of Cryptology, 1991 — Springer 文献ページ / [公開原稿PDF（ドイツ国立図書館）](https://d-nb.info/1156214580/34)
+
+[3] Goldreich, *[Foundations of Cryptography, Volume 1](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4(ゼロ知識性の定義の教科書的整理) — 著者の書籍案内・目次・正誤表
+
+[4] Cook, "[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf)," STOC 1971(Cook-Levin定理，次回以降の算術化の背景として) — 著者公開PDF
 
 ## 講義中に使える発問例
 

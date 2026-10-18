@@ -44,4 +44,4 @@ No. The immediate implication runs the other way: use a B solver after translati
 
 ## Further reading
 
-[Cook, The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf) — external material in English.
+[1] [Cook, The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf) — external material in English.

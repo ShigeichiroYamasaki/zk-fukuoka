@@ -127,4 +127,4 @@ $A\mathbf z=(3,9,35)^T$, $B\mathbf z=(3,3,1)^T$, and $C\mathbf z=(9,27,35)^T$. T
 
 ## Further reading
 
-[Gennaro et al., Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — Further reading in English; first work through the example on this page.
+[1] [Gennaro et al., Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — Further reading in English; first work through the example on this page.

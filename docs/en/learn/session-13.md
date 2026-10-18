@@ -252,9 +252,11 @@ Next time (Session 14), we integrate Act III. We compare how Groth16, PLONK, and
 
 ## References and further reading
 
-- Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) IACR ePrint 2018/046 (foundations of STARKs; public PDF available).
-- StarkWare, [official directory for the “STARK Math” blog series](https://starkware.co/stark/) (follow the entries under “STARK Blog Posts”) / [“STARK Math – A Very Short Primer”](https://starkware.co/stark-math-a-very-short-primer/) (a short introductory overview).
-- Shor, [“Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer,”](https://arxiv.org/abs/quant-ph/9508027) SIAM Journal on Computing, 1997 (background for the post-quantum discussion; the link provides the public preprint and PDF).
+[1] Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) IACR ePrint 2018/046 (foundations of STARKs; public PDF available).
+
+[2] StarkWare, [official directory for the “STARK Math” blog series](https://starkware.co/stark/) (follow the entries under “STARK Blog Posts”) / [“STARK Math – A Very Short Primer”](https://starkware.co/stark-math-a-very-short-primer/) (a short introductory overview).
+
+[3] Shor, [“Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer,”](https://arxiv.org/abs/quant-ph/9508027) SIAM Journal on Computing, 1997 (background for the post-quantum discussion; the link provides the public preprint and PDF).
 
 ## Suggested classroom questions
 

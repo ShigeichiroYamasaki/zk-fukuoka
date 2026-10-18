@@ -49,4 +49,4 @@ $\mathbb F_{101}$ 上で $a_{i+1}=a_i^2$ を3回繰り返し，$a_0=2$ から始
 
 ## 参考資料
 
-[Ben-Sasson et al., Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Ben-Sasson et al., Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — 英語の発展資料．まずこのページの例を確認してから読む．

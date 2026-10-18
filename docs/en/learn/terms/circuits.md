@@ -47,4 +47,4 @@ No: the first equation $t=x\cdot x$ fails. Translate each gate into [constraints
 
 ## Further reading
 
-[Thaler, Chapter 6: Front Ends](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — external material in English.
+[1] [Thaler, Chapter 6: Front Ends](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — external material in English.

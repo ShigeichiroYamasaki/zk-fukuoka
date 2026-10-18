@@ -165,5 +165,5 @@ $$x\in L\quad\Longleftrightarrow\quad\exists w,\ C_x(w)=1$$
 
 ## 参考文献
 
-- J．E．ホップクロフト，R．モトワニ，J．D．ウルマン『[オートマトン 言語理論 計算論 I［第2版］](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003)』，『[II［第2版］](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003)』サイエンス社，2003．
+[1] J．E．ホップクロフト，R．モトワニ，J．D．ウルマン『[オートマトン 言語理論 計算論 I［第2版］](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003)』，『[II［第2版］](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003)』サイエンス社，2003．
 - [第1回：証明とは何か](./session-01) · [第4回：算術化の技法と計算量理論](./session-04) · [第10回：PCP定理とIOP](./session-10)

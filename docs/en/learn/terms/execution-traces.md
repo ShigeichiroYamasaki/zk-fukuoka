@@ -49,4 +49,4 @@ The boundaries still pass. The transition from time one to two fails because $17
 
 ## Further reading
 
-[Ben-Sasson et al., Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — external material in English.
+[1] [Ben-Sasson et al., Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — external material in English.

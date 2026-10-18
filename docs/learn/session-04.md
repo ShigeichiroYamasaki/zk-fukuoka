@@ -424,9 +424,11 @@ $$Q_{\mathrm{comp}}=\rho_{\mathrm{tr}}Q_{\mathrm{tr}}+\rho_{\mathrm{in}}Q_{\math
 
 ## 参考文献・発展読書
 
-- Cook, "[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf)," STOC 1971 — 著者公開PDF
-- Gennaro, Gentry, Parno, Raykova, "[Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215)," EUROCRYPT 2013(QAPの原論文) — IACR ePrint公開版（2012/215）・[PDF](https://eprint.iacr.org/2012/215.pdf)
-- Ben-Sasson et al., "[Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046)," 2018(AIRの整理された定式化) — IACR ePrint・[PDF](https://eprint.iacr.org/2018/046.pdf)
+[1] Cook, "[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf)," STOC 1971 — 著者公開PDF
+
+[2] Gennaro, Gentry, Parno, Raykova, "[Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215)," EUROCRYPT 2013(QAPの原論文) — IACR ePrint公開版（2012/215）・[PDF](https://eprint.iacr.org/2012/215.pdf)
+
+[3] Ben-Sasson et al., "[Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046)," 2018(AIRの整理された定式化) — IACR ePrint・[PDF](https://eprint.iacr.org/2018/046.pdf)
 
 ## 講義中に使える発問例
 

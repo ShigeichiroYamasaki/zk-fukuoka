@@ -211,9 +211,11 @@ The final session (Session 15) introduces recursive SNARKs, folding schemes, and
 
 ## References and further reading
 
-- Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016 (Groth16 construction, security, and efficiency; public PDF).
-- Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019 (universal and updatable SRS, arithmetization, and permutation arguments; public PDF).
-- Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) 2018 (STARK transparency and coding-based construction; public PDF).
+[1] Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016 (Groth16 construction, security, and efficiency; public PDF).
+
+[2] Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019 (universal and updatable SRS, arithmetization, and permutation arguments; public PDF).
+
+[3] Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) 2018 (STARK transparency and coding-based construction; public PDF).
 
 [Groth16 implementations and manuals](../exercises/#groth16) · [PLONK implementations and manuals](../exercises/#plonk) · [STARK implementations and manuals](../exercises/#stark)
 

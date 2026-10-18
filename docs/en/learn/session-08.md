@@ -282,9 +282,11 @@ In Session 9, we will study the Fiat–Shamir transform: how to turn the interac
 
 ## References and further reading
 
-- Kate, Zaverucha, and Goldberg, [“Constant-Size Commitments to Polynomials and Their Applications,” ASIACRYPT 2010](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf) — the original KZG paper; public PDF hosted by IACR.
-- Ben-Sasson et al., [“Scalable, transparent, and post-quantum secure computational integrity,” 2018](https://eprint.iacr.org/2018/046) — context for FRI-based commitments; public IACR ePrint version with PDF.
-- Goldreich, [*Foundations of Cryptography, Volume 1*, Section 4.4](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html) — general commitment theory, particularly Section 4.4.1; author's book page, table of contents, and errata.
+[1] Kate, Zaverucha, and Goldberg, [“Constant-Size Commitments to Polynomials and Their Applications,” ASIACRYPT 2010](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf) — the original KZG paper; public PDF hosted by IACR.
+
+[2] Ben-Sasson et al., [“Scalable, transparent, and post-quantum secure computational integrity,” 2018](https://eprint.iacr.org/2018/046) — context for FRI-based commitments; public IACR ePrint version with PDF.
+
+[3] Goldreich, [*Foundations of Cryptography, Volume 1*, Section 4.4](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html) — general commitment theory, particularly Section 4.4.1; author's book page, table of contents, and errata.
 
 ## Suggested discussion questions
 

@@ -16,7 +16,7 @@ import { withBase } from "vitepress";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 14, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 6 in the syllabus](./#session-6) · [Session 6 exercises](../exercises/session-06)
 
@@ -340,9 +340,11 @@ In Session 7, we will study elliptic curves and pairings, algebraic structures u
 
 ## References and further reading
 
-- Ben-Sasson, Bentov, Horesh, and Riabzev, [“Fast Reed-Solomon Interactive Oracle Proofs of Proximity,” ICALP 2018](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2018.14) — the original FRI paper; open-access publisher page with PDF.
-- Pointcheval and Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003) — a developed formulation of the forking lemma; publisher's article page.
-- Bellare and Goldreich, [“On Defining Proofs of Knowledge,” CRYPTO 1992](https://cseweb.ucsd.edu/~mihir/papers/pok.pdf) — formal definitions of knowledge extraction and the role of rewinding; author-hosted PDF.
+[1] Ben-Sasson, Bentov, Horesh, and Riabzev, [“Fast Reed-Solomon Interactive Oracle Proofs of Proximity,” ICALP 2018](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2018.14) — the original FRI paper; open-access publisher page with PDF.
+
+[2] Pointcheval and Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003) — a developed formulation of the forking lemma; publisher's article page.
+
+[3] Bellare and Goldreich, [“On Defining Proofs of Knowledge,” CRYPTO 1992](https://cseweb.ucsd.edu/~mihir/papers/pok.pdf) — formal definitions of knowledge extraction and the role of rewinding; author-hosted PDF.
 
 ## Suggested discussion questions
 

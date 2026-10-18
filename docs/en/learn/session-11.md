@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 11 in the syllabus](./#session-11) · [Session 11 exercises](../exercises/session-11)
 
@@ -200,9 +200,11 @@ Next time (Session 12), we study PLONK: the motivation for universal setup to ad
 
 ## References and further reading
 
-- Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016 (the original paper; public PDF available).
-- Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) technical blog post (an introduction to comparing arithmetization in Groth16 and PLONK; title follows the published article).
-- Bowe, Gabizon, Miers, [“Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model,”](https://eprint.iacr.org/2017/1050) 2017 (multi-party generation of trusted-setup parameters; public PDF available).
+[1] Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016 (the original paper; public PDF available).
+
+[2] Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) technical blog post (an introduction to comparing arithmetization in Groth16 and PLONK; title follows the published article).
+
+[3] Bowe, Gabizon, Miers, [“Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model,”](https://eprint.iacr.org/2017/1050) 2017 (multi-party generation of trusted-setup parameters; public PDF available).
 
 ## Suggested classroom questions
 

@@ -16,7 +16,7 @@ import { withBase } from "vitepress";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月14日
+最終更新日付：2026年10月18日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第6回](./#session-6) · [第6回の演習](../exercises/session-06)
 
@@ -342,9 +342,11 @@ Rewindingの考え方を一般化し，Fiat-Shamir変換後の非対話プロト
 
 ## 参考文献・発展読書
 
-- Ben-Sasson, Bentov, Horesh, Riabzev, [“Fast Reed-Solomon Interactive Oracle Proofs of Proximity,” ICALP 2018](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2018.14)（FRIの原論文．出版社のオープンアクセスページ・PDFあり）
-- Pointcheval, Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003)（forking lemmaの整理された定式化．出版社の論文ページ）
-- Bellare, Goldreich, [“On Defining Proofs of Knowledge,” CRYPTO 1992](https://cseweb.ucsd.edu/~mihir/papers/pok.pdf)（知識の抽出の形式的定義とrewindingの位置づけ．著者公開PDF）
+[1] Ben-Sasson, Bentov, Horesh, Riabzev, [“Fast Reed-Solomon Interactive Oracle Proofs of Proximity,” ICALP 2018](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2018.14)（FRIの原論文．出版社のオープンアクセスページ・PDFあり）
+
+[2] Pointcheval, Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003)（forking lemmaの整理された定式化．出版社の論文ページ）
+
+[3] Bellare, Goldreich, [“On Defining Proofs of Knowledge,” CRYPTO 1992](https://cseweb.ucsd.edu/~mihir/papers/pok.pdf)（知識の抽出の形式的定義とrewindingの位置づけ．著者公開PDF）
 
 ## 講義中に使える発問例
 

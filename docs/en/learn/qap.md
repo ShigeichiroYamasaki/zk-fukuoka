@@ -86,5 +86,5 @@ Each row must be checked at its own point. If multiple rows shared a point, seei
 
 This guide uses an original example and wording while following the general idea of interpolating R1CS columns and combining the result into a QAP relation.
 
-- [RareSkills, “Quadratic Arithmetic Programs”](https://rareskills.io/post/quadratic-arithmetic-program) — a detailed explanation in English.
+[1] [RareSkills, “Quadratic Arithmetic Programs”](https://rareskills.io/post/quadratic-arithmetic-program) — a detailed explanation in English.
 - [Session 4: Arithmetization and complexity theory](./session-04) — R1CS, QAP and AIR.

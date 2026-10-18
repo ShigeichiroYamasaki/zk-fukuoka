@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 13, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 10 in the syllabus](./#session-10) · [Session 10 exercises](../exercises/session-10)
 
@@ -180,10 +180,13 @@ This completes Act II. Session 11 begins Act III, integration, with Groth16. We 
 
 ## References and further reading
 
-- Arora and Safra, [“Probabilistic Checking of Proofs: A New Characterization of NP,” JACM 1998](https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf) — public PDF hosted by the University of Maryland.
-- Arora, Lund, Motwani, Sudan, and Szegedy, [“Proof Verification and the Hardness of Approximation Problems,” JACM 1998](https://people.csail.mit.edu/madhu/papers/1992/almss-journ.pdf) — author-hosted journal-version manuscript PDF.
-- Ben-Sasson, Chiesa, and Spooner, [“Interactive Oracle Proofs,” TCC 2016](https://eprint.iacr.org/2016/116) — the IOP framework; public IACR ePrint version with PDF.
-- Håstad, [“Some Optimal Inapproximability Results,” JACM 2001](https://people.kth.se/~johanh/optimalinap.pdf) — representative optimal hardness-of-approximation results; author-hosted PDF.
+[1] Arora and Safra, [“Probabilistic Checking of Proofs: A New Characterization of NP,” JACM 1998](https://www.cs.umd.edu/~gasarch/TOPICS/pcp/AS.pdf) — public PDF hosted by the University of Maryland.
+
+[2] Arora, Lund, Motwani, Sudan, and Szegedy, [“Proof Verification and the Hardness of Approximation Problems,” JACM 1998](https://people.csail.mit.edu/madhu/papers/1992/almss-journ.pdf) — author-hosted journal-version manuscript PDF.
+
+[3] Ben-Sasson, Chiesa, and Spooner, [“Interactive Oracle Proofs,” TCC 2016](https://eprint.iacr.org/2016/116) — the IOP framework; public IACR ePrint version with PDF.
+
+[4] Håstad, [“Some Optimal Inapproximability Results,” JACM 2001](https://people.kth.se/~johanh/optimalinap.pdf) — representative optimal hardness-of-approximation results; author-hosted PDF.
 
 ## Suggested discussion questions
 

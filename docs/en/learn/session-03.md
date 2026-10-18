@@ -17,7 +17,7 @@ import PolynomialVisual from "../../.vitepress/theme/PolynomialVisual.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 14, 2026
+Last updated: October 18, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 3 in the syllabus](./#session-3) · [Supplement · Introductory finite-field exercise](./foundations) · [Session 3 exercises](../exercises/session-03)
 
@@ -496,13 +496,15 @@ In Session 4, we begin concrete arithmetization techniques: R1CS, QAP, and AIR, 
 
 ## References and further reading
 
-- Schwartz, “[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html),” JACM, 1980. — bibliography and publisher link hosted by ACM SIGMOD
-- Zippel, “[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73),” EUROSAM, 1979. — Springer publication page
-- Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7 (the algorithmic context of polynomial identity testing). — publisher’s book information
+[1] Schwartz, “[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html),” JACM, 1980. — bibliography and publisher link hosted by ACM SIGMOD
 
-- Anup Rao, "[Lecture 15: Error reduction, Schwartz-Zippel, Polynomial identity testing](https://homes.cs.washington.edu/~anuprao/pubs/cse431sp24/lecture15.pdf)," CSE 431, 2024 — lecture notes on arithmetic-circuit PIT and randomized complexity.
+[2] Zippel, “[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73),” EUROSAM, 1979. — Springer publication page
 
-- [SageMath: Quotients of Univariate Polynomial Rings](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_quotient_ring.html) — polynomial rings and quotient constructions.
+[3] Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7 (the algorithmic context of polynomial identity testing). — publisher’s book information
+
+[4] Anup Rao, "[Lecture 15: Error reduction, Schwartz-Zippel, Polynomial identity testing](https://homes.cs.washington.edu/~anuprao/pubs/cse431sp24/lecture15.pdf)," CSE 431, 2024 — lecture notes on arithmetic-circuit PIT and randomized complexity.
+
+[5] [SageMath: Quotients of Univariate Polynomial Rings](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_quotient_ring.html) — polynomial rings and quotient constructions.
 
 ## Suggested classroom questions
 

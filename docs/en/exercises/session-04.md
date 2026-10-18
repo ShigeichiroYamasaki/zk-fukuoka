@@ -270,6 +270,9 @@ The self-test exhausts all $8^4=4096$ declared inputs and compares the program a
 
 - [Session 4](../learn/session-04)
 - [Constraints](../learn/terms/constraints), [interpolation and divisibility](../learn/terms/polynomials), [execution traces](../learn/terms/execution-traces)
-- Gennaro et al., [Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — QAP background
-- Ben-Sasson et al., [Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — AIR/STARK background
-- Thaler, [Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — further reading on circuits and polynomial proof systems
+
+[1] Gennaro et al., [Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — QAP background
+
+[2] Ben-Sasson et al., [Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — AIR/STARK background
+
+[3] Thaler, [Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — further reading on circuits and polynomial proof systems

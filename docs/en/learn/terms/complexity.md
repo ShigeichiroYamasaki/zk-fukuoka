@@ -49,4 +49,4 @@ Each binary addition reduces the number of remaining values by one. Going from e
 
 ## Further reading
 
-[Arora and Barak, Computational Complexity (draft), Chapters 1, 2, 6](https://theory.cs.princeton.edu/complexity/book.pdf) — external material in English.
+[1] [Arora and Barak, Computational Complexity (draft), Chapters 1, 2, 6](https://theory.cs.princeton.edu/complexity/book.pdf) — external material in English.

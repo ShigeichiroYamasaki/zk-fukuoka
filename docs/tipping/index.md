@@ -97,12 +97,18 @@ $$
 
 ## 参考資料
 
-- [公的個人認証サービス（JPKI）とは](https://www.jpki.go.jp/jpkiguide/index.html)：電子証明書による本人確認・電子署名の公的説明．
-- [JPKI 電子証明書の説明](https://www.jpki.go.jp/prepare/digital_certificate.html)：署名用・利用者証明用電子証明書の役割．
-- [金融庁：電子決済手段等取引業・電子決済等取扱業](https://www.fsa.go.jp/common/shinsei/dendai/dentori.html)：ステーブルコイン関連の登録制度案内．
-- [金融庁：暗号資産・電子決済手段の移転に係るトラベルルール](https://www.fsa.go.jp/news/r6/sonota/20250625/04.pdf)：対象移転，通知事項，記録保存の概要．
-- [金融庁：マネー・ローンダリング等及び金融犯罪対策の取組と課題](https://www.fsa.go.jp/news/r6/20250627/01.pdf)：電子決済手段のリスクとAML/CFT上の論点．
-- [国税庁：暗号資産の寄附に関するFAQ](https://www.nta.go.jp/publication/pamph/pdf/virtual_currency_faq_03.pdf)：寄附時の評価・税務上の扱いの参考．投げ銭への適用は取引実態に応じて確認する．
-- [国税庁：「対価を得て行われる」の意義](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6113.htm)：役務の対価と無償供与の区別に関する説明．
+[1] [公的個人認証サービス（JPKI）とは](https://www.jpki.go.jp/jpkiguide/index.html)：電子証明書による本人確認・電子署名の公的説明．
+
+[2] [JPKI 電子証明書の説明](https://www.jpki.go.jp/prepare/digital_certificate.html)：署名用・利用者証明用電子証明書の役割．
+
+[3] [金融庁：電子決済手段等取引業・電子決済等取扱業](https://www.fsa.go.jp/common/shinsei/dendai/dentori.html)：ステーブルコイン関連の登録制度案内．
+
+[4] [金融庁：暗号資産・電子決済手段の移転に係るトラベルルール](https://www.fsa.go.jp/news/r6/sonota/20250625/04.pdf)：対象移転，通知事項，記録保存の概要．
+
+[5] [金融庁：マネー・ローンダリング等及び金融犯罪対策の取組と課題](https://www.fsa.go.jp/news/r6/20250627/01.pdf)：電子決済手段のリスクとAML/CFT上の論点．
+
+[6] [国税庁：暗号資産の寄附に関するFAQ](https://www.nta.go.jp/publication/pamph/pdf/virtual_currency_faq_03.pdf)：寄附時の評価・税務上の扱いの参考．投げ銭への適用は取引実態に応じて確認する．
+
+[7] [国税庁：「対価を得て行われる」の意義](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6113.htm)：役務の対価と無償供与の区別に関する説明．
 
 [応用編：ERC-20 ZK rollup](../rollup/) · [応用編：入力を隠したAI推論](../zkml/) · [演習](../exercises/)

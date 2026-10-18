@@ -163,5 +163,5 @@ Arithmetization replaces the input, intermediate values, and output of a circuit
 
 ## References
 
-- J. E. Hopcroft, R. Motwani, and J. D. Ullman, [Automata, Languages, and Computation I](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003) and [II](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003) (Japanese second-edition translation), Saiensu-Sha, 2003.
+[1] J. E. Hopcroft, R. Motwani, and J. D. Ullman, [Automata, Languages, and Computation I](https://saiensu.co.jp/search/?isbn=978-4-7819-1026-0&y=2003) and [II](https://saiensu.co.jp/search/?isbn=978-4-7819-1027-7&y=2003) (Japanese second-edition translation), Saiensu-Sha, 2003.
 - [Session 1: What Is a Proof?](./session-01) · [Session 4: Arithmetization and Complexity](./session-04) · [Session 10: PCP and IOP](./session-10)

@@ -234,6 +234,6 @@ $$\bigl(f(r_1),f(r_2),\ldots,f(r_n)\bigr)$$
 
 ## 参考文献
 
-- Rudolf Lidl, Harald Niederreiter, *Finite Fields*, 2nd edition, Cambridge University Press. [出版社の書籍情報と目次](https://www.cambridge.org/core/books/finite-fields/75BDAA74ABAE713196E718392B9E5E72)には，代数的基礎，有限体の構造，有限体上の多項式などが掲載されている．本ページでは，体と多項式環，既約多項式による有限体の構成，有限体拡大とFrobenius自己同型という体系を参照しつつ，本授業に必要な項目を独自の説明と例で再構成した．
+[1] Rudolf Lidl, Harald Niederreiter, *Finite Fields*, 2nd edition, Cambridge University Press. [出版社の書籍情報と目次](https://www.cambridge.org/core/books/finite-fields/75BDAA74ABAE713196E718392B9E5E72)には，代数的基礎，有限体の構造，有限体上の多項式などが掲載されている．本ページでは，体と多項式環，既約多項式による有限体の構成，有限体拡大とFrobenius自己同型という体系を参照しつつ，本授業に必要な項目を独自の説明と例で再構成した．
 - [第3回：有限体・多項式と確率的検査](./session-03)
 - [第4回：QAPのチュートリアル](./qap)

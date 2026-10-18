@@ -288,6 +288,9 @@ ruby balance_arithmetization.rb --self-test
 
 - [第4回：算術化の技法と計算量理論](../learn/session-04)
 - [制約・割当・充足可能性](../learn/terms/constraints)，[補間と多項式の整除性](../learn/terms/polynomials)，[実行トレース](../learn/terms/execution-traces)
-- Gennaro et al., [Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — QAPの背景
-- Ben-Sasson et al., [Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — AIRとSTARKの背景
-- Thaler, [Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — 回路への変換と多項式による証明の発展読書
+
+[1] Gennaro et al., [Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — QAPの背景
+
+[2] Ben-Sasson et al., [Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046) — AIRとSTARKの背景
+
+[3] Thaler, [Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — 回路への変換と多項式による証明の発展読書

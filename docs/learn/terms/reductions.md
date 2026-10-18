@@ -49,4 +49,4 @@ AからBへ帰着できるとき，Aを解く高速な方法だけでBも解け�
 
 ## 参考資料
 
-[Cook, The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Cook, The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．

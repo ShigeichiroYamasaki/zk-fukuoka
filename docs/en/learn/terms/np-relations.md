@@ -48,4 +48,4 @@ No. Enforce $t=w^2$ and $tw+w+5=35$. Both the intermediate computation and its c
 
 ## Further reading
 
-[Thaler, Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — external material in English.
+[1] [Thaler, Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — external material in English.

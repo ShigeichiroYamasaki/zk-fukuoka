@@ -119,10 +119,14 @@ Adopting ZK does not remove obligations under applicable privacy laws, including
 
 ## References
 
-- [IPA: October 2026 alert on data breaches](https://www.ipa.go.jp/security/security-alert/2026/alert20261009.html): includes reviewing stored information and avoiding unnecessary data.
-- [IPA: Ransomware guidance](https://www.ipa.go.jp/security/anshin/measures/ransom_tokusetsu.html): organizational ransomware countermeasures.
-- [NIST CSRC: Data minimization](https://csrc.nist.gov/glossary/term/minimization): limiting personal-data processing to what is necessary for a purpose.
-- [NIST SP 800-63-4: Privacy](https://pages.nist.gov/800-63-4/sp800-63c/privacy/): privacy-preserving approaches that disclose only needed attributes.
-- [Japan PPC: breach response resources](https://www.ppc.go.jp/personalinfo/legal/leakAction/): information on responses and reporting after personal-data breaches.
+[1] [IPA: October 2026 alert on data breaches](https://www.ipa.go.jp/security/security-alert/2026/alert20261009.html): includes reviewing stored information and avoiding unnecessary data.
+
+[2] [IPA: Ransomware guidance](https://www.ipa.go.jp/security/anshin/measures/ransom_tokusetsu.html): organizational ransomware countermeasures.
+
+[3] [NIST CSRC: Data minimization](https://csrc.nist.gov/glossary/term/minimization): limiting personal-data processing to what is necessary for a purpose.
+
+[4] [NIST SP 800-63-4: Privacy](https://pages.nist.gov/800-63-4/sp800-63c/privacy/): privacy-preserving approaches that disclose only needed attributes.
+
+[5] [Japan PPC: breach response resources](https://www.ppc.go.jp/personalinfo/legal/leakAction/): information on responses and reporting after personal-data breaches.
 
 [ERC-20 ZK rollup](../rollup/) · [ZKML](../zkml/) · [Exercises](../exercises/)

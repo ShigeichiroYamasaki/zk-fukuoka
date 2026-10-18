@@ -228,9 +228,11 @@ Next time (Session 13), we study STARK. We will examine how a construction pursu
 
 ## References and further reading
 
-- Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019 (the original paper; public PDF available).
-- Bünz, Fisch, Szepieniec, [“Transparent SNARKs from DARK Compilers,”](https://eprint.iacr.org/2019/1229) EUROCRYPT 2020 (further reading on transparent setup and polynomial IOPs; the linked revision includes a corrected security proof, with a public PDF).
-- Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) technical blog post (comparing PLONKish arithmetization with AIR; title follows the published article).
+[1] Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019 (the original paper; public PDF available).
+
+[2] Bünz, Fisch, Szepieniec, [“Transparent SNARKs from DARK Compilers,”](https://eprint.iacr.org/2019/1229) EUROCRYPT 2020 (further reading on transparent setup and polynomial IOPs; the linked revision includes a corrected security proof, with a public PDF).
+
+[3] Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) technical blog post (comparing PLONKish arithmetization with AIR; title follows the published article).
 
 ## Suggested classroom questions
 

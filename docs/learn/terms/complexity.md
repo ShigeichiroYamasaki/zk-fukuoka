@@ -49,4 +49,4 @@ $n^2$ や $n^5$ のように，固定次数の多項式で実行時間を上か�
 
 ## 参考資料
 
-[Arora and Barak, Computational Complexity (draft), Chapters 1, 2, 6](https://theory.cs.princeton.edu/complexity/book.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Arora and Barak, Computational Complexity (draft), Chapters 1, 2, 6](https://theory.cs.princeton.edu/complexity/book.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．

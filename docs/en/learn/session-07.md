@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 7, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Session 7 exercises](../exercises/session-07)
 
@@ -302,10 +302,13 @@ In Session 8, we will study polynomial commitments: committing to a polynomial a
 
 ## References and further reading
 
-- Silverman, [*The Arithmetic of Elliptic Curves*](https://link.springer.com/book/10.1007/978-0-387-09494-6) — a standard textbook on elliptic curves; publisher's page for the second edition.
-- Boneh and Franklin, [“Identity-Based Encryption from the Weil Pairing,” CRYPTO 2001](https://www.iacr.org/archive/crypto2001/21390212.pdf) — a classic starting point for cryptographic applications of pairings; public conference-version PDF. [Author's publication page and 2003 full version](https://crypto.stanford.edu/~dabo/pubs/abstracts/bfibe.html).
-- Barreto and Naehrig, [“Pairing-Friendly Elliptic Curves of Prime Order,” SAC 2005](https://eprint.iacr.org/2005/133) — public IACR ePrint version with PDF; the conference proceedings were published in 2006.
-- Katz and Lindell, [*Introduction to Modern Cryptography*](https://www.cs.umd.edu/~jkatz/imc.html) — textbook treatment of reduction-based security; author's book page, contents, and errata. The supplied manuscript specifies Chapter 11; check the contents of the edition you are using.
+[1] Silverman, [*The Arithmetic of Elliptic Curves*](https://link.springer.com/book/10.1007/978-0-387-09494-6) — a standard textbook on elliptic curves; publisher's page for the second edition.
+
+[2] Boneh and Franklin, [“Identity-Based Encryption from the Weil Pairing,” CRYPTO 2001](https://www.iacr.org/archive/crypto2001/21390212.pdf) — a classic starting point for cryptographic applications of pairings; public conference-version PDF. [Author's publication page and 2003 full version](https://crypto.stanford.edu/~dabo/pubs/abstracts/bfibe.html).
+
+[3] Barreto and Naehrig, [“Pairing-Friendly Elliptic Curves of Prime Order,” SAC 2005](https://eprint.iacr.org/2005/133) — public IACR ePrint version with PDF; the conference proceedings were published in 2006.
+
+[4] Katz and Lindell, [*Introduction to Modern Cryptography*](https://www.cs.umd.edu/~jkatz/imc.html) — textbook treatment of reduction-based security; author's book page, contents, and errata. The supplied manuscript specifies Chapter 11; check the contents of the edition you are using.
 
 ## Suggested discussion questions
 

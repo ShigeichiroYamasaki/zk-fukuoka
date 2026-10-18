@@ -16,7 +16,7 @@ import ArithmetizationOverview from "../../.vitepress/theme/ArithmetizationOverv
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 14, 2026
+Last updated: October 18, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 4 in the syllabus](./#session-4) · [Session 4 exercises](../exercises/session-04)
 
@@ -407,9 +407,11 @@ In Session 5, we examine how to treat these polynomial representations as codes 
 
 ## References and further reading
 
-- Cook, “[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf),” STOC 1971 — author-hosted PDF.
-- Gennaro, Gentry, Parno, Raykova, “[Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215),” EUROCRYPT 2013 (the original QAP paper) — public IACR ePrint version, 2012/215; [PDF](https://eprint.iacr.org/2012/215.pdf).
-- Ben-Sasson et al., “[Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046),” 2018 (a systematic formulation of AIR) — IACR ePrint; [PDF](https://eprint.iacr.org/2018/046.pdf).
+[1] Cook, “[The Complexity of Theorem-Proving Procedures](https://www.cs.utoronto.ca/~sacook/homepage/1971.pdf),” STOC 1971 — author-hosted PDF.
+
+[2] Gennaro, Gentry, Parno, Raykova, “[Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215),” EUROCRYPT 2013 (the original QAP paper) — public IACR ePrint version, 2012/215; [PDF](https://eprint.iacr.org/2012/215.pdf).
+
+[3] Ben-Sasson et al., “[Scalable, transparent, and post-quantum secure computational integrity](https://eprint.iacr.org/2018/046),” 2018 (a systematic formulation of AIR) — IACR ePrint; [PDF](https://eprint.iacr.org/2018/046.pdf).
 
 ## Suggested classroom questions
 

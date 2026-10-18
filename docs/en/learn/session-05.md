@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 11, 2026
+Last updated: October 18, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 5 in the syllabus](./#session-5) · [Session 5 exercises](../exercises/session-05)
 
@@ -299,12 +299,15 @@ In Session 6, we will study FRI as a concrete technique for low-degree testing. 
 
 ## References and further reading
 
-- MacWilliams and Sloane, [*The Theory of Error-Correcting Codes*](https://neilsloane.com/doc/ms77.html) — a standard coding-theory textbook; author's book information and errata.
-- Guruswami and Sudan, [“Improved Decoding of Reed-Solomon and Algebraic-Geometric Codes,” 1999](https://www.cs.cmu.edu/~venkatg/pubs/papers.html) — foundations of RS list decoding; the author's publication list links the full version in PostScript format. [Public PDF of the conference version](https://people.csail.mit.edu/madhu/papers/1998/gs.pdf).
-- Shannon, [“A Mathematical Theory of Communication,” 1948](https://www.cs.yale.edu/homes/yry/readings/general/shannon1948.pdf) — the original paper underlying the Shannon limit; public PDF hosted by Yale University.
+[1] MacWilliams and Sloane, [*The Theory of Error-Correcting Codes*](https://neilsloane.com/doc/ms77.html) — a standard coding-theory textbook; author's book information and errata.
 
-- Venkatesan Guruswami, [Introduction to Coding Theory — course notes](https://www.cs.cmu.edu/~venkatg/teaching/codingtheory/) — distance, bounds, and RS decoding.
-- [RS list decoding lecture notes](https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/RS-list-decoding.pdf) — Johnson radius and list decoding.
+[2] Guruswami and Sudan, [“Improved Decoding of Reed-Solomon and Algebraic-Geometric Codes,” 1999](https://www.cs.cmu.edu/~venkatg/pubs/papers.html) — foundations of RS list decoding; the author's publication list links the full version in PostScript format. [Public PDF of the conference version](https://people.csail.mit.edu/madhu/papers/1998/gs.pdf).
+
+[3] Shannon, [“A Mathematical Theory of Communication,” 1948](https://www.cs.yale.edu/homes/yry/readings/general/shannon1948.pdf) — the original paper underlying the Shannon limit; public PDF hosted by Yale University.
+
+[4] Venkatesan Guruswami, [Introduction to Coding Theory — course notes](https://www.cs.cmu.edu/~venkatg/teaching/codingtheory/) — distance, bounds, and RS decoding.
+
+[5] [RS list decoding lecture notes](https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/RS-list-decoding.pdf) — Johnson radius and list decoding.
 
 ## Suggested discussion questions
 

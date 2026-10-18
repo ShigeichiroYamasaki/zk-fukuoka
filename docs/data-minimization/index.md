@@ -119,10 +119,14 @@ end
 
 ## 参考資料
 
-- [IPA：不正アクセスによる漏えい等の事案を踏まえた注意喚起（2026年10月）](https://www.ipa.go.jp/security/security-alert/2026/alert20261009.html)：不要な情報を持たず，保有情報を必要最小限に見直すことを含む対策．
-- [IPA：ランサムウェア対策特設ページ](https://www.ipa.go.jp/security/anshin/measures/ransom_tokusetsu.html)：組織におけるランサムウェア対策の基本情報．
-- [NIST CSRC：Data minimization](https://csrc.nist.gov/glossary/term/minimization)：目的に必要な範囲に個人情報の収集・利用・保管・開示を限る考え方．
-- [NIST SP 800-63-4：Privacy](https://pages.nist.gov/800-63-4/sp800-63c/privacy/)：属性全体ではなく，必要な条件だけを共有するプライバシー配慮型の設計．
-- [個人情報保護委員会：漏えい等の対応とお役立ち資料](https://www.ppc.go.jp/personalinfo/legal/leakAction/)：漏えい等が発生した場合の報告・対応に関する情報．
+[1] [IPA：不正アクセスによる漏えい等の事案を踏まえた注意喚起（2026年10月）](https://www.ipa.go.jp/security/security-alert/2026/alert20261009.html)：不要な情報を持たず，保有情報を必要最小限に見直すことを含む対策．
+
+[2] [IPA：ランサムウェア対策特設ページ](https://www.ipa.go.jp/security/anshin/measures/ransom_tokusetsu.html)：組織におけるランサムウェア対策の基本情報．
+
+[3] [NIST CSRC：Data minimization](https://csrc.nist.gov/glossary/term/minimization)：目的に必要な範囲に個人情報の収集・利用・保管・開示を限る考え方．
+
+[4] [NIST SP 800-63-4：Privacy](https://pages.nist.gov/800-63-4/sp800-63c/privacy/)：属性全体ではなく，必要な条件だけを共有するプライバシー配慮型の設計．
+
+[5] [個人情報保護委員会：漏えい等の対応とお役立ち資料](https://www.ppc.go.jp/personalinfo/legal/leakAction/)：漏えい等が発生した場合の報告・対応に関する情報．
 
 [ERC-20 ZK rollup](../rollup/) · [ZKML](../zkml/) · [演習トップ](../exercises/)

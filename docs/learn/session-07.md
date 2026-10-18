@@ -16,7 +16,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月7日
+最終更新日付：2026年10月18日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第7回](./#session-7) · [第7回の演習](../exercises/session-07)
 
@@ -308,10 +308,13 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\,
 
 ## 参考文献・発展読書
 
-- Silverman, [*The Arithmetic of Elliptic Curves*](https://link.springer.com/book/10.1007/978-0-387-09494-6)（楕円曲線論の標準的教科書．第2版・出版社の書籍案内）
-- Boneh, Franklin, [“Identity-Based Encryption from the Weil Pairing,” CRYPTO 2001](https://www.iacr.org/archive/crypto2001/21390212.pdf)（ペアリングの暗号応用の古典的な出発点．会議版の公開PDF．[著者の論文案内・2003年の完全版](https://crypto.stanford.edu/~dabo/pubs/abstracts/bfibe.html)）
-- Barreto, Naehrig, [“Pairing-Friendly Elliptic Curves of Prime Order,” SAC 2005](https://eprint.iacr.org/2005/133)（IACR ePrintの公開版・PDFあり．会議録の刊行年は2006年）
-- Katz, Lindell, [*Introduction to Modern Cryptography*](https://www.cs.umd.edu/~jkatz/imc.html)（還元証明の考え方の教科書的整理．著者の書籍案内・目次・正誤表．原稿ではChapter 11を指定していますが，参照時には使用する版の目次を確認してください）
+[1] Silverman, [*The Arithmetic of Elliptic Curves*](https://link.springer.com/book/10.1007/978-0-387-09494-6)（楕円曲線論の標準的教科書．第2版・出版社の書籍案内）
+
+[2] Boneh, Franklin, [“Identity-Based Encryption from the Weil Pairing,” CRYPTO 2001](https://www.iacr.org/archive/crypto2001/21390212.pdf)（ペアリングの暗号応用の古典的な出発点．会議版の公開PDF．[著者の論文案内・2003年の完全版](https://crypto.stanford.edu/~dabo/pubs/abstracts/bfibe.html)）
+
+[3] Barreto, Naehrig, [“Pairing-Friendly Elliptic Curves of Prime Order,” SAC 2005](https://eprint.iacr.org/2005/133)（IACR ePrintの公開版・PDFあり．会議録の刊行年は2006年）
+
+[4] Katz, Lindell, [*Introduction to Modern Cryptography*](https://www.cs.umd.edu/~jkatz/imc.html)（還元証明の考え方の教科書的整理．著者の書籍案内・目次・正誤表．原稿ではChapter 11を指定していますが，参照時には使用する版の目次を確認してください）
 
 ## 講義中に使える発問例
 

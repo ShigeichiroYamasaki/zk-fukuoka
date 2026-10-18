@@ -16,7 +16,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月11日
+最終更新日付：2026年10月18日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第5回](./#session-5) · [第5回の演習](../exercises/session-05)
 
@@ -299,12 +299,15 @@ $$E=(X-1)(X-4)=X^2+2X+4,\qquad Q=X^4+4X^3+2X^2+3X+4$$
 
 ## 参考文献・発展読書
 
-- MacWilliams, Sloane, [*The Theory of Error-Correcting Codes*](https://neilsloane.com/doc/ms77.html)（符号理論の標準的教科書．著者の書籍案内・正誤表）
-- Guruswami, Sudan, [“Improved Decoding of Reed-Solomon and Algebraic-Geometric Codes,” 1999](https://www.cs.cmu.edu/~venkatg/pubs/papers.html)（RS符号のリスト復号の基礎．著者の論文一覧に Full Version あり〔PostScript形式〕．[公開PDF・会議版](https://people.csail.mit.edu/madhu/papers/1998/gs.pdf)）
-- Shannon, [“A Mathematical Theory of Communication,” 1948](https://www.cs.yale.edu/homes/yry/readings/general/shannon1948.pdf)（Shannon限界の原論文．公開PDF・Yale大学掲載）
+[1] MacWilliams, Sloane, [*The Theory of Error-Correcting Codes*](https://neilsloane.com/doc/ms77.html)（符号理論の標準的教科書．著者の書籍案内・正誤表）
 
-- Venkatesan Guruswami, [Introduction to Coding Theory — course notes](https://www.cs.cmu.edu/~venkatg/teaching/codingtheory/) — 符号の距離・限界・RS復号の数学的解説．
-- [RS符号のリスト復号・講義ノート](https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/RS-list-decoding.pdf) — Johnson半径とリスト復号．
+[2] Guruswami, Sudan, [“Improved Decoding of Reed-Solomon and Algebraic-Geometric Codes,” 1999](https://www.cs.cmu.edu/~venkatg/pubs/papers.html)（RS符号のリスト復号の基礎．著者の論文一覧に Full Version あり〔PostScript形式〕．[公開PDF・会議版](https://people.csail.mit.edu/madhu/papers/1998/gs.pdf)）
+
+[3] Shannon, [“A Mathematical Theory of Communication,” 1948](https://www.cs.yale.edu/homes/yry/readings/general/shannon1948.pdf)（Shannon限界の原論文．公開PDF・Yale大学掲載）
+
+[4] Venkatesan Guruswami, [Introduction to Coding Theory — course notes](https://www.cs.cmu.edu/~venkatg/teaching/codingtheory/) — 符号の距離・限界・RS復号の数学的解説．
+
+[5] [RS符号のリスト復号・講義ノート](https://www.cs.cmu.edu/~venkatg/teaching/au18-coding-theory/lec-scribes/RS-list-decoding.pdf) — Johnson半径とリスト復号．
 
 ## 講義中に使える発問例
 

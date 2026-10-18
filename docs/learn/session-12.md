@@ -228,9 +228,11 @@ SRSを共有しても，回路への拘束はなくならない
 
 ## 参考文献・発展読書
 
-- Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019(原論文，公開PDFあり)
-- Bünz, Fisch, Szepieniec, [“Transparent SNARKs from DARK Compilers,”](https://eprint.iacr.org/2019/1229) EUROCRYPT 2020(透明なセットアップと多項式IOPに関連する発展的な構成．リンク先は安全性証明の修正を含む改訂版，公開PDFあり)
-- Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) 技術ブログ記事(PLONKishな算術化とAIRの比較．公開先の正式題名を記載)
+[1] Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019(原論文，公開PDFあり)
+
+[2] Bünz, Fisch, Szepieniec, [“Transparent SNARKs from DARK Compilers,”](https://eprint.iacr.org/2019/1229) EUROCRYPT 2020(透明なセットアップと多項式IOPに関連する発展的な構成．リンク先は安全性証明の修正を含む改訂版，公開PDFあり)
+
+[3] Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) 技術ブログ記事(PLONKishな算術化とAIRの比較．公開先の正式題名を記載)
 
 ## 講義中に使える発問例
 

@@ -240,15 +240,21 @@ CGHの反例に加え，Goldwasser–Kalaiは，[安全な3ラウンドの公開
 
 ## 参考文献・発展読書
 
-- Fiat, Shamir, [“How to Prove Yourself: Practical Solutions to Identification and Signature Problems,” CRYPTO 1986](https://link.springer.com/chapter/10.1007/3-540-47721-7_12)（原論文．出版社の論文ページ．会議録の刊行年は1987年）
-- Bellare, Rogaway, [“Random Oracles are Practical: A Paradigm for Designing Efficient Protocols,” CCS 1993](https://web.cs.ucdavis.edu/~rogaway/papers/ro-abstract.html)（ROMの定式化．著者の論文案内・本文へのリンクあり）
-- Canetti, Goldreich, Halevi, [“The Random Oracle Methodology, Revisited,” JACM 2004](https://eprint.iacr.org/1998/011)（ROMの限界を示した反例．IACR ePrintの公開版・PDFあり．初期版は1998年）
-- Pointcheval, Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003)（forking lemmaの整理された定式化．出版社の論文ページ．[第6回](./session-06)の内容の再確認）
+[1] Fiat, Shamir, [“How to Prove Yourself: Practical Solutions to Identification and Signature Problems,” CRYPTO 1986](https://link.springer.com/chapter/10.1007/3-540-47721-7_12)（原論文．出版社の論文ページ．会議録の刊行年は1987年）
 
-- Goldwasser, Sipser, [“Private Coins versus Public Coins in Interactive Proof Systems,” STOC 1986](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf)
-- Goldreich, Oren, [“Definitions and Properties of Zero-Knowledge Proof Systems,” Journal of Cryptology 1994](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf)
-- Goldwasser, Kalai, [“On the (In)security of the Fiat-Shamir Paradigm,” 2003](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html)
-- Wee, [“Zero Knowledge in the Random Oracle Model, Revisited,” ASIACRYPT 2009](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf)
+[2] Bellare, Rogaway, [“Random Oracles are Practical: A Paradigm for Designing Efficient Protocols,” CCS 1993](https://web.cs.ucdavis.edu/~rogaway/papers/ro-abstract.html)（ROMの定式化．著者の論文案内・本文へのリンクあり）
+
+[3] Canetti, Goldreich, Halevi, [“The Random Oracle Methodology, Revisited,” JACM 2004](https://eprint.iacr.org/1998/011)（ROMの限界を示した反例．IACR ePrintの公開版・PDFあり．初期版は1998年）
+
+[4] Pointcheval, Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003)（forking lemmaの整理された定式化．出版社の論文ページ．[第6回](./session-06)の内容の再確認）
+
+[5] Goldwasser, Sipser, [“Private Coins versus Public Coins in Interactive Proof Systems,” STOC 1986](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf)
+
+[6] Goldreich, Oren, [“Definitions and Properties of Zero-Knowledge Proof Systems,” Journal of Cryptology 1994](https://www.wisdom.weizmann.ac.il/~oded/PSX/oren.pdf)
+
+[7] Goldwasser, Kalai, [“On the (In)security of the Fiat-Shamir Paradigm,” 2003](https://eccc.weizmann.ac.il/eccc-reports/2003/TR03-015/index.html)
+
+[8] Wee, [“Zero Knowledge in the Random Oracle Model, Revisited,” ASIACRYPT 2009](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf)
 
 ## 講義中に使える発問例
 

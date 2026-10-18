@@ -97,12 +97,18 @@ FSA materials describe stablecoin transfers in connection with Travel Rule requi
 
 ## References
 
-- [JPKI: About the Public Personal Authentication Service](https://www.jpki.go.jp/jpkiguide/index.html): official explanation of identity verification and electronic signatures.
-- [JPKI electronic certificates](https://www.jpki.go.jp/prepare/digital_certificate.html): roles of signature and user-authentication certificates.
-- [FSA: Electronic Payment Instruments Service Providers](https://www.fsa.go.jp/common/shinsei/dendai/dentori.html): registration information for stablecoin-related businesses.
-- [FSA: Travel Rule for transfers of crypto-assets and electronic payment instruments](https://www.fsa.go.jp/news/r6/sonota/20250625/04.pdf): covered transfers, required notifications and records.
-- [FSA: AML/CFT and financial crime measures](https://www.fsa.go.jp/news/r6/20250627/01.pdf): risks and AML/CFT considerations for electronic payment instruments.
-- [NTA FAQ on donations of crypto-assets](https://www.nta.go.jp/publication/pamph/pdf/virtual_currency_faq_03.pdf): reference for valuation and tax treatment; application to tips depends on the transaction.
-- [NTA: Meaning of “for consideration”](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6113.htm): distinction between service consideration and gratuitous transfers.
+[1] [JPKI: About the Public Personal Authentication Service](https://www.jpki.go.jp/jpkiguide/index.html): official explanation of identity verification and electronic signatures.
+
+[2] [JPKI electronic certificates](https://www.jpki.go.jp/prepare/digital_certificate.html): roles of signature and user-authentication certificates.
+
+[3] [FSA: Electronic Payment Instruments Service Providers](https://www.fsa.go.jp/common/shinsei/dendai/dentori.html): registration information for stablecoin-related businesses.
+
+[4] [FSA: Travel Rule for transfers of crypto-assets and electronic payment instruments](https://www.fsa.go.jp/news/r6/sonota/20250625/04.pdf): covered transfers, required notifications and records.
+
+[5] [FSA: AML/CFT and financial crime measures](https://www.fsa.go.jp/news/r6/20250627/01.pdf): risks and AML/CFT considerations for electronic payment instruments.
+
+[6] [NTA FAQ on donations of crypto-assets](https://www.nta.go.jp/publication/pamph/pdf/virtual_currency_faq_03.pdf): reference for valuation and tax treatment; application to tips depends on the transaction.
+
+[7] [NTA: Meaning of “for consideration”](https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6113.htm): distinction between service consideration and gratuitous transfers.
 
 [ERC-20 ZK rollup](../rollup/) · [Private-input AI inference](../zkml/) · [Exercises](../exercises/)

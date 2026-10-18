@@ -46,4 +46,4 @@ Each of $a+b$, 1 and $c$ is a linear combination of the variable vector. Additio
 
 ## Further reading
 
-[Circom documentation source: Constraint Generation](https://github.com/iden3/circom/blob/master/mkdocs/docs/circom-language/constraint-generation.md) — external material in English.
+[1] [Circom documentation source: Constraint Generation](https://github.com/iden3/circom/blob/master/mkdocs/docs/circom-language/constraint-generation.md) — external material in English.

@@ -51,4 +51,4 @@ $x$ から複数のゲートへ配線が出ても，同じ値を使う．$t$ は
 
 ## 参考資料
 
-[Thaler, Chapter 6: Front Ends](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Thaler, Chapter 6: Front Ends](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．

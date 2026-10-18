@@ -211,9 +211,11 @@ STARKのコストはFRIの段階数だけでは決まらず，問い合わせ回
 
 ## 参考文献・発展読書
 
-- Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016(Groth16の構成・安全性・効率．公開PDFあり)
-- Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019(汎用・更新可能なSRS，算術化，permutation argument．公開PDFあり)
-- Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) 2018(STARKの透明性と符号理論的構成．公開PDFあり)
+[1] Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016(Groth16の構成・安全性・効率．公開PDFあり)
+
+[2] Gabizon, Williamson, Ciobotaru, [“PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge,”](https://eprint.iacr.org/2019/953) 2019(汎用・更新可能なSRS，算術化，permutation argument．公開PDFあり)
+
+[3] Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) 2018(STARKの透明性と符号理論的構成．公開PDFあり)
 
 [Groth16の実装と操作手順](../exercises/#groth16) · [PLONKの実装と操作手順](../exercises/#plonk) · [STARKの実装と操作手順](../exercises/#stark)
 

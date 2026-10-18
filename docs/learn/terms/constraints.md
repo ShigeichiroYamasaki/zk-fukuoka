@@ -48,4 +48,4 @@ $a+b$，1，$c$ はいずれも変数ベクトルの線形結合である．加�
 
 ## 参考資料
 
-[Circom documentation source: Constraint Generation](https://github.com/iden3/circom/blob/master/mkdocs/docs/circom-language/constraint-generation.md) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Circom documentation source: Constraint Generation](https://github.com/iden3/circom/blob/master/mkdocs/docs/circom-language/constraint-generation.md) — 英語の発展資料．まずこのページの例を確認してから読む．

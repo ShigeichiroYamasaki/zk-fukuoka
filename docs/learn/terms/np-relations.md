@@ -50,4 +50,4 @@ $$L_R=\{u\mid \exists w:\ R(u,w)=1\}$$
 
 ## 参考資料
 
-[Thaler, Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．
+[1] [Thaler, Proofs, Arguments, and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) — 英語の発展資料．まずこのページの例を確認してから読む．

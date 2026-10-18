@@ -50,4 +50,4 @@ Yes if both have degree below two. Without that bound, $P$ and $P+Z_D$ agree the
 
 ## Further reading
 
-[Gennaro et al., Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — external material in English.
+[1] [Gennaro et al., Quadratic Span Programs and Succinct NIZKs without PCPs](https://eprint.iacr.org/2012/215) — external material in English.

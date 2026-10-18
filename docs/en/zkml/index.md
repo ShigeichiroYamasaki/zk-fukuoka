@@ -49,8 +49,10 @@ The model is a linear classifier trained on synthetic data, small enough to enum
 
 ## References
 
-- [Circom signals](https://docs.circom.io/circom-language/signals/): main outputs are public, so copying a secret to an output exposes it.
-- [snarkjs implementation and manual](https://github.com/iden3/snarkjs): setup, proving and verification.
-- [EZKL documentation](https://docs.ezkl.xyz/) and [repository](https://github.com/zkonduit/ezkl): an extension route using ONNX models, separate from this Circom implementation.
+[1] [Circom signals](https://docs.circom.io/circom-language/signals/): main outputs are public, so copying a secret to an output exposes it.
+
+[2] [snarkjs implementation and manual](https://github.com/iden3/snarkjs): setup, proving and verification.
+
+[3] [EZKL documentation](https://docs.ezkl.xyz/) and [repository](https://github.com/zkonduit/ezkl): an extension route using ONNX models, separate from this Circom implementation.
 
 [ERC-20 ZK rollup course](../rollup/) · [Exercises](../exercises/)

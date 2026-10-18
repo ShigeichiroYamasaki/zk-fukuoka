@@ -252,9 +252,11 @@ PLONKとSTARKは，IOPを実装して非対話化するという見取り図で�
 
 ## 参考文献・発展読書
 
-- Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) IACR ePrint 2018/046(STARKの基礎理論，公開PDFあり)
-- StarkWare, [“STARK Math” ブログシリーズの公式案内](https://starkware.co/stark/)(「STARK Blog Posts」から各回へ) / [“STARK Math – A Very Short Primer”](https://starkware.co/stark-math-a-very-short-primer/)(導入として読む短い概説)
-- Shor, [“Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer,”](https://arxiv.org/abs/quant-ph/9508027) SIAM Journal on Computing, 1997(ポスト量子安全性の議論の背景．リンク先は公開プレプリント，PDFあり)
+[1] Ben-Sasson, Bentov, Horesh, Riabzev, [“Scalable, transparent, and post-quantum secure computational integrity,”](https://eprint.iacr.org/2018/046) IACR ePrint 2018/046(STARKの基礎理論，公開PDFあり)
+
+[2] StarkWare, [“STARK Math” ブログシリーズの公式案内](https://starkware.co/stark/)(「STARK Blog Posts」から各回へ) / [“STARK Math – A Very Short Primer”](https://starkware.co/stark-math-a-very-short-primer/)(導入として読む短い概説)
+
+[3] Shor, [“Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer,”](https://arxiv.org/abs/quant-ph/9508027) SIAM Journal on Computing, 1997(ポスト量子安全性の議論の背景．リンク先は公開プレプリント，PDFあり)
 
 ## 講義中に使える発問例
 

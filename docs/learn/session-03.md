@@ -547,13 +547,15 @@ Schwartz-Zippel補題は誤りの上界を与える．計算量の結論を出�
 
 ## 参考文献・発展読書
 
-- Schwartz, "[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html)," JACM, 1980 — ACM SIGMOD の書誌・出版社リンク
-- Zippel, "[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73)," EUROSAM, 1979 — Springer 文献ページ
-- Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7(多項式恒等性検査のアルゴリズム論的位置づけ) — 出版社の書籍案内
+[1] Schwartz, "[Fast Probabilistic Algorithms for Verification of Polynomial Identities](https://www.sigmod.org/publications/dblp/db/journals/jacm/Schwartz80.html)," JACM, 1980 — ACM SIGMOD の書誌・出版社リンク
 
-- Anup Rao, "[Lecture 15: Error reduction, Schwartz-Zippel, Polynomial identity testing](https://homes.cs.washington.edu/~anuprao/pubs/cse431sp24/lecture15.pdf)," CSE 431, 2024 — 算術回路としてのPITと乱択計算量の講義ノート
+[2] Zippel, "[Probabilistic Algorithms for Sparse Polynomials](https://link.springer.com/chapter/10.1007/3-540-09519-5_73)," EUROSAM, 1979 — Springer 文献ページ
 
-- [SageMath: Quotients of Univariate Polynomial Rings](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_quotient_ring.html) — 多項式環と商環の構成例
+[3] Motwani, Raghavan, *[Randomized Algorithms](https://www.cambridge.org/core/books/randomized-algorithms/6A3E5CD760B0DDBA3794A100EE2843E8)*, Chapter 7(多項式恒等性検査のアルゴリズム論的位置づけ) — 出版社の書籍案内
+
+[4] Anup Rao, "[Lecture 15: Error reduction, Schwartz-Zippel, Polynomial identity testing](https://homes.cs.washington.edu/~anuprao/pubs/cse431sp24/lecture15.pdf)," CSE 431, 2024 — 算術回路としてのPITと乱択計算量の講義ノート
+
+[5] [SageMath: Quotients of Univariate Polynomial Rings](https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_quotient_ring.html) — 多項式環と商環の構成例
 
 ## 講義中に使える発問例
 

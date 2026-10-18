@@ -289,10 +289,13 @@ Next time, we question the remaining Assumption A. How should we define not givi
 
 ## References and further reading
 
-- Goldwasser, Micali, Rackoff, “[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012),” 1985 (1989 SIAM Journal on Computing version). — SIAM, 1989 version
-- Babai, “[Trading Group Theory for Randomness](https://doi.org/10.1145/22145.22192),” STOC 1985. — ACM publication page
-- Shamir, “[IP = PSPACE](https://weizmann.esploro.exlibrisgroup.com/esploro/outputs/journalArticle/IP--PSPACE/993265992703596),” Journal of the ACM, 1992. — bibliography and abstract at the author’s institution
-- Goldreich, *[Foundations of Cryptography, Volume 1: Basic Tools](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4 (a textbook introduction to interactive proofs). — author’s book information, contents, and errata
+[1] Goldwasser, Micali, Rackoff, “[The Knowledge Complexity of Interactive Proof Systems](https://epubs.siam.org/doi/10.1137/0218012),” 1985 (1989 SIAM Journal on Computing version). — SIAM, 1989 version
+
+[2] Babai, “[Trading Group Theory for Randomness](https://doi.org/10.1145/22145.22192),” STOC 1985. — ACM publication page
+
+[3] Shamir, “[IP = PSPACE](https://weizmann.esploro.exlibrisgroup.com/esploro/outputs/journalArticle/IP--PSPACE/993265992703596),” Journal of the ACM, 1992. — bibliography and abstract at the author’s institution
+
+[4] Goldreich, *[Foundations of Cryptography, Volume 1: Basic Tools](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4 (a textbook introduction to interactive proofs). — author’s book information, contents, and errata
 
 ## Suggested classroom questions
 

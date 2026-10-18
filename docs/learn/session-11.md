@@ -16,7 +16,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年10月11日
+最終更新日付：2026年10月18日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第11回](./#session-11) · [第11回の演習](../exercises/session-11)
 
@@ -200,9 +200,11 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\
 
 ## 参考文献・発展読書
 
-- Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016(原論文，公開PDFあり)
-- Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) 技術ブログ記事(Groth16とPLONKの算術化の比較の入門として．公開先の正式題名を記載)
-- Bowe, Gabizon, Miers, [“Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model,”](https://eprint.iacr.org/2017/1050) 2017(トラステッドセットアップのマルチパーティ生成，公開PDFあり)
+[1] Groth, [“On the Size of Pairing-based Non-interactive Arguments,”](https://eprint.iacr.org/2016/260) EUROCRYPT 2016(原論文，公開PDFあり)
+
+[2] Gabizon, [“From AIRs to RAPs - how PLONK-style arithmetization works,”](https://hackmd.io/@aztec-network/plonk-arithmetiization-air) 技術ブログ記事(Groth16とPLONKの算術化の比較の入門として．公開先の正式題名を記載)
+
+[3] Bowe, Gabizon, Miers, [“Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model,”](https://eprint.iacr.org/2017/1050) 2017(トラステッドセットアップのマルチパーティ生成，公開PDFあり)
 
 ## 講義中に使える発問例
 
