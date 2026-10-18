@@ -8,7 +8,7 @@ outline: [2, 3]
 
 Updated: September 27, 2026
 
-## Begin with the claim
+## Begin with the proposition
 
 Consider “I know $x$ such that $x^3+x+5=35$.” The value 35 is public; the prover holds $x$. Write the public input as $u$ and the witness as $w$ to avoid overloading $x$. A relation $R$ specifies which pairs are valid. Over a fixed field, let $R(u,w)=1$ mean $w^3+w+5=u$. In $\mathbb F_{101}$, $(35,3)$ is a valid pair.
 
@@ -24,7 +24,7 @@ The relation specifies valid pairs; the language specifies public inputs having 
 | --- | --- |
 | Search | Find $w$ from $u$ |
 | Check | Substitute a supplied pair into the equation |
-| Prove in zero knowledge | Use a protocol to establish the claim without directly sending $w$ |
+| Prove in zero knowledge | Use a protocol to establish the proposition without directly sending $w$ |
 
 Being in NP does not mean being hard. Defining an NP relation does not itself supply zero knowledge or knowledge soundness.
 
@@ -32,7 +32,7 @@ Being in NP does not mean being hard. Defining an NP relation does not itself su
 
 A circuit breaks the checker into operations. Constraints enforce consistency of their inputs and outputs. Intermediate values may become part of the implementation's witness. Public versus private values are chosen as part of the relation; variables are not automatically private.
 
-Field equations wrap modulo the field characteristic. An integer claim can therefore require additional range and overflow constraints: see [constraints](./constraints).
+Field equations wrap modulo the field characteristic. A proposition about integer arithmetic can therefore require additional range and overflow constraints: see [constraints](./constraints).
 
 ## Check your understanding
 

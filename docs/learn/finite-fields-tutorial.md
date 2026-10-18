@@ -2,11 +2,11 @@
 
 著者：山崎重一郎  
 作成日：2026年9月29日  
-最終更新日：2026年10月17日
+最終更新日：2026年10月18日
 
 [前提知識と補助教材](./foundations) · [第3回：有限体・多項式と確率的検査](./session-03) · [第4回：算術化](./session-04)
 
-このページでは，ゼロ知識証明（秘密情報を明かさずに言明を確かめる証明技術）の授業で使う有限体と多項式の考え方を，手計算できる例から順に整理する．Lidl–Niederreiterの *Finite Fields* における代数的基礎，有限体の構造，有限体上の多項式という流れを基本にしつつ，第3回の補間とSchwartz–Zippel補題，第4回のR1CS（Rank-1 Constraint System，ランク1制約系）とQAP（Quadratic Arithmetic Program，多項式で制約をまとめる表現），第5回のReed–Solomon符号，第6回のFRI（Fast Reed–Solomon Interactive Oracle of Proximity，低次数多項式への近さを検査する対話型プロトコル）を読むための道具に絞る．詳しい説明は各節で行う．
+このページでは，ゼロ知識証明（秘密情報を明かさずに命題の正しさを確かめる証明技術）の授業で使う有限体と多項式の考え方を，手計算できる例から順に整理する．Lidl–Niederreiterの *Finite Fields* における代数的基礎，有限体の構造，有限体上の多項式という流れを基本にしつつ，第3回の補間とSchwartz–Zippel補題，第4回のR1CS（Rank-1 Constraint System，ランク1制約系）とQAP（Quadratic Arithmetic Program，多項式で制約をまとめる表現），第5回のReed–Solomon符号，第6回のFRI（Fast Reed–Solomon Interactive Oracle of Proximity，低次数多項式への近さを検査する対話型プロトコル）を読むための道具に絞る．詳しい説明は各節で行う．
 
 全体の道筋は次のとおりである．
 

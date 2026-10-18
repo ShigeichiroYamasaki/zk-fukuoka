@@ -14,9 +14,9 @@ Use the following preferred Japanese terms throughout the project. Where helpful
 | English | Preferred Japanese | Usage |
 | --- | --- | --- |
 | proposition | 命題 | An object in logic or mathematics whose truth can be evaluated. |
-| assertion | 言明 | An act or expression of asserting content; do not conflate it with the proposition itself. |
+| assertion | 言明 | An act or expression of stating whether a proposition is true or false; do not conflate it with the proposition itself. |
 | claim | 主張 | A claim made in explanatory prose. Use proposition／命題 for a formal logical object. |
-| witness | ウィットネス | A value $w$ supplied to establish a statement such as a relation $R(x,w)$. Do not use 証人. |
+| witness | ウィットネス | A value $w$ supplied to establish that a proposition specified by a relation such as $R(x,w)$ is true. Do not use 証人. |
 | extractor | 抽出器 | An algorithm that extracts a witness from a prover's execution. Do not use 抽出者. |
 | knowledge extraction | 知識の抽出 | The property or process of extracting a witness with an extractor. |
 | knowledge soundness | 知識の健全性 | The property relating an accepted proof to knowledge of a witness. |

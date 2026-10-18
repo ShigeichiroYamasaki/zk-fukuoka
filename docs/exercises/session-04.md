@@ -30,7 +30,7 @@ import { withBase } from "vitepress";
 
 [応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル．
 
-## 1. まずプログラムと主張を固定する {#program}
+## 1. まずプログラムと証明対象の命題を固定する {#program}
 
 ### 入力と実行例
 

@@ -16,7 +16,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月27日<br>
-最終更新日付：2026年10月13日
+最終更新日付：2026年10月18日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第10回](./#session-10) · [第10回の演習](../exercises/session-10)
 
@@ -32,7 +32,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 
 ::: tip 前提知識とこの回の論点
-NPと言明・ウィットネス（[第1回](./session-01)），ランダムな検査（[第1回](./session-01)），多項式恒等式検査（[第3回](./session-03)）を前提にする．PCP記法の乱数量と問い合わせ量は，[確率論チュートリアル](./probability-tutorial)の確率的検査の見方と結び付けて読む．
+NPの命題・ウィットネス（[第1回](./session-01)），ランダムな検査（[第1回](./session-01)），多項式恒等式検査（[第3回](./session-03)）を前提にする．PCP記法の乱数量と問い合わせ量は，[確率論チュートリアル](./probability-tutorial)の確率的検査の見方と結び付けて読む．
 
 まずPCP定理で「長い証明から少数しか読まない」保証を確認し，近似困難性との接点を見てから，PCP・IP・IOPのアクセス方法を区別する．最後にIOPを，幕IIIのプロトコルを読むための設計図として使う．
 :::

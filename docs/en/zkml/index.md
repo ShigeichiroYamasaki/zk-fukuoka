@@ -40,7 +40,7 @@ Zero knowledge does not hide information implied by the public label, including 
 
 | Lecture | Application |
 | --- | --- |
-| [Session 2](../learn/session-02) | Public statements, private witnesses and zero knowledge |
+| [Session 2](../learn/session-02) | Propositions specified by public inputs, private witnesses and zero knowledge |
 | [Session 4](../learn/session-04) | Turning inference into R1CS |
 | [Session 7](../learn/session-07) and [Session 11](../learn/session-11) | Pairings and Groth16 |
 | [Session 15](../learn/session-15) | Prover costs for large computations |

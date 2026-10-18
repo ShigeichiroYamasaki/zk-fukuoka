@@ -129,7 +129,7 @@ Circomのサイトに接続できない場合は，[snarkjs公式README](https:/
 | 1 | 共通の回路とウィットネスを用意する | [共通準備](#circuits) | 公開入力とウィットネスの役割 |
 | 2 | Powers of Tauを準備し，Groth16の回路固有のセットアップを進める | [snarkjsの手順](https://github.com/iden3/snarkjs#readme)，[Circom証明チュートリアル](https://docs.circom.io/getting-started/proving-circuits/) | `.ptau`と回路に対応する`.zkey`の違い．公式手順の貢献・検証も行う |
 | 3 | 検証鍵を出力し，証明を生成する | [検証鍵の出力](https://github.com/iden3/snarkjs#22-export-the-verification-key)，[証明生成](https://github.com/iden3/snarkjs#23-create-the-proof) | 検証鍵，証明JSON，公開入力JSON |
-| 4 | 検証し，公開入力のコピーを変更して再検証する | [検証](https://github.com/iden3/snarkjs#24-verify-the-proof)のGroth16手順 | 元の組は受理，変更した主張は拒否されること |
+| 4 | 検証し，公開入力のコピーを変更して再検証する | [検証](https://github.com/iden3/snarkjs#24-verify-the-proof)のGroth16手順 | 元の組は受理し，改ざんした公開入力は拒否されること |
 
 **完了後の確認**：制約を変更したら，どの生成物を作り直す必要があるでしょうか．回路固有のセットアップを第11回と結びつけて説明します．ローカルで作るセットアップは学習用として扱います．
 
@@ -142,7 +142,7 @@ Circomのサイトに接続できない場合は，[snarkjs公式README](https:/
 | 1 | 回路の規模・曲線などに適合するPowers of Tauを用意する | [公式README](https://github.com/iden3/snarkjs#readme) | 第11回のSRSを再利用できる条件 |
 | 2 | `plonk setup`で回路に対応する鍵を生成する | [SetupのPLONK手順](https://github.com/iden3/snarkjs#15-setup) | 汎用SRSがあっても回路ごとの前処理は残る |
 | 3 | 検証鍵を出力し，証明生成・検証を行う | [検証鍵](https://github.com/iden3/snarkjs#22-export-the-verification-key)，[証明生成](https://github.com/iden3/snarkjs#23-create-the-proof)，[検証](https://github.com/iden3/snarkjs#24-verify-the-proof) | 各節でPLONKのコマンドを使う |
-| 4 | 公開入力を変更して再検証し，回路変更後の鍵も作り直す | 同じ公式手順で再実行 | 不正な主張の拒否と，SRS再利用・回路前処理の違い |
+| 4 | 公開入力を変更して再検証し，回路変更後の鍵も作り直す | 同じ公式手順で再実行 | 不正な公開入力の拒否と，SRS再利用・回路前処理の違い |
 
 Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめないようにします．[gnark・Dusk PLONKの操作案内](./#plonk)は，GoやRustで実装を読む場合の選択肢です．CircomのR1CSを入力する経路と，PLONKishなゲート・コピー制約を直接記述する経路も区別しましょう．
 

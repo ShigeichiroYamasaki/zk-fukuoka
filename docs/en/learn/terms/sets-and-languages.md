@@ -31,7 +31,7 @@ In complexity theory, a **language** is a set of strings $L\subseteq\Sigma^*$, n
 
 $$x\in L$$
 
-means “input x is a Yes instance,” or “the claim about x is true.” $x\notin L$ describes a No instance.
+means “input x is a Yes instance,” or “the proposition that x belongs to L is true.” $x\notin L$ describes a No instance.
 
 For example, let L contain binary representations of even nonnegative integers. Then `1100` belongs to L, while `1101` does not. **Acceptance by a verifier does not make an input a member of L.** The problem defines the set beforehand.
 

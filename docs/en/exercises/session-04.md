@@ -30,7 +30,7 @@ The sections below provide the derivations, counterexamples, and runnable Ruby c
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
-## 1. Fix the program and claim {#program}
+## 1. Fix the program and proposition to be proved {#program}
 
 ### Inputs and execution
 

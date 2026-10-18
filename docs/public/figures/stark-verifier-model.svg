@@ -72,7 +72,7 @@
 <line x1="936.0" y1="56" x2="936.0" y2="422" class="grid"/>
 <text x="936.0" y="445" class="small" text-anchor="middle">2^24</text>
 <text x="746.0" y="475" class="label" text-anchor="middle">Trace length n (log₂) / トレース長 n (log₂)</text>
-<text x="497" y="239.0" class="label" text-anchor="middle" transform="rotate(-90 497 239.0)">FRI fold checks / FRI折り畳み検査数</text>
+<text x="497" y="239.0" class="label" text-anchor="middle" transform="rotate(-90 497 239.0)">FRI fold checks / FRIフォールディング検査数</text>
 <polyline class="line" stroke="#00796b" points="556.0,330.5 610.3,293.9 664.6,257.3 718.9,220.7 773.1,184.1 827.4,147.5 881.7,110.9 936.0,74.3"/>
 <circle class="dot" fill="#00796b" cx="556.0" cy="330.5" r="5"/>
 <circle class="dot" fill="#00796b" cx="610.3" cy="293.9" r="5"/>

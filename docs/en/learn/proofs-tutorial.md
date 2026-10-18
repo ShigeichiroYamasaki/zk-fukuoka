@@ -2,27 +2,27 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 17, 2026
+Last updated: October 18, 2026
 
 This tutorial introduces the logic and proof techniques needed to follow the zero-knowledge (ZK) course. It proceeds from statements and conditionals to quantifiers and proof methods. The goal is to help readers interpret phrases such as “there exists a witness” and “the probability that a false proof is accepted.” A **witness** is the concrete information that makes a statement true; for example, a satisfying assignment is a witness that a Boolean circuit can output 1. The next sections define this idea using relations and languages.
 
 The structure and examples here were written specifically for this site. For a broader systematic treatment, see Richard H. Hammack’s open textbook [Book of Proof](https://richardhammack.github.io/BookOfProof/).
 
-## 1. Statements and truth values
+## 1. Propositions and asserting them
 
-A **statement** is a sentence that is either true or false. “7 is prime” is a true statement; “9 is prime” is false. By contrast, “$n$ is prime” has no truth value until the value of $n$ is specified. It is a predicate containing a variable; specifying the domain and value turns it into a statement.
+A **proposition** is logical or mathematical content that has a truth value. The content “7 is prime” is a true proposition; “9 is prime” is false. By contrast, “$n$ is prime” has no truth value until the value of $n$ is specified. It is a predicate containing a variable; specifying the domain and value turns it into a proposition. An **assertion** is the act of stating whether a proposition is true or false, or the utterance or text expressing that act. A proposition is the content being evaluated; an assertion is what someone does with that content. Cryptography texts often use *statement* for the proposition to be proved (or the public input that specifies it); this page calls that object a proposition.
 
-In a zero-knowledge proof, we first specify the statement to be proved. For a public input $u$, “there exists a witness $w$ satisfying condition $R(u,w)$” is written
+In a zero-knowledge proof, we first specify the proposition to be proved. For a public input $u$, “there exists a witness $w$ satisfying condition $R(u,w)$” is written
 
 $$
 \exists w\;R(u,w)=1.
 $$
 
-Here $R$ is a relation (a check): it returns $1$ when the pair $(u,w)$ satisfies the condition and $0$ otherwise. The value $u$ is public information, while $w$ is the information that makes the statement hold.
+Here $R$ is a relation (a check): it returns $1$ when the pair $(u,w)$ satisfies the condition and $0$ otherwise. The value $u$ is public information, while $w$ is information showing that the proposition holds. The prover asserts that the proposition is true, and the verifier checks a proof.
 
 ## 2. Logical connectives and conditionals
 
-Statements $P$ and $Q$ can be combined as follows.
+Propositions $P$ and $Q$ can be combined as follows.
 
 | Symbol | Reading | True when |
 | --- | --- | --- |
@@ -58,7 +58,7 @@ Thus, the negation of “it holds for every candidate” is “there is a candid
 
 ### NP relations and witnesses
 
-NP (nondeterministic polynomial time) is the class of problems whose yes-instances have short candidate information that can be checked in polynomial time. An NP statement is often expressed as the existence of a witness satisfying a check. If a language $L$ is the set of accepted inputs, then
+NP (nondeterministic polynomial time) is the class of problems whose yes-instances have short candidate information that can be checked in polynomial time. An NP proposition is often expressed as the existence of a witness satisfying a check. If a language $L$ is the set of accepted inputs, then
 
 $$
 u\in L\quad\Longleftrightarrow\quad \exists w\;R(u,w)=1.

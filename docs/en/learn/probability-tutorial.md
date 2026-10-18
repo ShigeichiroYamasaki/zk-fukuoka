@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 17, 2026
+Last updated: October 18, 2026
 
 Understanding a zero-knowledge proof (a way to check a statement without revealing the secret information behind it) requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a procedure that tries to tell two probability distributions apart (a distinguisher) is evaluated by comparing its output probabilities, both theoretically and through sample experiments. This leads to comparing the verifier’s record of a real interaction with a record generated without the secret information. The final sections apply these ideas to randomized checks and to limiting the chance that a false statement is accepted.
 
@@ -10,13 +10,15 @@ The explanations and examples are original to this site. For systematic study of
 
 ### Proof terminology used on this page
 
-Before turning to probability, here are the proof-related terms used later. A **statement** is a sentence that can be true or false; “91 is composite” is an example. The number 7 lets us check that statement because it divides 91. In cryptography, private information that can be used to verify a statement is called a **witness**. The witness is information separate from the statement itself.
+Before turning to probability, here are the proof-related terms used later. A **proposition** is content that has a truth value: it is either true or false. “91 is composite” expresses a proposition, and that proposition is true. An **assertion** is the act of putting forward a proposition and stating its truth value; in ordinary proof contexts, the speaker usually asserts that it is true. In a cryptographic proof, the prover asserts that the proposition determined by the public input is true, and the verifier checks the proof. Cryptography texts often use **statement** for the proposition being proved (or the public input that specifies it), rather than for the act of asserting it.
 
-A **prover** tries to demonstrate that a statement is true. A **verifier** checks the explanation by following specified steps. A sequence of messages exchanged between them is an **interactive proof**. A random question or value sent by the verifier is a **challenge**. A **commitment** is a mechanism for fixing a value so it cannot later be changed.
+The number 7 lets us check the proposition “91 is composite” because it divides 91. In cryptography, information that can be used to verify that a proposition is true is called a **witness**. The witness is distinct both from the proposition and from the act of asserting it.
+
+A **prover** asserts that a proposition specified by the public input is true and tries to demonstrate it. A **verifier** checks the proof by following specified steps. A sequence of messages exchanged between them is an **interactive proof**. A random question or value sent by the verifier is a **challenge**. A **commitment** is a mechanism for fixing a value so it cannot later be changed.
 
 In zero-knowledge proofs, the record of what the verifier observes during an interaction is called its **view**. A **simulator** is an algorithm that generates a record without using the witness. The **simulator paradigm** defines zero-knowledge by asking whether a real verifier’s view can be distinguished from the simulator’s record.
 
-A **zero-knowledge proof** lets a verifier check that a statement is true without revealing information about the witness itself. The comparison between a real view and a simulator’s record, explained later, gives a precise way to express “revealing no information.”
+A **zero-knowledge proof** lets a verifier check that a proposition is true without revealing information about the witness itself. The comparison between a real view and a simulator’s record, explained later, gives a precise way to express “revealing no information.”
 
 The **Fiat–Shamir transform**, mentioned later, replaces an interactive verifier’s challenge with a value computed from a hash of earlier messages, avoiding that exchange. A **hash function** maps data of arbitrary length to a fixed-length value. The **soundness error** is the probability that a verifier accepts a false statement; **soundness amplification** means reducing this probability through an appropriate method. These terms are explained again where they are used.
 
