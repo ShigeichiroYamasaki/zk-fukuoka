@@ -490,3 +490,4 @@ $$
 - [第6回：Low-Degree Testingと健全性増幅](./session-06)：繰り返しと健全性誤差
 - [第9回：Fiat–Shamir変換とROMの功罪](./session-09)：暗号学的ハッシュ関数の出力からチャレンジを作る方法と，その関数を理想的なランダム関数とみなすモデル
 - 参考文献：[A First Course in Probability, Sheldon M. Ross（Pearson）](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
+- 暗号学への発展：[岡本栄司・西出隆志『暗号と情報セキュリティ』（コロナ社）](https://www.coronasha.co.jp/np/isbn/9784339079289/) — 第3章で確率と識別不可能性，第5章でゼロ知識対話証明を扱う．本ページの確率分布の識別やシミュレータパラダイムを，暗号学の定義と結びつけて学ぶ際の参考になる．
