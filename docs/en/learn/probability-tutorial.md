@@ -489,6 +489,7 @@ When calculating a probability, first write down what is randomized, how success
 - [Session 5: Error-correcting codes and information-theoretic perspective](./session-05): random errors versus adversarial errors
 - [Session 6: Low-degree testing and soundness amplification](./session-06): repetition and soundness error
 - [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): deriving challenges from cryptographic hash-function outputs and the model that idealizes such a function as random
+
 ## References
 
 [1] Ross, S. M. (2023). *A First Course in Probability* (10th ed.). Pearson. ISBN 978-0-13-802788-9. [Publisher information](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
