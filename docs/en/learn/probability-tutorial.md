@@ -8,23 +8,85 @@ Understanding a zero-knowledge proof (a way to check a statement without reveali
 
 The explanations and examples are original to this site. For systematic study of probability, see Ross’s probability textbook [1]. This tutorial does not reproduce or adapt that textbook; it selects foundational ideas used in this course. For the connection between distinguishing probability distributions and zero-knowledge proofs in cryptography, see Okamoto and Nishide [2]. For the standard definition of computational indistinguishability and its connection to pseudorandomness, zero-knowledge, and simulation, this tutorial refers to Goldreich’s survey volume [3] and systematic textbook [4].
 
-### Proof terminology used on this page
+### Technical terms
 
-Before turning to probability, here are the proof-related terms used later. A **proposition** is content that has a truth value: it is either true or false. “91 is composite” expresses a proposition, and that proposition is true. An **assertion** is the act of putting forward a proposition and stating its truth value; in ordinary proof contexts, the speaker usually asserts that it is true. In a cryptographic proof, the prover asserts that the proposition determined by the public input is true, and the verifier checks the proof. Cryptography texts often use **statement** for the proposition being proved (or the public input that specifies it), rather than for the act of asserting it.
+This section introduces the technical terms used on this page. They are explained in more detail in the main course, but becoming familiar with them here will make the later sections easier to follow.
 
-The number 7 lets us check the proposition “91 is composite” because it divides 91. In cryptography, information that can be used to verify that a proposition is true is called a **witness**. The witness is distinct both from the proposition and from the act of asserting it.
+#### Proposition
 
-A **prover** asserts that a proposition specified by the public input is true and tries to demonstrate it. A **verifier** checks the proof by following specified steps. A sequence of messages exchanged between them is an **interactive proof**. A random question or value sent by the verifier is a **challenge**. A **commitment** is a mechanism for fixing a value so it cannot later be changed.
+A **proposition** is a sentence whose truth value can be judged as true or false. For example, “91 is composite” is a proposition, and it is true.
 
-In zero-knowledge proofs, the record of what the verifier observes during an interaction is called its **view**. A **simulator** is an algorithm that generates a record without using the witness. The **simulator paradigm** defines zero-knowledge by asking whether a real verifier’s view can be distinguished from the simulator’s record.
+#### Assertion
 
-A **zero-knowledge proof** lets a verifier check that a proposition is true without revealing information about the witness itself. The comparison between a real view and a simulator’s record, explained later, gives a precise way to express “revealing no information.”
+An **assertion** is the act of taking a proposition and stating that it is true or false. For example, saying “91 is composite” and presenting it as true is an assertion.
 
-The **Fiat–Shamir transform**, mentioned later, replaces an interactive verifier’s challenge with a value computed by applying a **cryptographic hash function** to earlier messages, avoiding that exchange. A general **hash function** maps data of arbitrary length to a fixed-length value. A hash function used in a cryptographic protocol is called a cryptographic hash function because security properties such as collision resistance are expected of it. The **soundness error** is the probability that a verifier accepts a false statement; **soundness amplification** means reducing this probability through an appropriate method. These terms are explained again where they are used.
+#### Prover and verifier
 
-A **distinguisher** is a procedure that tries to tell two records or probability distributions apart. It observes an input and outputs, for example, 0 for “from source 0” or 1 for “from source 1.” Its **distinguishing advantage** here is the absolute difference between the probabilities of output 1 in the two experiments; this page explains the definition in detail.
+A **prover** asserts that the proposition determined by the public input is true and tries to demonstrate it. A **verifier** checks the proof by following a prescribed procedure.
 
-The **Random Oracle Model (ROM)**, named in the Session 9 link, is a security-analysis model that idealizes a cryptographic hash function as a function returning consistent random values for its inputs.
+#### Statement being proved
+
+A cryptographic proof consists of a prover asserting that a proposition determined by the public input is true and a verifier checking that assertion. Some literature uses “statement being proved” to mean, more precisely, the proposition that is the object of the assertion, or the public input that determines it.
+
+#### Witness
+
+The number 7 can be used to check that the proposition “91 is composite” is true because it divides 91. In cryptography, information that can be used to verify that a proposition is true is called a **witness**. A witness is distinct both from the proposition and from the assertion made about it.
+
+#### Interactive proof
+
+A procedure in which a prover and verifier exchange messages is called an **interactive proof**.
+
+#### Challenge
+
+A random question or value sent by the verifier to the prover is called a **challenge**.
+
+#### Commitment
+
+A **commitment** is a mechanism that fixes a value sent earlier by the prover so that it cannot be changed afterward.
+
+#### Zero-knowledge proof
+
+A **zero-knowledge proof** lets a verifier check that a proposition is true without revealing information about the witness itself. The later comparison between the verifier’s view and a simulator’s record makes “revealing no information” precise.
+
+#### Verifier’s view
+
+In zero-knowledge, the record of what the verifier observes during an actual interaction is called the **verifier’s view**.
+
+#### Simulator
+
+A **simulator** is an algorithm that does not use the witness and generates a record that is difficult to distinguish from the verifier’s view.
+
+#### Simulator paradigm
+
+The **simulator paradigm** defines “the witness leaks no information” by requiring that the verifier’s real view cannot be distinguished from the simulator’s record.
+
+#### Cryptographic hash function
+
+A general **hash function** maps data of arbitrary length to a fixed-length value. A function used with security expectations in a cryptographic protocol is required to have cryptographic properties such as collision resistance and is called a **cryptographic hash function** to distinguish it from a general hash function.
+
+#### Fiat–Shamir transform
+
+The **Fiat–Shamir transform**, discussed later, removes an interaction by computing the verifier’s challenge from the output of a cryptographic hash function applied to the preceding messages.
+
+#### Soundness error
+
+The **soundness error** is the probability that a prover causes the verifier to accept a proposition that is actually false.
+
+#### Soundness amplification
+
+A technique for reducing the soundness error is called **soundness amplification**. These terms are explained again where they are needed below.
+
+#### Distinguisher
+
+A **distinguisher** is a procedure that tries to tell two samples or probability distributions apart. It observes an input and outputs, for example, 0 to predict “from source 0” or 1 to predict “from source 1.”
+
+#### Distinguishing advantage
+
+The **distinguishing advantage** of a distinguisher is the absolute difference between its probabilities of outputting 1 for the two respective sources. Section 6 explains this quantity in detail.
+
+#### Random Oracle Model
+
+The **Random Oracle Model (ROM)**, referenced in Session 9, is a security-analysis model that treats a cryptographic hash function as an ideal function returning consistent random values for its inputs.
 
 ## 1. Experiments, sample spaces, and events
 
@@ -121,6 +183,8 @@ Section 4 compares the case where a prover fixes a value before the challenge wi
 
 ## 4. The order of random choices in cryptographic protocols
 
+#### Probability experiment
+
 Section 3 defined conditional probability as the probability of one event given that another has occurred. In a cryptographic protocol, we must also specify **who chooses each value, when it is chosen, and what information is available at that point**. Changing the order lets a later chooser adapt to earlier values, which can change the success probability.
 
 ### Example: fixing a value before the challenge or responding afterward
@@ -162,7 +226,11 @@ For a uniformly random bit $X$, for example, $\mathbb{E}[X]=0\cdot\frac12+1\cdot
 
 ### Representing the number of failures with indicator variables
 
+#### Bernoulli trial
+
 A **Bernoulli trial** is an experiment whose outcome is classified as either success or failure. Its success probability may be $p$ and its failure probability $1-p$. Calling an experiment a Bernoulli trial does not, by itself, mean that multiple trials are independent; independence must be stated separately when an argument needs it.
+
+#### Indicator variable
 
 Let $I_i=1$ if trial $i$ fails, and $I_i=0$ if it succeeds. This random variable is an **indicator variable** for failure and is a Bernoulli random variable taking values 0 and 1. If the failure probability on trial $i$ is $p_i$, then
 
@@ -250,17 +318,27 @@ This is an upper bound, not the actual probability. Hoeffding's inequality gives
 
 This section applies the random variables and expectations from the previous sections to comparing probability distributions. A sample $z$ is drawn from one of two distributions $P_0,P_1$, and a distinguisher $D$ predicts its source. Output $1$ means “from $P_1,” and output $0$ means “from $P_0.” The prediction may be wrong, and $D$ may use internal randomness.
 
-### Original definition: compare output probabilities in two experiments
+### Goldreich’s original definition: compare output probabilities in two experiments
 
-Cryptography defines this comparison using **two separate experiments**, not two decisions on one sample. The following terms help make the definition precise. A **security parameter** $n$ is a positive integer specifying the scale at which security is evaluated; larger values usually require more computation. A **probabilistic polynomial-time algorithm** may use random bits and has running time bounded by a polynomial in $n$. A function is **negligible** if, for every positive polynomial $p(n)$, it is eventually smaller than $1/p(n)$. Intuitively, it shrinks too quickly to be detected with polynomially bounded computational resources as $n$ grows.
+Goldreich’s standard cryptographic definition expresses the comparison as **two separate experiments**, rather than as two decisions applied to one sample. See [Goldreich, *Foundations of Modern Cryptography*, Definition 1.2, §1.2.2](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf).
 
-A pair of distribution ensembles $X_n,Y_n$ means a pair of probability distributions for each parameter $n$. Goldreich defines the difference for an algorithm $A$ as
+#### Security parameter
+
+A **security parameter** $n$ is a positive integer specifying the scale at which security is evaluated; increasing it normally increases the required computation. A **probabilistic polynomial-time algorithm** may use random bits and has running time bounded by a polynomial in $n$.
+
+#### Negligible function
+
+A **negligible function** is a function that, for every positive polynomial $p(n)$, is smaller than $1/p(n)$ for all sufficiently large $n$. Intuitively, it decreases so rapidly as the security parameter grows that polynomially bounded computational resources cannot detect it.
+
+#### Distribution ensembles
+
+Distribution ensembles $X_n,Y_n$ are sequences that specify one probability distribution for each parameter $n$. Goldreich defines the following output-probability difference for an algorithm $A$:
 
 $$
 d_A(n)=\left|\Pr[A(X_n)=1]-\Pr[A(Y_n)=1]\right|
 $$
 
-([Goldreich, *Foundations of Modern Cryptography*, Definition 1.2, §1.2.2](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf)). In each probability, a sample is drawn from the indicated distribution and the algorithm is run; if it is randomized, its coins are included. This difference measures the algorithm’s ability to tell the two sources apart. If it is negligible for every probabilistic polynomial-time algorithm, the ensembles are called **computationally indistinguishable**.
+In each probability, a sample is drawn from the indicated distribution and the algorithm is run; if it is randomized, its coins are included. This difference measures the algorithm’s ability to tell the two sources apart. If it is negligible for every probabilistic polynomial-time algorithm, the ensembles are called **computationally indistinguishable**.
 
 Now fix $n$ and write the corresponding pair of distributions as $P_0,P_1$. Let $q_i$ be the probability that $D$ outputs $1$ in the separate experiment using $P_i$:
 
