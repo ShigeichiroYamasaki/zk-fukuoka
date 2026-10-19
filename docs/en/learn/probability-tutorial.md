@@ -324,7 +324,11 @@ Goldreich’s standard cryptographic definition expresses the comparison as **tw
 
 #### Security parameter
 
-A **security parameter** $n$ is a positive integer specifying the scale at which security is evaluated; increasing it normally increases the required computation. A **probabilistic polynomial-time algorithm** may use random bits and has running time bounded by a polynomial in $n$.
+A **security parameter** $n$ is a positive integer specifying the scale at which security is evaluated; increasing it normally increases the required computation.
+
+#### Probabilistic polynomial-time algorithm
+
+A **probabilistic polynomial-time algorithm** may use random bits and has running time bounded by a polynomial in $n$.
 
 #### Negligible function
 
@@ -332,7 +336,11 @@ A **negligible function** is a function that, for every positive polynomial $p(n
 
 #### Distribution ensembles
 
-Distribution ensembles $X_n,Y_n$ are sequences that specify one probability distribution for each parameter $n$. Goldreich defines the following output-probability difference for an algorithm $A$:
+Distribution ensembles $X_n,Y_n$ are sequences that specify one probability distribution for each parameter $n$.
+
+#### Computational indistinguishability
+
+Goldreich defines the following output-probability difference for an algorithm $A$:
 
 $$
 d_A(n)=\left|\Pr[A(X_n)=1]-\Pr[A(Y_n)=1]\right|
@@ -425,7 +433,11 @@ A small total variation distance makes the distributions hard to distinguish by 
 
 ### Separate identity, observation, and distinguishing power
 
-To read these claims precisely, separate “Are these two things identical?” from “Can a particular observer tell them apart?” The first asks about the objects themselves. The second can be answered only after specifying what information is observable and how it may be judged. Leibniz’s Identity of Indiscernibles—the philosophical idea that things sharing every property are identical—can introduce this distinction. But indistinguishability in probability and cryptography is not a claim of identity: it compares objects only through specified observations and distinguishers. [The philosophical principle and its context](https://plato.stanford.edu/entries/identity-indiscernible/)
+To read these claims precisely, separate “Are these two things identical?” from “Can a particular observer tell them apart?” The first asks about the objects themselves. The second can be answered only after specifying what information is observable and how it may be judged.
+
+#### Identity in probability theory
+
+Leibniz’s Identity of Indiscernibles—the philosophical idea that things sharing every property are identical—can introduce this distinction. But indistinguishability in probability and cryptography is not a claim of identity: it compares objects only through specified observations and distinguishers. [The philosophical principle and its context](https://plato.stanford.edu/entries/identity-indiscernible/)
 
 Even in probability, “the same” has several meanings. For random variables $X,Y$ on the same probability space $(\Omega,\mathcal{F},\Pr)$, $X=Y$ means that they take equal values at every outcome. If $\Pr[X=Y]=1$, they are **equal almost surely**. By contrast, $X\overset{d}=Y$ means that they have the same probability distribution. Equal distributions do not require equal values outcome by outcome; the variables may even be defined on different probability spaces. Thus equality of distributions does not imply identity of random variables. [Equality of random variables and equality in distribution](https://textbook.prob140.org/notebooks-md/3_03_Equality.html)
 
@@ -436,7 +448,11 @@ Even in probability, “the same” has several meanings. For random variables $
 | Equality of distributions | The probability assigned to every value or event is the same | The law of a single sample is the same |
 | Indistinguishability for a distinguisher | Its output-probability difference is small | That observer’s specified view and computational power reveal little difference |
 
+#### Contents of the observation record
+
 Next specify **what is observed**. Let $T$ be an object and let an observation procedure $O$ produce a record $Z=O(T)$. A distinguisher usually receives this record, not the object itself. If the observation procedure discards information, distinct objects may look the same in the record. Conversely, two individual values may have the same marginal distributions while a joint observation reveals a difference in their dependence. In the earlier A/B example, each bit has the same marginal distribution, but observing the pair distinguishes the methods perfectly. Therefore, state whether the observation consists of one sample, multiple samples, auxiliary information, or an entire interaction transcript.
+
+#### Distinguishing power and output-probability difference
 
 A **distinguisher** $D$ is a randomized procedure that receives an observation $z$ and outputs a bit predicting its source. If its internal random coins are $R_D$, its output is $D(z;R_D)\in\{0,1\}$. Adopt the convention that output $1$ means “from $P_1$,” and set $q_i=\Pr_{z\sim P_i,\,R_D}[D(z;R_D)=1]$. The distinguisher’s **distinguishing power** can be measured by the difference between its output probabilities in the two experiments:
 
@@ -484,7 +500,9 @@ Such an experiment asks whether a particular distinguisher detects a difference 
 
 ### Connection to zero-knowledge
 
-For a fixed public statement and verifier procedure, compare the **view obtained by the verifier in a real interaction** (its random coins and the messages it receives) with a record generated by a simulator that does not use the witness. The question is not whether the records are identical in each run, but whether a distinguisher can tell their probability distributions apart. If the distributions are exactly equal, the protocol is **perfect zero-knowledge**; if their total variation distance (the largest possible difference between the probabilities assigned to the same event) is small, it is **statistical zero-knowledge**; if every probabilistic polynomial-time distinguisher has negligible output-probability difference, it is **computational zero-knowledge**. The simulator need not reproduce each real interaction one by one; it must match the distribution or indistinguishability condition required by the definition. This is the **simulator paradigm**. For formal definitions and diagrams, see [Session 2’s formal definition](./session-02#_2-2-a-formal-definition).
+For a fixed public statement and verifier procedure, compare the **view obtained by the verifier in a real interaction** (its random coins and the messages it receives) with a record generated by a simulator that does not use the witness. The question is not whether the records are identical in each run, but whether a distinguisher can tell their probability distributions apart. If the distributions are exactly equal, the protocol is **perfect zero-knowledge**; if their total variation distance (the largest possible difference between the probabilities assigned to the same event) is small, it is **statistical zero-knowledge**; if every probabilistic polynomial-time distinguisher has negligible output-probability difference, it is **computational zero-knowledge**. #### Simulator paradigm
+
+The simulator need not reproduce each real interaction one by one; it must match the distribution or indistinguishability condition required by the definition. This is the **simulator paradigm**. For formal definitions and diagrams, see [Session 2’s formal definition](./session-02#_2-2-a-formal-definition).
 
 ### Connection to soundness error and randomized checks
 
