@@ -2,11 +2,11 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 18, 2026
+Last updated: October 19, 2026
 
 Understanding a zero-knowledge proof (a way to check a statement without revealing the secret information behind it) requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a procedure that tries to tell two probability distributions apart (a distinguisher) is evaluated by comparing its output probabilities, both theoretically and through sample experiments. This leads to comparing the verifier’s record of a real interaction with a record generated without the secret information. The final sections apply these ideas to randomized checks and to limiting the chance that a false statement is accepted.
 
-The explanations and examples are original to this site. For systematic study of probability, see Sheldon M. Ross’s [A First Course in Probability (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589). This tutorial does not reproduce or adapt that textbook; it selects foundational ideas used in this course.
+The explanations and examples are original to this site. For systematic study of probability, see Ross’s probability textbook [1]. This tutorial does not reproduce or adapt that textbook; it selects foundational ideas used in this course. For the connection between distinguishing probability distributions and zero-knowledge proofs in cryptography, see Okamoto and Nishide [2]. For the standard definition of computational indistinguishability and its connection to pseudorandomness, zero-knowledge, and simulation, this tutorial refers to Goldreich’s survey volume [3] and systematic textbook [4].
 
 ### Proof terminology used on this page
 
@@ -489,4 +489,12 @@ When calculating a probability, first write down what is randomized, how success
 - [Session 5: Error-correcting codes and information-theoretic perspective](./session-05): random errors versus adversarial errors
 - [Session 6: Low-degree testing and soundness amplification](./session-06): repetition and soundness error
 - [Session 9: Fiat–Shamir and the pros and cons of ROM](./session-09): deriving challenges from cryptographic hash-function outputs and the model that idealizes such a function as random
-- Further reading: [A First Course in Probability, Sheldon M. Ross (Pearson)](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
+## References
+
+[1] Ross, S. M. (2023). *A First Course in Probability* (10th ed.). Pearson. ISBN 978-0-13-802788-9. [Publisher information](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
+
+[2] Okamoto, E., & Nishide, T. (2016). *Ango to Joho Security* [Cryptography and Information Security]. Corona Publishing, Risk Engineering Series 8. ISBN 978-4-339-07928-9. [Publisher information (Japanese)](https://www.coronasha.co.jp/np/isbn/9784339079289/)
+
+[3] Goldreich, O. (1998). *Modern Cryptography, Probabilistic Proofs and Pseudorandomness*. Algorithms and Combinatorics, Vol. 17. Springer Berlin, Heidelberg. ISBN 978-3-540-64766-9. [Publisher information](https://link.springer.com/book/10.1007/978-3-662-12521-2)
+
+[4] Goldreich, O. (2001). *Foundations of Cryptography, Volume 1: Basic Tools*. Cambridge University Press. ISBN 978-0-521-79172-4. [Publisher information](https://www.cambridge.org/core/books/foundations-of-cryptography/B61B6AD235D2034D511A5FF740415166)
