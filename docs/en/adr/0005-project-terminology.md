@@ -1,7 +1,7 @@
 # ADR-0005 · Project-wide terminology and Japanese translations
 
 - Date: 2026-10-12
-- Last updated: October 18, 2026
+- Last updated: October 19, 2026
 - Status: Proposed and reflected on the site; community ratification pending
 
 ## Context
@@ -31,6 +31,7 @@ Use the following preferred Japanese terms throughout the project. Where helpful
 | folding | フォールディング | An operation that progressively combines polynomials or proof instances. Do not use 折り畳み or 畳み込み for this meaning. |
 | polynomial divisibility | 多項式の整除性 | The relation in which one polynomial is divisible by another. Do not use 割り切れ性. |
 | probability distribution | 確率分布 | A specification of the probabilities with which a random variable takes values. Do not shorten it to 分布 when the probabilistic meaning is intended. |
+| negligible function | 無視可能関数 | A nonnegative function that is eventually smaller than $1/p(n)$ for every positive polynomial $p(n)$. Do not use 無視できる関数 as the term name. Describe a probability, distance, or difference as 無視可能である. |
 | hash function | ハッシュ関数 | A general function that maps arbitrary-length inputs to fixed-length outputs. Call one used for cryptographic purposes a 暗号学的ハッシュ関数. |
 | cryptographic hash function | 暗号学的ハッシュ関数 | A hash function used in cryptographic protocols with expected properties such as collision resistance. Use this full term rather than ハッシュ関数 alone for cryptographic use. |
 | view | ビュー | In zero-knowledge discussions, the complete information available to the verifier during a protocol, including its own input and randomness and the messages it receives. Use ビュー in Japanese prose. |
