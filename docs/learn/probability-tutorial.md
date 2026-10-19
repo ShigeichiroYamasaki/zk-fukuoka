@@ -10,6 +10,7 @@
 体系的な確率論の学習には，Ross の確率論教科書が参考となる[1]．
 本チュートリアルは，同書の内容を転載・翻案するものではなく，この講義で使う基礎事項に絞っている．
 暗号学における確率分布の識別やゼロ知識証明との接続には，岡本・西出の教科書も参照されたい[2]．
+計算量的識別不能性の標準的な定義と，それを疑似乱数・ゼロ知識・シミュレーションへ接続する枠組みについては，Goldreich の概説書[3]および体系的教科書[4]を参照した．
 
 ### 専門用語
 
@@ -597,3 +598,7 @@ $$
 [1] Ross, S. M. (2023). *A First Course in Probability* (10th ed.). Pearson. ISBN 978-0-13-802788-9. [出版社の書籍情報](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
 
 [2] 岡本栄司・西出隆志（2016）『暗号と情報セキュリティ』コロナ社，リスク工学シリーズ8，ISBN 978-4-339-07928-9．[出版社の書籍情報](https://www.coronasha.co.jp/np/isbn/9784339079289/)
+
+[3] Goldreich, O. (1998). *Modern Cryptography, Probabilistic Proofs and Pseudorandomness*. Algorithms and Combinatorics, Vol. 17. Springer Berlin, Heidelberg. ISBN 978-3-540-64766-9. [出版社の書籍情報](https://link.springer.com/book/10.1007/978-3-662-12521-2)
+
+[4] Goldreich, O. (2001). *Foundations of Cryptography, Volume 1: Basic Tools*. Cambridge University Press. ISBN 978-0-521-79172-4. [出版社の書籍情報](https://www.cambridge.org/core/books/foundations-of-cryptography/B61B6AD235D2034D511A5FF740415166)
