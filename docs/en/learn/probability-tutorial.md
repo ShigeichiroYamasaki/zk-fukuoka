@@ -11,6 +11,7 @@ The explanations and examples are original to this site. For systematic study of
 ### Technical terms
 
 This section introduces the technical terms used on this page. They are explained in more detail in the main course, but becoming familiar with them here will make the later sections easier to follow.
+Probability terms themselves (events, random variables, expectation, and so on) are defined in the following sections.
 
 #### Proposition
 
@@ -19,6 +20,7 @@ A **proposition** is a sentence whose truth value can be judged as true or false
 #### Assertion
 
 An **assertion** is the act of taking a proposition and stating that it is true or false. For example, saying “91 is composite” and presenting it as true is an assertion.
+The proposition itself is distinct from the act of asserting its truth or falsity.
 
 #### Prover and verifier
 
@@ -28,13 +30,21 @@ A **prover** asserts that the proposition determined by the public input is true
 
 A cryptographic proof consists of a prover asserting that a proposition determined by the public input is true and a verifier checking that assertion. Some literature uses “statement being proved” to mean, more precisely, the proposition that is the object of the assertion, or the public input that determines it.
 
+> **Terminology note.** This page distinguishes *proposition*, *assertion*, and *statement*.
+>
+> - A **proposition** is a sentence that can be judged true or false.
+> - An **assertion** is the act of stating that a proposition is true or false.
+> - A **statement** is a sentence that says something; it need not be evaluated for truth.
+>
+> In logic and mathematics, a proof establishes a proposition. This page follows that usage. Cryptography texts commonly call the content to be proved a *statement*: for public input $x$, it is the proposition that “$x$ satisfies a specified condition.” Some Japanese sources translate this cryptographic *statement* as 言明. In those sources, 言明 means the proposition (the content), not 言明 as used here for the act of asserting. Check which sense a source intends.
+
 #### Witness
 
 The number 7 can be used to check that the proposition “91 is composite” is true because it divides 91. In cryptography, information that can be used to verify that a proposition is true is called a **witness**. A witness is distinct both from the proposition and from the assertion made about it.
 
 #### Interactive proof
 
-A procedure in which a prover and verifier exchange messages is called an **interactive proof**.
+An **interactive proof** is a proof procedure carried out through messages exchanged between a prover and a verifier.
 
 #### Challenge
 
@@ -42,23 +52,30 @@ A random question or value sent by the verifier to the prover is called a **chal
 
 #### Commitment
 
-A **commitment** is a mechanism that fixes a value sent earlier by the prover so that it cannot be changed afterward.
+A **commitment** is a mechanism by which the prover first sends a value “under seal,” so it cannot later be changed. It is expected to have two properties:
+
+- **Binding:** after sending the commitment, the prover cannot open it as a different value.
+- **Hiding:** before opening it, the verifier learns no information about the sealed value.
+
+Binding is used mainly in soundness arguments; hiding is used mainly in zero-knowledge arguments.
 
 #### Zero-knowledge proof
 
-A **zero-knowledge proof** lets a verifier check that a proposition is true without revealing information about the witness itself. The later comparison between the verifier’s view and a simulator’s record makes “revealing no information” precise.
+A **zero-knowledge proof** lets a verifier check that a proposition is true while revealing **nothing beyond the truth of the proposition**. Preventing witness leakage is one consequence of this requirement.
+
+The comparison between the verifier’s view and a simulator’s record, explained later, makes “revealing nothing” precise.
 
 #### Verifier’s view
 
-In zero-knowledge, the record of what the verifier observes during an actual interaction is called the **verifier’s view**.
+In zero-knowledge, the record of what the verifier observes during an actual interaction—its own random coins and the messages it receives—is called the **verifier’s view**.
 
 #### Simulator
 
-A **simulator** is an algorithm that does not use the witness and generates a record that is difficult to distinguish from the verifier’s view.
+A **simulator** is a probabilistic polynomial-time algorithm that uses no witness and generates a record using only the public input and the verifier’s behavior. Its record must be indistinguishable from the verifier’s actual view.
 
 #### Simulator paradigm
 
-The **simulator paradigm** defines “the witness leaks no information” by requiring that the verifier’s real view cannot be distinguished from the simulator’s record.
+The **simulator paradigm** defines “the verifier learns nothing beyond the truth of the proposition” by requiring that the verifier’s actual view cannot be distinguished from the simulator’s record. The idea is that information the verifier can generate for itself, without the witness, is not new knowledge gained from the interaction.
 
 #### Cryptographic hash function
 
@@ -66,11 +83,11 @@ A general **hash function** maps data of arbitrary length to a fixed-length valu
 
 #### Fiat–Shamir transform
 
-The **Fiat–Shamir transform**, discussed later, removes an interaction by computing the verifier’s challenge from the output of a cryptographic hash function applied to the preceding messages.
+The **Fiat–Shamir transform** removes an interaction by computing the verifier’s challenge from the output of a cryptographic hash function applied to preceding messages. This page mentions it in Section 4; Session 9 treats it in detail.
 
 #### Soundness error
 
-The **soundness error** is the probability that a prover causes the verifier to accept a proposition that is actually false.
+The **soundness error** is an upper bound on the probability that a prover causes the verifier to accept a proposition that is actually false.
 
 #### Soundness amplification
 
@@ -78,19 +95,25 @@ A technique for reducing the soundness error is called **soundness amplification
 
 #### Distinguisher
 
-A **distinguisher** is a procedure that tries to tell two samples or probability distributions apart. It observes an input and outputs, for example, 0 to predict “from source 0” or 1 to predict “from source 1.”
+A **distinguisher** is a randomized procedure that tries to tell two samples or probability distributions apart. It observes an input and outputs, for example, 0 to predict “from source 0” or 1 to predict “from source 1.”
 
-#### Distinguishing advantage
+#### Distinguishing power (output-probability difference)
 
-The **distinguishing advantage** of a distinguisher is the absolute difference between its probabilities of outputting 1 for the two respective sources. Section 6 explains this quantity in detail.
+The **distinguishing power** (or **output-probability difference**) of a distinguisher is the absolute difference between its probabilities of outputting 1 in two probabilistic experiments. The larger the difference, the better it distinguishes the distributions. This quantity is unrelated to statistical significance. Section 6 explains it in detail.
 
 #### Random Oracle Model
 
-The **Random Oracle Model (ROM)**, referenced in Session 9, is a security-analysis model that treats a cryptographic hash function as an ideal function returning consistent random values for its inputs.
+The **Random Oracle Model (ROM)** treats a cryptographic hash function as an ideal function that returns a consistent random value for each input. Session 9 covers it in detail.
 
 ## 1. Experiments, sample spaces, and events
 
-An operation whose outcome is uncertain is a **random experiment**. The set of all possible outcomes is the **sample space** $\Omega$, and any subset of $\Omega$ is an **event**. The probability $\Pr[A]$ of an event $A$ is the chance that the outcome lies in $A$.
+An operation whose outcome is uncertain is a **random experiment**. The set of all possible outcomes is the **sample space** $\Omega$, and an **event** is a subset of $\Omega$. **Probability** is a rule assigning an occurrence likelihood $\Pr[A]$ to each event, subject to three axioms:
+
+1. $\Pr[A]\ge0$ for every event $A$.
+2. $\Pr[\Omega]=1$.
+3. For pairwise disjoint events $A_1,A_2,\ldots$, $\Pr[\bigcup_i A_i]=\sum_i\Pr[A_i]$.
+
+If $\Omega$ is finite or countable, all its subsets may be treated as events. For continuous outcomes, specify a family $\mathcal{F}$ of measurable events (a sigma-algebra) on which probability can consistently be defined. The triple $(\Omega,\mathcal{F},\Pr)$ is a **probability space**. Most examples on this page are finite and discrete.
 
 If one element is selected uniformly from a finite set $\Omega$, then
 
@@ -100,20 +123,20 @@ $$
 
 For example, choose $r$ uniformly from $S=\{0,1,2,3,4,5,6,7,8,9\}$. For $A=\{0,2,4,6,8\}$, we have $\Pr[r\in A]=5/10=1/2$. Whenever we say “choose at random,” we must specify the set and probability distribution used for the choice.
 
-The complement of $A$ is written $A^c$. The event that $A$ or $B$ occurs is $A\cup B$; the event that both occur is $A\cap B$. Basic identities include
+The complement of $A$ is written $A^c$. The event that $A$ or $B$ occurs is $A\cup B$; the event that both occur is $A\cap B$. The axioms imply the identities
 
 $$
 \Pr[A^c]=1-\Pr[A],\qquad
 \Pr[A\cup B]=\Pr[A]+\Pr[B]-\Pr[A\cap B].
 $$
 
-In particular, $\Pr[A\cup B]\leq\Pr[A]+\Pr[B]$. This **union bound** applies even when the events are dependent. It is useful when bounding the total failure probability by adding bounds for individual failure events.
+Since $\Pr[A\cap B]\ge0$, in particular $\Pr[A\cup B]\leq\Pr[A]+\Pr[B]$. This is the **union bound**, which applies even when the events are dependent. It is useful when adding bounds for several possible causes of failure.
 
 ## 2. Random variables and probability distributions
 
 A **random variable** $X$ is a function that assigns a numerical value $X(\omega)$ to each experiment outcome $\omega\in\Omega$. The variable itself is not moving randomly; it is a tool for describing a quantity whose value depends on the random outcome.
 
-The **probability distribution** of a random variable $X$ is the probability law specifying how likely its values or sets of values are. It is the general concept; a probability mass function, probability density function, or cumulative distribution function is a way to represent that law.
+The **probability distribution** of a random variable $X$ is the probability law specifying how likely its values or sets of values are. A probability mass function, probability density function, or cumulative distribution function represents this law as a function.
 
 For a discrete random variable, the distribution can be represented by the **probability mass function (PMF)**, which lists the probability of each value:
 
@@ -149,7 +172,7 @@ $$
 p_{X,Y}(x,y)=\Pr[X=x\;\text{and}\;Y=y],
 $$
 
-is their **joint probability distribution**. The individual distributions $p_X,p_Y$ are the **marginal probability distributions**. They are obtained by summing the joint probabilities over the other variable:
+is the **joint probability distribution**. The individual distributions $p_X,p_Y$ are the **marginal probability distributions**, obtained by summing over the other variable:
 
 $$
 p_X(x)=\sum_y p_{X,Y}(x,y),\qquad p_Y(y)=\sum_x p_{X,Y}(x,y).
@@ -169,13 +192,49 @@ $$
 
 It describes whether knowing that $B$ occurred changes the chance of $A$.
 
+Rearranging the definition gives the **product rule**, $\Pr[A\cap B]=\Pr[B]\Pr[A\mid B]$. Repeated application yields the **chain rule** for events $E_1,\ldots,E_k$:
+
+$$
+\Pr[E_1\cap\cdots\cap E_k]=\prod_{i=1}^{k}\Pr\bigl[E_i\mid E_1\cap\cdots\cap E_{i-1}\bigr].
+$$
+
+This is used in Section 8 on soundness amplification.
+
+### Law of total probability and Bayes’ theorem
+
+Suppose events $B_1,\ldots,B_m$ are pairwise disjoint and cover $\Omega$ (exactly one must occur). Then
+
+$$
+\Pr[A]=\sum_{j=1}^{m}\Pr[B_j]\Pr[A\mid B_j],
+$$
+
+the **law of total probability**, a basic way to calculate probabilities by cases. For example, it can sum the probability of an outcome over the verifier’s possible challenge values.
+
+If $\Pr[A]>0$, then
+
+$$
+\Pr[B_j\mid A]=\frac{\Pr[B_j]\Pr[A\mid B_j]}{\sum_l\Pr[B_l]\Pr[A\mid B_l]}.
+$$
+
+This is **Bayes’ theorem**: it gives the probability that the cause was $B_j$ after observing outcome $A$. It is related to how a distinguisher infers a source from an observation (Section 6).
+
+### Independence
+
 Events $A$ and $B$ are **independent** if knowing that $B$ occurred does not change the probability of $A$; that is,
 
 $$
 \Pr[A\mid B]=\Pr[A]
 $$
 
-(equivalently, $\Pr[A\cap B]=\Pr[A]\Pr[B]$). For independent repeated trials, the probability that every trial fails can be computed as a product. Do not multiply probabilities without establishing independence.
+(equivalently, $\Pr[A\cap B]=\Pr[A]\Pr[B]$).
+
+For three or more events, pairwise independence alone is not enough. Events $E_1,\ldots,E_k$ are **mutually independent** if for every subset $I\subseteq\{1,\ldots,k\}$,
+
+$$
+\Pr\left[\bigcap_{i\in I}E_i\right]=\prod_{i\in I}\Pr[E_i].
+$$
+
+When this page says “independent trials,” it means mutually independent trials. Then the probability of any specified combination of outcomes factors into the product of the individual probabilities. Do not multiply probabilities without establishing the required independence.
 
 Random variables $X,Y$ are independent exactly when their joint probability distribution factors into the product of their marginal distributions: $p_{X,Y}(x,y)=p_X(x)p_Y(y)$.
 
@@ -204,13 +263,21 @@ If the prover can see $C$ before choosing $A$, it can set $A=C$ and succeed with
 
 ### Representing a protocol as a probability experiment
 
-A typical interactive proof proceeds as follows: the prover sends an initial message, the verifier samples a random challenge, and the prover responds. Let $R_P$ and $R_V$ be the prover’s and verifier’s random coins. Write the public statement as $x$ and the private information used to verify it (the witness) as $w$. Denote the first message by $M=\mathsf{First}(x,w;R_P)$, the challenge by $C=\mathsf{Challenge}(x,M;R_V)$, and the response by $Z=\mathsf{Response}(x,w,M,C;R_P)$. These function names are shorthand for the prescribed step at each stage. Some protocols make the first message a commitment, but this is not true of every protocol. The verifier’s accept/reject result can be represented by a random variable $Y\in\{0,1\}$ determined by this record.
+A typical interactive proof proceeds as follows: the prover sends an initial message, the verifier samples a random challenge, and the prover responds. Let $R_P$ and $R_V$ be the honest prover’s and verifier’s random coins. Write the public input, which determines the proposition being proved, as $x$ and the private information used to verify it (the witness) as $w$. For an honest prover, denote the first message by $M=\mathsf{First}(x,w;R_P)$, the challenge by $C=\mathsf{Challenge}(x,M;R_V)$, and the response by $Z=\mathsf{Response}(x,w,M,C;R_P)$. These function names abbreviate the prescribed step at each stage. In a soundness analysis, an arbitrary cheating prover $P^*$ without the witness may use its own random coins $R_A$ and choose $M$ and $Z$ in any way. Some protocols make the first message a commitment, but this is not true of every protocol. The verifier’s accept/reject result can be represented by a random variable $Y\in\{0,1\}$ determined by this record.
 
-If the verifier samples fresh randomness for $C$ after receiving $M$, we analyze the challenge law conditioned on the fixed message $M$. For example, if $C$ is a uniform $k$-bit string, each value still has conditional probability $2^{-k}$ after fixing $M$. Requiring the prover to fix its first message before seeing the challenge prevents it from rewriting that message to fit the challenge.
+After receiving $M$, the verifier chooses the challenge using fresh randomness $R_V$ that is independent of $M$. Even conditioned on a fixed $M$, the challenge retains its original probability distribution. For example, for a uniform $k$-bit challenge,
+
+$$
+\Pr[C=c\mid M=m]=2^{-k}.
+$$
+
+This independence is a premise of the probability calculation. If the prover fixes its first message before seeing the challenge, it cannot rewrite that message to fit the challenge. This is why the success probability in the earlier $A,C$ example remains $1/2$.
 
 This order alone does not prove protocol security. The analysis must also establish how the initial message is fixed, whether the challenge can be predicted, and whether the prover can prepare multiple responses. In the Fiat–Shamir transform, the verifier’s challenge is computed by applying a cryptographic hash function to earlier messages. Security depends on which messages enter the hash input and how the prover can choose its queries.
 
-When writing a probability, state, for example, the challenge distribution conditioned on a fixed first message, or the probability that a false statement is accepted over both verifier and adversary randomness. The order of choices connects conditional probability and independence with the information available to an adversary. Keep asking “what was fixed first, and what could each party see before choosing?” when reading later sections on randomized checks and soundness error.
+Conversely, if the prover can choose its first message after seeing the challenge, it may be able to construct a matching record without a witness. Many standard interactive-proof simulators exploit this by choosing the challenge first and constructing the rest of the record afterward (an example appears at the end of Section 6). The order of choices is useful both for soundness (preventing cheating) and for zero-knowledge (protecting secrets).
+
+When writing a probability, state, for example, the challenge distribution conditioned on a fixed first message, or the probability that a false statement is accepted over both verifier randomness and the cheating prover’s randomness $R_A$. The order of choices connects conditional probability and independence with the information available to an adversary. Keep asking “what was fixed first, and what could each party see before choosing?” when reading later sections on randomized checks and soundness error.
 
 ## 5. Expectation and probability inequalities
 
@@ -224,11 +291,27 @@ Expectation is a long-run average; it does not mean that every individual trial 
 
 For a uniformly random bit $X$, for example, $\mathbb{E}[X]=0\cdot\frac12+1\cdot\frac12=\frac12$.
 
+### Linearity of expectation
+
+For random variables $X,Y$ with finite expectations and constants $a,b$, expectation is **linear**:
+
+$$
+\mathbb{E}[aX+bY]=a\mathbb{E}[X]+b\mathbb{E}[Y].
+$$
+
+In particular, for a finite sum,
+
+$$
+\mathbb{E}\left[\sum_{i=1}^{k}X_i\right]=\sum_{i=1}^{k}\mathbb{E}[X_i].
+$$
+
+This does not require the $X_i$ to be independent.
+
 ### Representing the number of failures with indicator variables
 
 #### Bernoulli trial
 
-A **Bernoulli trial** is an experiment whose outcome is classified as either success or failure. Its success probability may be $p$ and its failure probability $1-p$. Calling an experiment a Bernoulli trial does not, by itself, mean that multiple trials are independent; independence must be stated separately when an argument needs it.
+A **Bernoulli trial** is an experiment whose outcome is classified as success or failure. Its success probability may be $p$ and its failure probability $1-p$. Textbooks often use “Bernoulli trials” for repeated trials that are independent and have the same success probability. To avoid ambiguity, this page explicitly says **independent Bernoulli trials** whenever independence is needed.
 
 #### Indicator variable
 
@@ -250,33 +333,31 @@ $$
 \mathbb{E}[F]=\sum_{i=1}^{k}\mathbb{E}[I_i]=\sum_{i=1}^{k}p_i.
 $$
 
-For example, if three checks have failure probabilities $0.1$, $0.02$, and $0.01$, their expected number of failures is $0.1+0.02+0.01=0.13$. This calculation does not require the trials to be independent. By contrast, calculating the probability of at least one failure as $1-\prod_i(1-p_i)$ does require independence of the failure events. A small expected number of failures alone does not prove that a particular execution will never fail.
+For example, if three checks have failure probabilities $0.1$, $0.02$, and $0.01$, their expected number of failures is $0.1+0.02+0.01=0.13$. This calculation does not require the trials to be independent. By contrast, calculating the probability of at least one failure as $1-\prod_i(1-p_i)$ requires the failure events to be mutually independent.
 
-### Before Markov's inequality: linearity of expectation
-
-For random variables $X$ and $Y$ with finite expectations, and constants $a$ and $b$, expectation is **linear**:
-
-$$
-\mathbb{E}[aX+bY]=a\mathbb{E}[X]+b\mathbb{E}[Y].
-$$
-
-In particular, for a finite sum,
-
-$$
-\mathbb{E}\left[\sum_{i=1}^{k}X_i\right]=\sum_{i=1}^{k}\mathbb{E}[X_i].
-$$
-
-This identity does not require the $X_i$ to be independent. For example, each failure indicator $I_i$ takes value 0 or 1 and has expectation equal to its failure probability $p_i$. Thus, for the total number of failures $F=\sum_i I_i$, we have $\mathbb{E}[F]=\sum_i p_i$. This gives the expected number of failures first; Markov's inequality, in the next subsection, then bounds the probability that the count is large.
+The point is to calculate the expected number of failures first, then bound the probability that this count is large using Markov’s inequality.
 
 ### Markov's inequality: bounding an upper tail from the mean
 
-Let $X$ be a nonnegative random variable with finite expectation, and let $a>0$. On the event $X\ge a$, the value of $X$ is at least $a$, so its expectation is at least $a$ times the probability of that event. Therefore,
+Let $X$ be a nonnegative random variable with finite expectation, and let $a>0$. Then
 
 $$
 \Pr[X\ge a]\leq\frac{\mathbb{E}[X]}{a}.
 $$
 
 This is **Markov's inequality**. It uses only the expectation, with no assumption about the distribution's shape or independence. For example, let $F$ count failures in 20 checks, each with failure probability $0.01$. Linearity of expectation gives $\mathbb{E}[F]=0.2$, even without independence. Hence the probability of at least four failures is at most $\Pr[F\ge4]\le0.2/4=0.05$. This bound can be conservative and larger than the actual probability.
+
+The proof is one line. Since $X\ge0$, we always have $X\ge a\cdot\mathbf{1}[X\ge a]$, where $\mathbf{1}[\cdot]$ is 1 when the condition holds and 0 otherwise. Taking expectations gives $\mathbb{E}[X]\ge a\Pr[X\ge a]$; divide by $a$ to obtain the inequality.
+
+#### Application: averaging argument
+
+If a random variable $X$ takes values in $[0,1]$ and $\mathbb{E}[X]=\varepsilon$, then
+
+$$
+\Pr\left[X\ge\frac{\varepsilon}{2}\right]\ge\frac{\varepsilon}{2}.
+$$
+
+To see this, set $p=\Pr[X\ge\varepsilon/2]$. Since $X\le1$, we have $\varepsilon=\mathbb{E}[X]\le p\cdot1+(1-p)\cdot\frac{\varepsilon}{2}$, which implies $p\ge\varepsilon/2$. For example, suppose a prover is accepted with probability $\varepsilon$ over its random choice $r$ and the verifier’s challenge $c$. Let $X$ be its acceptance probability over $c$ when $r$ is fixed. Then at least an $\varepsilon/2$ fraction of choices of $r$ have acceptance probability at least $\varepsilon/2$. Such averaging arguments occur in soundness proofs that rewind a prover.
 
 ### Chebyshev's inequality: bounding deviations from the mean
 
@@ -314,7 +395,7 @@ The later section on statistical identification uses this inequality to bound ho
 
 ### Chernoff bounds: controlling relative deviations in independent trials
 
-Let $X_1,\ldots,X_n$ be independent Bernoulli random variables (each taking value 0 or 1), let $X=\sum_i X_i$, and write $\mu=\mathbb{E}[X]$. For every $\delta>0$, the upper tail satisfies
+Let $X_1,\ldots,X_n$ be independent Bernoulli random variables (each taking value 0 or 1; their success probabilities may differ), let $X=\sum_i X_i$, and write $\mu=\mathbb{E}[X]$. For every $\delta>0$, the upper tail satisfies
 
 $$
 \Pr[X\ge(1+\delta)\mu]\le\left(\frac{e^\delta}{(1+\delta)^{1+\delta}}\right)^\mu\le\exp\!\left(-\frac{\mu\delta^2}{2+\delta}\right).
@@ -338,19 +419,30 @@ This is an upper bound, not the actual probability. Hoeffding's inequality gives
 
 **Why include Chernoff bounds in this tutorial?** They show how to estimate the chance that a sum of independent 0/1 outcomes deviates substantially from its mean. For example, when distinguishing probability distributions, recording a distinguisher's output for each sample makes the number of outputs equal to 1 a sum of Bernoulli random variables. The same kind of bound is useful for analyzing majority decisions or rules that accept while allowing up to a threshold number of failures.
 
-However, the soundness amplification in Section 8—accepting only when every independent test passes—has a miss probability that is directly bounded by $\epsilon^k$; Chernoff bounds are not needed for that calculation. Chernoff bounds are a more general tool for conditions based on the **number** of successes or failures, such as accepting despite a limited number of failed tests. In a cryptographic protocol, an adversary may adapt its later actions to earlier outcomes, so a security proof must establish the required independence or appropriate conditional-probability bounds before applying Chernoff.
+However, the soundness amplification in Section 8—accepting only when every test passes—has a miss probability bounded directly by $\epsilon^k$ via the chain rule; Chernoff bounds are not needed for that calculation. Chernoff bounds are a more general tool for conditions based on the **number** of successes or failures, such as accepting despite a limited number of failed tests. In a cryptographic protocol, an adversary may adapt its later actions to earlier outcomes, so a security proof must establish the required independence or appropriate conditional-probability bounds before applying Chernoff.
+
+### Collision bound (birthday bound)
+
+Choose $q$ values independently and uniformly from a set of $N$ possible values. By applying the union bound to the $\binom{q}{2}$ pairs, the probability that any two values collide is at most
+
+$$
+\Pr[\text{collision}]\le\binom{q}{2}\cdot\frac1N=\frac{q(q-1)}{2N}.
+$$
+
+Each pair agrees with probability $1/N$. For example, even after generating $q=2^{64}$ values from a $2^{256}$-element hash-output space, the collision probability is at most $2^{128}/2^{257}=2^{-129}$. This bound often appears when assessing the chance of an accidental collision after $q$ queries in commitment or Fiat–Shamir analyses. Conversely, collisions may become likely when $q$ is on the order of $\sqrt N$.
 
 ## 6. Distinguishing probability distributions
 
 This section applies the random variables and expectations from the previous sections to comparing probability distributions. A sample $z$ is drawn from one of two distributions $P_0,P_1$, and a distinguisher $D$ predicts its source. Output $1$ means “from $P_1,” and output $0$ means “from $P_0.” The prediction may be wrong, and $D$ may use internal randomness.
 
-### Goldreich’s original definition: compare output probabilities in two experiments
+### Standard definition: compare output probabilities in two experiments
 
-Goldreich’s standard cryptographic definition expresses the comparison as **two separate experiments**, rather than as two decisions applied to one sample. See [Goldreich, *Foundations of Modern Cryptography*, Definition 1.2, §1.2.2](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf).
+Goldreich’s standard cryptographic definition expresses the comparison as **two separate experiments**, rather than as two decisions applied to one sample [3][4]. The exact definitions of computational indistinguishability are in those references; the presentation below is simplified for this tutorial.
 
 #### Security parameter
 
 A **security parameter** $n$ is a positive integer specifying the scale at which security is evaluated; increasing it normally increases the required computation.
+The distinguisher also receives the unary string $1^n$. This lets it use computation scaled to $n$, even when the sample itself is shorter than $n$.
 
 #### Probabilistic polynomial-time algorithm
 
@@ -358,29 +450,29 @@ A **probabilistic polynomial-time algorithm** may use random bits and has runnin
 
 #### Negligible function
 
-A **negligible function** is a function that, for every positive polynomial $p(n)$, is smaller than $1/p(n)$ for all sufficiently large $n$. Intuitively, it decreases so rapidly as the security parameter grows that polynomially bounded computational resources cannot detect it.
+A **negligible function** is a function that, for every positive polynomial $p(n)$, is smaller than $1/p(n)$ for all sufficiently large $n$. Equivalently, as $n$ grows, it approaches zero faster than the reciprocal of every polynomial.
 
 #### Distribution ensembles
 
-Distribution ensembles $X_n,Y_n$ are sequences that specify one probability distribution for each parameter $n$.
+Distribution ensembles $X_n,Y_n$ are sequences that specify one probability distribution for each parameter $n$; their sample lengths are assumed to be bounded by a polynomial in $n$.
 
 #### Computational indistinguishability
 
-Goldreich defines the following output-probability difference for an algorithm $A$:
+For two distribution ensembles and a distinguisher $A$, define the following output-probability difference:
 
 $$
-d_A(n)=\left|\Pr[A(X_n)=1]-\Pr[A(Y_n)=1]\right|
+d_A(n)=\left|\Pr[A(X_n,1^n)=1]-\Pr[A(Y_n,1^n)=1]\right|
 $$
 
-In each probability, a sample is drawn from the indicated distribution and the algorithm is run; if it is randomized, its coins are included. This difference measures the algorithm’s ability to tell the two sources apart. If it is negligible for every probabilistic polynomial-time algorithm, the ensembles are called **computationally indistinguishable**.
+In each probability, a sample is drawn from the indicated distribution and the algorithm is run; if it is randomized, its coins are included. This difference measures the algorithm’s ability to tell the two sources apart. If it is negligible for every probabilistic polynomial-time algorithm, the ensembles are called **computationally indistinguishable**. Some definitions also allow nonuniform polynomial-size circuits; this tutorial does not cover that variant.
 
-Now fix $n$ and write the corresponding pair of distributions as $P_0,P_1$. Let $q_i$ be the probability that $D$ outputs $1$ in the separate experiment using $P_i$:
+“Negligible” is a property as $n$ varies; it has no meaning for just two distributions at one fixed value of $n$. For the simpler discussion below, fix $n$ and write its two distributions as $P_0,P_1$. Let $q_i$ be the probability that $D$ outputs $1$ in the separate experiment using $P_i$, including any internal randomness of $D$:
 
 $$
 q_0=\Pr_{z\sim P_0}[D(z)=1],\qquad q_1=\Pr_{z\sim P_1}[D(z)=1].
 $$
 
-In this notation, Goldreich’s definition becomes the **output-probability difference**
+In this notation, the definition above becomes the **output-probability difference** (the distinguisher’s power)
 
 $$
 d_D(P_0,P_1)=|q_0-q_1|=\left|\Pr_{z\sim P_0}[D(z)=1]-\Pr_{z\sim P_1}[D(z)=1]\right|.
@@ -438,6 +530,8 @@ Let a sample be one of $z\in\{0,1,2,3\}$. In this example, $P_0$ tends to produc
 
 Choose $D(z)=1$ when $z\ge2$ (classifying the sample as coming from $P_1$), and $D(z)=0$ otherwise. The shaded region contains exactly the values for which $D$ outputs 1. Under $P_0$, this event has probability $q_0=P_0(2)+P_0(3)=0.15+0.05=0.20$. Under $P_1$, it has probability $q_1=P_1(2)+P_1(3)=0.30+0.40=0.70$. Therefore, this distinguisher's output-probability difference is $|q_1-q_0|=|0.70-0.20|=0.50$. The distinguisher first chooses the set of samples on which it outputs 1, then compares how much probability each distribution assigns to that set.
 
+Here the distinguisher chooses $\{2,3\}=\{z:P_1(z)>P_0(z)\}$, which maximizes the output-probability difference. The result equals the total variation distance $\frac12(0.40+0.10+0.15+0.35)=0.50$ introduced below.
+
 We can also estimate the difference from finite samples. Suppose ten samples from $P_0$ are $0,1,0,2,1,0,3,0,1,0$, and ten from $P_1$ are $0,1,2,3,2,3,1,3,0,3$.
 
 | Sample value | Count from $P_0$ (relative frequency) | Count from $P_1$ (relative frequency) |
@@ -449,15 +543,7 @@ We can also estimate the difference from finite samples. Suppose ten samples fro
 
 In these observations, $D=1$ on $\widehat q_0=(1+1)/10=0.20$ of the $P_0$ samples and $\widehat q_1=(2+4)/10=0.60$ of the $P_1$ samples. The estimated output-probability difference is $|0.60-0.20|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
 
-### Chi-square tests as an experimental check
-
-When a fixed distinguisher $D$ outputs either $0$ or $1$, the output counts from samples drawn from $P_0$ and $P_1$ can be arranged in a $2\times2$ contingency table. A **chi-square test** can then test whether the two sources have different output proportions. This is an experimental test of the hypothesis that the distinguisher's output probabilities are equal under the two sources. The test statistic measures the differences between observed counts and counts expected under the hypothesis, and is compared approximately with a chi-square distribution [5].
-
-In the sample above, the output-1 counts are 2 for $P_0$ and 6 for $P_1$; the output-0 counts are 8 and 4, respectively. Under the hypothesis of equal output proportions, the expected counts in each source row are 6 for output 0 and 4 for output 1. Pearson's chi-square statistic is about $3.33$ (1 degree of freedom). Since one expected cell count is 4, the chi-square approximation can be unreliable for such a small sample. We should not conclude that “there is no difference”; rather, this small experiment has not clearly detected one with this test. More samples or a method suitable for small expected counts may be needed.
-
-The chi-square test examines differences in the output of the selected distinguisher, or in categories chosen in advance. Failing to detect a difference does not prove that no difference exists, much less that no other distinguisher can tell the sources apart. The differences a test can detect depend on its categories and sample size.
-
-Zero-knowledge is not defined by this particular testing procedure. For a verifier, compare the view it obtains in a real interaction with the view generated by its corresponding simulator, and consider the output-probability difference (distinguishing advantage) of distinguishers. **Statistical zero-knowledge** requires the maximum difference over distinguishers without computational limits—equivalently, the appropriate statistical distance (total variation distance on a finite discrete space)—to be negligible in the security parameter. **Computational zero-knowledge** requires the distinguishing advantage to be negligible for every probabilistic polynomial-time distinguisher [6]. Thus, chi-square tests are supplementary tools for examining sample data; distinguishing advantage and statistical distance are the concepts used to define and prove zero-knowledge.
+### Total variation distance
 
 When the distinguisher’s computational power is unrestricted, the maximum output-probability difference over a finite sample space equals the **total variation distance**
 
@@ -467,15 +553,38 @@ $$
 
 A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires the output-probability difference of every such distinguisher to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
 
+The total variation distance satisfies the triangle inequality, $\Delta(P_0,P_2)\le\Delta(P_0,P_1)+\Delta(P_1,P_2)$. Computational distinguishing power can likewise be bounded by summing the differences across intermediate distributions. This is the basis of the **hybrid argument**.
+
+#### Hybrid argument
+
+Consider tuples of $m$ samples. Let $H_0$ be the distribution of $m$ samples all drawn from $P_0$, and $H_m$ the distribution of $m$ samples all drawn from $P_1$. For $0\le i\le m$, let $H_i$ draw the first $i$ samples from $P_1$ and the remaining samples from $P_0$. For any distinguisher $D$, the triangle inequality gives
+
+$$
+|\Pr[D(H_0)=1]-\Pr[D(H_m)=1]|\le\sum_{i=1}^{m}|\Pr[D(H_{i-1})=1]-\Pr[D(H_i)=1]|.
+$$
+
+Adjacent hybrids differ only in the source of one sample, so each term is bounded by the distinguishing power for one sample. Thus, if that power is at most $\varepsilon$ for one sample, it is at most $m\varepsilon$ for the tuple. If $m$ is polynomial and $\varepsilon$ is negligible, $m\varepsilon$ remains negligible. This is a basic tool when zero-knowledge proofs involve repetitions or multiple proofs.
+
+
+### Supplementary note: chi-square tests as an experimental check
+
+When a fixed distinguisher $D$ outputs either $0$ or $1$, the output counts from samples drawn from $P_0$ and $P_1$ can be arranged in a $2\times2$ contingency table. A **chi-square test** can then test whether the two sources have different output proportions. This is an experimental test of the hypothesis that the distinguisher's output probabilities are equal under the two sources. The test statistic measures the differences between observed counts and counts expected under the hypothesis, and is compared approximately with a chi-square distribution [5].
+
+In the sample above, the output-1 counts are 2 for $P_0$ and 6 for $P_1$; the output-0 counts are 8 and 4, respectively. Under the hypothesis of equal output proportions, the expected counts in each source row are 6 for output 0 and 4 for output 1. Pearson's chi-square statistic is about $3.33$ (1 degree of freedom, with a $p$-value of about $0.07$). Since one expected cell count is 4, the chi-square approximation can be unreliable for such a small sample. We should not conclude that “there is no difference”; rather, this small experiment has not clearly detected one with this test. More samples or a method suitable for small expected counts may be needed.
+
+The chi-square test examines differences in the output of the selected distinguisher, or in categories chosen in advance. Failing to detect a difference does not prove that no difference exists, much less that no other distinguisher can tell the sources apart. The differences a test can detect depend on its categories and sample size.
+
+Zero-knowledge is not defined by this particular testing procedure. For a verifier, compare the view it obtains in a real interaction with the view generated by its corresponding simulator, and consider the output-probability difference (distinguishing power) of distinguishers. **Statistical zero-knowledge** requires the maximum difference over distinguishers without computational limits—equivalently, the appropriate statistical distance (total variation distance on a finite discrete space)—to be negligible in the security parameter. **Computational zero-knowledge** requires the distinguishing power to be negligible for every probabilistic polynomial-time distinguisher [6]. Thus, chi-square tests are supplementary tools for examining sample data; distinguishing power and statistical distance are the concepts used to define and prove zero-knowledge.
+
 ### Separate identity, observation, and distinguishing power
 
 To read these claims precisely, separate “Are these two things identical?” from “Can a particular observer tell them apart?” The first asks about the objects themselves. The second can be answered only after specifying what information is observable and how it may be judged.
 
 #### Identity in probability theory
 
-Leibniz’s Identity of Indiscernibles—the philosophical idea that things sharing every property are identical—can introduce this distinction. But indistinguishability in probability and cryptography is not a claim of identity: it compares objects only through specified observations and distinguishers. [The philosophical principle and its context](https://plato.stanford.edu/entries/identity-indiscernible/)
+Leibniz’s Identity of Indiscernibles [7]—the philosophical idea that things sharing every property are identical—can introduce this distinction. But indistinguishability in probability and cryptography is not a claim of identity. It compares objects only through specified observations and distinguishers.
 
-Even in probability, “the same” has several meanings. For random variables $X,Y$ on the same probability space $(\Omega,\mathcal{F},\Pr)$, $X=Y$ means that they take equal values at every outcome. If $\Pr[X=Y]=1$, they are **equal almost surely**. By contrast, $X\overset{d}=Y$ means that they have the same probability distribution. Equal distributions do not require equal values outcome by outcome; the variables may even be defined on different probability spaces. Thus equality of distributions does not imply identity of random variables. [Equality of random variables and equality in distribution](https://textbook.prob140.org/notebooks-md/3_03_Equality.html)
+Even in probability, “the same” has several meanings. For random variables $X,Y$ on the same probability space $(\Omega,\mathcal{F},\Pr)$, $X=Y$ means that they take equal values at every outcome. If $\Pr[X=Y]=1$, they are **equal almost surely**. By contrast, $X\overset{d}=Y$ means that they have the same probability distribution. Equal distributions do not require equal values outcome by outcome; the variables may even be defined on different probability spaces. Thus equality of distributions does not imply identity of random variables [8].
 
 | What is compared | Condition | What follows |
 | --- | --- | --- |
@@ -498,13 +607,13 @@ $$
 
 If the difference is zero, this distinguisher’s output follows the same probability law for both sources. A larger difference means that it detects more information about the source. When the source is selected uniformly, and output labels are assigned in the favorable direction, its success probability is $1/2+d_D/2$. This measures the distinguisher’s performance; it does not say that the two objects are identical.
 
-If computation is unrestricted and any subset of the sample space can be used as a decision rule, the maximum distinguishing power equals the total variation distance $\Delta(P_0,P_1)$. Restricting computation or the number of observations narrows the set of available tests. Computational indistinguishability in cryptography typically says that every probabilistic polynomial-time distinguisher has negligible distinguishing advantage as the security parameter grows. Standard cryptography lecture notes formalize the concept by defining the distinguisher’s output-probability difference and restricting its computational power. [CMU cryptography lecture notes](https://www.cs.cmu.edu/~goyal/15356/lecture_notes.pdf)
+If computation is unrestricted and any subset of the sample space can be used as a decision rule, the maximum distinguishing power equals the total variation distance $\Delta(P_0,P_1)$. Restricting computation or the number of observations narrows the set of available tests. Computational indistinguishability in cryptography typically says that every probabilistic polynomial-time distinguisher has negligible distinguishing power as the security parameter grows. Standard cryptography lecture notes formalize the concept by defining the distinguisher’s output-probability difference and restricting its computational power [9].
 
 The order of reasoning is therefore: specify the objects, specify the observation procedure, specify the distinguisher’s resources, measure the output-probability difference, and then state whether that difference is small. A failure to detect a difference in one experiment does not prove that the distributions are equal or that every distinguisher is unable to tell them apart. Always state which observation and which class of distinguishers the conclusion covers.
 
 ### Estimating from samples: separate theoretical probabilities from observations
 
-An experiment observes finitely many samples, not the distributions themselves. Collect independent samples from $P_0$ and $P_1$ under the same conditions, then apply a distinguisher $D$ chosen in advance. If $D$ uses randomness, draw fresh independent coins for each sample. If $P_i$ supplies $n_i$ samples, estimate its probability of outputting $1$ by
+An experiment observes finitely many samples, not the distributions themselves. Collect independent samples from $P_0$ and $P_1$ under the same conditions, then apply a distinguisher $D$ chosen **before seeing the samples**. Choosing or adjusting the distinguisher after seeing these samples invalidates the guarantee below. If $D$ uses randomness, draw fresh independent coins for each sample. If $P_i$ supplies $n_i$ samples, estimate its probability of outputting $1$ by
 
 $$
 \widehat q_i=\frac{1}{n_i}\sum_{j=1}^{n_i}\mathbf{1}[D(z_{i,j})=1].
@@ -534,23 +643,41 @@ For example, set $\alpha=0.05$, allowing at most a 5% chance that the guarantee 
 
 Such an experiment asks whether a particular distinguisher detects a difference with the available samples. Failing to detect one does not prove that the distributions are equal or computationally indistinguishable to every efficient distinguisher. The latter requires a theoretical security proof that accounts for the security parameter, sample budget, and computational resources.
 
+The empirical total variation distance is also biased upward. If the sample space is large relative to the number of samples, two samples from the same distribution may still have a positive empirical distance because most values are never observed or appear only once. Do not conclude that the distributions differ solely from this estimate when the sample count is small relative to the sample space.
+
 ### Connection to zero-knowledge
 
-For a fixed public statement and verifier procedure, compare the **view obtained by the verifier in a real interaction** (its random coins and the messages it receives) with a record generated by a simulator that does not use the witness. The question is not whether the records are identical in each run, but whether a distinguisher can tell their probability distributions apart. If the distributions are exactly equal, the protocol is **perfect zero-knowledge**; if their total variation distance (the largest possible difference between the probabilities assigned to the same event) is small, it is **statistical zero-knowledge**; if every probabilistic polynomial-time distinguisher has negligible output-probability difference, it is **computational zero-knowledge**.
+Zero-knowledge is defined with the following order of quantifiers: for every (possibly dishonest) probabilistic polynomial-time verifier $V^*$, there exists a probabilistic polynomial-time simulator $S$ such that, for every true proposition $x$, the view that $V^*$ obtains in a real interaction is indistinguishable from the record output by $S$ without the witness.
+
+The strength of “indistinguishable” gives three variants:
+
+- If the real view and simulated record have exactly the same probability distribution, the protocol is **perfect zero-knowledge**.
+- If their total variation distance (the largest possible difference between probabilities assigned to the same event) is negligible in the security parameter, it is **statistical zero-knowledge**.
+- If every probabilistic polynomial-time distinguisher has negligible distinguishing power, it is **computational zero-knowledge**.
+
+The question is not whether individual records are identical run by run, but whether a distinguisher can tell their probability distributions apart.
 
 #### Simulator paradigm
 
 The simulator need not reproduce each real interaction one by one; it must match the distribution or indistinguishability condition required by the definition. This is the **simulator paradigm**. For formal definitions and diagrams, see [Session 2’s formal definition](./session-02#_2-2-a-formal-definition).
 
+#### Example: the simulator chooses the challenge first
+
+Consider the standard interactive proof of knowledge of a discrete logarithm $w$ such that $y=g^w$, where $g$ generates a group of prime order $q$. The honest prover chooses $a_0\in\mathbb{Z}_q$ uniformly, sends $a=g^{a_0}$, receives a challenge $c\in\mathbb{Z}_q$, then responds with $z=a_0+cw$. The verifier checks $g^z=a\cdot y^c$.
+
+When the honest verifier chooses $c$ uniformly, the view $(a,c,z)$ has a certain distribution. Because $a_0$ is uniform, $z=a_0+cw$ is uniform and independent of $c$, and $a=g^z y^{-c}$ follows from them. A simulator that does not know $w$ can choose $c,z\in\mathbb{Z}_q$ independently and uniformly, set $a=g^z y^{-c}$, and output $(a,c,z)$. Both procedures produce the same distribution: a uniform pair $(c,z)$ followed by the value $a$ determined from it. Thus their views are perfectly indistinguishable in this honest-verifier case.
+
+The simulator chooses $c$ and $z$ first, then constructs $a$ to match them. This is a concrete use of the reversed choice order from Section 4. This example covers an honest verifier; the general case of arbitrary verifiers is treated in Sessions 2 and 9.
+
 ### Connection to soundness error and randomized checks
 
-In protocol analysis, distinguish “the verifier’s random challenge $R$,” “the random coins $R_A$ of the party trying to cheat (called an adversary in cryptography),” and “the acceptance indicator $Y$.” If we encode acceptance as $Y=1$ and rejection as $Y=0$, the soundness error can, for example, be expressed as the conditional probability
+In protocol analysis, distinguish the verifier’s random coins $R_V$ (which determine the challenge), the random coins $R_A$ of the cheating prover $P^*$ (called an adversary in cryptography), and the acceptance indicator $Y$. Encode acceptance as $Y=1$ and rejection as $Y=0$. The proposition $x$ is a fixed parameter, not a random event, so it is not appropriate to write soundness error as a conditional probability given that $x$ is false. Instead, take the worst case over false propositions and arbitrary cheating provers:
 
 $$
-\Pr[Y=1\mid \text{the fixed statement is false}].
+\max_{x\ \text{false}}\ \max_{P^*}\ \Pr_{R_V,R_A}[Y=1]\le\epsilon.
 $$
 
-For precision, specify which random choices (such as the verifier’s or cheating party’s coins) the probability is taken over. The next section applies this way of tracking randomness to the Schwartz–Zippel lemma, where a random field element can expose an incorrect polynomial identity.
+The probability is over the verifier’s randomness $R_V$ and the cheating prover’s randomness $R_A$. This distinguishes the randomized quantities from the worst-case choices of $x$ and $P^*$.
 
 ## 7. Randomized checks and the Schwartz–Zippel lemma
 
@@ -560,27 +687,43 @@ The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable 
 
 A **finite field** is a finite number system in which addition, subtraction, multiplication, and division by nonzero elements are possible.
 
-Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. A nonzero polynomial of degree at most $d$ has at most $d$ roots (inputs where its value is zero), so
+First consider one variable. Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and choose the test point $r$ uniformly from a subset $S\subseteq\mathbb{F}$. A nonzero polynomial of degree at most $d$ has at most $d$ roots (inputs where its value is zero), so
 
 $$
-\Pr[h(R)=0]\leq\frac{d}{|S|}.
+\Pr[h(r)=0]\leq\frac{d}{|S|}.
 $$
 
-This bounds the probability that an incorrect polynomial happens to evaluate to $0$ at the random test point. For $d=3$, the bound is $3/16$ when $|S|=16$, and $3/256$ when $|S|=256$. Increasing the test set decreases the bound. The set $S$ must consist of field elements, and its sampling must satisfy the lemma’s assumptions, such as uniformity.
+The general **Schwartz–Zippel lemma** extends this to multiple variables. Let $h(x_1,\ldots,x_m)$ be a nonzero polynomial over $\mathbb{F}$ with total degree at most $d$, and choose $r_1,\ldots,r_m$ independently and uniformly from $S$. Then
 
-Crucially, the test polynomial $h$ is fixed before the random variable $R$ is chosen. If a prover can see $R$ and then freely choose $h$, it can make $h(R)=0$, and the bound cannot be applied as stated. Protocols enforce the relevant order by fixing a commitment before the challenge is sampled.
+$$
+\Pr[h(r_1,\ldots,r_m)=0]\leq\frac{d}{|S|}.
+$$
+
+The one-variable root bound is the case $m=1$.
+
+This lemma can test whether two polynomials $f,g$ are equal: set $h=f-g$. If $f\ne g$, then $h$ is nonzero, so the probability that they happen to agree at a random point is at most $d/|S|$. For $d=3$, the bound is $3/16$ when $|S|=16$, and $3/256$ when $|S|=256$. Increasing the test set decreases the bound. The set $S$ must consist of field elements, and its sampling must satisfy the lemma’s assumptions, such as uniformity.
+
+Crucially, the test polynomial $h$ is fixed before the test point $r$ is chosen. If a prover can see $r$ and then freely choose $h$, it can make $h(r)=0$, and the bound cannot be applied as stated. Protocols enforce the relevant order by fixing a commitment before the challenge is sampled.
 
 ## 8. Soundness amplification by repetition
 
 **Soundness amplification** means reducing the probability that a false statement is accepted (the soundness error), for example by repeating a test appropriately.
 
-Suppose one test misses a dishonest proof with probability at most $\epsilon$. If we run $k$ tests using independent randomness and accept only when all tests pass, the probability of missing the dishonesty in every test is at most
+Run $k$ tests in sequence and accept only if every test passes. Let $E_i$ be the event that test $i$ passes. By the chain rule from Section 3,
+
+$$
+\Pr[E_1\cap\cdots\cap E_k]=\prod_{i=1}^{k}\Pr\bigl[E_i\mid E_1\cap\cdots\cap E_{i-1}\bigr].
+$$
+
+If we prove that, even conditioned on all previous outcomes, each test misses the cheating prover with probability at most $\epsilon$, then the probability that all $k$ tests miss it is at most
 
 $$
 \epsilon^k.
 $$
 
-For example, four independent tests with $\epsilon=1/4$ give a miss probability at most $(1/4)^4=1/256$. If the tests are dependent, or later tests are chosen after observing earlier outcomes, this simple product may not apply. A soundness-amplification claim requires an argument for the protocol’s repetition method and the adversary’s adaptive behavior.
+If the tests are mutually independent, these conditional probabilities equal their unconditional probabilities, so the condition is automatic. For example, four tests with $\epsilon=1/4$ give a miss probability at most $(1/4)^4=1/256$.
+
+If tests are dependent, or the prover can change its response after seeing earlier results, we must separately prove the conditional bound. Merely using fresh verifier randomness in each test does not remove dependencies through the prover’s internal state. Soundness amplification requires an argument about the repetition method and the adversary’s adaptive behavior. Parallel repetition, or arguments about computational soundness against efficient provers, may require additional proofs; the product bound does not automatically apply.
 
 For this all-tests-must-pass repetition, the product $\epsilon^k$ follows from independent miss events. This is a different calculation from using a Chernoff bound to estimate an upper-tail probability for the number of missed tests. Chernoff bounds become relevant when acceptance depends on a threshold number of failures—for example, when some failed tests are allowed. In that case, the proof must still justify the needed independence or conditional-probability bounds, including against adaptive adversaries.
 
@@ -592,28 +735,29 @@ $$
 
 The events need not be independent. This is a basic method for bounding the probability that any of several protocol checks fails.
 
-Thus, when one repetition contains several checks, first use the union bound to limit the soundness error of that entire repetition by some $\delta$. If we can also prove that, in each later repetition, the conditional probability of missing the dishonesty—given all previous outcomes—is at most $\delta$, then the probability of missing it in all $k$ repetitions is at most $\delta^k$. The soundness error therefore decreases exponentially as the number of repetitions grows. This is the central point of soundness amplification by repetition. If the conditional bound has not been established, we cannot conclude amplification by simply multiplying probabilities.
+Thus, when one repetition contains several checks and the sum of their error probabilities is at most $\delta$, the union bound limits the error for that whole repetition by $\delta$. If we can also prove that, in each later repetition, the conditional probability of missing the dishonesty—given all previous outcomes—is at most $\delta$, then the probability of missing it in all $k$ repetitions is at most $\delta^k$. The soundness error therefore decreases exponentially as the number of repetitions grows. This is the central point of soundness amplification by repetition. If the conditional bound has not been established, we cannot conclude amplification by simply multiplying probabilities.
 
 ## 9. Where these ideas appear in the course
 
 | Course topic | Probability tool | What to check |
 | --- | --- | --- |
+| Session 2: zero-knowledge | Total variation, distinguishing power, hybrid argument | Is $V^*$ arbitrary? What does $S$ avoid using? What are the distinguisher’s resources? |
 | Session 3: Schwartz–Zippel lemma | Uniform random test point, probability bound | Is the polynomial fixed first? How is $S$ sampled? |
 | Session 5: error-correcting codes | Distinguish random errors from worst-case errors | Is the error channel noise, or chosen by an adversary? |
-| Session 6: soundness amplification | Independent trials, conditional probability | Does the repetition preserve independence? |
-| Session 9: Random Oracle Model | Queries to random functions, adaptive choices | What is the query history and order of challenges? |
+| Session 6: soundness amplification | Chain rule, independent trials, conditional probability | Does the conditional probability bound persist under repetition? |
+| Session 9: Random Oracle Model | Queries to random functions, birthday bound, adaptive choices | What is the query history and order of challenges? |
 
 When calculating a probability, first write down what is randomized, how success or failure is defined as an event, and which random choices the probability ranges over. Then check assumptions such as uniformity, independence, and order of selection before applying a formula.
 
 ## 10. Exercises
 
-**Exercise 1.** Choose $R$ uniformly from $S=\{0,1,\ldots,15\}$. What upper bound does Schwartz–Zippel give for $\Pr[h(R)=0]$ when $h$ is a nonzero polynomial of degree at most $3$?
+**Exercise 1.** Choose $r$ uniformly from the subset $S=\{0,1,\ldots,15\}$ of the finite field $\mathbb{F}_{17}$. What upper bound does Schwartz–Zippel give for $\Pr[h(r)=0]$ when $h$ is a nonzero polynomial of degree at most $3$?
 
 **Answer.** At most $3/16$. This is an upper bound; the actual probability need not equal $3/16$.
 
-**Exercise 2.** A single independent test misses a dishonest proof with probability at most $1/8$. What is the upper bound after three independent repetitions?
+**Exercise 2.** A test’s miss probability is at most $1/8$, even conditioned on previous outcomes. What is the upper bound on the probability that all three tests pass?
 
-**Answer.** $(1/8)^3=1/512$. This uses independence and the rule that acceptance requires passing all tests.
+**Answer.** By the chain rule, $(1/8)^3=1/512$. Independent tests satisfy the stated conditional bound.
 
 **Exercise 3.** Failure events $A$ and $B$ each have probability at most $0.02$ and $0.03$. Bound the probability that at least one occurs without assuming independence.
 
@@ -627,6 +771,14 @@ When calculating a probability, first write down what is randomized, how success
 
 **Answer.** $\Pr[|X-10|\ge6]\leq9/6^2=1/4$.
 
+**Exercise 6.** Choose $q=2^{10}$ values independently and uniformly from $N=2^{40}$ possibilities. Bound the probability that any two are equal.
+
+**Answer.** By the birthday bound, $q(q-1)/(2N)<2^{20}/2^{41}=2^{-21}$.
+
+**Exercise 7.** Use the law of total probability. A verifier chooses a fair bit $C$. A dishonest prover is accepted with probability 1 when $C=0$ and with probability 0 when $C=1$. What is its overall acceptance probability?
+
+**Answer.** $\Pr[\text{accept}]=\Pr[C=0]\cdot1+\Pr[C=1]\cdot0=1/2$.
+
 ## Continue learning
 
 - [Session 3: Finite fields, polynomial algebra, and randomized testing](./session-03): the Schwartz–Zippel lemma and error probability
@@ -636,14 +788,20 @@ When calculating a probability, first write down what is randomized, how success
 
 ## References
 
-[1] Ross, S. M. (2023). *A First Course in Probability* (10th ed.). Pearson. ISBN 978-0-13-802788-9. [Publisher information](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
+[1] Ross, S. M. *A First Course in Probability* (10th ed.). Pearson. [Publisher information](https://www.pearson.com/en-us/subject-catalog/p/Ross-First-Course-in-Probability-A-10th-Edition/P200000006334/9780137504589)
 
 [2] Okamoto, E., & Nishide, T. (2016). *Ango to Joho Security* [Cryptography and Information Security]. Corona Publishing, Risk Engineering Series 8. ISBN 978-4-339-07928-9. [Publisher information (Japanese)](https://www.coronasha.co.jp/np/isbn/9784339079289/)
 
-[3] Goldreich, O. (1998). *Modern Cryptography, Probabilistic Proofs and Pseudorandomness*. Algorithms and Combinatorics, Vol. 17. Springer Berlin, Heidelberg. ISBN 978-3-540-64766-9. [Publisher information](https://link.springer.com/book/10.1007/978-3-662-12521-2)
+[3] Goldreich, O. (1998). *Modern Cryptography, Probabilistic Proofs and Pseudorandomness*. Algorithms and Combinatorics, Vol. 17. Springer Berlin, Heidelberg. ISBN 978-3-540-64766-9. [Publisher information](https://link.springer.com/book/10.1007/978-3-662-12521-2), [author's PDF](https://www.wisdom.weizmann.ac.il/~oded/PDF/mcppp-v2.pdf)
 
 [4] Goldreich, O. (2001). *Foundations of Cryptography, Volume 1: Basic Tools*. Cambridge University Press. ISBN 978-0-521-79172-4. [Publisher information](https://www.cambridge.org/core/books/foundations-of-cryptography/B61B6AD235D2034D511A5FF740415166)
 
 [5] NIST/SEMATECH. (2012). “Do All the Processes Have the Same Proportion of Defectives?” *e-Handbook of Statistical Methods*, §7.4.6. [NIST](https://itl.nist.gov/div898/handbook/prc/section4/prc46.htm)
 
-[6] Vadhan, S. P. (2021). “Statistical Zero Knowledge.” *CS6230: Foundations of Cryptography*, National University of Singapore, Lecture 6. [Lecture notes (PDF)](https://www.comp.nus.edu.sg/~prashant/teaching/CS6230/files/notes/lecture06.pdf)
+[6] “Statistical Zero Knowledge.” *CS6230: Foundations of Cryptography*, National University of Singapore, Lecture 6 (lecture notes). [PDF](https://www.comp.nus.edu.sg/~prashant/teaching/CS6230/files/notes/lecture06.pdf)
+
+[7] Forrest, P. “The Identity of Indiscernibles.” *Stanford Encyclopedia of Philosophy*. [SEP](https://plato.stanford.edu/entries/identity-indiscernible/)
+
+[8] Prob140 Textbook. “Equality of Random Variables.” [Prob140](https://textbook.prob140.org/notebooks-md/3_03_Equality.html)
+
+[9] Carnegie Mellon University. *15-356 Cryptography Lecture Notes*. [PDF](https://www.cs.cmu.edu/~goyal/15356/lecture_notes.pdf)
