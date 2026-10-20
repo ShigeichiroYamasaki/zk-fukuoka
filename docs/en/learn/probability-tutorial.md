@@ -576,6 +576,8 @@ $$
 
 The events need not be independent. This is a basic method for bounding the probability that any of several protocol checks fails.
 
+Thus, when one repetition contains several checks, first use the union bound to limit the soundness error of that entire repetition by some $\delta$. If we can also prove that, in each later repetition, the conditional probability of missing the dishonesty—given all previous outcomes—is at most $\delta$, then the probability of missing it in all $k$ repetitions is at most $\delta^k$. The soundness error therefore decreases exponentially as the number of repetitions grows. This is the central point of soundness amplification by repetition. If the conditional bound has not been established, we cannot conclude amplification by simply multiplying probabilities.
+
 ## 9. Where these ideas appear in the course
 
 | Course topic | Probability tool | What to check |
