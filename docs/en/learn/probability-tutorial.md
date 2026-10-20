@@ -252,6 +252,22 @@ $$
 
 For example, if three checks have failure probabilities $0.1$, $0.02$, and $0.01$, their expected number of failures is $0.1+0.02+0.01=0.13$. This calculation does not require the trials to be independent. By contrast, calculating the probability of at least one failure as $1-\prod_i(1-p_i)$ does require independence of the failure events. A small expected number of failures alone does not prove that a particular execution will never fail.
 
+### Before Markov's inequality: linearity of expectation
+
+For random variables $X$ and $Y$ with finite expectations, and constants $a$ and $b$, expectation is **linear**:
+
+$$
+\mathbb{E}[aX+bY]=a\mathbb{E}[X]+b\mathbb{E}[Y].
+$$
+
+In particular, for a finite sum,
+
+$$
+\mathbb{E}\left[\sum_{i=1}^{k}X_i\right]=\sum_{i=1}^{k}\mathbb{E}[X_i].
+$$
+
+This identity does not require the $X_i$ to be independent. For example, each failure indicator $I_i$ takes value 0 or 1 and has expectation equal to its failure probability $p_i$. Thus, for the total number of failures $F=\sum_i I_i$, we have $\mathbb{E}[F]=\sum_i p_i$. This gives the expected number of failures first; Markov's inequality, in the next subsection, then bounds the probability that the count is large.
+
 ### Markov's inequality: bounding an upper tail from the mean
 
 Let $X$ be a nonnegative random variable with finite expectation, and let $a>0$. On the event $X\ge a$, the value of $X$ is at least $a$, so its expectation is at least $a$ times the probability of that event. Therefore,
