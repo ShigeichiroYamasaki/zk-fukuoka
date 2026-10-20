@@ -337,6 +337,56 @@ $$
 Fiat–Shamir変換では，検証者のチャレンジを，先行するメッセージを入力とする暗号学的ハッシュ関数の出力から作る．
 どのメッセージを入力に含めるか，証明者が問い合わせをどう選べるかが安全性に関わる．
 
+<figure class="protocol-experiment-figure">
+<svg viewBox="0 0 900 438" role="img" aria-labelledby="protocol-experiment-title protocol-experiment-desc" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid #cbd5e1;border-radius:12px">
+  <title id="protocol-experiment-title">対話型証明とFiat–Shamir変換を確率実験として見る</title>
+  <desc id="protocol-experiment-desc">上段は証明者と検証者が乱数を使ってメッセージ，チャレンジ，応答を交換する対話型証明で，検証者のビューを記録する．下段はチャレンジを公開入力と先行メッセージから暗号学的ハッシュ関数で導き，証明者が証明をまとめて出すFiat–Shamir変換である．</desc>
+  <defs>
+    <marker id="protocol-exp-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,4 L0,8 z" fill="#344054"/></marker>
+    <marker id="protocol-exp-arrow-blue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L10,4 L0,8 z" fill="#1769aa"/></marker>
+  </defs>
+  <rect x="1" y="1" width="898" height="436" rx="14" fill="#fff" stroke="#cbd5e1"/>
+  <text x="24" y="32" font-size="18" font-weight="700" fill="#101828">二つの確率実験：乱数を誰が使い，記録に何が残るか</text>
+  <rect x="20" y="48" width="860" height="170" rx="10" fill="#f3f8ff" stroke="#b8d3f0"/>
+  <text x="38" y="74" font-size="16" font-weight="700" fill="#174a7e">対話型証明</text>
+  <rect x="62" y="91" width="180" height="55" rx="8" fill="#fff" stroke="#4b83b5" stroke-width="2"/>
+  <text x="152" y="114" text-anchor="middle" font-size="15" font-weight="700" fill="#172b4d">証明者 P(x,w; R_P)</text>
+  <text x="152" y="134" text-anchor="middle" font-size="13" fill="#344054">乱数 R_P を使う</text>
+  <rect x="658" y="91" width="180" height="55" rx="8" fill="#fff" stroke="#4b83b5" stroke-width="2"/>
+  <text x="748" y="114" text-anchor="middle" font-size="15" font-weight="700" fill="#172b4d">検証者 V(x; R_V)</text>
+  <text x="748" y="134" text-anchor="middle" font-size="13" fill="#344054">独立な乱数 R_V を使う</text>
+  <line x1="244" y1="103" x2="652" y2="103" stroke="#344054" stroke-width="2" marker-end="url(#protocol-exp-arrow)"/>
+  <text x="448" y="96" text-anchor="middle" font-size="14" fill="#172b4d">最初のメッセージ M</text>
+  <line x1="656" y1="126" x2="248" y2="126" stroke="#1769aa" stroke-width="2" marker-end="url(#protocol-exp-arrow-blue)"/>
+  <text x="452" y="145" text-anchor="middle" font-size="14" fill="#174a7e">チャレンジ C</text>
+  <line x1="244" y1="162" x2="652" y2="162" stroke="#344054" stroke-width="2" marker-end="url(#protocol-exp-arrow)"/>
+  <text x="448" y="181" text-anchor="middle" font-size="14" fill="#172b4d">応答 Z</text>
+  <rect x="276" y="187" width="350" height="23" rx="6" fill="#e7f2e8" stroke="#9bc5a0"/>
+  <text x="451" y="204" text-anchor="middle" font-size="13" fill="#245b2a">記録するビュー V=(x, R_V, M, C, Z, 判定)</text>
+
+  <rect x="20" y="232" width="860" height="187" rx="10" fill="#f7f5ff" stroke="#c9b9ed"/>
+  <text x="38" y="258" font-size="16" font-weight="700" fill="#563b8c">Fiat–Shamir変換後（非対話型）</text>
+  <rect x="43" y="278" width="231" height="61" rx="8" fill="#fff" stroke="#8e75c2" stroke-width="2"/>
+  <text x="158" y="301" text-anchor="middle" font-size="14" font-weight="700" fill="#35245f">証明者が $M$ を作る</text>
+  <text x="158" y="323" text-anchor="middle" font-size="13" fill="#344054">乱数 R_P を使用</text>
+  <line x1="275" y1="309" x2="318" y2="309" stroke="#344054" stroke-width="2" marker-end="url(#protocol-exp-arrow)"/>
+  <rect x="324" y="272" width="264" height="75" rx="8" fill="#fff" stroke="#8e75c2" stroke-width="2"/>
+  <text x="456" y="294" text-anchor="middle" font-size="14" font-weight="700" fill="#35245f">チャレンジを導出</text>
+  <text x="456" y="316" text-anchor="middle" font-size="13" fill="#344054">C = H(識別情報, x, M)</text>
+  <text x="456" y="336" text-anchor="middle" font-size="12" fill="#5b6472">H は暗号学的ハッシュ関数</text>
+  <line x1="589" y1="309" x2="632" y2="309" stroke="#344054" stroke-width="2" marker-end="url(#protocol-exp-arrow)"/>
+  <rect x="638" y="278" width="211" height="61" rx="8" fill="#fff" stroke="#8e75c2" stroke-width="2"/>
+  <text x="743" y="301" text-anchor="middle" font-size="14" font-weight="700" fill="#35245f">証明 π=(M,Z) を出力</text>
+  <text x="743" y="323" text-anchor="middle" font-size="13" fill="#344054">検証者は C を再計算</text>
+  <rect x="43" y="361" width="806" height="39" rx="7" fill="#fff" stroke="#c9b9ed"/>
+  <text x="446" y="378" text-anchor="middle" font-size="13" fill="#35245f">検証者との往復はない．実験では証明者の乱数とハッシュ関数の振る舞いを含めて出力を評価する</text>
+  <text x="446" y="394" text-anchor="middle" font-size="12" fill="#5b6472">ROMで解析するときは，Hを一貫したランダムオラクルとしてモデル化する</text>
+</svg>
+<figcaption>図 4-1：対話型証明では検証者の乱数と交換記録がビューになる．Fiat–Shamir変換ではチャレンジを先行メッセージから導き，証明を一括して検証できる形にする．</figcaption>
+</figure>
+
+対話型の場合，ビューを作る確率実験には証明者と検証者それぞれの乱数が入る．Fiat–Shamir変換後は検証者からのチャレンジ送信がなくなり，証明者が作る証明と暗号学的ハッシュ関数の出力が検証を決める．ただし，変換しただけで安全性が自動的に保証されるわけではない．安全性の議論では，プロトコル固有の条件や，ランダムオラクルモデル（ROM）などの解析モデルを明示する．
+
 確率を式にするときは，たとえば「最初のメッセージ $M$ を固定した条件で，検証者のチャレンジ $C$ がどの確率分布に従うか」「敵対者の乱数 $R_A$ も含めて，偽の命題が受理される確率はいくらか」を明示する．
 
 このように，選択順序は条件付き確率・独立性・敵対者の情報と結び付くことになる．
