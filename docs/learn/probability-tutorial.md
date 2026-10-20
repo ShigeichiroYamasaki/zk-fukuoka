@@ -365,7 +365,7 @@ $$
 また偏差（観測値と期待値の差）の両側については
 
 $$
-\Pr[S-\mathbb{E}[S]\ge t]\le 2\exp\!\left(-\frac{2t^2}{\sum_i(b_i-a_i)^2}\right)
+\Pr[|S-\mathbb{E}[S]|\ge t]\le 2\exp\!\left(-\frac{2t^2}{\sum_i(b_i-a_i)^2}\right)
 $$
 
 で上界が得られる．
@@ -838,6 +838,6 @@ $$
 
 [4] Goldreich, O. (2001). *Foundations of Cryptography, Volume 1: Basic Tools*. Cambridge University Press. ISBN 978-0-521-79172-4. [出版社の書籍情報](https://www.cambridge.org/core/books/foundations-of-cryptography/B61B6AD235D2034D511A5FF740415166)
 
-[5] NIST/SEMATECH. (2012). “Chi-Square Goodness-of-Fit Test.” *e-Handbook of Statistical Methods*, §1.3.5.15. [NIST](https://www.itl.nist.gov/div898/handbook/eda/section3/eda35f.htm)
+[5] NIST/SEMATECH. (2012). “Do All the Processes Have the Same Proportion of Defectives?” *e-Handbook of Statistical Methods*, §7.4.6. [NIST](https://itl.nist.gov/div898/handbook/prc/section4/prc46.htm)
 
 [6] Vadhan, S. P. (2021). “Statistical Zero Knowledge.” *CS6230: Foundations of Cryptography*, National University of Singapore, Lecture 6. [講義ノート（PDF）](https://www.comp.nus.edu.sg/~prashant/teaching/CS6230/files/notes/lecture06.pdf)

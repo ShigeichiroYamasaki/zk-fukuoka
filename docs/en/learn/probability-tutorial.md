@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 19, 2026
+Last updated: October 20, 2026
 
 Understanding a zero-knowledge proof (a way to check a statement without revealing the secret information behind it) requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a procedure that tries to tell two probability distributions apart (a distinguisher) is evaluated by comparing its output probabilities, both theoretically and through sample experiments. This leads to comparing the verifier’s record of a real interaction with a record generated without the secret information. The final sections apply these ideas to randomized checks and to limiting the chance that a false statement is accepted.
 
@@ -280,7 +280,13 @@ $$
 \Pr[S-\mathbb{E}[S]\ge t]\le\exp\!\left(-\frac{2t^2}{\sum_i(b_i-a_i)^2}\right).
 $$
 
-For deviations in either direction, multiply the right-hand side by $2$. This is **Hoeffding's inequality**. It needs independence and bounds on the variables, but not their detailed distributions. Since it measures deviation by a specified absolute amount $t$, it is useful for **additive deviations**.
+For deviations in either direction, Hoeffding's inequality gives
+
+$$
+\Pr[|S-\mathbb{E}[S]|\ge t]\le 2\exp\!\left(-\frac{2t^2}{\sum_i(b_i-a_i)^2}\right).
+$$
+
+It needs independence and bounds on the variables, but not their detailed distributions. Since it measures deviation by a specified absolute amount $t$, it is useful for **additive deviations**.
 
 For example, in 100 independent trials with success probability $0.1$, the success count $S$ has expectation 10. Reaching at least 20 successes means exceeding the expectation by 10. Since each indicator $X_i$ lies in $[0,1]$, Hoeffding gives
 
@@ -313,6 +319,10 @@ $$
 $$
 
 This is an upper bound, not the actual probability. Hoeffding's inequality gives $e^{-2}\approx0.135$ for the same event. Chernoff uses the Bernoulli setting and the mean to bound a relative deviation more tightly here, yielding $e^{-10/3}\approx0.036$. Hoeffding applies more broadly to sums of independent bounded variables. Markov uses only the expectation, while Chebyshev also uses the variance; choose among them by balancing assumptions against the tightness of the bound.
+
+**Why include Chernoff bounds in this tutorial?** They show how to estimate the chance that a sum of independent 0/1 outcomes deviates substantially from its mean. For example, when distinguishing probability distributions, recording a distinguisher's output for each sample makes the number of outputs equal to 1 a sum of Bernoulli random variables. The same kind of bound is useful for analyzing majority decisions or rules that accept while allowing up to a threshold number of failures.
+
+However, the soundness amplification in Section 8—accepting only when every independent test passes—has a miss probability that is directly bounded by $\epsilon^k$; Chernoff bounds are not needed for that calculation. Chernoff bounds are a more general tool for conditions based on the **number** of successes or failures, such as accepting despite a limited number of failed tests. In a cryptographic protocol, an adversary may adapt its later actions to earlier outcomes, so a security proof must establish the required independence or appropriate conditional-probability bounds before applying Chernoff.
 
 ## 6. Distinguishing probability distributions
 
@@ -423,6 +433,16 @@ We can also estimate the difference from finite samples. Suppose ten samples fro
 
 In these observations, $D=1$ on $\widehat q_0=(1+1)/10=0.20$ of the $P_0$ samples and $\widehat q_1=(2+4)/10=0.60$ of the $P_1$ samples. The estimated output-probability difference is $|0.60-0.20|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
 
+### Chi-square tests as an experimental check
+
+When a fixed distinguisher $D$ outputs either $0$ or $1$, the output counts from samples drawn from $P_0$ and $P_1$ can be arranged in a $2\times2$ contingency table. A **chi-square test** can then test whether the two sources have different output proportions. This is an experimental test of the hypothesis that the distinguisher's output probabilities are equal under the two sources. The test statistic measures the differences between observed counts and counts expected under the hypothesis, and is compared approximately with a chi-square distribution [5].
+
+In the sample above, the output-1 counts are 2 for $P_0$ and 6 for $P_1$; the output-0 counts are 8 and 4, respectively. Under the hypothesis of equal output proportions, the expected counts in each source row are 6 for output 0 and 4 for output 1. Pearson's chi-square statistic is about $3.33$ (1 degree of freedom). Since one expected cell count is 4, the chi-square approximation can be unreliable for such a small sample. We should not conclude that “there is no difference”; rather, this small experiment has not clearly detected one with this test. More samples or a method suitable for small expected counts may be needed.
+
+The chi-square test examines differences in the output of the selected distinguisher, or in categories chosen in advance. Failing to detect a difference does not prove that no difference exists, much less that no other distinguisher can tell the sources apart. The differences a test can detect depend on its categories and sample size.
+
+Zero-knowledge is not defined by this particular testing procedure. For a verifier, compare the view it obtains in a real interaction with the view generated by its corresponding simulator, and consider the output-probability difference (distinguishing advantage) of distinguishers. **Statistical zero-knowledge** requires the maximum difference over distinguishers without computational limits—equivalently, the appropriate statistical distance (total variation distance on a finite discrete space)—to be negligible in the security parameter. **Computational zero-knowledge** requires the distinguishing advantage to be negligible for every probabilistic polynomial-time distinguisher [6]. Thus, chi-square tests are supplementary tools for examining sample data; distinguishing advantage and statistical distance are the concepts used to define and prove zero-knowledge.
+
 When the distinguisher’s computational power is unrestricted, the maximum output-probability difference over a finite sample space equals the **total variation distance**
 
 $$
@@ -518,7 +538,13 @@ For precision, specify which random choices (such as the verifier’s or cheatin
 
 ## 7. Randomized checks and the Schwartz–Zippel lemma
 
-The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable argument. A **finite field** is a finite number system in which addition, subtraction, multiplication, and division by nonzero elements are possible. Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. A nonzero polynomial of degree at most $d$ has at most $d$ roots (inputs where its value is zero), so
+The Schwartz–Zippel lemma used in Session 3 is a typical probability-variable argument.
+
+#### Finite fields
+
+A **finite field** is a finite number system in which addition, subtraction, multiplication, and division by nonzero elements are possible.
+
+Let $h$ be a nonzero univariate polynomial over a finite field $\mathbb{F}$ with degree at most $d$, and let $R$ be a random variable chosen uniformly from a subset $S\subseteq\mathbb{F}$. A nonzero polynomial of degree at most $d$ has at most $d$ roots (inputs where its value is zero), so
 
 $$
 \Pr[h(R)=0]\leq\frac{d}{|S|}.
@@ -539,6 +565,8 @@ $$
 $$
 
 For example, four independent tests with $\epsilon=1/4$ give a miss probability at most $(1/4)^4=1/256$. If the tests are dependent, or later tests are chosen after observing earlier outcomes, this simple product may not apply. A soundness-amplification claim requires an argument for the protocol’s repetition method and the adversary’s adaptive behavior.
+
+For this all-tests-must-pass repetition, the product $\epsilon^k$ follows from independent miss events. This is a different calculation from using a Chernoff bound to estimate an upper-tail probability for the number of missed tests. Chernoff bounds become relevant when acceptance depends on a threshold number of failures—for example, when some failed tests are allowed. In that case, the proof must still justify the needed independence or conditional-probability bounds, including against adaptive adversaries.
 
 For failure events $E_1,\ldots,E_m$, the union bound gives
 
@@ -597,3 +625,7 @@ When calculating a probability, first write down what is randomized, how success
 [3] Goldreich, O. (1998). *Modern Cryptography, Probabilistic Proofs and Pseudorandomness*. Algorithms and Combinatorics, Vol. 17. Springer Berlin, Heidelberg. ISBN 978-3-540-64766-9. [Publisher information](https://link.springer.com/book/10.1007/978-3-662-12521-2)
 
 [4] Goldreich, O. (2001). *Foundations of Cryptography, Volume 1: Basic Tools*. Cambridge University Press. ISBN 978-0-521-79172-4. [Publisher information](https://www.cambridge.org/core/books/foundations-of-cryptography/B61B6AD235D2034D511A5FF740415166)
+
+[5] NIST/SEMATECH. (2012). “Do All the Processes Have the Same Proportion of Defectives?” *e-Handbook of Statistical Methods*, §7.4.6. [NIST](https://itl.nist.gov/div898/handbook/prc/section4/prc46.htm)
+
+[6] Vadhan, S. P. (2021). “Statistical Zero Knowledge.” *CS6230: Foundations of Cryptography*, National University of Singapore, Lecture 6. [Lecture notes (PDF)](https://www.comp.nus.edu.sg/~prashant/teaching/CS6230/files/notes/lecture06.pdf)
