@@ -30,7 +30,6 @@ Use the following preferred Japanese terms throughout the project. Where helpful
 | trusted setup | トラステッドセットアップ | An initial setup that requires the secret trapdoor to be generated and managed appropriately. Do not use 信頼設定. |
 | folding | フォールディング | An operation that progressively combines polynomials or proof instances. Do not use 折り畳み or 畳み込み for this meaning. |
 | polynomial divisibility | 多項式の整除性 | The relation in which one polynomial is divisible by another. Do not use 割り切れ性. |
-| probability distribution | 確率分布 | A specification of the probabilities with which a random variable takes values. Do not shorten it to 分布 when the probabilistic meaning is intended. |
 | negligible function | 無視可能関数 | A nonnegative function that is eventually smaller than $1/p(n)$ for every positive polynomial $p(n)$. Do not use 無視できる関数 as the term name. Describe a probability, distance, or difference as 無視可能である. |
 | hash function | ハッシュ関数 | A general function that maps arbitrary-length inputs to fixed-length outputs. Call one used for cryptographic purposes a 暗号学的ハッシュ関数. |
 | cryptographic hash function | 暗号学的ハッシュ関数 | A hash function used in cryptographic protocols with expected properties such as collision resistance. Use this full term rather than ハッシュ関数 alone for cryptographic use. |
@@ -38,9 +37,17 @@ Use the following preferred Japanese terms throughout the project. Where helpful
 | prover | 証明者 | The party that generates a proof. |
 | verifier | 検証者 | The party that checks a proof. |
 | commitment | コミットメント | A cryptographic construction that binds a value against later change and, depending on the scheme, hides its contents. |
+| binding | 束縛性 | The property that a commitment cannot be validly opened as two different values. |
+| hiding | 隠蔽性 | The property that a commitment reveals no information about its value before it is opened. |
+| interactive proof | 対話型証明 | A procedure in which a prover and verifier exchange messages to check a proposition. |
+| challenge | チャレンジ | A random question or value sent from the verifier to the prover in an interactive proof. |
+| zero-knowledge proof | ゼロ知識証明 | A proof system that lets a verifier check a proposition while revealing no information beyond its truth. |
+| Fiat–Shamir transform | Fiat–Shamir変換 | A transformation that removes interaction by deriving an interactive proof's challenge from a cryptographic hash function applied to prior messages. Security must be checked for each protocol and model. |
+| random oracle model (ROM) | ランダムオラクルモデル（ROM） | A security-analysis model that treats a cryptographic hash function as an ideal function returning consistent random values in response to queries. |
 | probability space | 確率空間 | The triple consisting of a sample space, a collection of events, and a probability measure on those events. |
 | probability measure | 確率測度 | A function assigning probabilities to events in a sample space. |
 | experiment / trial | 確率実験／試行 | A procedure whose outcome is probabilistic, or one execution of that procedure. |
+| Bernoulli trial | ベルヌーイ試行 | A trial whose outcome is classified as success or failure. State explicitly when repeated trials must be independent or have the same success probability. |
 | sample space | 標本空間 | The set of all possible outcomes of a probability experiment. |
 | event | 事象 | A subset of the sample space whose probability is considered. |
 | random variable | 確率変数 | A function that maps outcomes in a sample space to values, such as numbers. |
@@ -69,6 +76,8 @@ Use the following preferred Japanese terms throughout the project. Where helpful
 | distinguishing advantage | 識別能力（出力確率差） | The absolute difference between the probabilities that a distinguisher outputs 1 in two probability experiments. It is distinct from statistical significance in hypothesis testing. |
 | output-probability difference | 出力確率差 | The difference between the probabilities that a specified distinguisher returns a designated output in two experiments. This is the measure used here to define distinguishing power. |
 | computational indistinguishability | 計算量的識別不能性 | A property requiring every probabilistic polynomial-time distinguisher to have negligible distinguishing power between two experiments as the security parameter grows. |
+| probability ensemble | 確率分布族 | A family of probability distributions with one distribution for each value of a security parameter or other index. Asymptotic indistinguishability compares such families. |
+| statistical distance | 統計距離 | A general notion of distance between probability distributions. State the specific definition and do not identify it unconditionally with total variation distance for finite discrete distributions. |
 | total variation distance | 全変動距離 | A distance between discrete probability distributions, equal to maximum distinguishing power on a finite sample space. Distinguish it from statistical distance in general; specify the distance used for continuous distributions or other settings. |
 | almost-sure equality | ほとんど確実な等しさ | Equality of two random variables with probability 1. Distinguish it from equality at every sample point and from equality of distributions. |
 | equality in distribution | 確率分布の等しさ（同分布） | Equality of the probability distributions of random variables. It does not mean their values agree pointwise. |
