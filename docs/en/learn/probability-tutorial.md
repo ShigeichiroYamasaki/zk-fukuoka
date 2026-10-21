@@ -452,6 +452,18 @@ A **probabilistic polynomial-time algorithm** may use random bits and has runnin
 
 A **negligible function** is a function that, for every positive polynomial $p(n)$, is smaller than $1/p(n)$ for all sufficiently large $n$. Equivalently, as $n$ grows, it approaches zero faster than the reciprocal of every polynomial.
 
+##### Closure properties of negligible functions
+
+Cryptographic proofs often add negligible probabilities or multiply them by a polynomial. These operations preserve negligibility under the following conditions:
+
+- A finite sum of negligible functions is negligible.
+- The product of a negligible function and a nonnegative function bounded by a polynomial is negligible. In particular, counting the same negligible failure bound a polynomial number of times still gives a negligible total.
+- A finite product of negligible functions is negligible.
+
+For example, $\varepsilon(n)=2^{-n}$ is negligible, and so is $n^3\varepsilon(n)$. Multiplying by a polynomial does not change the fact that $2^{-n}$ eventually becomes smaller than the reciprocal of every polynomial. Also, independence is not needed for the union bound: if each of $k(n)$ failure events has probability at most $\varepsilon(n)$, the probability that at least one occurs is at most $k(n)\varepsilon(n)$. If $k(n)$ is polynomially bounded, this total failure probability remains negligible.
+
+The common bound matters when summing polynomially many terms: each term should be bounded by the same negligible function $\varepsilon(n)$. An arbitrary list of different negligible functions does not automatically have a negligible sum when the number of terms grows with $n$.
+
 #### Distribution ensembles
 
 Distribution ensembles $X_n,Y_n$ are sequences that specify one probability distribution for each parameter $n$; their sample lengths are assumed to be bounded by a polynomial in $n$.
