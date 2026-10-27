@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 20, 2026
+Last updated: October 28, 2026
 
 Understanding a zero-knowledge proof (a way to check a statement without revealing the secret information behind it) requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a procedure that tries to tell two probability distributions apart (a distinguisher) is evaluated by comparing its output probabilities, both theoretically and through sample experiments. This leads to comparing the verifier’s record of a real interaction with a record generated without the secret information. The final sections apply these ideas to randomized checks and to limiting the chance that a false statement is accepted.
 
@@ -470,13 +470,40 @@ Distribution ensembles $X_n,Y_n$ are sequences that specify one probability dist
 
 #### Computational indistinguishability
 
-For two distribution ensembles and a distinguisher $A$, define the following output-probability difference:
+Here, **indistinguishable** means that no efficient distinguisher can tell the two distribution ensembles apart with a noticeable advantage as the security parameter $n$ grows.
+
+First fix one distinguisher $A$. We compare the probability that it outputs $1$ in two separate experiments:
+
+1. Draw a sample from $X_n$ and give $(\text{sample},1^n)$ to $A$.
+2. Draw a sample from $Y_n$ and give $(\text{sample},1^n)$ to the same $A$.
+
+The absolute difference between these two probabilities is the distinguisher’s **output-probability difference**:
 
 $$
-d_A(n)=\left|\Pr[A(X_n,1^n)=1]-\Pr[A(Y_n,1^n)=1]\right|
+\begin{aligned}
+q_0^A(n)&=\Pr[A(X_n,1^n)=1],\\
+q_1^A(n)&=\Pr[A(Y_n,1^n)=1],\\
+d_A(n)&=|q_0^A(n)-q_1^A(n)|.
+\end{aligned}
 $$
 
-In each probability, a sample is drawn from the indicated distribution and the algorithm is run; if it is randomized, its coins are included. This difference measures the algorithm’s ability to tell the two sources apart. If it is negligible for every probabilistic polynomial-time algorithm, the ensembles are called **computationally indistinguishable**. Some definitions also allow nonuniform polynomial-size circuits; this tutorial does not cover that variant.
+Here, $q_0^A(n)$ is the probability of output $1$ in the first experiment, and $q_1^A(n)$ is that probability in the second. The probabilities include both the random sample and the distinguisher’s own random coins. Since $d_A(n)$ is the absolute difference between these probabilities, a large value means that $A$ can more easily tell the experiments apart, while a small value means it has little distinguishing power.
+
+Next, write “negligible difference” explicitly. A function $\varepsilon(n)$ is **negligible** if, for every positive polynomial $p(n)$, it eventually satisfies
+
+$$
+\varepsilon(n)<\frac{1}{p(n)}.
+$$
+
+Thus, the ensembles $X_n,Y_n$ are computationally indistinguishable if the output-probability difference $d_A(n)$ is negligible for **every probabilistic polynomial-time distinguisher $A$**. With the quantifiers shown, this means
+
+$$
+\forall A\in\mathrm{PPT},\ \forall\text{ positive polynomials }p,\ \exists N_{A,p},\ \forall n\ge N_{A,p}:\quad d_A(n)<\frac{1}{p(n)}.
+$$
+
+In other words, once the distinguisher and polynomial $p$ are fixed, there is a threshold $N_{A,p}$ after which the output-probability difference is smaller than $1/p(n)$. The threshold may depend on both choices. For example, $2^{-n}$ is negligible, whereas $1/n^2$ is not: choosing $p(n)=n^3$ shows that $1/n^2<1/n^3$ never holds for large $n$.
+
+**Negligibility is a property of a family as $n$ varies.** A small output-probability difference at just one value of $n$ does not establish computational indistinguishability. Some definitions also allow nonuniform polynomial-size circuits; this tutorial does not cover that variant.
 
 “Negligible” is a property as $n$ varies; it has no meaning for just two distributions at one fixed value of $n$. For the simpler discussion below, fix $n$ and write its two distributions as $P_0,P_1$. Let $q_i$ be the probability that $D$ outputs $1$ in the separate experiment using $P_i$, including any internal randomness of $D$:
 
@@ -555,15 +582,19 @@ We can also estimate the difference from finite samples. Suppose ten samples fro
 
 In these observations, $D=1$ on $\widehat q_0=(1+1)/10=0.20$ of the $P_0$ samples and $\widehat q_1=(2+4)/10=0.60$ of the $P_1$ samples. The estimated output-probability difference is $|0.60-0.20|=0.40$. It differs from the theoretical value $0.50$ because a finite sample fluctuates by chance. More samples tend to bring the estimate closer to the theoretical value, but a finite experiment need not match it exactly.
 
-### Total variation distance
+### Statistical distance and total variation distance
 
-When the distinguisher’s computational power is unrestricted, the maximum output-probability difference over a finite sample space equals the **total variation distance**
+**Statistical distance** is a general name for numerical measures of how different two probability distributions are; the phrase alone does not specify one formula. Choose the measure for the setting and state its definition. Cryptography texts sometimes use *statistical distance* to mean total variation distance, but terminology varies. This tutorial uses **total variation distance**, which directly measures distinguishing power for finite discrete distributions.
+
+For distributions $P,Q$ and a set $A$ of sample values, $|P(A)-Q(A)|$ is the difference between the probabilities that a sample falls in $A$. The total variation distance is the largest such difference over all sets $A$:
 
 $$
-\Delta(P_0,P_1)=\frac12\sum_z|P_0(z)-P_1(z)|.
+\Delta(P,Q)=\max_A|P(A)-Q(A)|=\frac12\sum_z|P(z)-Q(z)|.
 $$
 
-A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires the output-probability difference of every such distinguisher to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
+The final equality is the probability-mass-function formula for finite or countable sample spaces. The maximum is attained by choosing $A$ to contain the values where $P(z)-Q(z)$ is positive; the total positive difference is half the sum of absolute differences.
+
+When the distinguisher’s computational power is unrestricted, the maximum output-probability difference over a finite sample space equals the total variation distance $\Delta(P_0,P_1)$. A distinguisher that outputs 1 exactly when the sample lies in $A$ achieves the difference $|P_0(A)-P_1(A)|$. A small total variation distance makes the distributions hard to distinguish by any test. In **computational indistinguishability**, cryptography restricts distinguishers to probabilistic polynomial time and requires the output-probability difference of every such distinguisher to be negligible in the security parameter. Two distributions may have a large total variation distance yet remain indistinguishable to efficient distinguishers.
 
 The total variation distance satisfies the triangle inequality, $\Delta(P_0,P_2)\le\Delta(P_0,P_1)+\Delta(P_1,P_2)$. Computational distinguishing power can likewise be bounded by summing the differences across intermediate distributions. This is the basis of the **hybrid argument**.
 
