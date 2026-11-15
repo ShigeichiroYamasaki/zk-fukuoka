@@ -141,9 +141,11 @@ Selecting parameters such as the embedding degree requires number-theoretic anal
 
 ### 2.3 The new capability provided by pairings
 
-Read bilinearity as a verification tool. Given $aP$ and $bQ$, the pairing produces $e(P,Q)^{ab}$: the product appears in an exponent without recovering $a$ or $b$. Symmetric notation writes this as $e(g^a,g^b)=e(g,g)^{ab}$, but actual constructions may require distinct generators in $G_1$ and $G_2$. Keep those types clear.
+ECDH (Elliptic-Curve Diffie–Hellman key exchange) makes the pairing's distinct role easier to see. In a group of order $q$, Alice chooses secret $a$ and sends $A=aP$; Bob chooses secret $b$ and sends $B=bP$. Alice computes $aB=abP$ with her secret, while Bob computes $bA=abP$ with his. They derive a shared key from this point using a key-derivation function. An observer sees $P,A,B$, but under the Computational Diffie–Hellman assumption, cannot compute $abP$. ECDH's purpose is to let the two participants derive a shared secret.
 
-This is a **multiplicative verification capability** unavailable from ordinary discrete-log group operations alone, which provide additive structure in the exponents. Many SNARKs, including Groth16, use this property to verify polynomial multiplication relations in QAPs from Session 4. This connection will be crucial when studying Groth16 in Act III.
+With a pairing, anyone can compute $e(A,B)=[ab]_T$ from points $A=[a]_1$ and $B=[b]_2$ in distinct input groups. This output is therefore public, not a secret key like the ECDH shared key. The purpose is different: a pairing lets us check relations involving the product of values encoded in group elements without recovering $a$ or $b$. Ordinary group operations alone cannot form this product relation without knowing the exponents. This **multiplicative verification capability** lets SNARKs such as Groth16 check polynomial multiplication relations from the QAP in Session 4. ECDH supports secret-key agreement; pairings support publicly checkable algebraic relations. They are not interchangeable schemes.
+
+In practical pairings, $G_1$ and $G_2$ have distinct generators and point types, so read the equation as $e([a]_1,[b]_2)=[ab]_T$. We will use this distinction in the following sections and when studying Groth16.
 
 <div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
 
