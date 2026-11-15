@@ -81,13 +81,24 @@ The discrete-log problem can also be defined in $\mathbb{F}_p^*$ from Session 3.
 
 ### 2.1 Definition
 
-Given group addition and scalar multiplication, what extra operation lets us check a relation involving the product of two hidden scalars? Consider the following map from two groups into a target group.
+First, recall the general meaning of a bilinear map. Given vector spaces $V,W,U$ over a field $K$, a map $B:V\times W\to U$ is **bilinear** when it is linear in each input separately. That is, for all $u,u_1,u_2\in V$, $v,v_1,v_2\in W$, and $\alpha,\beta\in K$,
+
+$$
+B(\alpha u_1+\beta u_2,v)=\alpha B(u_1,v)+\beta B(u_2,v),\qquad
+B(u,\alpha v_1+\beta v_2)=\alpha B(u,v_1)+\beta B(u,v_2).
+$$
+
+For example, the ordinary dot product $B(u,v)=\sum_i u_iv_i$ takes two vectors and returns a field element; it is a bilinear map.
+
+A **cryptographic bilinear pairing** $e$ has the same algebraic property of being bilinear in each input, but its input and output types differ from an ordinary dot product. Its inputs are points in two cyclic groups $G_1,G_2$, and its output is an element of a third group $G_T$. The source groups use addition, while the target group uses multiplication. If we rewrote the target operation in additive notation, the same bilinear laws would apply; in the usual multiplicative notation, addition in an input corresponds to multiplication in the output, and scalar multiplication corresponds to exponentiation. A pairing is not a different algebraic notion of bilinearity; it is a bilinear map between differently typed groups, with a multiplicative target operation.
+
+This lets us handle products of exponents across two groups. Consider the map
 
 $$e: G_1 \times G_2 \to G_T$$
 
 where $q$ is prime and $G_1,G_2,G_T$ are cyclic groups of order $q$, satisfying:
 
-- **Bilinearity:** $e(aP, bQ) = e(P, Q)^{ab}$ for all $a, b \in \mathbb{Z}_q$, $P \in G_1$, and $Q \in G_2$.
+- **Bilinearity:** $e(P_1+P_2,Q)=e(P_1,Q)e(P_2,Q)$ and $e(P,Q_1+Q_2)=e(P,Q_1)e(P,Q_2)$. Consequently, for scalars $a,b\in\mathbb F_q$, $e(aP,bQ)=e(P,Q)^{ab}$, where $P,P_1,P_2\in G_1$ and $Q,Q_1,Q_2\in G_2$.
 - **Non-degeneracy:** $e(P, Q) \ne 1$ when $P$ and $Q$ are generators.
 - **Efficient computability:** $e$ can be computed in polynomial time.
 
