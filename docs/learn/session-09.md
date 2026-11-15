@@ -16,7 +16,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月18日
+最終更新日付：2026年11月15日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第9回](./#session-9) · [第9回の演習](../exercises/session-09)
 
@@ -123,7 +123,7 @@ $$c = H(\text{コミット}, x)$$
 
 ### 3.2 ROMでの安全性証明の骨格
 
-Schnorr型の構成など，必要な条件を満たす場合には，第6回のforking lemmaが使える．同じ敵対者の実行を分岐させ，あるオラクル応答を変えて，異なるチャレンジに対する受理記録を得る．その記録からウィットネスを抽出する方針である．ただし，すべての公開コイン型プロトコルに同じ証明が適用できるわけではない．変換前の性質と，変換後に示したい性質を確認する必要がある．
+Schnorr型の構成など，必要な条件を満たす場合には，第6回の分岐補題が使える．同じ敵対者の実行を分岐させ，あるオラクル応答を変えて，異なるチャレンジに対する受理記録を得る．その記録からウィットネスを抽出する方針である．ただし，すべての公開コイン型プロトコルに同じ証明が適用できるわけではない．変換前の性質と，変換後に示したい性質を確認する必要がある．
 
 ---
 
@@ -195,7 +195,7 @@ Goldwasser–Sipserは，[秘密コイン型IPを公開コイン型へ変換で�
 
 非対話化した記録には，さらに $c=H(x,a)$ が必要になる．プログラム可能なROMでのシミュレータは，未定義の入力への応答を適切に設定することで，この関係を成立させる場合がある．ただし，すでに問い合わせた点との整合性や，実際のランダムオラクルとの確率分布の差まで解析しなければならない．現実の証明者が，SHA-256の任意の出力を上書きできるという意味ではない．
 
-また，forking lemmaで異なる実行のオラクル応答を変えるのは，知識の抽出を示す還元の中の操作である．ゼロ知識性のシミュレータが応答を設定する操作とは，目的が異なる．いずれも，実装に「暗号学的ハッシュ関数の出力を変更するAPI」があるという説明ではない．
+また，分岐補題で異なる実行のオラクル応答を変えるのは，知識の抽出を示す還元の中の操作である．ゼロ知識性のシミュレータが応答を設定する操作とは，目的が異なる．いずれも，実装に「暗号学的ハッシュ関数の出力を変更するAPI」があるという説明ではない．
 
 この違いは，[ROMにおけるゼロ知識性の定式化を比較した研究](https://www.iacr.org/archive/asiacrypt2009/59120414/59120414.pdf)でも扱われている．どのオラクルへのアクセスと設定権限をシミュレータに与えるかで，保証する性質が変わる．「シミュレータが存在する」だけで，現実の第三者も同じ公開暗号学的ハッシュ関数のもとで受理証明を生成できるとは言えない．
 
@@ -230,7 +230,7 @@ CGHの反例に加え，Goldwasser–Kalaiは，[安全な3ラウンドの公開
 今日は，対話をなくす変換と，その変換の安全性を扱うモデルを学んだ．手順，モデル，実装の三つを分けて振り返ろう．
 
 - Fiat-Shamir変換:対話型プロトコルのチャレンジを暗号学的ハッシュ関数で代用することによる非対話化の仕組み
-- Random Oracle Model:暗号学的ハッシュ関数を理想化したモデルにおける安全性証明の考え方，forking lemma(第6回)がここで実際に使われること
+- Random Oracle Model:暗号学的ハッシュ関数を理想化したモデルにおける安全性証明の考え方，分岐補題(第6回)がここで実際に使われること
 - ROMの理論的な限界:CGHの反例が示す，ROMでの証明が万能の保証にならないことの理論的根拠
 - それでもROMが実務で広く受け入れられている理由と，その批判的な評価の必要性
 
@@ -246,7 +246,7 @@ CGHの反例に加え，Goldwasser–Kalaiは，[安全な3ラウンドの公開
 
 [3] Canetti, Goldreich, Halevi, [“The Random Oracle Methodology, Revisited,” JACM 2004](https://eprint.iacr.org/1998/011)（ROMの限界を示した反例．IACR ePrintの公開版・PDFあり．初期版は1998年）
 
-[4] Pointcheval, Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003)（forking lemmaの整理された定式化．出版社の論文ページ．[第6回](./session-06)の内容の再確認）
+[4] Pointcheval, Stern, [“Security Arguments for Digital Signatures and Blind Signatures,” Journal of Cryptology, 2000](https://link.springer.com/article/10.1007/s001450010003)（分岐補題の整理された定式化．出版社の論文ページ．[第6回](./session-06)の内容の再確認）
 
 [5] Goldwasser, Sipser, [“Private Coins versus Public Coins in Interactive Proof Systems,” STOC 1986](https://www.cs.toronto.edu/tss/files/papers/goldwasser-Sipser.pdf)
 
