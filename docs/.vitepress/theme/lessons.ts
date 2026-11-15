@@ -32,7 +32,7 @@ export const lessons = [
   },
   {
     "number": 6,
-    "ja": "Low-Degree Testingと健全性増幅",
+    "ja": "低次数検定と健全性増幅",
     "en": "Low-degree testing and soundness amplification",
     "material": "learn/session-06.html"
   },
