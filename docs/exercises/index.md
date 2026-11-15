@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 演習
 
-更新日：2026年10月18日
+更新日：2026年11月15日
 
 講義で学んだことを，計算や実装で確かめよう．演習教材，利用可能なツール，基本操作マニュアルをここから探せます．
 
@@ -105,11 +105,11 @@ Dockerを使う場合は `docker compose run --rm ruby ruby test/ruby/test_examp
 
 ## STARKの実装例と操作マニュアル {#stark}
 
-[第13回・STARK](../learn/session-13)に対応する外部の実装例です．**外部Python教材で仕組みを追うならAnatomy of a STARK，AIRを自分で記述するならWinterfell，プログラムの実行を証明するならMiden VM**を選べます．本サイトで用意する計算例や応用編はRubyを基本にし，外部実装はそれぞれの開発言語を使います．実装サイトと，著者・開発元の操作手順やコード例を対にしています．
+[第13回・STARK](../learn/session-13)では，まずサイト内の[Rubyフォールディング例](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/examples/fri_folding.rb)を使って計算を確認できます．外部実装をさらに読む場合は，Anatomy of a STARK（Python），AIRを自分で記述するWinterfell（Rust），プログラムの実行を証明するMiden VMを選べます．本サイトの演習コードはRubyを基本にし，外部実装はそれぞれの開発言語を使います．
 
 | 実装サイト | 演習で扱う例・学習の目的 | 環境・目安 | 操作マニュアル・実行例 |
 | --- | --- | --- | --- |
-| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) | Rescue-Primeの計算を証明する教育用Python実装．有限体・多項式・FRI・STARKを段階的に組み立てる | ローカルのPython．第3〜6回を復習しながら実装を学ぶ人向け | [著者のチュートリアル](https://aszepieniec.github.io/stark-anatomy/) / [Part 5: 証明系の組み立て](https://aszepieniec.github.io/stark-anatomy/rescue-prime) / [Pythonコードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code)．READMEのJekyll起動手順は解説サイト用で，Python演習の手順ではない |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | Rescue-Primeの計算を証明する教育用Python実装．有限体・多項式・FRI・STARKを段階的に組み立てる | ローカルのPythonが必要．サイト内Ruby演習を終えた後の発展読書向け | [著者のチュートリアル](https://aszepieniec.github.io/stark-anatomy/) / [Part 5: 証明系の組み立て](https://aszepieniec.github.io/stark-anatomy/rescue-prime) / [Pythonコードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code)．READMEのJekyll起動手順は解説サイト用 |
 | [Winterfell](https://github.com/facebook/winterfell) | 値を3乗して42を加える反復計算の例．実行トレース，遷移制約，境界の指定，証明生成・検証を対応づける | ローカルのRust/Cargo．Rust経験者向け | [公式の利用チュートリアル](https://github.com/facebook/winterfell#usage) / [演習用の実装例](https://github.com/facebook/winterfell/tree/main/examples) / [APIマニュアル](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyの加算やFibonacciの例．VMでプログラムを実行し，その実行証明を生成・検証する | ローカルのRust/CargoとMiden VM CLI．VMを使う演習向け | [公式クレートREADME・利用例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) / [CLI操作](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#cli-interface) / [Fibonacci演習](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#fibonacci-example)．リンクは開発ブランチ `next` のため，利用するリリースと手順の版を揃える |
 

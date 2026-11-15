@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Basic operation manuals
 
-Updated: October 18, 2026
+Updated: November 15, 2026
 
 Follow the Act III exercises (Sessions 11–15): generate and verify a proof, compare setup requirements, inspect execution traces, compare results, and explore advanced constructions.
 
@@ -90,7 +90,7 @@ Check what code is provided and what remains an implementation task. **You do no
 | [14: Integration](../learn/session-14) | Record comparable experiments | [Comparison](#comparison) | Separate measurements from theoretical properties |
 | [15: Further directions](../learn/session-15) | Explore recursion, folding and sumcheck | [Advanced exercises](#advanced) | Explain what is combined and which costs are reduced |
 
-Ruby is the default for off-chain ledger, training and aggregation models in the applied courses. Circom is used for proof circuits, Solidity for L1 contracts, and Node.js where required by proving tools. Start Sessions 11–12 with **Circom + snarkjs** to reuse a circuit. Anatomy of a STARK is an external Python resource; Winterfell is an external Rust implementation for writing AIR; Miden VM is an external VM exercise. Installing every implementation is unnecessary.
+Ruby is the default for the site's exercise calculations and off-chain ledger, training and aggregation models. Circom is used for proof circuits, Solidity for L1 contracts, and Node.js where required by proving tools. Session 13 starts with the Ruby folding example; Anatomy of a STARK (Python), Winterfell (Rust), and Miden VM are optional external implementations for further study. Installing every implementation is unnecessary.
 
 ## Common preparation and circuit creation {#circuits}
 
@@ -104,7 +104,7 @@ Create an exercise directory and record the implementation release or commit and
 | Go | [gnark getting started](https://docs.gnark.consensys.io/HowTo/get_started) | Example and dependency versions match |
 | Rust | [Rust installation](https://doc.rust-lang.org/book/ch01-01-installation.html) and the selected implementation README | Record Rust/Cargo versions and feature flags |
 | Ruby | [Installing Ruby](https://www.ruby-lang.org/en/documentation/installation/), [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/), [Ruby reference](https://docs.ruby-lang.org/en/) | Use a maintained stable release, not a preview. The provided Ruby code uses standard libraries only |
-| External Python resource | [Anatomy code](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | This language choice belongs to the external resource, not the site's applied-course default |
+| Optional external Python resource | [Anatomy code](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | This external resource's language choice does not replace the site's Ruby exercise |
 
 ### Prepare shared Circom inputs
 
@@ -150,11 +150,12 @@ In the exercise log, record how challenges are mapped into the field, the per-ch
 
 ### Session 13: STARK {#stark}
 
-Choose one implementation and start with a small official example.
+Start by running the site's Ruby calculation example. Then, if useful, choose one external implementation and begin with a small official example.
 
 | Approach | Implementation and manuals | Inspect |
 | --- | --- | --- |
-| Read an external Python implementation | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Prime, traces, constraints, proving and verification. This external resource uses Python. Jekyll instructions serve its website, not the code exercise |
+| Calculate folding in Ruby | [Session 13 exercise code and instructions](./session-13#ruby-folding) | Finite-field arithmetic, the degree condition, and valid/invalid examples. This does not implement a cryptographic STARK proof |
+| Read an external Python implementation (optional) | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Prime, traces, constraints, proving and verification. The external resource uses Python |
 | Write AIR in Rust | [Winterfell usage](https://github.com/facebook/winterfell#usage), [examples](https://github.com/facebook/winterfell/tree/main/examples), [API](https://docs.rs/winterfell/latest/winterfell/) | Trace construction, transitions, boundary assertions, proving and verification |
 | Prove VM execution | [Miden VM CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | Instructions, inputs, outputs and execution proof. Match `next` documentation to your release |
 

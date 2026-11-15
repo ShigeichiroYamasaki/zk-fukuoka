@@ -37,20 +37,15 @@ The sections below provide the derivations, counterexamples, and runnable Ruby c
 Use deposits $d_0=4,d_1=3$ and withdrawals $w_0=2,w_1=5$. There are exactly two entries on each side, each an integer from zero to seven. Use an arbitrary smallest unit, without floating-point amounts.
 
 ```ruby
-def balanced(deposits, withdrawals):
-    if len(deposits) != 2 or len(withdrawals) != 2:
-        return False
-    if not all(type(x) is int and 0 <= x <= 7
-               for x in deposits + withdrawals):
-        return False
-    s = 0
-    t = 0
-    for i in range(2):
-        s += deposits[i]
-        t += withdrawals[i]
-    return s == t
+def balanced(deposits, withdrawals)
+  return false unless deposits.length == 2 && withdrawals.length == 2
+  amounts = deposits + withdrawals
+  return false unless amounts.all? { |x| x.is_a?(Integer) && x.between?(0, 7) }
 
-print(balanced([4, 3], [2, 5]))  # True: 7 == 7
+  deposits.sum == withdrawals.sum
+end
+
+puts balanced([4, 3], [2, 5]) # true: 7 == 7
 ```
 
 ### Public inputs and field arithmetic

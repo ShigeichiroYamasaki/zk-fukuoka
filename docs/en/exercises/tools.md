@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Available tools
 
-Updated: October 13, 2026
+Updated: November 15, 2026
 
 New off-chain ledger, training and aggregation models in the applied courses use Ruby by default. Circom, Solidity and Node.js are used where required for proof circuits, EVM contracts and proving tools. Follow the language requirements of external implementations.
 
@@ -23,7 +23,7 @@ Choose implementations and computation environments for Act III (Sessions 11–1
 | --- | --- | --- | --- |
 | [11: Groth16](../learn/session-11) | Circom + snarkjs | Complete a circuit-to-proof workflow | [Groth16](./manuals#groth16) |
 | [12: PLONK](../learn/session-12) | Same Circom circuit + snarkjs | Compare setup and artifacts for the same computation | [PLONK](./manuals#plonk) |
-| [13: STARK](../learn/session-13) | Anatomy of a STARK / Winterfell / Miden VM | Read the external Python resource / write AIR in Rust / prove VM execution | [STARK](./manuals#stark) |
+| [13: STARK](../learn/session-13) | Ruby folding example / Winterfell / Miden VM | Check the arithmetic in Ruby / write AIR in Rust / prove VM execution | [STARK](./manuals#stark) |
 | [14: Comparison](../learn/session-14) | Selected implementations + spreadsheet or Ruby + Git | Record conditions and compare results | [Comparison](./manuals#comparison) |
 | [15: Extensions](../learn/session-15) | Nova; SageMath / Ruby | Explore recursion/folding and small sumcheck calculations | [Advanced exercises](./manuals#advanced) |
 
@@ -56,7 +56,8 @@ Circuit formats and APIs differ across PLONK implementations. Distinguish a Circ
 
 | Implementation | Exercise role | Environment and audience | Manuals |
 | --- | --- | --- | --- |
-| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) | Read educational code building from fields, polynomials and FRI | Python; step-by-step study | [Author's tutorial](https://aszepieniec.github.io/stark-anatomy/), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
+| [Site Ruby exercise](../session-13) | Run a folding calculation over a finite field and check the degree condition | Ruby; standard library only | [Code and instructions](../session-13#ruby-folding) |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) (optional external reference) | Read educational Python code building from fields, polynomials and FRI | Python; further study of an external implementation | [Author's tutorial](https://aszepieniec.github.io/stark-anatomy/), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
 | [Winterfell](https://github.com/facebook/winterfell) | Implement traces, transition constraints and boundary assertions | Rust/Cargo; write AIR directly | [Usage](https://github.com/facebook/winterfell#usage), [API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Execute Miden Assembly and generate/verify execution proofs | Rust/Cargo and VM CLI | [CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
 

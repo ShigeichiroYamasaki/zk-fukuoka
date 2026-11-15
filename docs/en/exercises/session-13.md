@@ -1,10 +1,10 @@
 # Session 13 exercise: STARK transparency and execution traces
 
-Updated: October 18, 2026
+Updated: November 15, 2026
 
 [Session 13: STARK](../learn/session-13) · [Exercises index](./)
 
-Check STARK trace constraints and the design tradeoff with transparent proofs.
+Check STARK trace constraints and the design tradeoff with transparent proofs. The runnable calculation example in this site uses Ruby by default.
 
 ### Try it
 
@@ -13,4 +13,14 @@ Over $\mathbb F_{17}$, start at $s_0=3$ and apply $s_{i+1}=s_i^2$ three times. W
 ### Check
 
 The trace is $3,9,13,16$. Transitions check each adjacent squaring step; boundaries fix $s_0=3$ and $s_3=16$. KZG uses a trusted setup and pairing assumptions for short proofs. FRI uses transparent commitments based on cryptographic hash functions, typically with larger proofs and verification work.
+
+### Check a folding calculation in Ruby {#ruby-folding}
+
+Run the site's [Ruby FRI folding example](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/examples/fri_folding.rb) from the repository root:
+
+```sh
+ruby docs/public/examples/fri_folding.rb
+```
+
+Over a small evaluation domain in $\mathbb F_{17}$, the code combines even- and odd-degree components and checks examples that do and do not satisfy the degree condition. It is educational arithmetic for following FRI folding, not a STARK implementation with Merkle trees, interaction, or cryptographic security. Anatomy of a STARK is an optional external reference for reading a separate implementation.
 

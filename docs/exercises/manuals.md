@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 基本操作マニュアル集
 
-更新日：2026年10月18日
+更新日：2026年11月15日
 
 幕III（第11〜15回）の演習を進めるための操作案内です．第11回で証明の生成・検証を一巡し，第12回でセットアップの違い，第13回で実行トレース，第14回で方式の比較，第15回で発展的な構成を確認します．
 
@@ -90,7 +90,7 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 | [第14回・統合](../learn/session-14) | 条件を揃えて記録・比較する | [比較と考察](#comparison) | 実測値と理論的性質を分けて説明できる |
 | [第15回・発展](../learn/session-15) | 再帰・フォールディング・sumcheckの役割を調べる | [発展演習](#advanced) | 何を集約し，どの負担を減らすか説明できる |
 
-応用編で自作するオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．証明回路にはCircom，L1コントラクトにはSolidity，証明ツールにはNode.jsが必要なため，これらは目的に応じて併用します．初めてなら **Circom＋snarkjsで第11・12回を続けて進める**と，回路を再利用して違いを確認できます．第13回のAnatomy of a STARKは外部のPython教材，WinterfellはRustでAIRを書く外部実装，Miden VMはVMの操作を学ぶ外部実装です．すべて導入する必要はありません．
+本サイトの演習用計算コードと応用編で自作するオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．証明回路にはCircom，L1コントラクトにはSolidity，証明ツールにはNode.jsが必要なため，これらは目的に応じて併用します．第13回はRubyのフォールディング例から始め，必要ならAnatomy of a STARK（Python），Winterfell（Rust），Miden VMを外部実装の参考として読み進めます．すべて導入する必要はありません．
 
 ## 共通の準備と回路の作成 {#circuits}
 
@@ -104,7 +104,7 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 | Goの実装 | [gnark導入](https://docs.gnark.consensys.io/HowTo/get_started) | 例と依存モジュールの版が一致する |
 | Rustの実装 | [Rust導入（日本語）](https://doc.rust-jp.rs/book-ja/ch01-01-installation.html)と選んだ実装のREADME | Rust/Cargoの版，必要な機能フラグを記録する |
 | Rubyの実装 | [Rubyのインストール](https://www.ruby-lang.org/ja/documentation/installation/)，[20分ではじめるRuby](https://www.ruby-lang.org/ja/documentation/quickstart/)，[リファレンスマニュアル](https://docs.ruby-lang.org/ja/) | プレビュー版ではなく，保守中の安定版Rubyを使う．応用編の配布Rubyコードは標準ライブラリで動く |
-| 外部のPython教材 | [Anatomy of a STARKのコード](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | これは外部教材の言語選択であり，本サイトの応用編の基本言語とは区別する |
+| 任意の外部Python教材 | [Anatomy of a STARKのコード](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | 外部教材の言語選択です．サイト内のRuby演習を置き換えるものではありません |
 
 ### Circomで共通の入力を用意する
 
@@ -150,11 +150,12 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 
 ### 第13回：STARK {#stark}
 
-目的に合う実装を一つ選び，公式の小さい例から始めます．
+まずサイト内のRuby計算例を実行します．その後，必要に応じて目的に合う外部実装を一つ選び，公式の小さい例から始めます．
 
 | 学び方 | 実装と操作マニュアル | 追いかける箇所 |
 | --- | --- | --- |
-| 外部Python実装を読む | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証．外部教材の実装言語はPython．Jekyll起動は解説サイト用で，コード演習とは別 |
+| Rubyでフォールディングを計算 | [第13回演習のコードと手順](./session-13#ruby-folding) | 有限体上の計算，次数条件，正常・不正例．暗号学的なSTARK証明を実装するものではない |
+| 外部Python実装を読む（任意） | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証．外部教材はPython実装 |
 | RustでAIRを書く | [Winterfellの利用手順](https://github.com/facebook/winterfell#usage)，[実装例](https://github.com/facebook/winterfell/tree/main/examples)，[API](https://docs.rs/winterfell/latest/winterfell/) | トレースの作成，遷移制約，境界の指定，証明・検証 |
 | VMで実行を証明する | [Miden VMのCLIと例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | 命令列，入力，実行結果，実行証明．`next`の手順と利用リリースの差を確認する |
 

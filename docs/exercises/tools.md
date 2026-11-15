@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 利用可能なツール
 
-更新日：2026年10月14日
+更新日：2026年11月15日
 
 応用編で新たに書くオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．Circom・Solidity・Node.jsなどは，証明回路やEVM，証明ツールに必要な範囲で併用します．外部実装の言語は各教材の説明に従います．
 
@@ -23,7 +23,7 @@ outline: [2, 3]
 | --- | --- | --- | --- |
 | [第11回・Groth16](../learn/session-11) | Circom＋snarkjs | 回路から証明生成・検証まで一巡する | [Groth16の手順](./manuals#groth16) |
 | [第12回・PLONK](../learn/session-12) | 同じCircom回路＋snarkjs | 計算を揃えてセットアップと生成物の違いを見る | [PLONKの手順](./manuals#plonk) |
-| [第13回・STARK](../learn/session-13) | Anatomy of a STARK／Winterfell／Miden VM | 外部Python教材で構造を読む／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
+| [第13回・STARK](../learn/session-13) | Rubyのフォールディング例／Winterfell／Miden VM | Rubyで算術を確認する／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
 | [第14回・比較](../learn/session-14) | 使った実装＋表計算またはRuby＋Git | 条件と結果を記録し，比較する | [比較と考察](./manuals#comparison) |
 | [第15回・発展](../learn/session-15) | Nova，SageMath／Ruby | 再帰・フォールディングの実装と，sumcheckの小さな計算を調べる | [発展演習](./manuals#advanced) |
 
@@ -56,7 +56,8 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 
 | 実装・サイト | 演習での役割 | 環境・対象 | 操作マニュアル |
 | --- | --- | --- | --- |
-| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) | 有限体・多項式・FRIから証明系を組み立てる教育用コードを読む | Python．仕組みを段階的に学ぶ人向け | [著者の解説](https://aszepieniec.github.io/stark-anatomy/)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
+| [サイト内Ruby演習](../session-13) | 有限体上のフォールディング計算を実行し，次数条件を確認する | Ruby．標準ライブラリのみ | [コードと実行手順](../session-13#ruby-folding) |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | 有限体・多項式・FRIから証明系を組み立てる教育用Pythonコードを読む | Python．外部実装を追う発展向け | [著者の解説](https://aszepieniec.github.io/stark-anatomy/)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
 | [Winterfell](https://github.com/facebook/winterfell) | 実行トレース，遷移制約，境界の指定を実装する | Rust/Cargo．AIRを自分で記述したい人向け | [利用チュートリアル](https://github.com/facebook/winterfell#usage)，[API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyのプログラムを実行し，実行証明を生成・検証する | Rust/CargoとVM CLI．VM操作を学ぶ人向け | [CLIと実行例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
 

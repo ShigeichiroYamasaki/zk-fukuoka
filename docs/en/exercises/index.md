@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Exercises
 
-Updated: October 18, 2026
+Updated: November 15, 2026
 
 Explore lecture concepts through calculations and implementation. Find exercise materials, available tools, and basic operation manuals here.
 
@@ -105,11 +105,11 @@ Official documentation checked on **September 27, 2026**. Manuals are primarily 
 
 ## STARK implementations and operation manuals {#stark}
 
-These external examples accompany [Session 13: STARK](../learn/session-13). Choose **Anatomy of a STARK to follow its external Python tutorial, Winterfell to write AIR constraints, or Miden VM to prove program execution**. The site's own arithmetic and applied examples use Ruby by default; external implementations use their native languages. Each implementation is paired with instructions and examples from its author or development team.
+For [Session 13: STARK](../learn/session-13), start with the site's [Ruby FRI folding example](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/examples/fri_folding.rb). For further external study, choose Anatomy of a STARK (Python), Winterfell to write AIR constraints (Rust), or Miden VM to prove program execution. The site's exercise code uses Ruby by default; external implementations use their native languages.
 
 | Implementation | Example and learning objective | Environment and level | Operation manuals and examples |
 | --- | --- | --- | --- |
-| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) | An educational Python implementation proving a Rescue-Prime computation; build up finite fields, polynomials, FRI, and STARKs | Local Python; for learning the construction while revisiting Sessions 3–6 | [Author’s tutorial](https://aszepieniec.github.io/stark-anatomy/) / [Part 5: Putting the proof system together](https://aszepieniec.github.io/stark-anatomy/rescue-prime) / [Python code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code). The README’s Jekyll instructions serve the explanation website, not the Python exercise |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) (optional external reference) | An educational Python implementation proving a Rescue-Prime computation; build up finite fields, polynomials, FRI, and STARKs | Requires local Python; optional further reading after the site's Ruby exercise | [Author’s tutorial](https://aszepieniec.github.io/stark-anatomy/) / [Part 5: Putting the proof system together](https://aszepieniec.github.io/stark-anatomy/rescue-prime) / [Python code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code). The README’s Jekyll instructions serve the explanation website |
 | [Winterfell](https://github.com/facebook/winterfell) | Repeatedly cube a value and add 42; connect the execution trace, transition constraints, boundary assertions, proving, and verification | Local Rust/Cargo; for Rust programmers | [Official usage tutorial](https://github.com/facebook/winterfell#usage) / [Example implementations](https://github.com/facebook/winterfell/tree/main/examples) / [API manual](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Addition and Fibonacci examples in Miden Assembly; execute a program, generate its execution proof, and verify it | Local Rust/Cargo and the Miden VM CLI; for VM-based exercises | [Official crate README and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) / [CLI operations](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#cli-interface) / [Fibonacci exercise](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#fibonacci-example). These links target the development branch `next`; match your release and documentation versions |
 
