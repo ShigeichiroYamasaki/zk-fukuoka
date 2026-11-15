@@ -38,9 +38,9 @@ This session uses Session 3’s finite fields and multiplicative groups, the dis
 
 ### Roadmap for this session
 
-<div class="captioned-table" id="table-07-4" role="group" aria-labelledby="table-caption-07-4">
+<div class="captioned-table" id="table-07-1" role="group" aria-labelledby="table-caption-07-1">
 
-<p class="table-caption" id="table-caption-07-4"><strong>Table 07-4：Learning sequence from groups to security reductions</strong></p>
+<p class="table-caption" id="table-caption-07-1"><strong>Table 07-1：Learning sequence from groups to security reductions</strong></p>
 
 | Stage | Question | Connection to later sessions |
 | --- | --- | --- |
@@ -102,10 +102,56 @@ where $q$ is prime and $G_1,G_2,G_T$ are cyclic groups of order $q$, satisfying:
 - **Non-degeneracy:** $e(P, Q) \ne 1$ when $P$ and $Q$ are generators.
 - **Efficient computability:** $e$ can be computed in polynomial time.
 
+Here $G_1,G_2$ are the input groups and $G_T$ is the output group. Section 2.4 specifies their elements and operations. For now, note that a pairing is a bilinear map between differently typed groups.
+
+### 2.2 Pairing-friendly curves
+
+Making pairings easy to compute is not enough; some choices undermine security. We need to balance efficient pairing computation with hardness of discrete logarithms. Examples of curves designed for this purpose include:
+
+- **BN254:** A Barreto–Naehrig curve that has long been widely used in many systems.
+- **BLS12-381:** A curve widely adopted for its higher security level.
+
+Selecting parameters such as the embedding degree requires number-theoretic analysis. For now, the key point is that carefully designed curves balance security and efficiency and are used in practice.
+
+### 2.3 The new capability provided by pairings
+
+ECDH (Elliptic-Curve Diffie–Hellman key exchange) makes the pairing's distinct role easier to see. In a group of order $q$, Alice chooses secret $a$ and sends $A=aP$; Bob chooses secret $b$ and sends $B=bP$. Alice computes $aB=abP$ with her secret, while Bob computes $bA=abP$ with his. They derive a shared key from this point using a key-derivation function. An observer sees $P,A,B$, but under the Computational Diffie–Hellman assumption, cannot compute $abP$. ECDH's purpose is to let the two participants derive a shared secret.
+
+With a pairing, anyone can compute $e(aP,bQ)=e(P,Q)^{ab}$ from points $aP\in G_1$ and $bQ\in G_2$ in distinct input groups. This output is therefore public, not a secret key like the ECDH shared key. The purpose is different: a pairing lets us check relations involving the product of values encoded in group elements without recovering $a$ or $b$. Ordinary group operations alone cannot form this product relation without knowing the exponents. This **multiplicative verification capability** lets SNARKs such as Groth16 check polynomial multiplication relations from the QAP in Session 4. ECDH supports secret-key agreement; pairings support publicly checkable algebraic relations. They are not interchangeable schemes.
+
+In practical pairings, $G_1$ and $G_2$ have distinct generators and point types, so read the equation as $e([a]_1,[b]_2)=[ab]_T$. We will use this distinction in the following sections and when studying Groth16.
+
+### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
+
+The field containing point coordinates need not equal the field of scalars. Keep $\mathbb F_p$ as the coordinate field, and now assume the common group order $q$ is prime. Scalars belong to $\mathbb F_q$: since $qP=O$, scalar multiplication depends only on the scalar modulo $q$. **Groth16's R1CS and QAP coefficients live in this scalar field.** Do not confuse $q$ with the coordinate modulus $p$.
+
+For generators $P\in G_1$ and $Q\in G_2$, write
+
+$$[a]_1=aP,\qquad[b]_2=bQ,\qquad g_T=e(P,Q),\qquad[c]_T=g_T^c.$$
+
+We use additive notation for the source groups and multiplicative notation for the target. Session 11's notation $[a]_1=g^a$ describes the same structure multiplicatively.
+
+<div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
+
+<p class="table-caption" id="table-caption-07-2"><strong>Table 07-2：Pairing types and their corresponding scalar operations</strong></p>
+
+| Object | Notation and operation | Scalar interpretation |
+|---|---|---|
+| $G_1$ | $[a]_1+[b]_1=[a+b]_1$, $k[a]_1=[ka]_1$ | Addition and multiplication by known $k\in\mathbb F_q$ |
+| $G_2$ | $[a]_2+[b]_2=[a+b]_2$, $k[a]_2=[ka]_2$ | Addition and multiplication by known $k\in\mathbb F_q$ |
+| $G_T$ | $[a]_T[b]_T=[a+b]_T$ | Addition of exponents |
+| Pairing | $e([a]_1,[b]_2)=[ab]_T$ | Multiplication of two scalars |
+
+</div>
+
+We now connect the notation to concrete group constructions.
+
 The symbols alone can obscure what these sets contain, so let us distinguish the three groups. A **subgroup** is a subset of a larger group that is closed under the group operation and contains the identity and inverses. In an elliptic-curve group, the elements are curve points and the operation is point addition.
 
 - $G_1$ and $G_2$ are subgroups of order $q$ (that is, with $q$ elements) selected from suitable elliptic-curve groups. Their elements are points and their operation is addition. A pairing treats them as distinct input types. In implementations, $G_1$ often uses points on a curve over the base field, while $G_2$ uses points represented on a curve over an extension field or on its twist.
 - $G_T$ is not a set of elliptic-curve points. It is a subgroup of order $q$ inside the multiplicative group $\mathbb F_{p^k}^{*}$ of **nonzero** elements of the extension field $\mathbb F_{p^k}$. Its elements are nonzero field elements, its operation is multiplication, and its identity is $1$.
+
+In practical asymmetric pairings, a $G_1$ point cannot simply be used in the $G_2$ input position. The **embedding degree** explains why extension fields occur in $G_2$ and $G_T$: it is the smallest positive integer $k$ such that $q\mid(p^k-1)$, and determines the extension field used for the target group.
 
 All three groups have $q$ elements, but their elements and operations differ: $G_1,G_2$ add points, while $G_T$ multiplies field elements. Figure 07-2 shows the types: two point groups go in, and a multiplicative subgroup of a field receives the output.
 
@@ -141,73 +187,9 @@ $$
 
 Exponents are computed modulo the group order, so the exponent here is $6$. This symbolic example illustrates how the number of point additions becomes a product in the exponent; it is not an actual pairing calculation or a cryptographic parameter set. The relationship between real curve groups and fields is revisited in [Section 2.4](#pairing-math). Weil and Tate pairings are constructions that realize such maps. We will focus on the verification equations enabled by their properties, not on their computation algorithms.
 
-### 2.2 Pairing-friendly curves
+### 2.5 Applying bilinearity to verification equations {#pairing-product-check}
 
-Making pairings easy to compute is not enough; some choices undermine security. We need to balance efficient pairing computation with hardness of discrete logarithms. Examples of curves designed for this purpose include:
-
-- **BN254:** A Barreto–Naehrig curve that has long been widely used in many systems.
-- **BLS12-381:** A curve widely adopted for its higher security level.
-
-Selecting parameters such as the embedding degree requires number-theoretic analysis. For now, the key point is that carefully designed curves balance security and efficiency and are used in practice.
-
-### 2.3 The new capability provided by pairings
-
-ECDH (Elliptic-Curve Diffie–Hellman key exchange) makes the pairing's distinct role easier to see. In a group of order $q$, Alice chooses secret $a$ and sends $A=aP$; Bob chooses secret $b$ and sends $B=bP$. Alice computes $aB=abP$ with her secret, while Bob computes $bA=abP$ with his. They derive a shared key from this point using a key-derivation function. An observer sees $P,A,B$, but under the Computational Diffie–Hellman assumption, cannot compute $abP$. ECDH's purpose is to let the two participants derive a shared secret.
-
-With a pairing, anyone can compute $e(A,B)=[ab]_T$ from points $A=[a]_1$ and $B=[b]_2$ in distinct input groups. This output is therefore public, not a secret key like the ECDH shared key. The purpose is different: a pairing lets us check relations involving the product of values encoded in group elements without recovering $a$ or $b$. Ordinary group operations alone cannot form this product relation without knowing the exponents. This **multiplicative verification capability** lets SNARKs such as Groth16 check polynomial multiplication relations from the QAP in Session 4. ECDH supports secret-key agreement; pairings support publicly checkable algebraic relations. They are not interchangeable schemes.
-
-In practical pairings, $G_1$ and $G_2$ have distinct generators and point types, so read the equation as $e([a]_1,[b]_2)=[ab]_T$. We will use this distinction in the following sections and when studying Groth16.
-
-<div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
-
-<p class="table-caption" id="table-caption-07-2"><strong>Table 07-2：Pairings expose a product in the exponent</strong></p>
-
-| Step / stage | Explanation |
-| --- | --- |
-| 1. Inputs from two groups | aP ∈ G₁, bQ ∈ G₂ |
-| 2. Apply the bilinear map | e(aP, bQ) |
-| 3. Relation in the target group | e(aP, bQ) = e(P, Q)ᵃᵇ ∈ G\_T |
-
-</div>
-
-G₁ and G₂ use additive notation; G\_T uses multiplicative notation. This does not recover a or b: it enables checking relations between encoded values.
-
-::: tip Connection to PLONK: pairings support KZG openings
-The original PLONK uses KZG polynomial commitments. Pairings help verify evaluation openings of committed polynomials; PLONK's copy constraints themselves are checked with a permutation argument and grand product over the scalar field. Do not conflate this with pairings directly checking the circuit wiring. Read [Session 8 on KZG](./session-08) alongside [Session 12's overview](./session-12).
-:::
-
-### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
-
-The field containing point coordinates need not equal the field of scalars. Keep $\mathbb F_p$ as the coordinate field, and now assume the common group order $q$ is prime. Scalars belong to $\mathbb F_q$: since $qP=O$, scalar multiplication depends only on the scalar modulo $q$. **Groth16's R1CS and QAP coefficients live in this scalar field.** Do not confuse $q$ with the coordinate modulus $p$.
-
-For generators $P\in G_1$ and $Q\in G_2$, write
-
-$$[a]_1=aP,\qquad[b]_2=bQ,\qquad g_T=e(P,Q),\qquad[c]_T=g_T^c.$$
-
-We use additive notation for the source groups and multiplicative notation for the target. Session 11's notation $[a]_1=g^a$ describes the same structure multiplicatively.
-
-<div class="captioned-table" id="table-07-1" role="group" aria-labelledby="table-caption-07-1">
-
-<p class="table-caption" id="table-caption-07-1"><strong>Table 07-1：Pairing types and their corresponding scalar operations</strong></p>
-
-| Object | Notation and operation | Scalar interpretation |
-|---|---|---|
-| $G_1$ | $[a]_1+[b]_1=[a+b]_1$ | Addition |
-| $G_2$ | $k[a]_2=[ka]_2$ | Multiplication by known $k\in\mathbb F_q$ |
-| $G_T$ | $[a]_T[b]_T=[a+b]_T$ | Addition of exponents |
-| Pairing | $e([a]_1,[b]_2)=[ab]_T$ | Multiplication of two scalars |
-
-</div>
-
-For practical asymmetric pairings, a $G_1$ element cannot simply be supplied in a $G_2$ input position. $G_2$ uses an extension-field curve or a twist representation; $G_T$ is an order-$q$ subgroup of $\mathbb F_{p^k}^*$. The embedding degree $k$ is the smallest positive integer satisfying $q\mid(p^k-1)$.
-
-### 2.5 What bilinearity can check {#pairing-product-check}
-
-Separating the two arguments gives
-
-$$e(U+V,Q)=e(U,Q)e(V,Q),\qquad e(P,S+T)=e(P,S)e(P,T).$$
-
-Applying these identities to scalar multiplication yields $e(aP,bQ)=g_T^{ab}$. Non-degeneracy and prime order imply that $g_T$ has order $q$, hence
+Using the bilinearity from Section 2.1 and notation from Section 2.4, we can replace a scalar-product equality with a comparison of group elements. Since $g_T\ne1$ by non-degeneracy and the group has prime order $q$, $g_T$ also has order $q$. Therefore,
 
 $$e([a]_1,[b]_2)=e([c]_1,[1]_2)\quad\Longleftrightarrow\quad ab=c\text{ in }\mathbb F_q.$$
 
@@ -283,6 +265,10 @@ $$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\,
 **The verifier compares target-group elements without recovering secret scalars.** This calculation establishes completeness for correctly generated proofs. Knowledge soundness and zero-knowledge require separate arguments, discussed with the original paper's model in Session 11. Implementations must also validate inputs, including curve and subgroup membership.
 
 Public-input MSM work depends on the number of public inputs, while the proof has three group elements and the number of pairings is constant. Groth16 does not check every circuit multiplication with a separate pairing.
+
+::: tip Connection to PLONK: pairings support KZG openings
+The original PLONK uses KZG polynomial commitments. Pairings help verify evaluation openings of committed polynomials; PLONK's copy constraints themselves are checked with a permutation argument and grand product over the scalar field. Do not conflate this with pairings directly checking the circuit wiring. Read [Session 8 on KZG](./session-08) alongside [Session 12's overview](./session-12).
+:::
 
 
 ---
