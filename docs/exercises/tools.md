@@ -56,7 +56,7 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 
 | 実装・サイト | 演習での役割 | 環境・対象 | 操作マニュアル |
 | --- | --- | --- | --- |
-| [サイト内Ruby演習](../session-13) | 有限体上のフォールディング計算を実行し，次数条件を確認する | Ruby．標準ライブラリのみ | [コードと実行手順](../session-13#ruby-folding) |
+| [サイト内Ruby演習](../learn/session-13) | 有限体上のフォールディング計算を実行し，次数条件を確認する | Ruby．標準ライブラリのみ | [コードと実行手順](../learn/session-13#ruby-folding) |
 | [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | 有限体・多項式・FRIから証明系を組み立てる教育用Pythonコードを読む | Python．外部実装を追う発展向け | [著者の解説](https://aszepieniec.github.io/stark-anatomy/)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
 | [Winterfell](https://github.com/facebook/winterfell) | 実行トレース，遷移制約，境界の指定を実装する | Rust/Cargo．AIRを自分で記述したい人向け | [利用チュートリアル](https://github.com/facebook/winterfell#usage)，[API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyのプログラムを実行し，実行証明を生成・検証する | Rust/CargoとVM CLI．VM操作を学ぶ人向け | [CLIと実行例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |

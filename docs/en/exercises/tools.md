@@ -56,7 +56,7 @@ Circuit formats and APIs differ across PLONK implementations. Distinguish a Circ
 
 | Implementation | Exercise role | Environment and audience | Manuals |
 | --- | --- | --- | --- |
-| [Site Ruby exercise](../session-13) | Run a folding calculation over a finite field and check the degree condition | Ruby; standard library only | [Code and instructions](../session-13#ruby-folding) |
+| [Site Ruby exercise](../learn/session-13) | Run a folding calculation over a finite field and check the degree condition | Ruby; standard library only | [Code and instructions](../learn/session-13#ruby-folding) |
 | [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) (optional external reference) | Read educational Python code building from fields, polynomials and FRI | Python; further study of an external implementation | [Author's tutorial](https://aszepieniec.github.io/stark-anatomy/), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
 | [Winterfell](https://github.com/facebook/winterfell) | Implement traces, transition constraints and boundary assertions | Rust/Cargo; write AIR directly | [Usage](https://github.com/facebook/winterfell#usage), [API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Execute Miden Assembly and generate/verify execution proofs | Rust/Cargo and VM CLI | [CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
