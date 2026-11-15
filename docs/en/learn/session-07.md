@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: November 14, 2026
+Last updated: November 15, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Session 7 exercises](../exercises/session-07)
 
@@ -210,11 +210,23 @@ Pairing output lies in $G_T$ and cannot simply be fed back into the pairing to m
 
 ### 2.6 Evaluating at a secret point using group elements {#encoded-polynomial-evaluation}
 
-For $f(X)=\sum_{j=0}^d f_jX^j$, an SRS containing $[1]_1,[\tau]_1,\dots,[\tau^d]_1$ enables
+An **SRS** is a *structured reference string*: public parameters generated during setup and referenced by the prover and verifier according to their roles. Despite the word “string,” in this example it is an ordered list of group elements. The entries are structured: they correspond to powers of a setup scalar $\tau$.
+
+Consider a simplified setup for polynomials of maximum degree $d$. Let $P_1$ generate $G_1$, and use a secret $\tau\in\mathbb F_q$ to compute $[1]_1=P_1,[\tau]_1=\tau P_1,\dots,[\tau^d]_1=\tau^dP_1$. Publish these group elements. Here $[a]_1$ means the scalar $a$ encoded as the point $aP_1$; it does not publish the number $a$. A security premise is that no one knows $\tau$ after setup. A distributed setup depends on conditions such as at least one honest participant erasing their secret contribution. If the secret remains known, the security of the construction may be undermined.
+
+For example, if $f(X)=2+3X+X^2$, an SRS up to degree 2 lets the prover compute
+
+$$2[1]_1+3[\tau]_1+[\tau^2]_1=[2+3\tau+\tau^2]_1=[f(\tau)]_1.$$
+
+The left side uses only scalar multiplication by the known coefficients and group addition. The prover need not know $\tau$ or directly read the numerical value $f(\tau)$.
+
+<StudyDiagram id="07-4" :en="true" />
+
+In general, for $f(X)=\sum_{j=0}^d f_jX^j$, an SRS containing $[1]_1,[\tau]_1,\dots,[\tau^d]_1$ enables
 
 $$\sum_{j=0}^d f_j[\tau^j]_1=[f(\tau)]_1.$$
 
-This is a **multi-scalar multiplication (MSM)**: known coefficients multiply points, and the results are added. It is analogous to Session 4's dot product, with encoded values replacing scalars. Neither $\tau$ nor the numerical value $f(\tau)$ needs to be known.
+This is a **multi-scalar multiplication (MSM)**: known coefficients multiply points, and the results are added. It is analogous to Session 4's dot product, with encoded values replacing scalars. The published output is the group encoding $[f(\tau)]_1$, not the numerical value $f(\tau)$. Here we focus on the powers-of-$\tau$ portion of the SRS.
 
 Groth16's proving key additionally contains circuit-dependent combinations and encodings involving $1/\delta$. Using a supplied point $[u/\delta]_1$ does not mean the prover numerically divides by an unknown $\delta$. The available key elements determine which computations can be performed.
 

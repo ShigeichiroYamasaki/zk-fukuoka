@@ -976,6 +976,44 @@ export const diagrams = {
       }
     ]
   },
+  "07-4": {
+    "section": "2.6",
+    "type": "flow",
+    "title": [
+      "SRSから，秘密の評価点での値を群要素として計算する",
+      "Use the SRS to compute a secret-point evaluation as a group element"
+    ],
+    "top": [
+      "最大次数 d を先に定める．SRSは，セットアップ秘密 τ のべきに対応する公開群要素の列．",
+      "Fix the maximum degree d. The SRS is a public list of group elements corresponding to powers of the setup secret τ."
+    ],
+    "nodes": [
+      {
+        "title": ["セットアップでべきを符号化", "Encode powers during setup"],
+        "body": ["生成元 P₁ と秘密 τ から，各 τʲP₁ を計算する．", "Use generator P₁ and secret τ to compute each τʲP₁."],
+        "formula": "[1]₁, [τ]₁, …, [τᵈ]₁"
+      },
+      {
+        "title": ["SRSを公開", "Publish the SRS"],
+        "body": ["群要素の列は公開する．τ自体は秘密のままにし，セットアップ後に誰も知らない状態にする．", "Publish the group elements, but keep τ secret so no one knows it after setup."],
+        "formula": "[τʲ]₁ = τʲP₁"
+      },
+      {
+        "title": ["係数で点をスカラー倍", "Scale points by coefficients"],
+        "body": ["多項式の既知の係数 fⱼ を使う．例：f(X)=2+3X+X²", "Use the known polynomial coefficients fⱼ. Example: f(X)=2+3X+X²"],
+        "formula": "2[1]₁ + 3[τ]₁ + [τ²]₁"
+      },
+      {
+        "title": ["点を加えて評価値を符号化", "Add points to encode the evaluation"],
+        "body": ["得るのは数値 f(τ) ではなく，それを表す群要素．", "The result is not the number f(τ), but a group element encoding it."],
+        "formula": "[f(τ)]₁ = [2+3τ+τ²]₁"
+      }
+    ],
+    "note": [
+      "[a]₁ は aP₁ という群要素を表す．SRSは度数上限までの係数に対応する点を用意する．実際のGroth16証明鍵には，回路固有の線形結合や別の群の要素も含まれる．",
+      "[a]₁ denotes the group element aP₁. The SRS supplies points for coefficients up to the degree bound. An actual Groth16 proving key also contains circuit-specific linear combinations and elements from other groups."
+    ]
+  },
   "07-3": {
     "section": "4.1",
     "type": "flow",
