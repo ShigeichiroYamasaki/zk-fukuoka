@@ -16,7 +16,7 @@ import StudyDiagram from "../.vitepress/theme/StudyDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年10月18日
+最終更新日付：2026年11月14日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第7回](./#session-7) · [第7回の演習](../exercises/session-07)
 
@@ -85,13 +85,50 @@ $$y^2 = x^3 + ax + b \quad (4a^3 + 27b^2 \ne 0)$$
 
 $$e: G_1 \times G_2 \to G_T$$
 
-であって，次の性質を満たすものをいう($G_1, G_2, G_T$ は位数 $q$ の巡回群):
+であって，次の性質を満たすものをいう．ここでは $q$ を素数とし，$G_1,G_2,G_T$ はそれぞれ位数 $q$ の巡回群とする．
 
 - **双線形性**:$e(aP, bQ) = e(P, Q)^{ab}$ (任意の $a, b \in \mathbb{Z}_q$，$P \in G_1$, $Q \in G_2$)
 - **非退化性**:$e(P, Q) \ne 1$(ただし $P, Q$ が生成元のとき)
 - **効率的計算可能性**:$e$ は多項式時間で計算できる
 
-ここで $G_1,G_2$ は適切な楕円曲線群の部分群，$G_T$ は拡大体の乗法群の部分群として構成される．WeilペアリングやTateペアリングなどは，この写像を実現するための道具である．今日は写像を作る計算法を追わず，上の三つの性質があれば，どのような検証式を作れるかを考える．
+記号だけでは対象が見えにくいので，まず三つの群を具体的に区別しよう．**部分群**とは，大きな群の要素のうち，群の演算をしてもその集合から出ず，単位元や逆元も含むように選んだ集合である．楕円曲線群では，要素は曲線上の点，演算は点の加法である．
+
+- $G_1$ と $G_2$ は，適切な楕円曲線群から選んだ位数 $q$（要素が $q$ 個）の部分群である．どちらも要素は点で，加法で演算する．ただし，ペアリングでは別々の入力型として扱う．実装では，$G_1$ は素体上の曲線の点，$G_2$ は拡大体上の曲線またはそのツイストで表す点を使うことが多い．
+- $G_T$ は楕円曲線上の点の集合ではない．拡大体 $\mathbb F_{p^k}$ の **0でない元**からなる乗法群 $\mathbb F_{p^k}^{*}$ の中から選んだ，位数 $q$ の部分群である．要素は0でない体の元で，演算は掛け算，単位元は $1$ である．
+
+どの群も要素数は $q$ 個だが，要素の種類と演算は異なる．$G_1,G_2$ では「点を足す」のに対し，$G_T$ では「体の元を掛ける」．図07-2では，二つの点群を入力に取り，体の乗法部分群へ値を返す型の違いを示す．
+
+例えば，位数7の部分群を生成元 $P$ で表すと，その要素は $O,P,2P,3P,4P,5P,6P$ で，次に $P$ を加えると $7P=O$ に戻る．実際の $G_1$ では，これらは抽象的な記号でなく楕円曲線上の点である．
+
+<figure id="figure-07-2" aria-labelledby="caption-07-2" style="margin:24px 0">
+<div style="overflow-x:auto"><svg viewBox="0 0 960 340" role="img" aria-labelledby="pairing-groups-title pairing-groups-desc" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;min-width:760px;height:auto;border:1px solid var(--vp-c-divider,#d1d5db);border-radius:12px;background:var(--vp-c-bg,#fff)">
+<title id="pairing-groups-title">ペアリングの三つの群と写像の型</title>
+<desc id="pairing-groups-desc">G1とG2は楕円曲線の点からなる位数qの部分群で，どちらも点の加法を使う。ペアリングeは二つの点群を入力に取り，拡大体の0でない元からなる位数qの乗法部分群GTへ出力する。</desc>
+<defs><marker id="pairing-arrow-07" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--vp-c-brand-1,#2563eb)"/></marker></defs>
+<g fill="var(--vp-c-bg-soft,#f8fafc)" stroke="var(--vp-c-divider,#94a3b8)" stroke-width="2">
+<rect x="24" y="28" width="320" height="112" rx="14"/><rect x="24" y="198" width="320" height="112" rx="14"/>
+<rect x="420" y="106" width="150" height="124" rx="18" fill="var(--vp-c-brand-soft,#eff6ff)" stroke="var(--vp-c-brand-1,#2563eb)"/>
+<rect x="652" y="91" width="284" height="154" rx="14"/>
+</g>
+<g fill="var(--vp-c-text-1,#111827)" font-family="system-ui, sans-serif">
+<text x="48" y="63" font-size="24" font-weight="700">G₁：楕円曲線上の点</text><text x="48" y="94" font-size="17">素体上の曲線 E / Fₚ など</text><text x="48" y="121" font-size="17">演算：点の加法　｜　位数 q</text>
+<text x="48" y="233" font-size="24" font-weight="700">G₂：別の点群</text><text x="48" y="264" font-size="17">拡大体上の曲線・ツイスト表現など</text><text x="48" y="291" font-size="17">演算：点の加法　｜　位数 q</text>
+<text x="495" y="151" text-anchor="middle" font-size="28" font-weight="700">e(P,Q)</text><text x="495" y="183" text-anchor="middle" font-size="16">ペアリング</text><text x="495" y="207" text-anchor="middle" font-size="15">点 × 点 → 元</text>
+<text x="677" y="128" font-size="24" font-weight="700">G_T：拡大体の乗法部分群</text><text x="677" y="164" font-size="17">Fₚᵏ の 0 でない元の一部</text><text x="677" y="194" font-size="17">演算：掛け算　｜　位数 q</text><text x="677" y="224" font-size="17">単位元：1</text>
+</g>
+<g fill="none" stroke="var(--vp-c-brand-1,#2563eb)" stroke-width="3" marker-end="url(#pairing-arrow-07)"><path d="M344 84 C380 84 390 130 420 144"/><path d="M344 254 C380 254 390 208 420 194"/><path d="M570 168 L640 168"/></g>
+<g fill="var(--vp-c-text-2,#4b5563)" font-family="system-ui, sans-serif" font-size="15"><text x="360" y="68">P ∈ G₁</text><text x="360" y="278">Q ∈ G₂</text><text x="579" y="151">出力</text></g>
+</svg></div>
+<figcaption id="caption-07-2"><strong>図 07-2：点の加法群から体の乗法群へ写すペアリング</strong>．G₁，G₂は点を足す入力群，G_Tは拡大体の0でない元を掛ける出力群である．三つの群は同じ位数qを持つが，要素と演算は異なる．</figcaption>
+</figure>
+
+小さな**抽象例**で双線形性を計算してみよう．位数 $q=7$ の群を考え，$P\in G_1,Q\in G_2$ を生成元，$g_T=e(P,Q)$ とする．非退化性より $g_T\ne1$ であり，位数7の巡回群では単位元以外の要素はすべて生成元なので，$g_T$ は $G_T$ の生成元である．$2P$ は $P+P$，$3Q$ は $Q+Q+Q$ である．すると
+
+$$
+e(2P,3Q)=e(P,Q)^{2\cdot3}=g_T^6.
+$$
+
+指数は群の位数を法として計算するので，ここでは $6$ となる．これは「入力の点を足す回数が，出力側では指数の積になる」ことを示す記号上の例であり，実際のペアリング計算や暗号用パラメータを示すものではない．実際の曲線での $G_1,G_2,G_T$ の構成と体の関係は，[2.4節](#pairing-math)で改めて整理する．WeilペアリングやTateペアリングなどは，この写像を実現するための道具である．ここでは写像を作る計算法を追わず，上の性質からどのような検証式を作れるかを考える．
 
 ### 2.2 ペアリングフレンドリーな曲線
 
@@ -107,9 +144,6 @@ $$e: G_1 \times G_2 \to G_T$$
 双線形性の式を，検証の側から読んでみよう．$aP$ と $bQ$ を与えられると，ペアリングによって $e(P,Q)^{ab}$ が得られる．$a,b$ を取り出さずに，その積が指数に現れるのである．対称な記法では $e(g^a,g^b)=e(g,g)^{ab}$ と書けるが，実際には $G_1$ と $G_2$ の生成元を区別する場合がある．この型の違いも確認しておこう．
 
 これは通常の離散対数ベースの群演算(加法的な構造しか持たない)では実現できない，**乗法的な検証能力**である．Groth16をはじめとするSNARKの多くが，QAP(第4回)における多項式の乗算関係を，まさにこのペアリングの性質を使って検証している．この点は幕IIIでGroth16を読む際に決定的に重要になるので，ここで強調しておく．
-
-<span id="figure-07-2"></span>
-<span id="caption-07-2"></span>
 
 <div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
 
