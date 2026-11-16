@@ -1,6 +1,6 @@
 # Prerequisites and Supplementary Resources
 
-Updated: September 29, 2026
+Updated: November 16, 2026
 
 [Syllabus](./) · [Sessions](./sessions) · [Topic index](./topics)
 
@@ -49,6 +49,7 @@ Updated: September 29, 2026
   - [Vectors and matrices: linear algebra for ZK arithmetization](./linear-algebra-tutorial)
   - [Linear combinations, dot products, matrices and rank 1](./terms/linear-algebra)
 - Related lectures
+  - [Session 3: Lagrange interpolation and Vandermonde matrices](./session-03#_3-3-lagrange-interpolation)
   - [Session 4: R1CS](./session-04#_3-r1cs-rank-1-constraint-system)
 
 ## Coding theory

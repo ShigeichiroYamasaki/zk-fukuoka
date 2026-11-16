@@ -1,6 +1,6 @@
 # 初学者のための前提知識と補助教材
 
-更新日：2026年11月15日
+更新日：2026年11月16日
 
 [シラバス](./) · [各回の授業](./sessions) · [トピック別インデックス](./topics)
 
@@ -49,6 +49,7 @@
   - [ベクトルと行列：ZK算術化のための線形代数](./linear-algebra-tutorial)
   - [線形結合・内積・行列・Rank-1](./terms/linear-algebra)
 - 関連授業
+  - [第3回：Lagrange補間とヴァンデルモンド行列](./session-03#_3-3-lagrange補間)
   - [第4回：R1CS](./session-04#_3-r1cs-rank-1-constraint-system)
 
 ## 符号理論

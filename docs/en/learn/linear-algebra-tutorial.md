@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 11, 2026
+Last updated: November 16, 2026
 
 This tutorial defines vectors and matrices not merely as computational notation, but as elements of vector spaces and linear maps between those spaces. This perspective makes it easier to understand how matrices translate computations into constraints in Session 4’s R1CS, and how QAP turns those constraints into polynomials.
 
@@ -123,6 +123,43 @@ V^{-1}=\begin{pmatrix}
 $$
 
 Over a finite field, use that field’s operations for the same steps. For example, in $\mathbb F_7$, dividing by 2 means multiplying by the inverse of 2, which is 4.
+
+### 4.3 Vandermonde matrices: recovering coefficients from evaluations
+
+A **Vandermonde matrix** collects the evaluations of a polynomial at specified points. Let
+
+$$
+f(X)=c_0+c_1X+\cdots+c_dX^d
+$$
+
+be a polynomial of degree at most $d$, with coefficient vector $c=(c_0,c_1,\ldots,c_d)^T$. For distinct points $x_0,\ldots,x_d$, collect the values in $y=(f(x_0),\ldots,f(x_d))^T$. Then
+
+$$
+y=Vc,\qquad V=\begin{pmatrix}
+1&x_0&x_0^2&\cdots&x_0^d\\
+1&x_1&x_1^2&\cdots&x_1^d\\
+\vdots&\vdots&\vdots&&\vdots\\
+1&x_d&x_d^2&\cdots&x_d^d
+\end{pmatrix}.
+$$
+
+Each row evaluates the polynomial at one point; each column corresponds to one coefficient $c_0,c_1,\ldots,c_d$. For example, evaluating $f(X)=1+X^2$ at $0,1,2$ gives
+
+$$
+\begin{pmatrix}1\\2\\5\end{pmatrix}
+=\begin{pmatrix}1&0&0\\1&1&1\\1&2&4\end{pmatrix}
+\begin{pmatrix}1\\0\\1\end{pmatrix}.
+$$
+
+The determinant is
+
+$$
+\det V=\prod_{0\le i<j\le d}(x_j-x_i).
+$$
+
+If the points are distinct, every difference is nonzero. Over a field, this means $\det V\ne0$, so $V^{-1}$ exists and the coefficients are uniquely recovered as $c=V^{-1}y$. The same formula works over a finite field, provided the points are distinct in that field.
+
+Lagrange interpolation in Session 3 can be viewed as an explicit solution to $Vc=y$: instead of computing the entries of the inverse matrix one by one, it writes the solution directly using **Lagrange basis polynomials**. The Vandermonde matrix makes the connection between coefficient and evaluation representations visible as a linear-algebra calculation.
 
 ## 5. Dot products, componentwise products, and linear combinations
 
@@ -278,6 +315,7 @@ This is a mathematical way to organize the QAP structure; it does not mean that 
 | Matrix product | Compute many linear combinations together | Compute $(Az),(Bz),(Cz)$ |
 | Basis vectors and coordinates | Express each vector uniquely as a linear combination of basis vectors | Represent a polynomial by its coefficient vector |
 | Inverse matrix | Reverse an invertible linear transformation | Recover polynomial coefficients from evaluation values |
+| Vandermonde matrix | Map polynomial coefficients to evaluations at distinct points | Understand Session 3’s Lagrange interpolation as a linear system |
 | Componentwise product | Multiply entries at matching positions | Express the quadratic part of R1CS constraints |
 | Tensor product | Vector of pairwise products of entries from two vectors | View bilinear products as linear maps on a larger space and expand QAP products |
 | Dimension and rank | Matrix shape and number of independent directions | Understand rows/columns in R1CS and the name Rank-1 |
@@ -307,3 +345,4 @@ This is a mathematical way to organize the QAP structure; it does not mean that 
 - [Session 4: Arithmetization and computational complexity](./session-04): follow the transformations from R1CS to QAP and AIR
 - [QAP: Combining R1CS constraints into a polynomial](./qap): see how matrix constraints are combined into polynomials
 - [Finite fields and polynomials: a compact tutorial for ZK](./finite-fields-tutorial): learn the finite field over which scalars are computed
+- [Session 3: Finite fields, polynomials, and probabilistic checks](./session-03): connect coefficient and evaluation representations using Vandermonde matrices and Lagrange interpolation
