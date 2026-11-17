@@ -1515,9 +1515,10 @@ export const diagrams = {
           "Desired relation"
         ],
         "body": [
-          "A(τ)B(τ) = C(τ) + H(τ)Z(τ)",
-          "A(τ)B(τ) = C(τ) + H(τ)Z(τ)"
-        ]
+          "QAPの整除性を，秘密の評価点 τ における等式として確認する．",
+          "Check the QAP divisibility relation as an equality at the secret evaluation point τ."
+        ],
+        "formulaMath": "<math display=\"block\"><mrow><mi>A</mi><mo>(</mo><mi>τ</mi><mo>)</mo><mo>·</mo><mi>B</mi><mo>(</mo><mi>τ</mi><mo>)</mo><mo>=</mo><mi>C</mi><mo>(</mo><mi>τ</mi><mo>)</mo><mo>+</mo><mi>H</mi><mo>(</mo><mi>τ</mi><mo>)</mo><mo>·</mo><mi>Z</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow></math>"
       },
       {
         "title": [
@@ -1525,9 +1526,10 @@ export const diagrams = {
           "Encode values in group elements"
         ],
         "body": [
-          "g₁^{A(τ)}，g₂^{B(τ)}",
-          "g₁^{A(τ)}, g₂^{B(τ)}"
-        ]
+          "多項式の値を指数に置き，値そのものは明かさずに群要素として扱う．",
+          "Put the polynomial evaluations in the exponents and handle them as group elements without revealing the values themselves."
+        ],
+        "formulaMath": "<math display=\"block\"><mrow><msup><msub><mi>g</mi><mn>1</mn></msub><mrow><mi>A</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow></msup><mo>,</mo><mspace width=\"0.5em\"/><msup><msub><mi>g</mi><mn>2</mn></msub><mrow><mi>B</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow></msup></mrow></math>"
       },
       {
         "title": [
@@ -1535,9 +1537,10 @@ export const diagrams = {
           "Use bilinearity to check the product"
         ],
         "body": [
-          "e(g₁^{A(τ)}, g₂^{B(τ)}) = e(g₁,g₂)^{A(τ)B(τ)}",
-          "e(g₁^{A(τ)}, g₂^{B(τ)}) = e(g₁,g₂)^{A(τ)B(τ)}"
-        ]
+          "ペアリングを使うと，指数にある二つの値の積を対象群で表せる．",
+          "The pairing represents the product of the two exponent values in the target group."
+        ],
+        "formulaMath": "<math display=\"block\"><mrow><mi>e</mi><mo>(</mo><msup><msub><mi>g</mi><mn>1</mn></msub><mrow><mi>A</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow></msup><mo>,</mo><msup><msub><mi>g</mi><mn>2</mn></msub><mrow><mi>B</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow></msup><mo>)</mo><mo>=</mo><msup><mrow><mi>e</mi><mo>(</mo><msub><mi>g</mi><mn>1</mn></msub><mo>,</mo><msub><mi>g</mi><mn>2</mn></msub><mo>)</mo></mrow><mrow><mi>A</mi><mo>(</mo><mi>τ</mi><mo>)</mo><mo>·</mo><mi>B</mi><mo>(</mo><mi>τ</mi><mo>)</mo></mrow></msup></mrow></math>"
       }
     ]
   },
