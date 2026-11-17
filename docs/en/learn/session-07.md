@@ -67,7 +67,39 @@ where $(x, y) \in \mathbb{F}_p \times \mathbb{F}_p$, together with a point at in
 
 ### 1.2 Group structure
 
-A set of points alone is not yet a cryptographic tool. Defining addition of points gives a finite abelian group with the point at infinity $O$ as identity. Lines intersecting the curve provide a geometric interpretation of that addition. Rather than deriving every formula here, establish that we can add points and multiply them by integer scalars.
+A set of points alone is not yet a cryptographic tool. Defining point addition gives a finite abelian group with the point at infinity $O$ as its identity.
+
+#### Point addition: a line and a reflection
+
+Over the real numbers, the rule has a geometric picture. Draw a line through two distinct points $P,Q$ and let $R$ be its third intersection with the curve. Define their sum as the reflection of $R$ across the $x$ axis: $P+Q=-R$. When $P=Q$, use the tangent line instead. On a curve $y^2=x^3+ax+b$, reflection is $(x,y)\mapsto(x,-y)$.
+
+This picture motivates the same addition rule over a finite field. Cryptographic point coordinates are finite-field elements, not real numbers, so slopes and coordinates are computed with finite-field arithmetic. When $Q=-P$, the line through the two points is vertical and their sum is defined to be the point at infinity $O$. Thus $O$ is the additive identity and $P+O=P$.
+
+#### A finite-field addition example
+
+Consider the curve $E:y^2=x^3+2x+2$ over $\mathbb F_{17}$. The point $P=(5,1)$ lies on it. To double $P$, use the tangent slope
+
+$$\lambda=\frac{3x_P^2+2}{2y_P}=\frac{77}{2}=13\pmod{17}.$$
+
+Since $2^{-1}=9\pmod{17}$, division by 2 means multiplying by 9, and $77\cdot9=81=13\pmod{17}$. The coordinates are
+
+$$x_{2P}=\lambda^2-2x_P=6,\qquad y_{2P}=\lambda(x_P-x_{2P})-y_P=3,$$
+
+so $[2]P=P+P=(6,3)$. This small example illustrates the group law; it is not a cryptographically secure curve parameter set.
+
+In general, if $P=(x_1,y_1)$ and $Q=(x_2,y_2)$ have different $x$ coordinates, compute the slope $\lambda=(y_2-y_1)/(x_2-x_1)$ and then
+
+$$x_{P+Q}=\lambda^2-x_1-x_2,\qquad y_{P+Q}=\lambda(x_1-x_{P+Q})-y_1.$$
+
+For $P=Q$, use the tangent slope $\lambda=(3x_1^2+a)/(2y_1)$. These divisions are not real-number divisions: they mean multiplication by a multiplicative inverse in the finite field.
+
+#### Scalar multiplication and notation
+
+An integer multiple of $P$ means repeated point addition. Define $[0]P=O$, $[1]P=P$, and for positive integers $n$,
+
+$$[n+1]P=[n]P+P.$$
+
+For example, $[2]P=P+P$ and $[3]P=P+P+P$. Write the reflected point as $-P$, so $[-n]P=-([n]P)$. If the group has order $q$, then $[q]P=O$ and scalar coefficients can be reduced modulo $q$. For a scalar $a\in\mathbb F_q$, we write its scalar multiplication map as $[a]$ and its action on $P$ as **$[a]P$**. The scalar goes inside the brackets, followed by the point on which the map acts. Thus $[a]P$ means “the point $P$ multiplied by $a$”; it is not an encoding notation with a group-type subscript such as $[a]_1$. Section 2.4 gives the map definition $[a]:G_i\to G_i$ explicitly.
 
 <StudyDiagram id="07-1" :en="true" />
 
