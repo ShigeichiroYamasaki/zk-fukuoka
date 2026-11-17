@@ -950,8 +950,8 @@ export const diagrams = {
           "Inputs from two groups"
         ],
         "body": [
-          "aP ∈ G₁，bQ ∈ G₂",
-          "aP ∈ G₁, bQ ∈ G₂"
+          "[a]P₁ ∈ G₁，[b]P₂ ∈ G₂",
+          "[a]P₁ ∈ G₁, [b]P₂ ∈ G₂"
         ]
       },
       {
@@ -960,8 +960,8 @@ export const diagrams = {
           "Apply the bilinear map"
         ],
         "body": [
-          "e(aP, bQ)",
-          "e(aP, bQ)"
+          "e([a]P₁, [b]P₂)",
+          "e([a]P₁, [b]P₂)"
         ]
       },
       {
@@ -970,8 +970,8 @@ export const diagrams = {
           "Relation in the target group"
         ],
         "body": [
-          "e(aP, bQ) = e(P, Q)ᵃᵇ ∈ G_T",
-          "e(aP, bQ) = e(P, Q)ᵃᵇ ∈ G_T"
+          "e([a]P₁, [b]P₂) = e(P₁, P₂)ᵃᵇ ∈ Gₜ",
+          "e([a]P₁, [b]P₂) = e(P₁, P₂)ᵃᵇ ∈ Gₜ"
         ]
       }
     ]
@@ -991,27 +991,27 @@ export const diagrams = {
       {
         "title": ["セットアップでべきを符号化", "Encode powers during setup"],
         "body": ["生成元 P₁ と秘密 τ から，各 τʲP₁ を計算する．", "Use generator P₁ and secret τ to compute each τʲP₁."],
-        "formula": "[1]₁, [τ]₁, …, [τᵈ]₁"
+        "formula": "P₁, [τ]P₁, …, [τᵈ]P₁"
       },
       {
         "title": ["SRSを公開", "Publish the SRS"],
         "body": ["群要素の列は公開する．τ自体は秘密のままにし，セットアップ後に誰も知らない状態にする．", "Publish the group elements, but keep τ secret so no one knows it after setup."],
-        "formula": "[τʲ]₁ = τʲP₁"
+        "formula": "[τʲ]P₁"
       },
       {
         "title": ["係数で点をスカラー倍", "Scale points by coefficients"],
         "body": ["多項式の既知の係数 fⱼ を使う．例：f(X)=2+3X+X²", "Use the known polynomial coefficients fⱼ. Example: f(X)=2+3X+X²"],
-        "formula": "2[1]₁ + 3[τ]₁ + [τ²]₁"
+        "formula": "[2]P₁ + [3]([τ]P₁) + [τ²]P₁"
       },
       {
         "title": ["点を加えて評価値を符号化", "Add points to encode the evaluation"],
         "body": ["得るのは数値 f(τ) ではなく，それを表す群要素．", "The result is not the number f(τ), but a group element encoding it."],
-        "formula": "[f(τ)]₁ = [2+3τ+τ²]₁"
+        "formula": "[f(τ)]P₁ = [2+3τ+τ²]P₁"
       }
     ],
     "note": [
-      "[a]₁ は aP₁ という群要素を表す．SRSは度数上限までの係数に対応する点を用意する．実際のGroth16証明鍵には，回路固有の線形結合や別の群の要素も含まれる．",
-      "[a]₁ denotes the group element aP₁. The SRS supplies points for coefficients up to the degree bound. An actual Groth16 proving key also contains circuit-specific linear combinations and elements from other groups."
+      "[a]P₁ はスカラー倍写像 [a] を P₁ に作用させた点を表す．SRSは度数上限までの係数に対応する点を用意する．実際のGroth16証明鍵には，回路固有の線形結合や別の群の要素も含まれる．",
+      "[a]P₁ is the result of applying the scalar multiplication map [a] to P₁. The SRS supplies points for coefficients up to the degree bound. An actual Groth16 proving key also contains circuit-specific linear combinations and elements from other groups."
     ]
   },
   "07-3": {
@@ -1549,8 +1549,8 @@ export const diagrams = {
       "Roles of the terms in Groth16 verification"
     ],
     "note": [
-      "検証式は e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂)．A,B,Cは証明の群要素であり，QAP多項式と区別する．ペアリング回数は定数でも，公開入力の処理は残る．",
-      "Verification: e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂). Here A,B,C are proof group elements, distinct from QAP polynomials. Constant pairing count does not remove public-input processing."
+      "検証式は e(A,B)=e([α]P₁,[β]P₂)·e(IC,[γ]P₂)·e(C,[δ]P₂)．A,B,Cは証明の群要素であり，QAP多項式と区別する．ペアリング回数は定数でも，公開入力の処理は残る．",
+      "Verification: e(A,B)=e([α]P₁,[β]P₂)·e(IC,[γ]P₂)·e(C,[δ]P₂). Here A,B,C are proof group elements, distinct from QAP polynomials. Constant pairing count does not remove public-input processing."
     ],
     "headers": [
       [
@@ -1571,21 +1571,21 @@ export const diagrams = {
         ]
       ],
       [
-        "e([α]₁, [β]₂)",
+        "e([α]P₁, [β]P₂)",
         [
           "検証鍵に含まれる固定の項",
           "Fixed term from the verification key"
         ]
       ],
       [
-        "e(IC, [γ]₂)",
+        "e(IC, [γ]P₂)",
         [
           "公開入力からICを計算して結び付ける",
           "Bind the IC computed from public inputs"
         ]
       ],
       [
-        "e(C, [δ]₂)",
+        "e(C, [δ]P₂)",
         [
           "証明の残りの項との整合性を確認する",
           "Check consistency with the remaining proof term"

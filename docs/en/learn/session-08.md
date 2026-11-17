@@ -17,7 +17,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 18, 2026
+Last updated: November 17, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 8 in the syllabus](./#session-8) · [Session 8 exercises](../exercises/session-08)
 
@@ -145,9 +145,9 @@ $$f(X)=X^2+2X+3.$$
 
 Later, open its value at $x=3$: $f(3)=18=1\pmod{17}$. This small-field example illustrates arithmetic; order-17 groups are not cryptographically secure.
 
-**Commit.** Using Session 7's additive notation $[a]_1=aP$ and $[b]_2=bQ$, the SRS supplies $[1]_1,[\tau]_1,[\tau^2]_1$ and verification elements $[1]_2,[\tau]_2$. Compute
+**Commit.** Using Session 7's additive notation $[a]P_1$ and $[b]P_2$, the SRS supplies $P_1,[\tau]P_1,[\tau^2]P_1$ and verification elements $P_2,[\tau]P_2$. Compute
 
-$$C=[\tau^2]_1+2[\tau]_1+3[1]_1=[f(\tau)]_1$$
+$$C=[\tau^2]P_1+[2]([\tau]P_1)+[3]P_1=[f(\tau)]P_1$$
 
 and send $C$ first. The numerical value of $\tau$ is not needed.
 
@@ -155,15 +155,15 @@ and send $C$ first. The numerical value of $\tau$ is not needed.
 
 $$q(X)=\frac{f(X)-1}{X-3}=X+5,$$
 
-because $(X-3)(X+5)=X^2+2X-15=f(X)-1$ modulo 17. Send value 1 and proof $\pi=[\tau]_1+5[1]_1=[q(\tau)]_1$, rather than all polynomial coefficients.
+because $(X-3)(X+5)=X^2+2X-15=f(X)-1$ modulo 17. Send value 1 and proof $\pi=[\tau]P_1+[5]P_1=[q(\tau)]P_1$, rather than all polynomial coefficients.
 
 **Verify.** Using the public commitment, point, value, proof, and SRS, check
 
-$$e(C-[1]_1,[1]_2)\overset{?}=e(\pi,[\tau]_2-3[1]_2).$$
+$$e(C-P_1,P_2)\overset{?}=e(\pi,[\tau-3]P_2).$$
 
 The exponents on the two sides are $f(\tau)-1$ and $q(\tau)(\tau-3)$: this is the quotient identity encoded through a pairing.
 
-For a numerical check only, suppose the setup internally used $\tau=5$. Then $C=[4]_1$, $\pi=[10]_1$, and both sides equal $[3]_T$, since $10(5-3)=20=3\pmod{17}$. Keeping the same proof but changing the asserted value to 2 makes the left side $[2]_T$, which fails. **A real setup does not publish $\tau$.** Revealing 5 here is only for arithmetic illustration; evaluation binding cannot be expected against someone who knows the secret point.
+For a numerical check only, suppose the setup internally used $\tau=5$. Then $C=[4]P_1$, $\pi=[10]P_1$, and both sides equal $g_{T}^{3}$, since $10(5-3)=20=3\pmod{17}$. Keeping the same proof but changing the asserted value to 2 makes the left side $g_{T}^{2}$, which fails. **A real setup does not publish $\tau$.** Revealing 5 here is only for arithmetic illustration; evaluation binding cannot be expected against someone who knows the secret point.
 
 The commitment is one $G_1$ element and the single-point opening proof is also one $G_1$ element. This example includes no hiding randomization. Review [Session 7's group and scalar notation](./session-07#pairing-math) to distinguish the objects being transmitted.
 

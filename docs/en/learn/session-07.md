@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: November 15, 2026
+Last updated: November 17, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Session 7 exercises](../exercises/session-07)
 
@@ -90,19 +90,19 @@ $$
 
 For example, the ordinary dot product $B(u,v)=\sum_i u_iv_i$ takes two vectors and returns a field element; it is a bilinear map.
 
-A **cryptographic bilinear pairing** $e$ has the same algebraic property of being bilinear in each input, but its input and output types differ from an ordinary dot product. Its inputs are points in two cyclic groups $G_1,G_2$, and its output is an element of a third group $G_T$. The source groups use addition, while the target group uses multiplication. If we rewrote the target operation in additive notation, the same bilinear laws would apply; in the usual multiplicative notation, addition in an input corresponds to multiplication in the output, and scalar multiplication corresponds to exponentiation. A pairing is not a different algebraic notion of bilinearity; it is a bilinear map between differently typed groups, with a multiplicative target operation.
+A **cryptographic bilinear pairing** $e$ has the same algebraic property of being bilinear in each input, but its input and output types differ from an ordinary dot product. Its inputs are points in two cyclic groups $G_1,G_2$, and its output is an element of a third group $G_{T}$. The source groups use addition, while the target group uses multiplication. If we rewrote the target operation in additive notation, the same bilinear laws would apply; in the usual multiplicative notation, addition in an input corresponds to multiplication in the output, and scalar multiplication corresponds to exponentiation. A pairing is not a different algebraic notion of bilinearity; it is a bilinear map between differently typed groups, with a multiplicative target operation.
 
 This lets us handle products of exponents across two groups. Consider the map
 
-$$e: G_1 \times G_2 \to G_T$$
+$$e: G_1 \times G_2 \to G_{T}$$
 
-where $q$ is prime and $G_1,G_2,G_T$ are cyclic groups of order $q$, satisfying:
+where $q$ is prime and $G_1,G_2,G_{T}$ are cyclic groups of order $q$, satisfying:
 
-- **Bilinearity:** $e(P_1+P_2,Q)=e(P_1,Q)e(P_2,Q)$ and $e(P,Q_1+Q_2)=e(P,Q_1)e(P,Q_2)$. Consequently, for scalars $a,b\in\mathbb F_q$, $e(aP,bQ)=e(P,Q)^{ab}$, where $P,P_1,P_2\in G_1$ and $Q,Q_1,Q_2\in G_2$.
+- **Bilinearity:** $e(P_1+P_2,Q)=e(P_1,Q)e(P_2,Q)$ and $e(P,Q_1+Q_2)=e(P,Q_1)e(P,Q_2)$. Consequently, for scalars $a,b\in\mathbb F_q$, $e([a]P,[b]Q)=e(P,Q)^{ab}$, where $P,P_1,P_2\in G_1$ and $Q,Q_1,Q_2\in G_2$.
 - **Non-degeneracy:** $e(P, Q) \ne 1$ when $P$ and $Q$ are generators.
 - **Efficient computability:** $e$ can be computed in polynomial time.
 
-Here $G_1,G_2$ are the input groups and $G_T$ is the output group. Section 2.4 specifies their elements and operations. For now, note that a pairing is a bilinear map between differently typed groups.
+Here $G_1,G_2$ are the input groups and $G_{T}$ is the output group. Section 2.4 specifies their elements and operations. For now, note that a pairing is a bilinear map between differently typed groups.
 
 ### 2.2 Pairing-friendly curves
 
@@ -115,21 +115,21 @@ Selecting parameters such as the embedding degree requires number-theoretic anal
 
 ### 2.3 The new capability provided by pairings
 
-ECDH (Elliptic-Curve Diffie–Hellman key exchange) makes the pairing's distinct role easier to see. In a group of order $q$, Alice chooses secret $a$ and sends $A=aP$; Bob chooses secret $b$ and sends $B=bP$. Alice computes $aB=abP$ with her secret, while Bob computes $bA=abP$ with his. They derive a shared key from this point using a key-derivation function. An observer sees $P,A,B$, but under the Computational Diffie–Hellman assumption, cannot compute $abP$. ECDH's purpose is to let the two participants derive a shared secret.
+ECDH (Elliptic-Curve Diffie–Hellman key exchange) makes the pairing's distinct role easier to see. In a group of order $q$, Alice chooses secret $a$ and sends $A=[a]P$; Bob chooses secret $b$ and sends $B=[b]P$. Alice computes $[a]B=[ab]P$ with her secret, while Bob computes $[b]A=[ab]P$ with his. They derive a shared key from this point using a key-derivation function. An observer sees $P,A,B$, but under the Computational Diffie–Hellman assumption, cannot compute $[ab]P$. ECDH's purpose is to let the two participants derive a shared secret.
 
-With a pairing, anyone can compute $e(aP,bQ)=e(P,Q)^{ab}$ from points $aP\in G_1$ and $bQ\in G_2$ in distinct input groups. This output is therefore public, not a secret key like the ECDH shared key. The purpose is different: a pairing lets us check relations involving the product of values encoded in group elements without recovering $a$ or $b$. Ordinary group operations alone cannot form this product relation without knowing the exponents. This **multiplicative verification capability** lets SNARKs such as Groth16 check polynomial multiplication relations from the QAP in Session 4. ECDH supports secret-key agreement; pairings support publicly checkable algebraic relations. They are not interchangeable schemes.
+With a pairing, anyone can compute $e([a]P,[b]Q)=e(P,Q)^{ab}$ from points $[a]P\in G_1$ and $[b]Q\in G_2$ in distinct input groups. This output is therefore public, not a secret key like the ECDH shared key. The purpose is different: a pairing lets us check relations involving the product of values encoded in group elements without recovering $a$ or $b$. Ordinary group operations alone cannot form this product relation without knowing the exponents. This **multiplicative verification capability** lets SNARKs such as Groth16 check polynomial multiplication relations from the QAP in Session 4. ECDH supports secret-key agreement; pairings support publicly checkable algebraic relations. They are not interchangeable schemes.
 
-In practical pairings, $G_1$ and $G_2$ have distinct generators and point types, so read the equation as $e([a]_1,[b]_2)=[ab]_T$. We will use this distinction in the following sections and when studying Groth16.
+In practical pairings, $G_1$ and $G_2$ have distinct generators and point types, so read the equation as $e([a]P_1,[b]P_2)=g_{T}^{ab}$. We will use this distinction in the following sections and when studying Groth16.
 
 ### 2.4 Coordinate fields, scalar fields, and three groups {#pairing-math}
 
-The field containing point coordinates need not equal the field of scalars. Keep $\mathbb F_p$ as the coordinate field, and now assume the common group order $q$ is prime. Scalars belong to $\mathbb F_q$: since $qP=O$, scalar multiplication depends only on the scalar modulo $q$. **Groth16's R1CS and QAP coefficients live in this scalar field.** Do not confuse $q$ with the coordinate modulus $p$.
+The field containing point coordinates need not equal the field of scalars. Keep $\mathbb F_p$ as the coordinate field, and now assume the common group order $q$ is prime. Scalars belong to $\mathbb F_q$: since $[q]P=O$, scalar multiplication depends only on the scalar modulo $q$. **Groth16's R1CS and QAP coefficients live in this scalar field.** Do not confuse $q$ with the coordinate modulus $p$.
 
-For generators $P\in G_1$ and $Q\in G_2$, write
+Let $P_1\in G_1$ and $P_2\in G_2$ be generators. For a scalar $a\in\mathbb F_q$, define the **scalar multiplication map** $[a]:G_i\to G_i$ by $R\mapsto[a]R$. Thus $[a]$ is a map acting on a point, and $[a]P_i$ is the point obtained by multiplying generator $P_i$ by $a$. Let $g_{T}=e(P_1,P_2)$ generate the target group. We write
 
-$$[a]_1=aP,\qquad[b]_2=bQ,\qquad g_T=e(P,Q),\qquad[c]_T=g_T^c.$$
+$$[a]P_1,\qquad [b]P_2,\qquad g_{T}=e(P_1,P_2),\qquad g_{T}^c.$$
 
-We use additive notation for the source groups and multiplicative notation for the target. Session 11's notation $[a]_1=g^a$ describes the same structure multiplicatively.
+We use additive notation for the source groups and multiplicative notation for the target: $[a]P_i$ is the result of the scalar multiplication map, while $g_{T}^a$ is the target-group element corresponding to exponent $a$.
 
 <div class="captioned-table" id="table-07-2" role="group" aria-labelledby="table-caption-07-2">
 
@@ -137,10 +137,10 @@ We use additive notation for the source groups and multiplicative notation for t
 
 | Object | Notation and operation | Scalar interpretation |
 |---|---|---|
-| $G_1$ | $[a]_1+[b]_1=[a+b]_1$, $k[a]_1=[ka]_1$ | Addition and multiplication by known $k\in\mathbb F_q$ |
-| $G_2$ | $[a]_2+[b]_2=[a+b]_2$, $k[a]_2=[ka]_2$ | Addition and multiplication by known $k\in\mathbb F_q$ |
-| $G_T$ | $[a]_T[b]_T=[a+b]_T$ | Addition of exponents |
-| Pairing | $e([a]_1,[b]_2)=[ab]_T$ | Multiplication of two scalars |
+| $G_1$ | $[a]P_1+[b]P_1=[a+b]P_1$, $[k]([a]P_1)=[ka]P_1$ | Addition and multiplication by known $k\in\mathbb F_q$ |
+| $G_2$ | $[a]P_2+[b]P_2=[a+b]P_2$, $[k]([a]P_2)=[ka]P_2$ | Addition and multiplication by known $k\in\mathbb F_q$ |
+| $G_{T}$ | $g_{T}^{a}g_{T}^{b}=g_{T}^{a+b}$ | Addition of exponents |
+| Pairing | $e([a]P_1,[b]P_2)=g_{T}^{ab}$ | Multiplication of two scalars |
 
 </div>
 
@@ -149,13 +149,13 @@ We now connect the notation to concrete group constructions.
 The symbols alone can obscure what these sets contain, so let us distinguish the three groups. A **subgroup** is a subset of a larger group that is closed under the group operation and contains the identity and inverses. In an elliptic-curve group, the elements are curve points and the operation is point addition.
 
 - $G_1$ and $G_2$ are subgroups of order $q$ (that is, with $q$ elements) selected from suitable elliptic-curve groups. Their elements are points and their operation is addition. A pairing treats them as distinct input types. In implementations, $G_1$ often uses points on a curve over the base field, while $G_2$ uses points represented on a curve over an extension field or on its twist.
-- $G_T$ is not a set of elliptic-curve points. It is a subgroup of order $q$ inside the multiplicative group $\mathbb F_{p^k}^{*}$ of **nonzero** elements of the extension field $\mathbb F_{p^k}$. Its elements are nonzero field elements, its operation is multiplication, and its identity is $1$.
+- $G_{T}$ is not a set of elliptic-curve points. It is a subgroup of order $q$ inside the multiplicative group $\mathbb F_{p^k}^{*}$ of **nonzero** elements of the extension field $\mathbb F_{p^k}$. Its elements are nonzero field elements, its operation is multiplication, and its identity is $1$.
 
-In practical asymmetric pairings, a $G_1$ point cannot simply be used in the $G_2$ input position. The **embedding degree** explains why extension fields occur in $G_2$ and $G_T$: it is the smallest positive integer $k$ such that $q\mid(p^k-1)$, and determines the extension field used for the target group.
+In practical asymmetric pairings, a $G_1$ point cannot simply be used in the $G_2$ input position. The **embedding degree** explains why extension fields occur in $G_2$ and $G_{T}$: it is the smallest positive integer $k$ such that $q\mid(p^k-1)$, and determines the extension field used for the target group.
 
-All three groups have $q$ elements, but their elements and operations differ: $G_1,G_2$ add points, while $G_T$ multiplies field elements. Figure 07-2 shows the types: two point groups go in, and a multiplicative subgroup of a field receives the output.
+All three groups have $q$ elements, but their elements and operations differ: $G_1,G_2$ add points, while $G_{T}$ multiplies field elements. Figure 07-2 shows the types: two point groups go in, and a multiplicative subgroup of a field receives the output.
 
-For example, a subgroup of order 7 generated by $P$ contains $O,P,2P,3P,4P,5P,6P$; adding $P$ once more returns to $7P=O$. In an actual $G_1$, these symbols stand for points on an elliptic curve, not just abstract labels.
+For example, a subgroup of order 7 generated by $P$ contains $O,[1]P,[2]P,[3]P,[4]P,[5]P,[6]P$; adding $P$ once more returns to $[7]P=O$. In an actual $G_1$, these symbols stand for points on an elliptic curve, not just abstract labels.
 
 <figure id="figure-07-2" aria-labelledby="caption-07-2" style="margin:24px 0">
 <div style="overflow-x:auto"><svg viewBox="0 0 960 340" role="img" aria-labelledby="pairing-groups-title-en pairing-groups-desc-en" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;min-width:760px;height:auto;border:1px solid var(--vp-c-divider,#d1d5db);border-radius:12px;background:var(--vp-c-bg,#fff)">
@@ -168,62 +168,62 @@ For example, a subgroup of order 7 generated by $P$ contains $O,P,2P,3P,4P,5P,6P
 <rect x="652" y="91" width="284" height="154" rx="14"/>
 </g>
 <g fill="var(--vp-c-text-1,#111827)" font-family="system-ui, sans-serif">
-<text x="48" y="63" font-size="24" font-weight="700">G₁: elliptic-curve points</text><text x="48" y="94" font-size="17">e.g. curve E over Fₚ</text><text x="48" y="121" font-size="17">operation: point addition | order q</text>
-<text x="48" y="233" font-size="24" font-weight="700">G₂: another point group</text><text x="48" y="264" font-size="17">e.g. extension-field curve or twist</text><text x="48" y="291" font-size="17">operation: point addition | order q</text>
+<text x="48" y="63" font-size="24" font-weight="700">G_1: elliptic-curve points</text><text x="48" y="94" font-size="17">e.g. curve E over Fₚ</text><text x="48" y="121" font-size="17">operation: point addition | order q</text>
+<text x="48" y="233" font-size="24" font-weight="700">G_2: another point group</text><text x="48" y="264" font-size="17">e.g. extension-field curve or twist</text><text x="48" y="291" font-size="17">operation: point addition | order q</text>
 <text x="495" y="151" text-anchor="middle" font-size="28" font-weight="700">e(P,Q)</text><text x="495" y="183" text-anchor="middle" font-size="16">pairing</text><text x="495" y="207" text-anchor="middle" font-size="15">point × point → field element</text>
-<text x="677" y="128" font-size="24" font-weight="700">G_T: target group</text><text x="677" y="164" font-size="17">multiplicative subgroup in Fₚᵏ</text><text x="677" y="194" font-size="17">operation: multiplication | order q</text><text x="677" y="224" font-size="17">identity: 1</text>
+<text x="677" y="128" font-size="24" font-weight="700">G_{T}: target group</text><text x="677" y="164" font-size="17">multiplicative subgroup in Fₚᵏ</text><text x="677" y="194" font-size="17">operation: multiplication | order q</text><text x="677" y="224" font-size="17">identity: 1</text>
 </g>
 <g fill="none" stroke="var(--vp-c-brand-1,#2563eb)" stroke-width="3" marker-end="url(#pairing-arrow-07-en)"><path d="M344 84 C380 84 390 130 420 144"/><path d="M344 254 C380 254 390 208 420 194"/><path d="M570 168 L640 168"/></g>
-<g fill="var(--vp-c-text-2,#4b5563)" font-family="system-ui, sans-serif" font-size="15"><text x="360" y="68">P ∈ G₁</text><text x="360" y="278">Q ∈ G₂</text><text x="579" y="151">output</text></g>
+<g fill="var(--vp-c-text-2,#4b5563)" font-family="system-ui, sans-serif" font-size="15"><text x="360" y="68">P ∈ G_1</text><text x="360" y="278">Q ∈ G_2</text><text x="579" y="151">output</text></g>
 </svg></div>
-<figcaption id="caption-07-2"><strong>Figure 07-2: A pairing maps point-addition groups to a field-multiplication group.</strong> G₁ and G₂ are input groups whose elements are points; G_T is an output group whose elements are nonzero extension-field values. They have the same order q, but different elements and operations.</figcaption>
+<figcaption id="caption-07-2"><strong>Figure 07-2: A pairing maps point-addition groups to a field-multiplication group.</strong> G_1 and G_2 are input groups whose elements are points; G_{T} is an output group whose elements are nonzero extension-field values. They have the same order q, but different elements and operations.</figcaption>
 </figure>
 
-Work through a small **abstract example**. Let the groups have order $q=7$, let $P\in G_1,Q\in G_2$ be generators, and set $g_T=e(P,Q)$. Non-degeneracy gives $g_T\ne1$; in a cyclic group of prime order 7, every non-identity element is a generator, so $g_T$ generates $G_T$. Here $2P$ means $P+P$, and $3Q$ means $Q+Q+Q$. Bilinearity gives
+Work through a small **abstract example**. Let the groups have order $q=7$, let $P\in G_1,Q\in G_2$ be generators, and set $g_{T}=e(P,Q)$. Non-degeneracy gives $g_{T}\ne1$; in a cyclic group of prime order 7, every non-identity element is a generator, so $g_{T}$ generates $G_{T}$. Here $[2]P$ means $P+P$, and $[3]Q$ means $Q+Q+Q$. Bilinearity gives
 
 $$
-e(2P,3Q)=e(P,Q)^{2\cdot3}=g_T^6.
+e([2]P,[3]Q)=e(P,Q)^{2\cdot3}=g_{T}^{6}.
 $$
 
 Exponents are computed modulo the group order, so the exponent here is $6$. This symbolic example illustrates how the number of point additions becomes a product in the exponent; it is not an actual pairing calculation or a cryptographic parameter set. The relationship between real curve groups and fields is revisited in [Section 2.4](#pairing-math). Weil and Tate pairings are constructions that realize such maps. We will focus on the verification equations enabled by their properties, not on their computation algorithms.
 
 ### 2.5 Applying bilinearity to verification equations {#pairing-product-check}
 
-Using the bilinearity from Section 2.1 and notation from Section 2.4, we can replace a scalar-product equality with a comparison of group elements. Since $g_T\ne1$ by non-degeneracy and the group has prime order $q$, $g_T$ also has order $q$. Therefore,
+Using the bilinearity from Section 2.1 and notation from Section 2.4, we can replace a scalar-product equality with a comparison of group elements. Since $g_{T}\ne1$ by non-degeneracy and the group has prime order $q$, $g_{T}$ also has order $q$. Therefore,
 
-$$e([a]_1,[b]_2)=e([c]_1,[1]_2)\quad\Longleftrightarrow\quad ab=c\text{ in }\mathbb F_q.$$
+$$e([a]P_1,[b]P_2)=e([c]P_1,P_2)\quad\Longleftrightarrow\quad ab=c\text{ in }\mathbb F_q.$$
 
-Checking the left side does not require recovering the scalars. In an abstract order-101 example, $a=7,b=9,c=63$ gives $[63]_T$ on both sides; $c=64$ fails. This illustrates exponent arithmetic, not a concrete secure elliptic-curve construction.
+Checking the left side does not require recovering the scalars. In an abstract order-101 example, $a=7,b=9,c=63$ gives $g_{T}^{63}$ on both sides; $c=64$ fails. This illustrates exponent arithmetic, not a concrete secure elliptic-curve construction.
 
 Likewise,
 
-$$e([a]_1,[b]_2)=e([c]_1,[1]_2)e([h]_1,[z]_2)\quad\Longleftrightarrow\quad ab=c+hz.$$
+$$e([a]P_1,[b]P_2)=e([c]P_1,P_2)e([h]P_1,[z]P_2)\quad\Longleftrightarrow\quad ab=c+hz.$$
 
 This helps read [Session 4's QAP relation](./session-04#qap-worked-math), $\mathcal A(\tau)\mathcal B(\tau)=\mathcal C(\tau)+H(\tau)Z(\tau)$. This does not mean that Groth16 sends these four evaluations directly.
 
-Pairing output lies in $G_T$ and cannot simply be fed back into the pairing to multiply by another unknown scalar. Encoding a value as a point also does not automatically hide it: if $a\in\{0,1\}$, compare $[a]_1$ with $O$ and $P$. Discrete-log hardness and zero-knowledge are distinct properties.
+Pairing output lies in $G_{T}$ and cannot simply be fed back into the pairing to multiply by another unknown scalar. Encoding a value as a point also does not automatically hide it: if $a\in\{0,1\}$, compare $[a]P_1$ with $O$ and $P_1$. Discrete-log hardness and zero-knowledge are distinct properties.
 
 ### 2.6 Evaluating at a secret point using group elements {#encoded-polynomial-evaluation}
 
 An **SRS** is a *structured reference string*: public parameters generated during setup and referenced by the prover and verifier according to their roles. Despite the word “string,” in this example it is an ordered list of group elements. The entries are structured: they correspond to powers of a setup scalar $\tau$.
 
-Consider a simplified setup for polynomials of maximum degree $d$. Let $P_1$ generate $G_1$, and use a secret $\tau\in\mathbb F_q$ to compute $[1]_1=P_1,[\tau]_1=\tau P_1,\dots,[\tau^d]_1=\tau^dP_1$. Publish these group elements. Here $[a]_1$ means the scalar $a$ encoded as the point $aP_1$; it does not publish the number $a$. A security premise is that no one knows $\tau$ after setup. A distributed setup depends on conditions such as at least one honest participant erasing their secret contribution. If the secret remains known, the security of the construction may be undermined.
+Consider a simplified setup for polynomials of maximum degree $d$. Let $P_1$ generate $G_1$, and use a secret $\tau\in\mathbb F_q$ to compute $[1]P_1=P_1,[\tau]P_1=\tau P_1,\dots,[\tau^d]P_1=\tau^dP_1$. Publish these group elements. Here $[a]P_1$ is the result of applying scalar multiplication map $[a]$ to $P_1$; it does not publish the number $a$. A security premise is that no one knows $\tau$ after setup. A distributed setup depends on conditions such as at least one honest participant erasing their secret contribution. If the secret remains known, the security of the construction may be undermined.
 
 For example, if $f(X)=2+3X+X^2$, an SRS up to degree 2 lets the prover compute
 
-$$2[1]_1+3[\tau]_1+[\tau^2]_1=[2+3\tau+\tau^2]_1=[f(\tau)]_1.$$
+$$[2]P_1+[3]([\tau]P_1)+[\tau^2]P_1=[2+3\tau+\tau^2]P_1=[f(\tau)]P_1.$$
 
 The left side uses only scalar multiplication by the known coefficients and group addition. The prover need not know $\tau$ or directly read the numerical value $f(\tau)$.
 
 <StudyDiagram id="07-4" :en="true" />
 
-In general, for $f(X)=\sum_{j=0}^d f_jX^j$, an SRS containing $[1]_1,[\tau]_1,\dots,[\tau^d]_1$ enables
+In general, for $f(X)=\sum_{j=0}^d f_jX^j$, an SRS containing $[1]P_1,[\tau]P_1,\dots,[\tau^d]P_1$ enables
 
-$$\sum_{j=0}^d f_j[\tau^j]_1=[f(\tau)]_1.$$
+$$\sum_{j=0}^d [f_j]([\tau^j]P_1)=[f(\tau)]P_1.$$
 
-This is a **multi-scalar multiplication (MSM)**: known coefficients multiply points, and the results are added. It is analogous to Session 4's dot product, with encoded values replacing scalars. The published output is the group encoding $[f(\tau)]_1$, not the numerical value $f(\tau)$. Here we focus on the powers-of-$\tau$ portion of the SRS.
+This is a **multi-scalar multiplication (MSM)**: known coefficients multiply points, and the results are added. It is analogous to Session 4's dot product, with encoded values replacing scalars. The published output is the group encoding $[f(\tau)]P_1$, not the numerical value $f(\tau)$. Here we focus on the powers-of-$\tau$ portion of the SRS.
 
-Groth16's proving key additionally contains circuit-dependent combinations and encodings involving $1/\delta$. Using a supplied point $[u/\delta]_1$ does not mean the prover numerically divides by an unknown $\delta$. The available key elements determine which computations can be performed.
+Groth16's proving key additionally contains circuit-dependent combinations and encodings involving $1/\delta$. Using a supplied point $[u/\delta]P_1$ does not mean the prover numerically divides by an unknown $\delta$. The available key elements determine which computations can be performed.
 
 ### 2.7 Reading Groth16's verification equation as a scalar identity {#groth16-pairing-derivation}
 
@@ -243,11 +243,11 @@ so $S_I+S_J=\beta U+\alpha V+W$. For nonzero $\gamma,\delta$ and fresh proof ran
 $$a=\alpha+U+r\delta,\qquad b=\beta+V+s\delta,$$
 $$c=\frac{S_J+H(\tau)Z(\tau)}{\delta}+sa+rb-rs\delta.$$
 
-The proof contains $\pi_A=[a]_1,\pi_B=[b]_2,\pi_C=[c]_1$, not the numerical scalars. They are computed through proving-key linear combinations. The construction provides the key elements needed to encode the $rb$ term in $G_1$; it does not convert $\pi_B$ from $G_2$ to $G_1$.
+The proof contains $\pi_A=[a]P_1,\pi_B=[b]P_2,\pi_C=[c]P_1$, not the numerical scalars. They are computed through proving-key linear combinations. The construction provides the key elements needed to encode the $rb$ term in $G_1$; it does not convert $\pi_B$ from $G_2$ to $G_1$.
 
-Using verification-key points $K_j=[(\beta A_j(\tau)+\alpha B_j(\tau)+C_j(\tau))/\gamma]_1$, compute
+Using verification-key points $K_j=[(\beta A_j(\tau)+\alpha B_j(\tau)+C_j(\tau))/\gamma]P_1$, compute
 
-$$\mathrm{IC}=\sum_{j\in I}z_jK_j=[S_I/\gamma]_1.$$
+$$\mathrm{IC}=\sum_{j\in I}[z_j]K_j=[S_I/\gamma]P_1.$$
 
 Expansion gives
 
@@ -259,8 +259,8 @@ ab&=\alpha\beta+\beta U+\alpha V+UV+s\delta(\alpha+U)+r\delta(\beta+V)+rs\delta^
 
 The first step expands the product; the second substitutes the QAP identity; the third uses the definition of $c$. Both $sa$ and $rb$ contain $rs\delta$, so one copy must be subtracted. Bilinearity translates this scalar identity into
 
-$$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\,
- e(\mathrm{IC},[\gamma]_2)\,e(\pi_C,[\delta]_2).$$
+$$e(\pi_A,\pi_B)=e([\alpha]P_1,[\beta]P_2)\,
+ e(\mathrm{IC},[\gamma]P_2)\,e(\pi_C,[\delta]P_2).$$
 
 **The verifier compares target-group elements without recovering secret scalars.** This calculation establishes completeness for correctly generated proofs. Knowledge soundness and zero-knowledge require separate arguments, discussed with the original paper's model in Session 11. Implementations must also validate inputs, including curve and subgroup membership.
 
@@ -357,7 +357,7 @@ In Session 8, we will study polynomial commitments: committing to a polynomial a
 
 ## Suggested discussion questions
 
-- Present $e(aP, bQ) = e(P,Q)^{ab}$ and let students explore what it enables before discussing Section 2.3, highlighting the nontrivial new capability.
+- Present $e([a]P, [b]Q) = e(P,Q)^{ab} and let students explore what it enables before discussing Section 2.3, highlighting the nontrivial new capability.
 - Ask why some protocols cannot be proved secure using standard assumptions alone, and discuss the motivation for introducing non-standard assumptions.
 - Have students explain the reduction structure in their own words: if an adversary existed, we could use it to solve another problem. Encourage them to notice the resemblance to proof by contradiction.
 

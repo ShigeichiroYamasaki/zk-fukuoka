@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 27, 2026<br>
-Last updated: October 18, 2026
+Last updated: November 17, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 11 in the syllabus](./#session-11) · [Session 11 exercises](../exercises/session-11)
 
@@ -70,7 +70,7 @@ Now apply Session 7’s tool. On inputs $g^{A(\tau)}\in G_1$ and $h^{B(\tau)}\in
 
 $$e(g^{A(\tau)}, h^{B(\tau)}) = e(g, h)^{A(\tau) B(\tau)}$$
 
-This represents a **product** of exponents in the target group $G_T$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
+This represents a **product** of exponents in the target group $G_{T}$, providing the multiplicative verification capability from Session 7. It is not a complete proof system on its own: the key structure must enforce consistency with the QAP and public inputs, and randomization is needed for zero knowledge.
 
 <StudyDiagram id="11-1" en />
 
@@ -81,8 +81,8 @@ This represents a **product** of exponents in the target group $G_T$, providing 
 | Step / stage | Explanation |
 | --- | --- |
 | 1. Desired relation | A(τ)B(τ) = C(τ) + H(τ)Z(τ) |
-| 2. Encode values in group elements | g₁^&#123;A(τ)&#125;, g₂^&#123;B(τ)&#125; |
-| 3. Use bilinearity to check the product | e(g₁^&#123;A(τ)&#125;, g₂^&#123;B(τ)&#125;) = e(g₁,g₂)^&#123;A(τ)B(τ)&#125; |
+| 2. Encode values in group elements | g_1^&#123;A(τ)&#125;, g_2^&#123;B(τ)&#125; |
+| 3. Use bilinearity to check the product | e(g_1^&#123;A(τ)&#125;, g_2^&#123;B(τ)&#125;) = e(g_1,g_2)^&#123;A(τ)B(τ)&#125; |
 
 </div>
 
@@ -106,17 +106,17 @@ The prover computes the quotient polynomial from a satisfying assignment and com
 
 ### 3.3 Verification
 
-Write $[a]_1=g^a\in G_1$ and $[a]_2=h^a\in G_2$ to distinguish secret scalars from public group elements. For public inputs $x_1,\dots,x_\ell$ and verification-key elements $K_0,\dots,K_\ell\in G_1$, compute
+Use additive notation for the source groups, with generators $P_1\in G_1$ and $P_2\in G_2$. The scalar multiplication map sends a point $R$ to $[a]R$; thus $[a]P_1\in G_1$ and $[a]P_2\in G_2$. For public inputs $x_1,\dots,x_\ell$ and verification-key elements $K_0,\dots,K_\ell\in G_1$, compute
 
-$$\mathrm{IC}=K_0\prod_{i=1}^{\ell}K_i^{x_i}$$
+$$\mathrm{IC}=K_0+\sum_{i=1}^{\ell}[x_i]K_i$$
 
 and check
 
-$$e(\pi_A,\pi_B)=e([\alpha]_1,[\beta]_2)\cdot e(\mathrm{IC},[\gamma]_2)\cdot e(\pi_C,[\delta]_2)$$
+$$e(\pi_A,\pi_B)=e([\alpha]P_1,[\beta]P_2)\cdot e(\mathrm{IC},[\gamma]P_2)\cdot e(\pi_C,[\delta]P_2)$$
 
-The elements $[\alpha]_1,[\beta]_2,[\gamma]_2,[\delta]_2$ in this equation are public verification-key group elements, not revealed secret scalars. Checking the public-input-dependent IC alongside the three proof elements binds the proof to the intended public input.
+The elements $[\alpha]P_1,[\beta]P_2,[\gamma]P_2,[\delta]P_2$ in this equation are public verification-key group elements, not revealed secret scalars. Checking the public-input-dependent IC alongside the three proof elements binds the proof to the intended public input.
 
-The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]_1,[\beta]_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
+The proof has **three group elements**, independent of circuit size and witness length. The pairing count is also constant: precomputing $e([\alpha]P_1,[\beta]P_2)$ leaves three pairings at verification time. However, computing $\mathrm{IC}$ requires group operations proportional to $\ell$. **Total verification time is therefore not constant with respect to the number of public inputs.** For fixed groups and security parameters, it consists of public-input processing plus a constant number of pairings. See the [original construction and efficiency analysis](https://iacr.org/archive/eurocrypt2016/96650272/96650272.pdf).
 
 <StudyDiagram id="11-2" en />
 
@@ -126,14 +126,14 @@ The proof has **three group elements**, independent of circuit size and witness 
 
 | Term | Interpretation |
 | --- | --- |
-| e(A, B) | Pair two proof group elements |
-| e([α]₁, [β]₂) | Fixed term from the verification key |
-| e(IC, [γ]₂) | Bind the IC computed from public inputs |
-| e(C, [δ]₂) | Check consistency with the remaining proof term |
+| $e(A,B)$ | Pair two proof group elements |
+| $e([\alpha]P_1,[\beta]P_2)$ | Fixed term from the verification key |
+| $e(\mathrm{IC},[\gamma]P_2)$ | Bind the IC computed from public inputs |
+| $e(C,[\delta]P_2)$ | Check consistency with the remaining proof term |
 
 </div>
 
-Verification: e(A,B)=e([α]₁,[β]₂)·e(IC,[γ]₂)·e(C,[δ]₂). Here A,B,C are proof group elements, distinct from QAP polynomials. Constant pairing count does not remove public-input processing.
+Verification checks $e(A,B)=e([\alpha]P_1,[\beta]P_2)\cdot e(\mathrm{IC},[\gamma]P_2)\cdot e(C,[\delta]P_2)$. Here $A,B,C$ are proof group elements, distinct from QAP polynomials. A constant pairing count still leaves public-input processing.
 
 ---
 
@@ -209,7 +209,7 @@ Next time (Session 12), we study PLONK: the motivation for universal setup to ad
 ## Suggested classroom questions
 
 - Before presenting the difficulties in Section 2.1, ask students what could go wrong if $A(\tau)$ and $B(\tau)$ were simply sent as numbers. This helps motivate the need for pairings.
-- Display $e(\pi_A,\pi_B) = e([\alpha]_1,[\beta]_2) \cdot e(\mathrm{IC},[\gamma]_2) \cdot e(\pi_C,[\delta]_2)$ and ask where the public inputs enter and which multiplication relation the pairing checks.
+- Display $e(\pi_A,\pi_B) = e([\alpha]P_1,[\beta]P_2) \cdot e(\mathrm{IC},[\gamma]P_2) \cdot e(\pi_C,[\delta]P_2)$ and ask where the public inputs enter and which multiplication relation the pairing checks.
 - Ask why circuit-specific key generation is needed, encouraging students to anticipate the motivation for universal setup in the next session.
 
 ---
