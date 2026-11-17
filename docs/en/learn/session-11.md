@@ -80,9 +80,9 @@ This represents a **product** of exponents in the target group $G_{T}$, providin
 
 | Step / stage | Explanation |
 | --- | --- |
-| 1. Desired relation | A(τ)B(τ) = C(τ) + H(τ)Z(τ) |
-| 2. Encode values in group elements | g_1^&#123;A(τ)&#125;, g_2^&#123;B(τ)&#125; |
-| 3. Use bilinearity to check the product | e(g_1^&#123;A(τ)&#125;, g_2^&#123;B(τ)&#125;) = e(g_1,g_2)^&#123;A(τ)B(τ)&#125; |
+| 1. Desired relation | $A(\tau)B(\tau)=C(\tau)+H(\tau)Z(\tau)$ |
+| 2. Encode values in group elements | $g_1^{A(\tau)}$, $g_2^{B(\tau)}$ |
+| 3. Use bilinearity to check the product | $e(g_1^{A(\tau)},g_2^{B(\tau)})=e(g_1,g_2)^{A(\tau)B(\tau)}$ |
 
 </div>
 
