@@ -269,7 +269,7 @@ Conversely, if $G_0$ and $G_1$ are not isomorphic, no single $H$ can be isomorph
 
 An **extractor $E$** is a hypothetical algorithm used in a security proof. In this graph example, it rewinds the prover to the point where it sent the same commitment $H$, issues the other challenge, and obtains both responses. It then constructs a witness using the equation above. This method of invoking a prover and examining its responses is called **black-box extraction**.
 
-Figure 02-4 illustrates this process. Unlike an ordinary verifier, which interacts once, the extractor in a security proof rewinds the prover to the state with the same commitment $H$ and tries another challenge. If it obtains two accepting responses, it composes them to construct a valid witness.
+Figure 02-4 makes the lesson’s graph-isomorphism example concrete. It draws the vertices and edges of $G_0$, $G_1$, and the prover’s commitment $H$, and lists the vertex maps in responses $f_0,f_1$. Unlike an ordinary verifier, which interacts once, the extractor in a security proof rewinds the prover to the state with the same commitment $H$ and tries another challenge. If it obtains two accepting responses, it computes $f_1^{-1}\circ f_0$ and obtains the same witness mapping $a\mapsto3,b\mapsto1,c\mapsto5,d\mapsto2,e\mapsto4$ shown in the lesson.
 
 <StudyDiagram id="02-4" en />
 

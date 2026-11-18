@@ -101,10 +101,49 @@ export const diagrams = {
         "Save the prover state after its commitment"
       ],
       "body": [
-        "公開入力 G₀, G₁ に対して，証明者 P* はグラフ H をコミットする．抽出器 E は，この同じ H を使う状態まで巻き戻せるようにする．",
-        "For public input G₀, G₁, prover P* commits to a graph H. Extractor E can rewind to the state with this same H."
+        "具体例では，G₀ の頂点 a,b,c,d,e と G₁ の頂点 3,1,5,2,4 に対し，P* は頂点 u,v,w,x,y の H をコミットする．H の辺は u–v, v–w, w–x, x–y, y–u, u–w．E は同じ H を送った実行点まで戻る．",
+        "In this example, G₀ has vertices a,b,c,d,e and G₁ has 3,1,5,2,4. P* commits to H with vertices u,v,w,x,y and edges u–v, v–w, w–x, x–y, y–u, u–w. E rewinds to the execution point where this same H was sent."
       ]
     },
+    "graphAlt": [
+      "三つのグラフ G₀, H, G₁ は同じ五角形と対角線の形を持つ．矢印 f₀ は G₀ から H へ，f₁ は G₁ から H への頂点対応を表す．",
+      "The three graphs G₀, H and G₁ share a five-cycle with one diagonal. Arrow f₀ maps vertices from G₀ to H; f₁ maps vertices from G₁ to H."
+    ],
+    "graphs": [
+      {
+        "title": ["G₀", "G₀"],
+        "nodes": [
+          {"label": ["a", "a"], "x": 120, "y": 38},
+          {"label": ["b", "b"], "x": 176, "y": 78},
+          {"label": ["c", "c"], "x": 154, "y": 142},
+          {"label": ["d", "d"], "x": 86, "y": 142},
+          {"label": ["e", "e"], "x": 64, "y": 78}
+        ],
+        "edges": [[0,1],[1,2],[2,3],[3,4],[4,0],[0,2]]
+      },
+      {
+        "title": ["H", "H"],
+        "nodes": [
+          {"label": ["u", "u"], "x": 410, "y": 38},
+          {"label": ["v", "v"], "x": 466, "y": 78},
+          {"label": ["w", "w"], "x": 444, "y": 142},
+          {"label": ["x", "x"], "x": 376, "y": 142},
+          {"label": ["y", "y"], "x": 354, "y": 78}
+        ],
+        "edges": [[0,1],[1,2],[2,3],[3,4],[4,0],[0,2]]
+      },
+      {
+        "title": ["G₁", "G₁"],
+        "nodes": [
+          {"label": ["3", "3"], "x": 700, "y": 38},
+          {"label": ["1", "1"], "x": 756, "y": 78},
+          {"label": ["5", "5"], "x": 734, "y": 142},
+          {"label": ["2", "2"], "x": 666, "y": 142},
+          {"label": ["4", "4"], "x": 644, "y": 78}
+        ],
+        "edges": [[0,1],[1,2],[2,3],[3,4],[4,0],[0,2]]
+      }
+    ],
     "forkLabel": [
       "同じ状態から，チャレンジだけを変えて再実行",
       "Rerun from the same state, changing only the challenge"
@@ -116,12 +155,12 @@ export const diagrams = {
           "Challenge b = 0"
         ],
         "body": [
-          "E が b = 0 を送り，P* の返答を得る．",
-          "E sends b = 0 and obtains P*’s response."
+          "E が b = 0 を送る．G₀ から H への頂点対応を返す．",
+          "E sends b = 0. P* returns a vertex map from G₀ to H."
         ],
         "answer": [
-          "受理される返答：f₀ : G₀ → H",
-          "Accepting response: f₀ : G₀ → H"
+          "f₀：a→u, b→v, c→w, d→x, e→y",
+          "f₀: a→u, b→v, c→w, d→x, e→y"
         ]
       },
       {
@@ -130,12 +169,12 @@ export const diagrams = {
           "Challenge b = 1"
         ],
         "body": [
-          "保存した同じ状態に巻き戻し，E が b = 1 を送る．",
-          "Rewind to the same saved state; E sends b = 1."
+          "同じ H の状態まで巻き戻し，E が b = 1 を送る．G₁ から H への対応を返す．",
+          "Rewind to the state with the same H. E sends b = 1; P* returns a map from G₁ to H."
         ],
         "answer": [
-          "受理される返答：f₁ : G₁ → H",
-          "Accepting response: f₁ : G₁ → H"
+          "f₁：3→u, 1→v, 5→w, 2→x, 4→y",
+          "f₁: 3→u, 1→v, 5→w, 2→x, 4→y"
         ]
       }
     ],
@@ -146,8 +185,8 @@ export const diagrams = {
       ],
       "formula": "π′ = f₁⁻¹ ∘ f₀ : G₀ → G₁",
       "body": [
-        "二つの写像がともに H への同型なら，合成 π′ も G₀ と G₁ の同型写像になる．抽出器は証明者の内部を読まず，返答から有効なウィットネスを作る．",
-        "If both maps are isomorphisms to H, their composition π′ is an isomorphism between G₀ and G₁. The extractor constructs a valid witness from the responses without reading the prover’s private state."
+        "u→3, v→1, w→5, x→2, y→4 と f₁ を逆にたどるので，π′ は a→3, b→1, c→5, d→2, e→4 となる．これは本文のグラフ同型写像 π と同じ有効なウィットネスである．",
+        "Following f₁ backward gives u→3, v→1, w→5, x→2, y→4. Thus π′ maps a→3, b→1, c→5, d→2, e→4: the valid witness π shown in the lesson’s graph example."
       ]
     },
     "note": [
