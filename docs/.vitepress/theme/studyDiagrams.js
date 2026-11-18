@@ -88,6 +88,73 @@ export const diagrams = {
       "E is an algorithm in the security proof, not a third participant in normal interaction. Rewound responses share randomness and need not be independent. Section 2’s S outputs a record; E outputs a witness."
     ]
   },
+  "02-4": {
+    "section": "3.2",
+    "type": "extractor",
+    "title": [
+      "抽出器は，同じコミットから二つの返答を得てウィットネスを作る",
+      "The extractor obtains two responses from one commitment to construct a witness"
+    ],
+    "setup": {
+      "title": [
+        "証明者のコミット後の状態を保存",
+        "Save the prover state after its commitment"
+      ],
+      "body": [
+        "公開入力 G₀, G₁ に対して，証明者 P* はグラフ H をコミットする．抽出器 E は，この同じ H を使う状態まで巻き戻せるようにする．",
+        "For public input G₀, G₁, prover P* commits to a graph H. Extractor E can rewind to the state with this same H."
+      ]
+    },
+    "forkLabel": [
+      "同じ状態から，チャレンジだけを変えて再実行",
+      "Rerun from the same state, changing only the challenge"
+    ],
+    "branches": [
+      {
+        "title": [
+          "チャレンジ b = 0",
+          "Challenge b = 0"
+        ],
+        "body": [
+          "E が b = 0 を送り，P* の返答を得る．",
+          "E sends b = 0 and obtains P*’s response."
+        ],
+        "answer": [
+          "受理される返答：f₀ : G₀ → H",
+          "Accepting response: f₀ : G₀ → H"
+        ]
+      },
+      {
+        "title": [
+          "チャレンジ b = 1",
+          "Challenge b = 1"
+        ],
+        "body": [
+          "保存した同じ状態に巻き戻し，E が b = 1 を送る．",
+          "Rewind to the same saved state; E sends b = 1."
+        ],
+        "answer": [
+          "受理される返答：f₁ : G₁ → H",
+          "Accepting response: f₁ : G₁ → H"
+        ]
+      }
+    ],
+    "result": {
+      "title": [
+        "二つの返答からウィットネスを構成",
+        "Construct a witness from the two responses"
+      ],
+      "formula": "π′ = f₁⁻¹ ∘ f₀ : G₀ → G₁",
+      "body": [
+        "二つの写像がともに H への同型なら，合成 π′ も G₀ と G₁ の同型写像になる．抽出器は証明者の内部を読まず，返答から有効なウィットネスを作る．",
+        "If both maps are isomorphisms to H, their composition π′ is an isomorphism between G₀ and G₁. The extractor constructs a valid witness from the responses without reading the prover’s private state."
+      ]
+    },
+    "note": [
+      "これは安全性証明で考える抽出実験であり，通常の検証者が二つのチャレンジを送るという意味ではない．実際に抽出できる確率や時間は，証明者の受理確率と抽出器に許される操作を含めて評価する．",
+      "This is an extraction experiment in a security proof; it does not mean an ordinary verifier sends both challenges. Extraction probability and runtime must be analyzed against the prover’s acceptance probability and the extractor’s permitted access."
+    ]
+  },
   "02-2": {
     "section": "4.1",
     "type": "flow",

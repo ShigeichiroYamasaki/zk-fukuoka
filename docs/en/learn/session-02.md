@@ -19,7 +19,7 @@ import GraphIsoExample from "../../.vitepress/theme/GraphIsoExample.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: October 18, 2026
+Last updated: November 18, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2) · [Session 2 exercises](../exercises/session-02)
 
@@ -268,6 +268,10 @@ Conversely, if $G_0$ and $G_1$ are not isomorphic, no single $H$ can be isomorph
 ### 3.2 The concept of an extractor
 
 An **extractor $E$** is a hypothetical algorithm used in a security proof. In this graph example, it rewinds the prover to the point where it sent the same commitment $H$, issues the other challenge, and obtains both responses. It then constructs a witness using the equation above. This method of invoking a prover and examining its responses is called **black-box extraction**.
+
+Figure 02-4 illustrates this process. Unlike an ordinary verifier, which interacts once, the extractor in a security proof rewinds the prover to the state with the same commitment $H$ and tries another challenge. If it obtains two accepting responses, it composes them to construct a valid witness.
+
+<StudyDiagram id="02-4" en />
 
 The extractor is not a third participant in the ordinary interaction, and it cannot read the prover's private memory. Whether rewinding is allowed depends on the proof system and security definition. In this example, **knowledge soundness** requires that if a prover convinces the verifier more often than the “guess at random” baseline, an extractor can obtain a valid witness.
 
