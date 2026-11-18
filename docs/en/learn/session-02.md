@@ -81,6 +81,8 @@ $$R\subseteq\{0,1\}^*\times\{0,1\}^*.$$
 
 An algorithm can test whether a pair belongs to $R$. Its result may also be written $R(x,w)=1$ when the condition holds and $R(x,w)=0$ otherwise. Here, $(x,w)\in R$ and $R(x,w)=1$ express the same test result: the first uses set membership, while the second emphasizes the output of the test.
 
+There are two useful ways to define a relation. An **extensional definition** lists the pairs $(x,w)$ that belong to $R$. An **intensional definition** gives a predicate or algorithm for deciding whether a pair belongs to $R$. In cryptographic protocols, the latter is usually more practical: the relation is public as a verification rule, while the witness remains private.
+
 From $R$, define the language
 
 $$L=L_R:=\{x\mid \exists w,\ (x,w)\in R\}.$$
@@ -108,6 +110,8 @@ For every verifier algorithm $V^*$, assume there is a simulator $S$ that reprodu
 
 Now define the random variables.
 
+#### 2.2.1 The random variables being compared
+
 **Separate what is fixed from what is sampled.** Fix a valid pair $(x,w)\in R$, verifier algorithm $V^*$, and auxiliary input $z$ available to the verifier before the interaction. If auxiliary input is not considered, let $z$ be the empty string.
 
 The prover's random tape $r_P$ and verifier's random tape $r_V$ are sampled independently according to their respective algorithms. Once the inputs and tapes are fixed, the transcript is determined. Varying the tapes gives the random variable for the verifier's **entire view**:
@@ -134,6 +138,8 @@ $$\Pr[X_{x,w,z}=t]\quad\text{and}\quad\Pr[Y_{x,z}=t].$$
 
 The first probability is induced by the real interaction's randomness $r_P,r_V$; the second by the simulator's randomness $r_S$. The two record distributions are compared; individual executions need not produce the same record.
 
+#### 2.2.2 The distinguisher $D$
+
 Make the role of the **distinguisher** $D$ explicit. It receives the public input $x$, auxiliary input $z$, and one record $t$ sampled from either $X$ or $Y$. It outputs 1 if it judges the record to come from the real interaction and 0 if it judges it to come from the simulator. It is not told which source produced $t$ and does not receive the witness $w$ or the prover's random tape $r_P$. The record contains what the verifier can observe, including its own random tape when that is part of the view. The distinguisher may inspect this information and use its own randomness.
 
 The **capability** of a distinguisher means the computational resources available for this decision. Computational zero-knowledge restricts it to probabilistic polynomial time. Perfect and statistical zero-knowledge consider even distinguishers with no computational limit. In each case, compare the probability that it outputs 1 on a real record with the probability that it outputs 1 on a simulated record.
@@ -143,6 +149,8 @@ For fixed $x,w,z$, call this output-probability gap the distinguisher's **distin
 $$\operatorname{Adv}^{\mathrm{ZK}}_D(x,w,z):=\left|\Pr[D(x,z,X_{x,w,z})=1]-\Pr[D(x,z,Y_{x,z})=1]\right|.$$
 
 A larger advantage means $D$ can more easily tell the two record sources apart. The zero-knowledge definitions specify which distinguishers are considered and how small this gap must be.
+
+#### 2.2.3 Classes of zero-knowledge defined by distinguishers
 
 Below, omit subscripts and write $X,Y$. Compare the family of distributions as input length $n=|x|$ grows, with auxiliary-input length polynomially bounded in $n$. The notation $\mathrm{negl}(n)$ denotes a nonnegative function that eventually becomes smaller than every inverse polynomial.
 
@@ -162,7 +170,7 @@ An **honest verifier** follows the protocol's prescribed steps. For example, it 
 
 ### 2.3 Example: checking the formal definition
 
-**Comparing probability distributions**
+#### 2.3.1 Distinguishing two probability distributions
 
 The following hypothetical two-bit records illustrate probability distributions; they are not themselves a zero-knowledge protocol.
 
@@ -183,7 +191,7 @@ Under both random variables, each bit considered individually is equally likely 
 
 The indistinguishability condition concerns the distributions of the random variable $X$, representing the real verifier view, and $Y$, representing the simulator output, for the same fixed public input. Restricting a dishonest prover's power for soundness and restricting a distinguisher's power for zero-knowledge are separate axes. Being an argument does not imply computational zero-knowledge; for example, the original paper for Groth16, a proof system studied in Session 11, proves perfect zero-knowledge.
 
-**Graph-isomorphism example**
+#### 2.3.2 Checking the definition with graph isomorphism
 
 A **graph isomorphism** is a bijection between the vertices of two graphs that preserves both edges and non-edges. Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
 
