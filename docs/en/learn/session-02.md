@@ -114,7 +114,11 @@ Now define the random variables.
 
 **Separate what is fixed from what is sampled.** Fix a valid pair $(x,w)\in R$, verifier algorithm $V^*$, and auxiliary input $z$ available to the verifier before the interaction. If auxiliary input is not considered, let $z$ be the empty string.
 
-The prover's random tape $r_P$ and verifier's random tape $r_V$ are sampled independently according to their respective algorithms. Once the inputs and tapes are fixed, the transcript is determined. Varying the tapes gives the random variable for the verifier's **entire view**:
+The prover's random tape $r_P$ and verifier's random tape $r_V$ are sampled independently according to their respective algorithms. Once the inputs and tapes are fixed, the transcript is determined.
+
+**One random variable being compared is the entire record observed from the verifier's point of view.** The prover's random tape $r_P$ and witness $w$ are not part of the verifier's view.
+
+Changing the random tapes changes the verifier's record, defined as follows:
 
 $$X_{x,w,z}:=\operatorname{View}_{V^*}\bigl[P(x,w;r_P)\leftrightarrow V^*(x,z;r_V)\bigr].$$
 
@@ -124,7 +128,7 @@ $$X_{x,w,z}=(x,z,r_V,m_1,\ldots,m_k),$$
 
 where $m_1,\ldots,m_k$ are messages received by the verifier. The verifier's own messages and final decision can be reconstructed from this record and its algorithm.
 
-**The comparison is of the entire record the verifier can know.** The prover's random tape $r_P$ and witness $w$ are not themselves included in the view.
+**The other random variable being compared is the complete record that simulates the verifier's interaction, generated without using the witness.**
 
 The simulator uses its own random tape $r_S$ to output a record in the same format. Treat its output as the random variable
 
@@ -136,7 +140,7 @@ The simulator receives $x,z$, but not $w$. It may depend on $V^*$, but a separat
 
 $$\Pr[X_{x,w,z}=t]\quad\text{and}\quad\Pr[Y_{x,z}=t].$$
 
-The first probability is induced by the real interaction's randomness $r_P,r_V$; the second by the simulator's randomness $r_S$. The two record distributions are compared; individual executions need not produce the same record.
+The first probability is induced by the real interaction's randomness $r_P,r_V$; the second by the simulator's randomness $r_S$. The simulator paradigm compares these two **probability distributions**.
 
 #### 2.2.2 The distinguisher $D$
 
