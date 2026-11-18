@@ -65,7 +65,7 @@ export const diagrams = {
           "P* と V の乱数を選んで対話する．\nV が出す結果：受理または拒否．\nA_x は判定の0・1変数．",
           "Sample prover and verifier randomness and interact.\nV outputs accept or reject.\nA_x is the binary decision variable."
         ],
-        "formula": "p_{P*}(x) = Pr[A_x = 1]"
+        "formulaMath": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><msub><mi>p</mi><mrow><mi>P</mi><mo>*</mo></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>Pr</mi><mo>[</mo><msub><mi>A</mi><mi>x</mi></msub><mo>=</mo><mn>1</mn><mo>]</mo></math>"
       },
       {
         "title": [
@@ -76,7 +76,7 @@ export const diagrams = {
           "E が検証者の役を実行し，P* を呼び出す．\nこのモデルでは再実行・巻き戻しが可能．\nE の出力 W：有効な w′ または ⊥．\nB は (x, W) ∈ R なら1，失敗なら0．",
           "E emulates a verifier and invokes P*.\nThis model permits reruns and rewinding.\nOutput W: valid witness w′ or failure ⊥.\nB = 1 for (x, W) ∈ R; otherwise B = 0."
         ],
-        "formula": "W = E_T^{P*}(x); e_{P*}(x,T) = Pr[B = 1]"
+        "formulaMath": "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>W</mi><mo>=</mo><msubsup><mi>E</mi><mi>T</mi><mrow><mi>P</mi><mo>*</mo></mrow></msubsup><mo>(</mo><mi>x</mi><mo>)</mo><mo>;</mo><mspace width=\"0.6em\"/><msub><mi>e</mi><mrow><mi>P</mi><mo>*</mo></mrow></msub><mo>(</mo><mi>x</mi><mo>,</mo><mi>T</mi><mo>)</mo><mo>=</mo><mi>Pr</mi><mo>[</mo><mi>B</mi><mo>=</mo><mn>1</mn><mo>]</mo></math>"
       }
     ],
     "bottom": [
