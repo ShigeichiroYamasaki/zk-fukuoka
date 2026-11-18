@@ -17,19 +17,19 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: October 18, 2026
+Last updated: November 18, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1) · [Language and computation theory prerequisites](./computation-theory) · [Session 1 exercises](../exercises/session-01)
 
 ## Context and learning objectives
 
-Over 15 sessions, this course explores zk-SNARKs and zk-STARKs. The first question is what we want these technologies to achieve. Before assembling the mathematics needed to understand their mechanisms, let us establish why those mechanisms are needed. Today's three objectives are:
+Over 15 sessions, this course explores zk-SNARKs and zk-STARKs. This session examines what we want these technologies to achieve and why we need them. Today we have three objectives.
 
 1. Make explicit the implicit assumptions behind the classical concept of a proof—the NP verifier paradigm—and question them.
 2. Understand how removing those assumptions leads to interactive proofs, independently motivated by two different contexts: complexity theory and cryptography.
 3. Take the first steps toward a mathematical definition of interactive proofs: completeness, soundness, and the distinction between proofs and arguments.
 
-We define zero-knowledge in the next session. Before that, we reconsider checking correctness as a computational procedure. In particular, what changes if the verifier can ask the prover questions?
+We define zero-knowledge in the next session. Today we treat deciding whether a proposition is true as a computational procedure. We consider what changes when this procedure involves a prover and a verifier who can ask the prover questions.
 
 ---
 
@@ -37,9 +37,9 @@ We define zero-knowledge in the next session. Before that, we reconsider checkin
 
 ### 1.1 The NP verifier paradigm
 
-First, consider how to check whether a proposition is true. A proposition is content that can be true or false; to assert a proposition is to put it forward as true. Even when checking the proposition directly is difficult, supporting information may let us verify it efficiently. We call this information a witness.
+First, consider how to check whether a proposition is true. Even when checking the proposition directly is difficult, supporting information may let us verify it efficiently. We call this information a witness.
 
-For example, consider the proposition **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. If someone supplies the number 7, the verifier can check $1<7<91$ and $91=7\times13$. Here the input being checked is 91, and the witness is 7.
+For example, consider the proposition **“91 is composite.”** A composite number is an integer greater than one with a positive divisor other than one and itself. Factoring very large composite numbers can be extremely difficult in practice. Given the divisor 7, the verifier can quickly establish that the proposition is true by checking $1<7<91$ and $91=7\times13$. Here 91 is the public input and 7 is the witness.
 
 <div class="captioned-table" id="table-01-1" role="group" aria-labelledby="table-caption-01-1">
 
@@ -54,23 +54,23 @@ For example, consider the proposition **“91 is composite.”** A composite num
 
 </div>
 
-Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a proposition, not the proposition itself, and it need not be unique.** This example illustrates the role of a witness: handing over 7 does not conceal that value. However, zero-knowledge does not require hiding information easily computed from the public input, as in this small example. We define zero-knowledge next time.
+Supplying 8 fails because it does not divide 91. Supplying 1 also fails: it divides 91 but does not satisfy $1<w<91$. The number 13, however, is another valid witness. **A witness is concrete information used to check a proposition, not the proposition itself, and it need not be unique.** This example illustrates the role of a witness: handing over 7 does not conceal that value.
 
 #### 1.1.1 Languages in computation theory
 
 Before reading the formula, review **sets, elements, membership, and languages $L$ in complexity theory**. A finite set of symbols is an alphabet $\Sigma$, and $\Sigma^*$ is the set of all finite strings over it. **A language is a set of strings $L\subseteq\Sigma^*$.** The language itself is a set, distinct from an algorithm deciding membership in it.
 
-The set of syntactically well-formed expressions is one example of a language. However, languages are not limited to syntax: the encodings of composite numbers or of satisfiable logical formulas also form languages. **Being well-formed and satisfying the condition expressed by a formula are different properties.** Our choice of what to include in $L$ specifies the decision problem.
+The set of syntactically well-formed expressions is one example of a language. An encoding is a string that represents an object such as an integer or a logical formula. A language can also be defined by a property of the objects those strings encode. For example, the set of encodings of composite numbers and the set of encodings of satisfiable formulas are both languages. **Being well-formed and satisfying the condition expressed by a formula are different properties.** Our choice of what to include in $L$ specifies the decision problem.
 
 See [Sets, membership and languages: reading $x\in L$](./terms/sets-and-languages) for examples and a step-by-step reading of the symbols.
 
-#### 1.1.2 Truth of a proposition and acceptance by an NP verifier
+#### 1.1.2 Using an NP verifier to define when a proposition is true
 
 A decision problem is represented by the language $L$ of encodings of its Yes instances. Read $x\in L$ as “input $x$ belongs to that set of Yes instances.” For example, if $L$ contains the encodings of composite numbers, the encoding of 91 belongs to $L$, whereas that of the prime 97 does not. Both are well-formed integers, so this problem is not simply a syntax check.
 
 When this course says that input $x$ is a Yes instance, it means, more precisely, **the proposition “$x\in L$” is true**. By contrast, $L\in\mathrm{NP}$ says that language $L$ belongs to the complexity class NP defined below. Distinguish membership of an individual input from classification of a decision problem.
 
-An NP verifier is an algorithm that takes an input $x$ and a witness $w$ and accepts or rejects. It is not an automatic method for deciding the truth of arbitrary propositions. For a specified language $L$, it connects Yes instances with the existence of accepted witnesses.
+**An NP verifier** is an algorithm that takes an input $x$ and a witness $w$ and either accepts or rejects. It provides a way to define the complexity class NP. It is not an automatic method for deciding the truth of arbitrary propositions. For a specified language $L$, it connects Yes instances with the existence of accepted witnesses.
 
 #### 1.1.3 Definition of the NP verifier paradigm
 
@@ -78,7 +78,7 @@ A language $L\subseteq\Sigma^*$ belongs to $\mathrm{NP}$ if there exist a **dete
 
 $$x \in L \iff \exists w\in\Sigma^*,\ |w| \le p(|x|),\ V(x, w) = 1$$
 
-Here $x$ is the problem input, $w$ is a witness, and $V(x,w)=1$ means acceptance. The quantities $|x|$ and $|w|$ are lengths of encoded strings, not the numerical values of integers. The running time of $V$ is polynomial in its total input length; together with the witness bound $p(|x|)$, this makes verification polynomial in $|x|$.
+Here $x$ is the problem input, $w$ is a witness, and $V(x,w)=1$ means acceptance. The quantities $|x|$ and $|w|$ are lengths of encoded strings, not the numerical values of integers. The running time of $V$ is polynomial in its total input length. With the witness length bounded by $p(|x|)$, verification therefore takes polynomial time in $|x|$.
 
 Read the equivalence in both directions. If the proposition “$x\in L$” is true, an accepted witness exists. Taking the contrapositive of the reverse implication, if the proposition is false, no witness meeting the length bound is accepted.
 
@@ -91,7 +91,7 @@ Using this definition directly as a proving procedure means giving the witness t
 
 Here, “a single reading” means inspecting a received witness without sending questions back. The definition of NP neither requires every bit to be read nor limits the verifier to one pass.
 
-Giving the witness allows verification, but is giving it necessary? Is there a reason the verifier should not ask questions? Separating the goal of checking correctness from the chosen method lets us question these two assumptions.
+Giving the entire witness allows verification. Is full disclosure necessary? Is there a reason the verifier should not ask questions? Separating the goal of checking correctness from the chosen method lets us question these two assumptions.
 
 <LectureDiagram kind="witness" :en="true" />
 
@@ -108,25 +108,29 @@ One question concerns what information to give the verifier. The other concerns 
 
 ### 2.1 Arthur–Merlin games
 
-In 1985, Babai proposed interactive games in which the verifier uses randomness. The prover, Merlin, has no bound on its computation time; the verifier, Arthur, runs in probabilistic polynomial time in the input length. The model still bounds message lengths and total communication by a polynomial.
+In 1985, Babai proposed interactive games in which the verifier uses randomness. The names come from Arthurian legend. Merlin is the prover and has unlimited computation time. Arthur is the verifier and runs in probabilistic polynomial time in the input length. The model still bounds message lengths and total communication by a polynomial.
 
-Merlin's power does not make its answers trustworthy. Arthur must check the propositions Merlin asserts within its own computational budget. Randomness and interaction provide tools for doing so.
+Merlin's unlimited computation time gives Arthur no reason to trust Merlin's answers. Arthur must check the propositions Merlin asserts within its own computational budget. Randomness and interaction provide tools for doing so.
 
 At this point, one might ask how sending a witness in pieces differs from sending it all at once. The important feature is not merely increasing the number of transmissions. The verifier issues random questions, and the prover responds to them.
 
-Does allowing such exchanges change which propositions can be verified? When comparing Arthur–Merlin public-coin models with general IP, conditions such as the number of rounds must be distinguished. The next result concerns IP with polynomially many rounds.
+Does allowing such exchanges change which propositions can be verified?
+
+**IP** is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. **PSPACE** is the class of languages decidable using polynomial workspace.
+
+When comparing Arthur–Merlin models with general IP, specify conditions such as the number of rounds. The next result concerns IP with polynomially many rounds.
 
 <LectureDiagram kind="interaction" :en="true" />
 
 ### 2.2 IP = PSPACE (presenting the result)
 
-The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result. We refer here to the 1992 paper.
+The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result.
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
 
-IP is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. PSPACE is the class decidable using polynomial workspace. NP $\subseteq$ PSPACE holds, but NP and PSPACE have not been proved distinct. Keep that open question separate from the theorem IP = PSPACE.
+NP $\subseteq$ PSPACE holds. Whether the inclusion is strict remains open.
 
-**The distinction to notice is between solving a problem yourself and checking correctness with another party's help.** A verifier running in polynomial time can, through interaction, handle all of PSPACE. The point is not to trust the powerful party, but to construct a procedure unlikely to accept even when that party asserts a false proposition.
+**The distinction to notice is between solving a problem yourself and checking correctness with another party's help.** A verifier running in polynomial time can, through interaction, handle all of PSPACE. The verifier can keep the probability of accepting a false proposition low even against a prover with unlimited computation time.
 
 *(We discuss sumcheck, a technique used in the proof, in [Session 15](./session-15#_3-1-revisiting-the-sumcheck-protocol), after assembling the polynomial tools in Act II. Today, rather than following the proof, we establish what this result makes possible.)*
 
@@ -140,7 +144,7 @@ From the perspective of complexity theory, the central question is how much a co
 
 ### 3.1 The Goldwasser–Micali–Rackoff problem setting (1985)
 
-Also in 1985, Goldwasser, Micali, and Rackoff studied what knowledge is conveyed through a proof. The concern is not only which propositions can be verified, but how much information must be given to another party for verification. With authentication applications in mind, we can pose the question as follows:
+Also in 1985, Goldwasser, Micali, and Rackoff (GMR) studied what knowledge is conveyed through a proof. The concern is not only which propositions can be verified, but how much information must be given to another party for verification. With authentication applications in mind, we can pose the question as follows:
 
 > How can you convince someone that you know a secret without revealing it?
 
@@ -151,7 +155,7 @@ This question requires considering **the possibility that either the prover or t
 
 Interactive proofs in complexity theory already required protection against dishonest provers. Cryptography additionally considers whether a verifier might learn extra information from the exchange.
 
-“Being able to check that a proposition is true” and “not needing to disclose a secret to do so” are different properties. “The proposition is true” and “the prover knows its witness” must also be distinguished. Defining these separately, rather than treating them as one notion, is a task for the coming sessions.
+“Being able to check that $x\in L$ is true” and “not needing to disclose a secret to do so” are different properties. “$x\in L$ is true” and “the prover knows a witness $w$ for it” must also be distinguished. Defining these separately, rather than treating them as one notion, is a task for the coming sessions.
 
 ### 3.2 Building intuition with examples
 
@@ -193,7 +197,7 @@ First, we specify conditions for accepting true propositions and rejecting false
 
 </div>
 
-The shared framework is an interactive proof system (P, V): exchange messages, then accept or reject.
+The shared framework is an interactive proof system $(P, V)$: exchange messages, then accept or reject.
 
 The descriptive framework is shared. Completeness, soundness and zero-knowledge are defined separately.
 
@@ -205,11 +209,11 @@ Let us rewrite the preceding discussion as conditions a procedure must satisfy. 
 
 ### 5.1 Completeness and soundness
 
-For a language $L$, consider a pair $(P,V)$ consisting of prover $P$ and verifier $V$. The prover has no bound on its internal computation time, while the verifier runs in probabilistic polynomial time in the input length $|x|$. The protocol also bounds the number of rounds, each message length, and total communication by a polynomial in $|x|$. Thus, an unbounded prover may take arbitrarily long to compute, but cannot send unbounded messages. We write $\langle P,V\rangle(x)=1$ when the verifier accepts as the outcome of their exchange.
+For a language $L$, consider a pair $(P,V)$ consisting of prover $P$ and verifier $V$. The prover has no bound on its internal computation time, while the verifier runs in probabilistic polynomial time in the input length $|x|$. The protocol also bounds the number of rounds, each message length, and total communication by a polynomial in $|x|$. Thus, an unbounded prover may take arbitrarily long to compute, but cannot send unbounded messages.
 
-The verifier’s running time, including the time to read messages, is polynomial in the input length. The probabilities below are over the random choices of the verifier and, when randomized, the prover.
+We write $\langle P,V\rangle(x)=1$ when the verifier accepts $x$ at the end of the exchange. Thus $\Pr[\langle P,V\rangle(x)=1]$ is the probability that the verifier accepts $x$, taken over the random choices made during the interaction. Here $\mathrm{negl}(|x|)$ denotes a negligible function of the input length.
 
-Here, we state the two conditions in a form where error probabilities are negligible. $\mathrm{negl}(|x|)$ denotes a function that eventually becomes smaller than every inverse polynomial as the input length grows. IP can also be defined starting with constant error probabilities, which appropriate repetition can reduce.
+The verifier’s running time, including the time to read incoming messages, is polynomial in the input length. We state the two conditions below with negligible error probabilities.
 
 **Completeness:** If the proposition “$x\in L$” is true and the honest prover follows the procedure, the verifier accepts with high probability. For $x \in L$, we require
 
@@ -253,7 +257,8 @@ Next, consider how much computational power to allow the dishonest prover $P^*$.
 
 A proof requires soundness even without restricting the adversary's computational power. An argument requires soundness against adversaries that can compute efficiently. Cryptographic constructions typically measure the adversary's running time and success probability in terms of a security parameter.
 
-**The A in SNARK and STARK stands for Argument.** We may call them proofs in everyday discussion, but this distinction matters when reading their mathematical guarantees. When a scheme is described as secure, ask what the adversary is assumed unable to compute and under which assumptions the guarantee holds. We will use this perspective again when comparing protocols in Act III.
+**The A in SNARK and STARK stands for Argument.** We may call them proofs in everyday discussion, but this distinction matters when reading their mathematical guarantees.
+When a scheme is described as secure, ask what the adversary is assumed unable to compute and under which assumptions the guarantee holds. We will use this perspective again when comparing protocols in Act III.
 
 <span id="diagram-models"></span>
 
