@@ -37,6 +37,8 @@ const sidebar = (en: boolean) => {
         { text: en ? "Exercises" : "演習トップ", link: p + "exercises/" },
         { text: en ? "Available tools" : "利用可能なツール", link: p + "exercises/tools" },
         { text: en ? "Basic operation manuals" : "基本操作マニュアル集", link: p + "exercises/manuals" },
+        { text: en ? "Circom manual" : "Circomの操作マニュアル", link: p + "exercises/manuals/circom" },
+        { text: en ? "snarkjs manual" : "snarkjsの操作マニュアル", link: p + "exercises/manuals/snarkjs" },
       ],
     },
     {

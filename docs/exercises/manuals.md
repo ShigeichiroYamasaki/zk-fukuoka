@@ -4,11 +4,13 @@ outline: [2, 3]
 
 # 基本操作マニュアル集
 
-更新日：2026年11月15日
+更新日：2026年11月20日
 
 幕III（第11〜15回）の演習を進めるための操作案内です．第11回で証明の生成・検証を一巡し，第12回でセットアップの違い，第13回で実行トレース，第14回で方式の比較，第15回で発展的な構成を確認します．
 
 [演習トップ](./) · [実装・ツール一覧](./tools) · [前提知識・補助教材](../learn/foundations)
+
+[Circomの操作マニュアル](./manuals/circom) · [snarkjsの操作マニュアル](./manuals/snarkjs)
 
 公式資料の参照確認日：2026年10月12日．以下は公式手順への日本語の読み順・演習案内です．コマンドの詳細は利用する版の公式マニュアルで確認してください．参照先の確認は，その版を使ったローカル実行確認を意味しません．
 
@@ -90,7 +92,7 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 | [第14回・統合](../learn/session-14) | 条件を揃えて記録・比較する | [比較と考察](#comparison) | 実測値と理論的性質を分けて説明できる |
 | [第15回・発展](../learn/session-15) | 再帰・フォールディング・sumcheckの役割を調べる | [発展演習](#advanced) | 何を集約し，どの負担を減らすか説明できる |
 
-本サイトの演習用計算コードと応用編で自作するオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．証明回路にはCircom，L1コントラクトにはSolidity，証明ツールにはNode.jsが必要なため，これらは目的に応じて併用します．第13回はRubyのフォールディング例から始め，必要ならAnatomy of a STARK（Python），Winterfell（Rust），Miden VMを外部実装の参考として読み進めます．すべて導入する必要はありません．
+本サイトの演習用計算コードと応用編で自作するオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．証明回路にはCircom，L1コントラクトにはSolidity，証明ツールにはNode.jsが必要なため，これらは目的に応じて併用します．第13回ではRubyで有限体・多項式・Merkle木・FRIのコードを読み，必要ならAnatomy of a STARK（Python），Winterfell（Rust），Miden VMを外部実装の参考として読み進めます．すべて導入する必要はありません．
 
 ## 共通の準備と回路の作成 {#circuits}
 
@@ -100,7 +102,7 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 
 | 使う環境 | 導入・操作マニュアル | 最初に確認すること |
 | --- | --- | --- |
-| Circom＋snarkjs | [snarkjs公式README](https://github.com/iden3/snarkjs#readme)，[Circom導入](https://docs.circom.io/getting-started/installation/) | Node.js，Circom，snarkjsが起動し，ヘルプを参照できる |
+| Circom＋snarkjs | [Circomの操作マニュアル](./manuals/circom) → [snarkjsの操作マニュアル](./manuals/snarkjs) | Node.js，Circom，snarkjsが起動し，ヘルプを参照できる |
 | Goの実装 | [gnark導入](https://docs.gnark.consensys.io/HowTo/get_started) | 例と依存モジュールの版が一致する |
 | Rustの実装 | [Rust導入（日本語）](https://doc.rust-jp.rs/book-ja/ch01-01-installation.html)と選んだ実装のREADME | Rust/Cargoの版，必要な機能フラグを記録する |
 | Rubyの実装 | [Rubyのインストール](https://www.ruby-lang.org/ja/documentation/installation/)，[20分ではじめるRuby](https://www.ruby-lang.org/ja/documentation/quickstart/)，[リファレンスマニュアル](https://docs.ruby-lang.org/ja/) | プレビュー版ではなく，保守中の安定版Rubyを使う．応用編の配布Rubyコードは標準ライブラリで動く |
@@ -110,11 +112,11 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 
 | 順番 | 操作と公式手順 | 確認する生成物 |
 | --- | --- | --- |
-| 1 | [最初の回路を書く](https://docs.circom.io/getting-started/writing-circuits/) | `.circom`．何を公開し，何をウィットネスとして扱うか |
-| 2 | [回路をコンパイルする](https://docs.circom.io/getting-started/compiling-circuits/) | `.r1cs`，ウィットネス計算用のWasmなど |
-| 3 | [ウィットネスを計算する](https://docs.circom.io/getting-started/computing-the-witness/) | 入力JSONと`.wtns`．制約を満たす割当であること |
+| 1 | [日本語手順：回路を書く](./manuals/circom#write-circuit) | `.circom`．何を公開し，何をウィットネスとして扱うか |
+| 2 | [日本語手順：回路をコンパイルする](./manuals/circom#compile-circuit) | `.r1cs`，ウィットネス計算用のWasmなど |
+| 3 | [日本語手順：ウィットネスを計算する](./manuals/circom#compute-witness) | 入力JSONと`.wtns`．制約を満たす割当であること |
 
-Circomのサイトに接続できない場合は，[snarkjs公式README](https://github.com/iden3/snarkjs#readme)の回路作成・コンパイル・ウィットネス計算の節から進められます．
+各手順の英語原文は[Circom公式ガイド](https://docs.circom.io/getting-started/writing-circuits/)，[コンパイル](https://docs.circom.io/getting-started/compiling-circuits/)，[ウィットネス計算](https://docs.circom.io/getting-started/computing-the-witness/)です．証明生成・検証は[snarkjsの日本語手順](./manuals/snarkjs)へ進みます．
 
 ## 証明を生成・検証する {#proofs}
 
@@ -127,9 +129,9 @@ Circomのサイトに接続できない場合は，[snarkjs公式README](https:/
 | 順番 | 操作 | 公式マニュアル | 確認すること |
 | --- | --- | --- | --- |
 | 1 | 共通の回路とウィットネスを用意する | [共通準備](#circuits) | 公開入力とウィットネスの役割 |
-| 2 | Powers of Tauを準備し，Groth16の回路固有のセットアップを進める | [snarkjsの手順](https://github.com/iden3/snarkjs#readme)，[Circom証明チュートリアル](https://docs.circom.io/getting-started/proving-circuits/) | `.ptau`と回路に対応する`.zkey`の違い．公式手順の貢献・検証も行う |
-| 3 | 検証鍵を出力し，証明を生成する | [検証鍵の出力](https://github.com/iden3/snarkjs#22-export-the-verification-key)，[証明生成](https://github.com/iden3/snarkjs#23-create-the-proof) | 検証鍵，証明JSON，公開入力JSON |
-| 4 | 検証し，公開入力のコピーを変更して再検証する | [検証](https://github.com/iden3/snarkjs#24-verify-the-proof)のGroth16手順 | 元の組は受理し，改ざんした公開入力は拒否されること |
+| 2 | Powers of Tauを確認し，Groth16の回路固有のセットアップを進める | [snarkjsの日本語手順](./manuals/snarkjs#groth16) · [公式README](https://github.com/iden3/snarkjs#readme) | `.ptau`と回路に対応する`.zkey`の違い．貢献・検証の記録 |
+| 3 | 検証鍵を出力し，証明を生成する | [snarkjsの日本語手順](./manuals/snarkjs#groth16) | 検証鍵，証明JSON，公開入力JSON |
+| 4 | 検証し，公開入力のコピーを変更して再検証する | [snarkjsの日本語手順](./manuals/snarkjs#verify-as-verifier) · [公式README](https://github.com/iden3/snarkjs#readme) | 元の組は受理し，改ざんした公開入力は拒否されること |
 
 **完了後の確認**：制約を変更したら，どの生成物を作り直す必要があるでしょうか．回路固有のセットアップを第11回と結びつけて説明します．ローカルで作るセットアップは学習用として扱います．
 
@@ -139,9 +141,9 @@ Circomのサイトに接続できない場合は，[snarkjs公式README](https:/
 
 | 順番 | 操作 | 公式マニュアル | 確認すること |
 | --- | --- | --- | --- |
-| 1 | 回路の規模・曲線などに適合するPowers of Tauを用意する | [公式README](https://github.com/iden3/snarkjs#readme) | 第11回のSRSを再利用できる条件 |
-| 2 | `plonk setup`で回路に対応する鍵を生成する | [SetupのPLONK手順](https://github.com/iden3/snarkjs#15-setup) | 汎用SRSがあっても回路ごとの前処理は残る |
-| 3 | 検証鍵を出力し，証明生成・検証を行う | [検証鍵](https://github.com/iden3/snarkjs#22-export-the-verification-key)，[証明生成](https://github.com/iden3/snarkjs#23-create-the-proof)，[検証](https://github.com/iden3/snarkjs#24-verify-the-proof) | 各節でPLONKのコマンドを使う |
+| 1 | 回路の規模・曲線などに適合するPowers of Tauを用意する | [snarkjsの日本語手順](./manuals/snarkjs#powers-of-tau) · [公式README](https://github.com/iden3/snarkjs#readme) | 第11回のSRSを再利用できる条件 |
+| 2 | `plonk setup`で回路に対応する鍵を生成する | [snarkjsの日本語手順](./manuals/snarkjs#plonk) | 汎用SRSがあっても回路ごとの前処理は残る |
+| 3 | 検証鍵を出力し，証明生成・検証を行う | [snarkjsの日本語手順](./manuals/snarkjs#plonk) | 各節でPLONKのコマンドを使う |
 | 4 | 公開入力を変更して再検証し，回路変更後の鍵も作り直す | 同じ公式手順で再実行 | 不正な公開入力の拒否と，SRS再利用・回路前処理の違い |
 
 Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめないようにします．[gnark・Dusk PLONKの操作案内](./#plonk)は，GoやRustで実装を読む場合の選択肢です．CircomのR1CSを入力する経路と，PLONKishなゲート・コピー制約を直接記述する経路も区別しましょう．
@@ -154,8 +156,8 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 
 | 学び方 | 実装と操作マニュアル | 追いかける箇所 |
 | --- | --- | --- |
-| Rubyでフォールディングを計算 | [第13回演習のコードと手順](./session-13#ruby-folding) | 有限体上の計算，次数条件，正常・不正例．暗号学的なSTARK証明を実装するものではない |
-| 外部Python実装を読む（任意） | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証．外部教材はPython実装 |
+| RubyでFRIの仕組みを追う | [第13回演習のコードと手順](./session-13#ruby-fri) | 有限体，多項式，Merkle認証，FRIのコミット・問い合わせ・検証．AIRに結び付いた完全なSTARKではない |
+| 外部Python実装を読む（任意） | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証を含む別実装．外部教材はPython |
 | RustでAIRを書く | [Winterfellの利用手順](https://github.com/facebook/winterfell#usage)，[実装例](https://github.com/facebook/winterfell/tree/main/examples)，[API](https://docs.rs/winterfell/latest/winterfell/) | トレースの作成，遷移制約，境界の指定，証明・検証 |
 | VMで実行を証明する | [Miden VMのCLIと例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | 命令列，入力，実行結果，実行証明．`next`の手順と利用リリースの差を確認する |
 

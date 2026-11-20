@@ -4,11 +4,13 @@ outline: [2, 3]
 
 # Basic operation manuals
 
-Updated: November 15, 2026
+Updated: November 20, 2026
 
 Follow the Act III exercises (Sessions 11–15): generate and verify a proof, compare setup requirements, inspect execution traces, compare results, and explore advanced constructions.
 
 [Exercises](./) · [Implementations and tools](./tools) · [Prerequisites](../learn/foundations)
+
+[Circom manual](./manuals/circom) · [snarkjs manual](./manuals/snarkjs)
 
 Official documentation reference check: October 12, 2026. This page provides a reading order and exercise guide to official manuals. Use commands from the documentation matching your chosen version. Checking a reference does not mean that version was tested locally.
 
@@ -90,7 +92,7 @@ Check what code is provided and what remains an implementation task. **You do no
 | [14: Integration](../learn/session-14) | Record comparable experiments | [Comparison](#comparison) | Separate measurements from theoretical properties |
 | [15: Further directions](../learn/session-15) | Explore recursion, folding and sumcheck | [Advanced exercises](#advanced) | Explain what is combined and which costs are reduced |
 
-Ruby is the default for the site's exercise calculations and off-chain ledger, training and aggregation models. Circom is used for proof circuits, Solidity for L1 contracts, and Node.js where required by proving tools. Session 13 starts with the Ruby folding example; Anatomy of a STARK (Python), Winterfell (Rust), and Miden VM are optional external implementations for further study. Installing every implementation is unnecessary.
+Ruby is the default for the site's exercise calculations and off-chain ledger, training and aggregation models. Circom is used for proof circuits, Solidity for L1 contracts, and Node.js where required by proving tools. In Session 13, follow the Ruby code for fields, polynomials, Merkle trees and FRI; Anatomy of a STARK (Python), Winterfell (Rust), and Miden VM are optional external implementations for further study. Installing every implementation is unnecessary.
 
 ## Common preparation and circuit creation {#circuits}
 
@@ -100,7 +102,7 @@ Create an exercise directory and record the implementation release or commit and
 
 | Environment | Installation and operation manuals | First check |
 | --- | --- | --- |
-| Circom + snarkjs | [snarkjs README](https://github.com/iden3/snarkjs#readme), [Circom installation](https://docs.circom.io/getting-started/installation/) | Node.js, Circom and snarkjs run; help is available |
+| Circom + snarkjs | [Circom manual](./manuals/circom) → [snarkjs manual](./manuals/snarkjs) | Node.js, Circom and snarkjs run; help is available |
 | Go | [gnark getting started](https://docs.gnark.consensys.io/HowTo/get_started) | Example and dependency versions match |
 | Rust | [Rust installation](https://doc.rust-lang.org/book/ch01-01-installation.html) and the selected implementation README | Record Rust/Cargo versions and feature flags |
 | Ruby | [Installing Ruby](https://www.ruby-lang.org/en/documentation/installation/), [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/), [Ruby reference](https://docs.ruby-lang.org/en/) | Use a maintained stable release, not a preview. The provided Ruby code uses standard libraries only |
@@ -108,13 +110,15 @@ Create an exercise directory and record the implementation release or commit and
 
 ### Prepare shared Circom inputs
 
+Follow the [Circom operation manual](./manuals/circom) for circuit writing, compilation and witness generation. The corresponding Japanese manual is available at [Circomの操作マニュアル](../../exercises/manuals/circom).
+
 | Step | Official instructions | Outputs to identify |
 | --- | --- | --- |
-| 1 | [Write a circuit](https://docs.circom.io/getting-started/writing-circuits/) | `.circom`; public values and witness values |
-| 2 | [Compile](https://docs.circom.io/getting-started/compiling-circuits/) | `.r1cs` and witness-generation Wasm |
-| 3 | [Compute the witness](https://docs.circom.io/getting-started/computing-the-witness/) | Input JSON and `.wtns`; an assignment satisfying the constraints |
+| 1 | [Write a circuit](./manuals/circom#write-circuit) | `.circom`; public values and witness values |
+| 2 | [Compile](./manuals/circom#compile-circuit) | `.r1cs` and witness-generation Wasm |
+| 3 | [Compute the witness](./manuals/circom#compute-witness) | Input JSON and `.wtns`; an assignment satisfying the constraints |
 
-If the Circom site is unavailable, use the corresponding circuit, compilation and witness sections of the [snarkjs README](https://github.com/iden3/snarkjs#readme).
+The official source is the [Circom 2 Documentation](https://docs.circom.io/); the course manual links the relevant source sections at the end of the Japanese page.
 
 ## Generate and verify proofs {#proofs}
 
@@ -127,9 +131,9 @@ Use Circom + snarkjs, or apply the same checkpoints to [ZoKrates, gnark or bellm
 | Step | Operation | Official manual | Check |
 | --- | --- | --- | --- |
 | 1 | Prepare circuit and witness | [Preparation](#circuits) | Public inputs versus witness |
-| 2 | Prepare Powers of Tau and circuit-specific setup | [Walkthrough](https://github.com/iden3/snarkjs#readme), [Circom proving tutorial](https://docs.circom.io/getting-started/proving-circuits/) | `.ptau` versus `.zkey`; follow contribution and verification steps |
-| 3 | Export verification key and generate proof | [Key export](https://github.com/iden3/snarkjs#22-export-the-verification-key), [proving](https://github.com/iden3/snarkjs#23-create-the-proof) | Key, proof and public-input JSON |
-| 4 | Verify; change a copy of the public inputs and verify again | [Groth16 verification](https://github.com/iden3/snarkjs#24-verify-the-proof) | Original accepted; altered claim rejected |
+| 2 | Verify Powers of Tau and perform circuit-specific setup | [snarkjs manual](./manuals/snarkjs#groth16), [official README](https://github.com/iden3/snarkjs#readme) | `.ptau` versus `.zkey`; record contributions and verification |
+| 3 | Export verification key and generate proof | [snarkjs manual](./manuals/snarkjs#groth16) | Key, proof and public-input JSON |
+| 4 | Verify; change a copy of the public inputs and verify again | [snarkjs manual](./manuals/snarkjs#verify-as-a-verifier), [official README](https://github.com/iden3/snarkjs#readme) | Original accepted; altered public input rejected |
 
 Explain which artifacts need regeneration after changing constraints. Relate circuit-specific setup to Session 11. Locally generated exercise parameters are for learning.
 
@@ -139,9 +143,9 @@ Reuse the computation and inputs. Keep PLONK outputs separate from Groth16 outpu
 
 | Step | Operation | Official manual | Check |
 | --- | --- | --- | --- |
-| 1 | Select compatible Powers of Tau parameters | [README](https://github.com/iden3/snarkjs#readme) | Capacity and curve compatibility |
-| 2 | Generate circuit keys with `plonk setup` | [PLONK setup](https://github.com/iden3/snarkjs#15-setup) | Universal SRS still requires circuit preprocessing |
-| 3 | Export key, prove and verify | [Key export](https://github.com/iden3/snarkjs#22-export-the-verification-key), [proving](https://github.com/iden3/snarkjs#23-create-the-proof), [verification](https://github.com/iden3/snarkjs#24-verify-the-proof) | Select PLONK commands |
+| 1 | Select compatible Powers of Tau parameters | [snarkjs manual](./manuals/snarkjs#powers-of-tau), [official README](https://github.com/iden3/snarkjs#readme) | Capacity and curve compatibility |
+| 2 | Generate circuit keys with `plonk setup` | [snarkjs manual](./manuals/snarkjs#plonk) | Universal SRS still requires circuit preprocessing |
+| 3 | Export key, prove and verify | [snarkjs manual](./manuals/snarkjs#plonk) | Select PLONK commands |
 | 4 | Alter public inputs; regenerate keys after circuit changes | Repeat the matching instructions | Rejection, SRS reuse and preprocessing |
 
 Do not apply Groth16 phase-two contribution steps to PLONK. [gnark and Dusk PLONK](./#plonk) provide Go/Rust alternatives. Distinguish a Circom R1CS input route from directly writing PLONKish gates and copy constraints.
@@ -154,8 +158,8 @@ Start by running the site's Ruby calculation example. Then, if useful, choose on
 
 | Approach | Implementation and manuals | Inspect |
 | --- | --- | --- |
-| Calculate folding in Ruby | [Session 13 exercise code and instructions](./session-13#ruby-folding) | Finite-field arithmetic, the degree condition, and valid/invalid examples. This does not implement a cryptographic STARK proof |
-| Read an external Python implementation (optional) | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Prime, traces, constraints, proving and verification. The external resource uses Python |
+| Follow FRI in Ruby | [Session 13 exercise code and instructions](./session-13#ruby-fri) | Finite fields, polynomials, Merkle authentication, and FRI commits, queries and verification. Not a complete STARK bound to AIR |
+| Read the external Python implementation (optional) | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | A separate implementation that includes Rescue-Prime, traces, constraints, proving and verification; it uses Python |
 | Write AIR in Rust | [Winterfell usage](https://github.com/facebook/winterfell#usage), [examples](https://github.com/facebook/winterfell/tree/main/examples), [API](https://docs.rs/winterfell/latest/winterfell/) | Trace construction, transitions, boundary assertions, proving and verification |
 | Prove VM execution | [Miden VM CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | Instructions, inputs, outputs and execution proof. Match `next` documentation to your release |
 

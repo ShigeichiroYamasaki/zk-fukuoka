@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 演習
 
-更新日：2026年11月15日
+更新日：2026年11月20日
 
 講義で学んだことを，計算や実装で確かめよう．演習教材，利用可能なツール，基本操作マニュアルをここから探せます．
 
@@ -105,7 +105,7 @@ Dockerを使う場合は `docker compose run --rm ruby ruby test/ruby/test_examp
 
 ## STARKの実装例と操作マニュアル {#stark}
 
-[第13回・STARK](../learn/session-13)では，まずサイト内の[Rubyフォールディング例](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/examples/fri_folding.rb)を使って計算を確認できます．外部実装をさらに読む場合は，Anatomy of a STARK（Python），AIRを自分で記述するWinterfell（Rust），プログラムの実行を証明するMiden VMを選べます．本サイトの演習コードはRubyを基本にし，外部実装はそれぞれの開発言語を使います．
+[第13回・STARK](../learn/session-13)では，まずサイト内の[Ruby FRI教材](./session-13#ruby-fri)で有限体・多項式・Merkle木・FRIを追います．この例はAIR制約に結び付いた完全なSTARKではありません．さらに学ぶ場合は，Anatomy of a STARK（Python），AIRを自分で記述するWinterfell（Rust），プログラムの実行を証明するMiden VMを選べます．本サイトの演習コードはRubyを基本にし，外部実装はそれぞれの開発言語を使います．
 
 | 実装サイト | 演習で扱う例・学習の目的 | 環境・目安 | 操作マニュアル・実行例 |
 | --- | --- | --- | --- |

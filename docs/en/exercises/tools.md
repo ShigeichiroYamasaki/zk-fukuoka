@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Available tools
 
-Updated: November 15, 2026
+Updated: November 20, 2026
 
 New off-chain ledger, training and aggregation models in the applied courses use Ruby by default. Circom, Solidity and Node.js are used where required for proof circuits, EVM contracts and proving tools. Follow the language requirements of external implementations.
 
@@ -23,7 +23,7 @@ Choose implementations and computation environments for Act III (Sessions 11–1
 | --- | --- | --- | --- |
 | [11: Groth16](../learn/session-11) | Circom + snarkjs | Complete a circuit-to-proof workflow | [Groth16](./manuals#groth16) |
 | [12: PLONK](../learn/session-12) | Same Circom circuit + snarkjs | Compare setup and artifacts for the same computation | [PLONK](./manuals#plonk) |
-| [13: STARK](../learn/session-13) | Ruby folding example / Winterfell / Miden VM | Check the arithmetic in Ruby / write AIR in Rust / prove VM execution | [STARK](./manuals#stark) |
+| [13: STARK](../learn/session-13) | Ruby FRI teaching example / Winterfell / Miden VM | Follow fields, Merkle trees and FRI in Ruby / write AIR in Rust / prove VM execution | [STARK](./manuals#stark) |
 | [14: Comparison](../learn/session-14) | Selected implementations + spreadsheet or Ruby + Git | Record conditions and compare results | [Comparison](./manuals#comparison) |
 | [15: Extensions](../learn/session-15) | Nova; SageMath / Ruby | Explore recursion/folding and small sumcheck calculations | [Advanced exercises](./manuals#advanced) |
 
@@ -35,7 +35,7 @@ You do not need every tool. Beginners can complete Sessions 11–12 with Circom 
 
 | Implementation | Exercise role | Environment and audience | Manuals |
 | --- | --- | --- | --- |
-| [Circom](https://github.com/iden3/circom) + [snarkjs](https://github.com/iden3/snarkjs) | Compile constraints and witness-generation code with Circom; set up, prove and verify with snarkjs | Local Circom + Node.js; introductory route | [Preparation](./manuals#circuits) → [Groth16](./manuals#groth16), [README](https://github.com/iden3/snarkjs#readme) |
+| [Circom](https://github.com/iden3/circom) + [snarkjs](https://github.com/iden3/snarkjs) | Compile constraints and witness-generation code with Circom; set up, prove and verify with snarkjs | Local Circom + Node.js; introductory route | [Circom manual](./manuals/circom) → [snarkjs manual](./manuals/snarkjs) |
 | [ZoKrates](https://github.com/ZoKrates/ZoKrates) | Compile a short program, compute its witness and prove it | CLI or Docker; learn through a dedicated language | [Getting Started](https://zokrates.github.io/gettingstarted.html), [select G16](https://zokrates.github.io/toolbox/proving_schemes.html) |
 | [gnark](https://github.com/Consensys-Incorporated/gnark) | Connect Go circuit definitions with Groth16 Setup, Prove and Verify | Go development environment | [Installation](https://docs.gnark.consensys.io/HowTo/get_started), [proving and verification](https://docs.gnark.consensys.io/HowTo/prove) |
 | [bellman](https://github.com/zkcrypto/bellman) | Read constraints, gadgets and Groth16 APIs | Rust/Cargo; advanced | [Example and API, 0.14.0](https://docs.rs/bellman/0.14.0/bellman/#example-circuit) |
@@ -46,7 +46,7 @@ Circom is a circuit compiler; it does not complete proving and verification on i
 
 | Implementation | Exercise role | Environment and audience | Manuals |
 | --- | --- | --- | --- |
-| [Circom + snarkjs](https://github.com/iden3/snarkjs) | Prove Session 11's circuit with PLONK; inspect universal SRS and circuit preprocessing | Circom + Node.js; continuation route | [PLONK instructions](./manuals#plonk), [setup](https://github.com/iden3/snarkjs#15-setup) |
+| [Circom + snarkjs](https://github.com/iden3/snarkjs) | Prove Session 11's circuit with PLONK; inspect universal SRS and circuit preprocessing | Circom + Node.js; continuation route | [Circom manual](./manuals/circom) → [snarkjs PLONK manual](./manuals/snarkjs#plonk) |
 | [gnark](https://github.com/Consensys-Incorporated/gnark) | Follow SCS compilation and PLONK APIs in Go | Go; compare APIs with Groth16 | [Proving guide, PlonK tab](https://docs.gnark.consensys.io/HowTo/prove) |
 | [Dusk PLONK](https://github.com/dusk-network/plonk) | Write circuits and gates; inspect compilation, proving and verification | Rust/Cargo; advanced | [Usage](https://github.com/dusk-network/plonk#usage), [API](https://docs.rs/dusk-plonk/latest/dusk_plonk/) |
 
@@ -56,8 +56,8 @@ Circuit formats and APIs differ across PLONK implementations. Distinguish a Circ
 
 | Implementation | Exercise role | Environment and audience | Manuals |
 | --- | --- | --- | --- |
-| [Site Ruby exercise](../learn/session-13) | Run a folding calculation over a finite field and check the degree condition | Ruby; standard library only | [Code and instructions](../learn/session-13#ruby-folding) |
-| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) (optional external reference) | Read educational Python code building from fields, polynomials and FRI | Python; further study of an external implementation | [Author's tutorial](https://aszepieniec.github.io/stark-anatomy/), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
+| [Site Ruby FRI exercise](./session-13#ruby-fri) | Follow field arithmetic, polynomials, Merkle authentication, and FRI proving/verification | Ruby; standard library only | [Code and instructions](./session-13#ruby-fri) |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) (optional external reference) | Read a separate educational Python implementation including Rescue-Prime | Python; further study of an external implementation | [Author's tutorial](https://aszepieniec.github.io/stark-anatomy/), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
 | [Winterfell](https://github.com/facebook/winterfell) | Implement traces, transition constraints and boundary assertions | Rust/Cargo; write AIR directly | [Usage](https://github.com/facebook/winterfell#usage), [API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Execute Miden Assembly and generate/verify execution proofs | Rust/Cargo and VM CLI | [CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
 

@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # 利用可能なツール
 
-更新日：2026年11月15日
+更新日：2026年11月20日
 
 応用編で新たに書くオフチェーンの台帳・学習・集計モデルはRubyを基本言語にします．Circom・Solidity・Node.jsなどは，証明回路やEVM，証明ツールに必要な範囲で併用します．外部実装の言語は各教材の説明に従います．
 
@@ -23,7 +23,7 @@ outline: [2, 3]
 | --- | --- | --- | --- |
 | [第11回・Groth16](../learn/session-11) | Circom＋snarkjs | 回路から証明生成・検証まで一巡する | [Groth16の手順](./manuals#groth16) |
 | [第12回・PLONK](../learn/session-12) | 同じCircom回路＋snarkjs | 計算を揃えてセットアップと生成物の違いを見る | [PLONKの手順](./manuals#plonk) |
-| [第13回・STARK](../learn/session-13) | Rubyのフォールディング例／Winterfell／Miden VM | Rubyで算術を確認する／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
+| [第13回・STARK](../learn/session-13) | RubyのFRI教材例／Winterfell／Miden VM | Rubyで有限体・Merkle木・FRIを追う／RustでAIRを書く／VMで実行を証明する | [STARKの手順](./manuals#stark) |
 | [第14回・比較](../learn/session-14) | 使った実装＋表計算またはRuby＋Git | 条件と結果を記録し，比較する | [比較と考察](./manuals#comparison) |
 | [第15回・発展](../learn/session-15) | Nova，SageMath／Ruby | 再帰・フォールディングの実装と，sumcheckの小さな計算を調べる | [発展演習](./manuals#advanced) |
 
@@ -35,7 +35,7 @@ outline: [2, 3]
 
 | 実装・サイト | 演習での役割 | 環境・対象 | 操作マニュアル |
 | --- | --- | --- | --- |
-| [Circom](https://github.com/iden3/circom) ＋ [snarkjs](https://github.com/iden3/snarkjs) | Circomで制約・ウィットネス計算用コードを生成し，snarkjsでセットアップ・証明・検証を行う | ローカルのCircom＋Node.js．入門ルート | [共通準備](./manuals#circuits) → [Groth16](./manuals#groth16)，[公式README](https://github.com/iden3/snarkjs#readme) |
+| [Circom](https://github.com/iden3/circom) ＋ [snarkjs](https://github.com/iden3/snarkjs) | Circomで制約・ウィットネス計算用コードを生成し，snarkjsでセットアップ・証明・検証を行う | ローカルのCircom＋Node.js．入門ルート | [Circomの日本語手順](./manuals/circom) → [snarkjsの日本語手順](./manuals/snarkjs) |
 | [ZoKrates](https://github.com/ZoKrates/ZoKrates) | 短いプログラムからコンパイル・ウィットネス・証明を扱う | CLIまたはDocker．独自言語で学ぶ人向け | [Getting Started](https://zokrates.github.io/gettingstarted.html)，[G16の選択](https://zokrates.github.io/toolbox/proving_schemes.html) |
 | [gnark](https://github.com/Consensys-Incorporated/gnark) | Goの回路定義とGroth16のSetup・Prove・Verifyを対応づける | Go開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.io/HowTo/get_started)，[証明生成・検証](https://docs.gnark.consensys.io/HowTo/prove) |
 | [bellman](https://github.com/zkcrypto/bellman) | 制約・ガジェット・Groth16 APIをコードで読む | Rust/Cargo．発展向け | [回路例とAPI（0.14.0）](https://docs.rs/bellman/0.14.0/bellman/#example-circuit) |
@@ -46,7 +46,7 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 
 | 実装・サイト | 演習での役割 | 環境・対象 | 操作マニュアル |
 | --- | --- | --- | --- |
-| [Circom＋snarkjs](https://github.com/iden3/snarkjs) | 第11回と同じ回路をPLONKで証明し，汎用SRSと回路ごとの前処理を確認する | Circom＋Node.js．第11回からの継続向け | [PLONKの手順](./manuals#plonk)，[公式Setup](https://github.com/iden3/snarkjs#15-setup) |
+| [Circom＋snarkjs](https://github.com/iden3/snarkjs) | 第11回と同じ回路をPLONKで証明し，汎用SRSと回路ごとの前処理を確認する | Circom＋Node.js．第11回からの継続向け | [Circomの日本語手順](./manuals/circom) → [snarkjs PLONK手順](./manuals/snarkjs#plonk) |
 | [gnark](https://github.com/Consensys-Incorporated/gnark) | GoでSCSへのコンパイルとPLONK APIを追う | Go開発環境．Groth16とのAPI比較向け | [証明生成・検証のPlonKタブ](https://docs.gnark.consensys.io/HowTo/prove) |
 | [Dusk PLONK](https://github.com/dusk-network/plonk) | Rustで回路・ゲートを記述し，コンパイル・証明・検証を読む | Rust/Cargo．発展向け | [利用案内](https://github.com/dusk-network/plonk#usage)，[API](https://docs.rs/dusk-plonk/latest/dusk_plonk/) |
 
@@ -56,8 +56,8 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 
 | 実装・サイト | 演習での役割 | 環境・対象 | 操作マニュアル |
 | --- | --- | --- | --- |
-| [サイト内Ruby演習](../learn/session-13) | 有限体上のフォールディング計算を実行し，次数条件を確認する | Ruby．標準ライブラリのみ | [コードと実行手順](../learn/session-13#ruby-folding) |
-| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | 有限体・多項式・FRIから証明系を組み立てる教育用Pythonコードを読む | Python．外部実装を追う発展向け | [著者の解説](https://aszepieniec.github.io/stark-anatomy/)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
+| [サイト内Ruby FRI教材](./session-13#ruby-fri) | 有限体，多項式，Merkle認証，FRIの証明生成・検証を追う | Ruby．標準ライブラリのみ | [コードと実行手順](./session-13#ruby-fri) |
+| [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | Rescue-Primeを含む教育用Python実装を読む | Python．外部実装を追う発展向け | [著者の解説](https://aszepieniec.github.io/stark-anatomy/)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
 | [Winterfell](https://github.com/facebook/winterfell) | 実行トレース，遷移制約，境界の指定を実装する | Rust/Cargo．AIRを自分で記述したい人向け | [利用チュートリアル](https://github.com/facebook/winterfell#usage)，[API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyのプログラムを実行し，実行証明を生成・検証する | Rust/CargoとVM CLI．VM操作を学ぶ人向け | [CLIと実行例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
 

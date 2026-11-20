@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # Exercises
 
-Updated: November 15, 2026
+Updated: November 20, 2026
 
 Explore lecture concepts through calculations and implementation. Find exercise materials, available tools, and basic operation manuals here.
 
@@ -105,7 +105,7 @@ Official documentation checked on **September 27, 2026**. Manuals are primarily 
 
 ## STARK implementations and operation manuals {#stark}
 
-For [Session 13: STARK](../learn/session-13), start with the site's [Ruby FRI folding example](https://github.com/ShigeichiroYamasaki/zk-fukuoka/blob/main/docs/public/examples/fri_folding.rb). For further external study, choose Anatomy of a STARK (Python), Winterfell to write AIR constraints (Rust), or Miden VM to prove program execution. The site's exercise code uses Ruby by default; external implementations use their native languages.
+For [Session 13: STARK](../learn/session-13), start with the site's [Ruby FRI teaching implementation](./session-13#ruby-fri), which covers field and polynomial arithmetic, Merkle commitments and FRI queries. It is not a complete STARK bound to AIR constraints. For further study, choose Anatomy of a STARK (Python), Winterfell to write AIR constraints (Rust), or Miden VM to prove program execution. The site's exercise code uses Ruby by default; external implementations use their native languages.
 
 | Implementation | Example and learning objective | Environment and level | Operation manuals and examples |
 | --- | --- | --- | --- |
