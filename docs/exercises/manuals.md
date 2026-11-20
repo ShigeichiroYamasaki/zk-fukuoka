@@ -10,9 +10,9 @@ outline: [2, 3]
 
 [演習トップ](./) · [実装・ツール一覧](./tools) · [前提知識・補助教材](../learn/foundations)
 
-[Circomの操作マニュアル](./manuals/circom) · [snarkjsの操作マニュアル](./manuals/snarkjs)
+[Circomの操作マニュアル](./manuals/circom) · [snarkjsの操作マニュアル](./manuals/snarkjs) · [Foundry／Anvilの操作マニュアル](./manuals/foundry) · [SageMathの操作マニュアル](./manuals/sagemath)
 
-公式資料の参照確認日：2026年10月12日．以下は公式手順への日本語の読み順・演習案内です．コマンドの詳細は利用する版の公式マニュアルで確認してください．参照先の確認は，その版を使ったローカル実行確認を意味しません．
+公式資料の参照確認日：2026年11月20日．以下は公式手順への日本語の読み順・演習案内です．コマンドの詳細は利用する版の公式マニュアルで確認してください．参照先の確認は，その版を使ったローカル実行確認を意味しません．
 
 [応用編：ERC-20送金用ZK rollupを作る](../rollup/) — 6段階の開発教材と実行用モデル．
 
@@ -64,7 +64,7 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 
 1. [台帳モデル](../rollup/01-ledger#run)の`ledger_model.rb`を保存し，`ruby ledger_model.rb`と`ruby ledger_model.rb --test`を実行します．まず残高保存則と異常系テストを確認します．外部gemは不要です．
 2. [送金回路](../rollup/03-circuit#core)の`transfer_core.circom`でCircomコンパイル，ウィットネス生成，R1CS検査を行います．署名やMerkleパスはこの入門回路には含まれません．[Circom公式導入手順](https://docs.circom.io/getting-started/installation/)と[Circomlibの回路](https://github.com/iden3/circomlib)を参照し，Node／npmとCircomの版を記録します．
-3. L1側は[Foundry公式導入](https://getfoundry.sh/introduction/installation/)の`forge`と`anvil`を使います．`forge build`でコンパイル，`forge test`で状態遷移を確認し，Anvilのローカルチェーンでだけ接続試験を行います．[Foundryのプロジェクト作成](https://getfoundry.sh/projects/creating-a-new-project/)と[OpenZeppelin ERC-20／SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20)を参照します．テストネットへの送信は基本演習に不要です．
+3. L1側は[Foundry／Anvilの日本語操作マニュアル](./manuals/foundry)に従い，`forge build`でコンパイル，`forge test`で状態遷移を確認します．接続試験はAnvilのローカルチェーンだけで行います．[OpenZeppelin ERC-20／SafeERC20 API](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20)も参照します．テストネットへの送信は基本演習に不要です．
 4. 運営者停止後の独立復元では[第6段階](../rollup/06-availability)の`operator/replay.ts`を実装します．教材はTypeScript実行環境とEthereum JSON-RPCクライアントを指定していないため，チームで選んでバージョンを固定し，RPCクライアントを使う範囲を記録してください．
 
 ### ZKML：配布コードを再現する {#zkml-tools}
@@ -103,7 +103,7 @@ docker compose run --rm ruby ruby test/ruby/test_examples.rb
 | 使う環境 | 導入・操作マニュアル | 最初に確認すること |
 | --- | --- | --- |
 | Circom＋snarkjs | [Circomの操作マニュアル](./manuals/circom) → [snarkjsの操作マニュアル](./manuals/snarkjs) | Node.js，Circom，snarkjsが起動し，ヘルプを参照できる |
-| Goの実装 | [gnark導入](https://docs.gnark.consensys.io/HowTo/get_started) | 例と依存モジュールの版が一致する |
+| Goの実装 | [gnark導入](https://docs.gnark.consensys.com/how-to/get_started) | 例と依存モジュールの版が一致する |
 | Rustの実装 | [Rust導入（日本語）](https://doc.rust-jp.rs/book-ja/ch01-01-installation.html)と選んだ実装のREADME | Rust/Cargoの版，必要な機能フラグを記録する |
 | Rubyの実装 | [Rubyのインストール](https://www.ruby-lang.org/ja/documentation/installation/)，[20分ではじめるRuby](https://www.ruby-lang.org/ja/documentation/quickstart/)，[リファレンスマニュアル](https://docs.ruby-lang.org/ja/) | プレビュー版ではなく，保守中の安定版Rubyを使う．応用編の配布Rubyコードは標準ライブラリで動く |
 | 任意の外部Python教材 | [Anatomy of a STARKのコード](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | 外部教材の言語選択です．サイト内のRuby演習を置き換えるものではありません |
@@ -158,7 +158,7 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 | --- | --- | --- |
 | RubyでFRIの仕組みを追う | [第13回演習のコードと手順](./session-13#ruby-fri) | 有限体，多項式，Merkle認証，FRIのコミット・問い合わせ・検証．AIRに結び付いた完全なSTARKではない |
 | 外部Python実装を読む（任意） | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/)，[Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | Rescue-Primeの計算，トレース，制約，証明生成・検証を含む別実装．外部教材はPython |
-| RustでAIRを書く | [Winterfellの利用手順](https://github.com/facebook/winterfell#usage)，[実装例](https://github.com/facebook/winterfell/tree/main/examples)，[API](https://docs.rs/winterfell/latest/winterfell/) | トレースの作成，遷移制約，境界の指定，証明・検証 |
+| RustでAIRを書く | [Winterfellの利用手順](https://github.com/meta/winterfell#usage)，[実装例](https://github.com/meta/winterfell/tree/main/examples)，[API](https://docs.rs/winterfell/latest/winterfell/) | トレースの作成，遷移制約，境界の指定，証明・検証 |
 | VMで実行を証明する | [Miden VMのCLIと例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | 命令列，入力，実行結果，実行証明．`next`の手順と利用リリースの差を確認する |
 
 1. 公式の例を実行し，正常な証明の検証結果を保存する．
@@ -203,6 +203,6 @@ Groth16用の第2段階の貢献手順をPLONKへそのまま当てはめない�
 
 ## 数学の操作を復習する {#math}
 
-法7の逆元から復習する場合は，[SageMathCell](https://sagecell.sagemath.org/)に`GF(7)(3)^(-1)`を入力し，**Evaluate**を押します．結果の`5`を[有限体のチュートリアル](../learn/finite-fields-tutorial)の手計算と比べてください．
+有限体・多項式・行列の計算は，[SageMathの日本語操作マニュアル](./manuals/sagemath)に沿ってSageMathCellで試せます．法7の逆元の結果を[有限体のチュートリアル](../learn/finite-fields-tutorial)の手計算と比べてください．
 
 [SageMath公式チュートリアル](https://doc.sagemath.org/html/en/tutorial/) · [導入ガイド](https://doc.sagemath.org/html/en/installation/) · [日本語の前提知識・補助教材](../learn/foundations)

@@ -70,7 +70,7 @@ Dockerを使う場合は `docker compose run --rm ruby ruby test/ruby/test_examp
 | --- | --- | --- | --- |
 | [Circom](https://github.com/iden3/circom) ＋ [snarkjs](https://github.com/iden3/snarkjs) | 乗算を含む回路．R1CS，ウィットネス，セットアップ，証明，検証の各成果物を確認する | ローカルのCircomコンパイラとNode.js．入門向け | [snarkjs公式の一連の手順](https://github.com/iden3/snarkjs#readme)（回路作成・コンパイル・ウィットネス計算・Groth16セットアップ・証明・検証） / [Circomの導入と基本操作](./manuals#circuits) |
 | [ZoKrates](https://github.com/ZoKrates/ZoKrates) | 非公開の平方根と公開の平方の関係を証明するHello World．短いプログラムから一連の処理を試す | ローカルCLIまたはDocker．入門向け | [導入から証明・検証まで](https://zokrates.github.io/gettingstarted.html) / [CLI操作](https://zokrates.github.io/toolbox/cli.html) / [Groth16（G16）の選択](https://zokrates.github.io/toolbox/proving_schemes.html) |
-| [gnark](https://github.com/Consensys-Incorporated/gnark) | Goで回路とウィットネスを記述し，`groth16.Setup`・`Prove`・`Verify`の対応を追う | ローカルのGo開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.io/HowTo/get_started) / [回路の記述](https://docs.gnark.consensys.io/HowTo/write/circuit_api) / [証明生成・検証のコード例](https://docs.gnark.consensys.io/HowTo/prove) |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | Goで回路とウィットネスを記述し，`groth16.Setup`・`Prove`・`Verify`の対応を追う | ローカルのGo開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.com/how-to/get_started) / [回路の記述](https://docs.gnark.consensys.com/how-to/write/circuit_api) / [証明生成・検証のコード例](https://docs.gnark.consensys.com/how-to/prove) |
 | [bellman](https://github.com/zkcrypto/bellman) | SHA-256を2回適用したハッシュの原像を知っていることを証明する例．制約・ガジェット・Groth16 APIを読む | ローカルのRust/Cargo．発展向け | [公式の回路・証明生成・検証例（0.14.0）](https://docs.rs/bellman/0.14.0/bellman/#example-circuit) / [Groth16 API（0.14.0）](https://docs.rs/bellman/0.14.0/bellman/groth16/) |
 
 ### 演習の進め方
@@ -89,7 +89,7 @@ Dockerを使う場合は `docker compose run --rm ruby ruby test/ruby/test_examp
 | 実装サイト | 演習で扱う例・学習の目的 | 環境・目安 | 操作マニュアル・実行例 |
 | --- | --- | --- | --- |
 | [Circom](https://github.com/iden3/circom) ＋ [snarkjs](https://github.com/iden3/snarkjs) | 公式READMEの乗算を含む回路例をPLONKで証明する．同じR1CSからGroth16との違いを比較する | ローカルのCircomコンパイラとNode.js．入門向け | [導入・全体の手順](https://github.com/iden3/snarkjs#readme) / [セットアップ](https://github.com/iden3/snarkjs#15-setup) / [証明生成](https://github.com/iden3/snarkjs#23-create-the-proof) / [検証](https://github.com/iden3/snarkjs#24-verify-the-proof)．各節の **PLONK** のコマンドを選ぶ |
-| [gnark](https://github.com/Consensys-Incorporated/gnark) | Goで回路をSCSとしてコンパイルし，`plonk.Setup`・`Prove`・`Verify`を追う．Groth16用R1CSとのコンパイル方法の違いを確認する | ローカルのGo開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.io/HowTo/get_started) / [回路の記述](https://docs.gnark.consensys.io/HowTo/write/circuit_api) / [証明生成・検証](https://docs.gnark.consensys.io/HowTo/prove)（**PlonK** タブの例を使用） |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | Goで回路をSCSとしてコンパイルし，`plonk.Setup`・`Prove`・`Verify`を追う．Groth16用R1CSとのコンパイル方法の違いを確認する | ローカルのGo開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.com/how-to/get_started) / [回路の記述](https://docs.gnark.consensys.com/how-to/write/circuit_api) / [証明生成・検証](https://docs.gnark.consensys.com/how-to/prove)（**PlonK** タブの例を使用） |
 | [Dusk PLONK（dusk-plonk）](https://github.com/dusk-network/plonk) | Rustの公式回路例から，制約の構成・コンパイル・証明・検証を読む．BLS12-381，KZG，カスタムゲートを用いる実装 | ローカルのRust/Cargo．発展向け | [利用案内](https://github.com/dusk-network/plonk#usage) / [公式回路例 circuit.rs](https://github.com/dusk-network/plonk/blob/master/examples/circuit.rs) / [APIマニュアル](https://docs.rs/dusk-plonk/latest/dusk_plonk/) |
 
 ### PLONK演習の進め方
@@ -110,7 +110,7 @@ Dockerを使う場合は `docker compose run --rm ruby ruby test/ruby/test_examp
 | 実装サイト | 演習で扱う例・学習の目的 | 環境・目安 | 操作マニュアル・実行例 |
 | --- | --- | --- | --- |
 | [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | Rescue-Primeの計算を証明する教育用Python実装．有限体・多項式・FRI・STARKを段階的に組み立てる | ローカルのPythonが必要．サイト内Ruby演習を終えた後の発展読書向け | [著者のチュートリアル](https://aszepieniec.github.io/stark-anatomy/) / [Part 5: 証明系の組み立て](https://aszepieniec.github.io/stark-anatomy/rescue-prime) / [Pythonコードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code)．READMEのJekyll起動手順は解説サイト用 |
-| [Winterfell](https://github.com/facebook/winterfell) | 値を3乗して42を加える反復計算の例．実行トレース，遷移制約，境界の指定，証明生成・検証を対応づける | ローカルのRust/Cargo．Rust経験者向け | [公式の利用チュートリアル](https://github.com/facebook/winterfell#usage) / [演習用の実装例](https://github.com/facebook/winterfell/tree/main/examples) / [APIマニュアル](https://docs.rs/winterfell/latest/winterfell/) |
+| [Winterfell](https://github.com/meta/winterfell) | 値を3乗して42を加える反復計算の例．実行トレース，遷移制約，境界の指定，証明生成・検証を対応づける | ローカルのRust/Cargo．Rust経験者向け | [公式の利用チュートリアル](https://github.com/meta/winterfell#usage) / [演習用の実装例](https://github.com/meta/winterfell/tree/main/examples) / [APIマニュアル](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyの加算やFibonacciの例．VMでプログラムを実行し，その実行証明を生成・検証する | ローカルのRust/CargoとMiden VM CLI．VMを使う演習向け | [公式クレートREADME・利用例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) / [CLI操作](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#cli-interface) / [Fibonacci演習](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md#fibonacci-example)．リンクは開発ブランチ `next` のため，利用するリリースと手順の版を揃える |
 
 ### STARK演習の進め方

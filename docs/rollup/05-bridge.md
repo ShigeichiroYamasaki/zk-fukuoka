@@ -20,7 +20,7 @@ TokenとVerifierのアドレス，初期アカウントルートをRollupの構�
 
 ## SolidityとFoundryの準備
 
-[OpenZeppelin ERC-20とSafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20)，[Foundryのプロジェクト作成](https://getfoundry.sh/projects/creating-a-new-project/)を読み，利用版を固定します．
+[OpenZeppelin ERC-20とSafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20)を読み，利用版を固定します．Foundryの導入とプロジェクト作成は[日本語操作マニュアル](../exercises/manuals/foundry)を参照します．
 
 ```sh
 forge init contracts-lab

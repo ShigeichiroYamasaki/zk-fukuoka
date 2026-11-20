@@ -3,7 +3,7 @@
 `model.csv`: educational accounting from `scripts/stark-cost-model.rb`, not measurements and not security estimates. n=2^10..2^24; q=20,30,40,60; b=8; w=8; one composition column; base/extension/digest widths=8/16/32 bytes; binary FRI; terminal evaluation table of 256 elements; independent, uncompressed Merkle paths. Excludes protocol metadata, out-of-domain openings, masking overhead and other scheme-specific messages. KiB = 1024 bytes.
 
 `winterfell-lamport.csv`: published Winterfell README data, inspected September 28, 2026. Snapshot:
-https://github.com/facebook/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance
+https://github.com/meta/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance
 
 Lamport+ signature verification; 22 trace columns; source-labeled 123-bit security; Intel Core i9-9980KH @ 2.4 GHz, 32 GB RAM, eight-core machine. KB is retained as reported, not reinterpreted as KiB. The table does not fully specify the measurement revision, date, verifier threading, cryptographic hash-function/FRI parameters, warm-up or timing boundaries. The snapshot revision is a citation anchor, not an assertion that the measurements used that revision. These are published historical results, not a benchmark run by ZK Fukuoka, and not a 2026 performance ranking.
 

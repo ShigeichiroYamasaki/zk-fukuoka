@@ -37,7 +37,7 @@ You do not need every tool. Beginners can complete Sessions 11–12 with Circom 
 | --- | --- | --- | --- |
 | [Circom](https://github.com/iden3/circom) + [snarkjs](https://github.com/iden3/snarkjs) | Compile constraints and witness-generation code with Circom; set up, prove and verify with snarkjs | Local Circom + Node.js; introductory route | [Circom manual](./manuals/circom) → [snarkjs manual](./manuals/snarkjs) |
 | [ZoKrates](https://github.com/ZoKrates/ZoKrates) | Compile a short program, compute its witness and prove it | CLI or Docker; learn through a dedicated language | [Getting Started](https://zokrates.github.io/gettingstarted.html), [select G16](https://zokrates.github.io/toolbox/proving_schemes.html) |
-| [gnark](https://github.com/Consensys-Incorporated/gnark) | Connect Go circuit definitions with Groth16 Setup, Prove and Verify | Go development environment | [Installation](https://docs.gnark.consensys.io/HowTo/get_started), [proving and verification](https://docs.gnark.consensys.io/HowTo/prove) |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | Connect Go circuit definitions with Groth16 Setup, Prove and Verify | Go development environment | [Installation](https://docs.gnark.consensys.com/how-to/get_started), [proving and verification](https://docs.gnark.consensys.com/how-to/prove) |
 | [bellman](https://github.com/zkcrypto/bellman) | Read constraints, gadgets and Groth16 APIs | Rust/Cargo; advanced | [Example and API, 0.14.0](https://docs.rs/bellman/0.14.0/bellman/#example-circuit) |
 
 Circom is a circuit compiler; it does not complete proving and verification on its own. These exercises pair it with snarkjs. See the [implementation examples](./#groth16).
@@ -47,7 +47,7 @@ Circom is a circuit compiler; it does not complete proving and verification on i
 | Implementation | Exercise role | Environment and audience | Manuals |
 | --- | --- | --- | --- |
 | [Circom + snarkjs](https://github.com/iden3/snarkjs) | Prove Session 11's circuit with PLONK; inspect universal SRS and circuit preprocessing | Circom + Node.js; continuation route | [Circom manual](./manuals/circom) → [snarkjs PLONK manual](./manuals/snarkjs#plonk) |
-| [gnark](https://github.com/Consensys-Incorporated/gnark) | Follow SCS compilation and PLONK APIs in Go | Go; compare APIs with Groth16 | [Proving guide, PlonK tab](https://docs.gnark.consensys.io/HowTo/prove) |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | Follow SCS compilation and PLONK APIs in Go | Go; compare APIs with Groth16 | [Proving guide, PlonK tab](https://docs.gnark.consensys.com/how-to/prove) |
 | [Dusk PLONK](https://github.com/dusk-network/plonk) | Write circuits and gates; inspect compilation, proving and verification | Rust/Cargo; advanced | [Usage](https://github.com/dusk-network/plonk#usage), [API](https://docs.rs/dusk-plonk/latest/dusk_plonk/) |
 
 Circuit formats and APIs differ across PLONK implementations. Distinguish a Circom R1CS input route from directly working with gates and copy constraints. Browse the [implementation examples](./#plonk).
@@ -58,7 +58,7 @@ Circuit formats and APIs differ across PLONK implementations. Distinguish a Circ
 | --- | --- | --- | --- |
 | [Site Ruby FRI exercise](./session-13#ruby-fri) | Follow field arithmetic, polynomials, Merkle authentication, and FRI proving/verification | Ruby; standard library only | [Code and instructions](./session-13#ruby-fri) |
 | [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy) (optional external reference) | Read a separate educational Python implementation including Rescue-Prime | Python; further study of an external implementation | [Author's tutorial](https://aszepieniec.github.io/stark-anatomy/), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
-| [Winterfell](https://github.com/facebook/winterfell) | Implement traces, transition constraints and boundary assertions | Rust/Cargo; write AIR directly | [Usage](https://github.com/facebook/winterfell#usage), [API](https://docs.rs/winterfell/latest/winterfell/) |
+| [Winterfell](https://github.com/meta/winterfell) | Implement traces, transition constraints and boundary assertions | Rust/Cargo; write AIR directly | [Usage](https://github.com/meta/winterfell#usage), [API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Execute Miden Assembly and generate/verify execution proofs | Rust/Cargo and VM CLI | [CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
 
 The [STARK manual](./manuals#stark) guides normal execution, changed-public-output tests and trace-length experiments. Winterfell's README explicitly says it does not provide perfect zero knowledge. Distinguish transparency, computational integrity and zero knowledge.
@@ -90,13 +90,13 @@ Use these to revisit Act II or check small calculations in Session 15.
 
 | Tool | Purpose | Access | Instructions |
 | --- | --- | --- | --- |
-| [SageMathCell](https://sagecell.sagemath.org/) | Try finite-field, polynomial and matrix calculations | Browser; no local installation | [SageMath basics](./manuals#math) |
-| [SageMath](https://www.sagemath.org/) | Save computations and investigate fields, polynomials and linear algebra | Local installation or an online environment | [Tutorial](https://doc.sagemath.org/html/en/tutorial/), [installation](https://doc.sagemath.org/html/en/installation/) |
+| [SageMathCell](https://sagecell.sagemath.org/) | Try finite-field, polynomial and matrix calculations | Browser; no local installation | [SageMath operation manual](./manuals/sagemath) |
+| [SageMath](https://www.sagemath.org/) | Save computations and investigate fields, polynomials and linear algebra | Local installation or an online environment | [Operation manual](./manuals/sagemath), [tutorial](https://doc.sagemath.org/html/en/tutorial/), [installation](https://doc.sagemath.org/html/en/installation/) |
 
 Start by comparing results with the [modulo-7 calculations](../learn/finite-fields-tutorial).
 
 ## Match versions and materials {#versions}
 
-Official documentation checked on September 27, 2026. These are exercise candidates; not every tool has been tested locally. External technical manuals are primarily in English.
+Official documentation checked on November 20, 2026. These are exercise candidates; not every tool has been tested locally.
 
 Record a release or commit and match examples with API documentation. The bellman link targets 0.14.0; the Miden link targets the development branch `next`. Switch `latest` API pages to your installed version. Follow [common preparation](./manuals#circuits) and start with small public samples.

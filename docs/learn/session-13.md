@@ -185,7 +185,7 @@ $$S \approx q(2wB+cE+2rE)+qH\left(3\log_2N+\sum_{j=1}^{r}(\log_2N-j)\right)+TE+(
 <img src="/figures/stark-winterfell-published.svg" alt="Winterfell公開資料の過去のLamport+検証例について，署名数と証明サイズ・検証時間を示す．">
 </figure>
 
-出典は[Winterfell READMEのPerformance節（固定したGitHubコミット）](https://github.com/facebook/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance)．データを[CSV](/data/stark-cost/winterfell-lamport.csv)でも公開する．証明サイズのKB表記は原資料のままとし，KiBへ読み替えていない．この例はモデルの前提を実測で裏付けるものではなく，特定の計算・実装・環境で証明サイズと検証時間を一緒に報告する形式の例である．
+出典は[Winterfell READMEのPerformance節（固定したGitHubコミット）](https://github.com/meta/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance)．データを[CSV](/data/stark-cost/winterfell-lamport.csv)でも公開する．証明サイズのKB表記は原資料のままとし，KiBへ読み替えていない．この例はモデルの前提を実測で裏付けるものではなく，特定の計算・実装・環境で証明サイズと検証時間を一緒に報告する形式の例である．
 
 ---
 

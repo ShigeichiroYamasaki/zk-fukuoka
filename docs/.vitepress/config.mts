@@ -39,6 +39,8 @@ const sidebar = (en: boolean) => {
         { text: en ? "Basic operation manuals" : "基本操作マニュアル集", link: p + "exercises/manuals" },
         { text: en ? "Circom manual" : "Circomの操作マニュアル", link: p + "exercises/manuals/circom" },
         { text: en ? "snarkjs manual" : "snarkjsの操作マニュアル", link: p + "exercises/manuals/snarkjs" },
+        { text: en ? "Foundry / Anvil manual" : "Foundry／Anvilの操作マニュアル", link: p + "exercises/manuals/foundry" },
+        { text: en ? "SageMath manual" : "SageMathの操作マニュアル", link: p + "exercises/manuals/sagemath" },
       ],
     },
     {

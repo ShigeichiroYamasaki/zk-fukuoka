@@ -10,9 +10,9 @@ Follow the Act III exercises (Sessions 11–15): generate and verify a proof, co
 
 [Exercises](./) · [Implementations and tools](./tools) · [Prerequisites](../learn/foundations)
 
-[Circom manual](./manuals/circom) · [snarkjs manual](./manuals/snarkjs)
+[Circom manual](./manuals/circom) · [snarkjs manual](./manuals/snarkjs) · [Foundry / Anvil manual](./manuals/foundry) · [SageMath manual](./manuals/sagemath)
 
-Official documentation reference check: October 12, 2026. This page provides a reading order and exercise guide to official manuals. Use commands from the documentation matching your chosen version. Checking a reference does not mean that version was tested locally.
+Official documentation reference check: November 20, 2026. This page provides a reading order and exercise guide to official manuals. Use commands from the documentation matching your chosen version. Checking a reference does not mean that version was tested locally.
 
 [Applied course: build an ERC-20 transfer ZK rollup](../rollup/) - six development stages and runnable starter models.
 
@@ -64,7 +64,7 @@ Check what code is provided and what remains an implementation task. **You do no
 
 1. Save `ledger_model.rb` from the [ledger model exercise](../rollup/01-ledger#run), then run `ruby ledger_model.rb` and `ruby ledger_model.rb --test`. Begin with conservation of balances and failure-case tests. No external gems are required.
 2. Use the [`transfer_core.circom` circuit](../rollup/03-circuit#core) to compile, generate a witness and inspect the R1CS. This introductory circuit does not include signatures or Merkle paths. Consult [Circom installation](https://docs.circom.io/getting-started/installation/) and [circomlib circuits](https://github.com/iden3/circomlib); record Node/npm and Circom versions.
-3. For L1, use `forge` and `anvil` from the [official Foundry installation guide](https://getfoundry.sh/introduction/installation/). Use `forge build` to compile and `forge test` for state-transition tests; connect only to the local Anvil chain. See [creating a Foundry project](https://getfoundry.sh/projects/creating-a-new-project/) and [OpenZeppelin ERC-20 / SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20). Testnet transactions are unnecessary for the core exercise.
+3. Follow the [Foundry / Anvil operation manual](./manuals/foundry) for L1. Use `forge build` to compile and `forge test` for state-transition tests; connect only to the local Anvil chain. Also consult the [OpenZeppelin ERC-20 / SafeERC20 API](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20). Testnet transactions are unnecessary for the core exercise.
 4. To independently reconstruct state after operator failure, implement `operator/replay.ts` from [Stage 6](../rollup/06-availability). The course does not choose a TypeScript runtime or Ethereum JSON-RPC client; select and pin one as a team, and document where the client is used.
 
 ### ZKML: reproduce the provided code {#zkml-tools}
@@ -103,7 +103,7 @@ Create an exercise directory and record the implementation release or commit and
 | Environment | Installation and operation manuals | First check |
 | --- | --- | --- |
 | Circom + snarkjs | [Circom manual](./manuals/circom) → [snarkjs manual](./manuals/snarkjs) | Node.js, Circom and snarkjs run; help is available |
-| Go | [gnark getting started](https://docs.gnark.consensys.io/HowTo/get_started) | Example and dependency versions match |
+| Go | [gnark getting started](https://docs.gnark.consensys.com/how-to/get_started) | Example and dependency versions match |
 | Rust | [Rust installation](https://doc.rust-lang.org/book/ch01-01-installation.html) and the selected implementation README | Record Rust/Cargo versions and feature flags |
 | Ruby | [Installing Ruby](https://www.ruby-lang.org/en/documentation/installation/), [Ruby in Twenty Minutes](https://www.ruby-lang.org/en/documentation/quickstart/), [Ruby reference](https://docs.ruby-lang.org/en/) | Use a maintained stable release, not a preview. The provided Ruby code uses standard libraries only |
 | Optional external Python resource | [Anatomy code](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | This external resource's language choice does not replace the site's Ruby exercise |
@@ -160,7 +160,7 @@ Start by running the site's Ruby calculation example. Then, if useful, choose on
 | --- | --- | --- |
 | Follow FRI in Ruby | [Session 13 exercise code and instructions](./session-13#ruby-fri) | Finite fields, polynomials, Merkle authentication, and FRI commits, queries and verification. Not a complete STARK bound to AIR |
 | Read the external Python implementation (optional) | [Anatomy of a STARK](https://aszepieniec.github.io/stark-anatomy/), [Part 5](https://aszepieniec.github.io/stark-anatomy/rescue-prime), [code and tests](https://github.com/aszepieniec/stark-anatomy/tree/master/code) | A separate implementation that includes Rescue-Prime, traces, constraints, proving and verification; it uses Python |
-| Write AIR in Rust | [Winterfell usage](https://github.com/facebook/winterfell#usage), [examples](https://github.com/facebook/winterfell/tree/main/examples), [API](https://docs.rs/winterfell/latest/winterfell/) | Trace construction, transitions, boundary assertions, proving and verification |
+| Write AIR in Rust | [Winterfell usage](https://github.com/meta/winterfell#usage), [examples](https://github.com/meta/winterfell/tree/main/examples), [API](https://docs.rs/winterfell/latest/winterfell/) | Trace construction, transitions, boundary assertions, proving and verification |
 | Prove VM execution | [Miden VM CLI and examples](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) | Instructions, inputs, outputs and execution proof. Match `next` documentation to your release |
 
 1. Run an official example and save successful verification results.
@@ -205,6 +205,6 @@ Record the example URL/version, commands, public sample inputs, results and inte
 
 ## Review mathematical operations {#math}
 
-Enter `GF(7)(3)^(-1)` in [SageMathCell](https://sagecell.sagemath.org/) and press **Evaluate**. Compare the result, `5`, with the [finite-field tutorial](../learn/finite-fields-tutorial).
+Use SageMathCell for finite-field, polynomial and matrix calculations by following the [SageMath operation manual](./manuals/sagemath). Compare the inverse-modulo-7 result with the hand calculation in the [finite-field tutorial](../learn/finite-fields-tutorial).
 
 [SageMath tutorial](https://doc.sagemath.org/html/en/tutorial/) · [Installation](https://doc.sagemath.org/html/en/installation/) · [Prerequisites and supplementary resources](../learn/foundations)

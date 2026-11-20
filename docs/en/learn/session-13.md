@@ -185,7 +185,7 @@ Separately from the model, consider a benchmark published in Winterfell's README
 <img src="/figures/stark-winterfell-published.svg" alt="Published historical Winterfell Lamport+ example: signature count, proof size, and verification time.">
 </figure>
 
-Source: [Winterfell README Performance section at a pinned GitHub commit](https://github.com/facebook/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance). The [CSV](/data/stark-cost/winterfell-lamport.csv) preserves the data. KB is retained as reported and not converted to KiB. This benchmark does not empirically validate the model assumptions; it illustrates how proof size and verifier time can be reported together for a specified computation, implementation, and environment.
+Source: [Winterfell README Performance section at a pinned GitHub commit](https://github.com/meta/winterfell/blob/2f78ee9bf667a561bdfcdfa68668d0f9b18b8315/README.md#performance). The [CSV](/data/stark-cost/winterfell-lamport.csv) preserves the data. KB is retained as reported and not converted to KiB. This benchmark does not empirically validate the model assumptions; it illustrates how proof size and verifier time can be reported together for a specified computation, implementation, and environment.
 
 ---
 

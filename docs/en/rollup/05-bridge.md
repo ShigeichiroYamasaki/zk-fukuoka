@@ -20,7 +20,7 @@ Fix token/verifier addresses and genesis root at deployment. Do not introduce an
 
 ## Solidity and Foundry preparation
 
-Read [OpenZeppelin ERC-20/SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20) and [Foundry project creation](https://getfoundry.sh/projects/creating-a-new-project/); pin dependency versions.
+Read [OpenZeppelin ERC-20/SafeERC20](https://docs.openzeppelin.com/contracts/5.x/api/token/erc20) and pin dependency versions. Follow the [Japanese Foundry operation manual](../exercises/manuals/foundry) for installation and project creation.
 
 ```sh
 forge init contracts-lab

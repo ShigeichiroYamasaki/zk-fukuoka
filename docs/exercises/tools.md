@@ -37,7 +37,7 @@ outline: [2, 3]
 | --- | --- | --- | --- |
 | [Circom](https://github.com/iden3/circom) ＋ [snarkjs](https://github.com/iden3/snarkjs) | Circomで制約・ウィットネス計算用コードを生成し，snarkjsでセットアップ・証明・検証を行う | ローカルのCircom＋Node.js．入門ルート | [Circomの日本語手順](./manuals/circom) → [snarkjsの日本語手順](./manuals/snarkjs) |
 | [ZoKrates](https://github.com/ZoKrates/ZoKrates) | 短いプログラムからコンパイル・ウィットネス・証明を扱う | CLIまたはDocker．独自言語で学ぶ人向け | [Getting Started](https://zokrates.github.io/gettingstarted.html)，[G16の選択](https://zokrates.github.io/toolbox/proving_schemes.html) |
-| [gnark](https://github.com/Consensys-Incorporated/gnark) | Goの回路定義とGroth16のSetup・Prove・Verifyを対応づける | Go開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.io/HowTo/get_started)，[証明生成・検証](https://docs.gnark.consensys.io/HowTo/prove) |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | Goの回路定義とGroth16のSetup・Prove・Verifyを対応づける | Go開発環境．Go経験者向け | [導入](https://docs.gnark.consensys.com/how-to/get_started)，[証明生成・検証](https://docs.gnark.consensys.com/how-to/prove) |
 | [bellman](https://github.com/zkcrypto/bellman) | 制約・ガジェット・Groth16 APIをコードで読む | Rust/Cargo．発展向け | [回路例とAPI（0.14.0）](https://docs.rs/bellman/0.14.0/bellman/#example-circuit) |
 
 Circomは回路コンパイラであり，単独で証明生成・検証を完結するツールではありません．この演習ではsnarkjsと組み合わせます．[各実装の演習例](./#groth16)も参照してください．
@@ -47,7 +47,7 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 | 実装・サイト | 演習での役割 | 環境・対象 | 操作マニュアル |
 | --- | --- | --- | --- |
 | [Circom＋snarkjs](https://github.com/iden3/snarkjs) | 第11回と同じ回路をPLONKで証明し，汎用SRSと回路ごとの前処理を確認する | Circom＋Node.js．第11回からの継続向け | [Circomの日本語手順](./manuals/circom) → [snarkjs PLONK手順](./manuals/snarkjs#plonk) |
-| [gnark](https://github.com/Consensys-Incorporated/gnark) | GoでSCSへのコンパイルとPLONK APIを追う | Go開発環境．Groth16とのAPI比較向け | [証明生成・検証のPlonKタブ](https://docs.gnark.consensys.io/HowTo/prove) |
+| [gnark](https://github.com/Consensys-Incorporated/gnark) | GoでSCSへのコンパイルとPLONK APIを追う | Go開発環境．Groth16とのAPI比較向け | [証明生成・検証のPlonKタブ](https://docs.gnark.consensys.com/how-to/prove) |
 | [Dusk PLONK](https://github.com/dusk-network/plonk) | Rustで回路・ゲートを記述し，コンパイル・証明・検証を読む | Rust/Cargo．発展向け | [利用案内](https://github.com/dusk-network/plonk#usage)，[API](https://docs.rs/dusk-plonk/latest/dusk_plonk/) |
 
 同じPLONK系でも，回路の入力形式やAPIは異なります．CircomのR1CSを使う経路と，ゲート・コピー制約を直接扱う経路を区別して選びます．[実装例の比較](./#plonk)から具体例へ進めます．
@@ -58,7 +58,7 @@ Circomは回路コンパイラであり，単独で証明生成・検証を完�
 | --- | --- | --- | --- |
 | [サイト内Ruby FRI教材](./session-13#ruby-fri) | 有限体，多項式，Merkle認証，FRIの証明生成・検証を追う | Ruby．標準ライブラリのみ | [コードと実行手順](./session-13#ruby-fri) |
 | [Anatomy of a STARK](https://github.com/aszepieniec/stark-anatomy)（任意の外部参考） | Rescue-Primeを含む教育用Python実装を読む | Python．外部実装を追う発展向け | [著者の解説](https://aszepieniec.github.io/stark-anatomy/)，[コードとテスト](https://github.com/aszepieniec/stark-anatomy/tree/master/code) |
-| [Winterfell](https://github.com/facebook/winterfell) | 実行トレース，遷移制約，境界の指定を実装する | Rust/Cargo．AIRを自分で記述したい人向け | [利用チュートリアル](https://github.com/facebook/winterfell#usage)，[API](https://docs.rs/winterfell/latest/winterfell/) |
+| [Winterfell](https://github.com/meta/winterfell) | 実行トレース，遷移制約，境界の指定を実装する | Rust/Cargo．AIRを自分で記述したい人向け | [利用チュートリアル](https://github.com/meta/winterfell#usage)，[API](https://docs.rs/winterfell/latest/winterfell/) |
 | [Miden VM](https://github.com/0xMiden/miden-vm) | Miden Assemblyのプログラムを実行し，実行証明を生成・検証する | Rust/CargoとVM CLI．VM操作を学ぶ人向け | [CLIと実行例](https://github.com/0xMiden/miden-vm/blob/next/miden-vm/README.md) |
 
 [STARKの操作手順](./manuals#stark)では，正常な実行，公開出力を変えた検証，トレース長を変えた測定へ進みます．Winterfellは完全ゼロ知識性を提供していないと公式READMEに明記しています．透明性・計算の正しさ・ゼロ知識性は分けて確認しましょう．
@@ -90,13 +90,13 @@ RubyやSageMathで総和を計算するだけでは，GKRやゼロ知識証明�
 
 | ツール | できること | 利用方法 | 操作案内 |
 | --- | --- | --- | --- |
-| [SageMathCell](https://sagecell.sagemath.org/) | 有限体・多項式・行列の計算を入力して試す | ブラウザー．ローカル導入不要 | [SageMathの基本操作](./manuals#math) |
-| [SageMath](https://www.sagemath.org/) | 計算を保存し，有限体・多項式・線形代数を継続して調べる | ローカル導入，またはオンライン環境 | [公式チュートリアル](https://doc.sagemath.org/html/en/tutorial/)，[導入](https://doc.sagemath.org/html/en/installation/) |
+| [SageMathCell](https://sagecell.sagemath.org/) | 有限体・多項式・行列の計算を入力して試す | ブラウザー．ローカル導入不要 | [SageMathの日本語操作マニュアル](./manuals/sagemath) |
+| [SageMath](https://www.sagemath.org/) | 計算を保存し，有限体・多項式・線形代数を継続して調べる | ローカル導入，またはオンライン環境 | [日本語操作マニュアル](./manuals/sagemath)，[公式チュートリアル](https://doc.sagemath.org/html/en/tutorial/)，[導入](https://doc.sagemath.org/html/en/installation/) |
 
 まずは[法7の計算例](../learn/finite-fields-tutorial)と結果を比べてみましょう．
 
 ## 利用する版と教材の選び方 {#versions}
 
-公式資料の参照確認日：2026年9月27日．掲載は演習候補の案内であり，全ツールのローカル実行を検証したものではありません．外部の操作マニュアルは主に英語です．
+公式資料の参照確認日：2026年11月20日．掲載は演習候補の案内であり，全ツールのローカル実行を検証したものではありません．
 
 利用するリリースまたはコミットを記録し，コード例とAPIの版を揃えます．bellmanの案内は0.14.0，Midenのリンクは開発ブランチ`next`です．`latest`のAPIは利用版へ切り替えて確認してください．導入後は[共通準備](./manuals#circuits)から，小さい公開サンプルで演習を始めます．
