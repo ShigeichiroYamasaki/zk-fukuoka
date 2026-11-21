@@ -116,7 +116,9 @@ At this point, one might ask how sending a witness in pieces differs from sendin
 
 Does allowing such exchanges change which propositions can be verified?
 
-**IP** is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. **PSPACE** is the class of languages decidable using polynomial workspace.
+**IP** is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. **PSPACE** is the class of languages decidable using an amount of workspace (working memory) polynomial in the input length. The bound is on memory, not necessarily on running time. PSPACE therefore includes problems that use polynomial memory but may take exponential time with a straightforward algorithm.
+
+A standard example is deciding the truth of a **fully quantified Boolean formula**. Such a formula uses quantifiers like `∀` (“for every value”) and `∃` (“there exists a value”). Checking every assignment one by one can take exponential time, but a procedure can reuse memory while it evaluates assignments and subformulas, keeping its workspace polynomial. This problem is PSPACE-complete, so it represents the full difficulty of PSPACE.
 
 When comparing Arthur–Merlin models with general IP, specify conditions such as the number of rounds. The next result concerns IP with polynomially many rounds.
 
@@ -127,6 +129,10 @@ When comparing Arthur–Merlin models with general IP, specify conditions such a
 The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result.
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
+
+This equality states two directions. First, every problem in PSPACE has an interactive procedure using a probabilistic polynomial-time verifier and a prover. The verifier does not simply trust the prover: it asks random questions and checks the answers. If the proposition is true, an honest prover can make the verifier accept with high probability; if it is false, no prover can make acceptance likely. Second, interactive proofs decide no problems outside PSPACE.
+
+This does not mean that the verifier can solve PSPACE problems by itself in polynomial time. Rather, even when solving a problem alone may require more than polynomial time, a verifier with limited computation can check its truth through a polynomial number of exchanges with a prover. The result shows that interaction is more than sending a witness in pieces: it can expand the range of problems that a limited verifier can check.
 
 NP $\subseteq$ PSPACE holds. Whether the inclusion is strict remains open.
 
