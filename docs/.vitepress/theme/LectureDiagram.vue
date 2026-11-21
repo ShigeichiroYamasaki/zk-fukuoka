@@ -4,7 +4,7 @@ const props = defineProps({ kind: String, en: Boolean });
 const t = (ja, en) => props.en ? en : ja;
 const titles = {
  witness: ['ウィットネスを渡して検査する', 'Send a witness, then check it'],
- interaction: ['対話証明：質問と応答を通じて命題の真偽を判定する', 'Interactive proofs: determine whether a proposition is true through questions and responses'],
+ interaction: ['対話証明の具体例：グラフ同型性をランダムな質問で確かめる', 'An interactive-proof example: checking graph isomorphism with a random challenge'],
  graphs: ['配置が違っても，つながりは同じ', 'Different layouts, the same connections'],
  motives: ['二つの問いから，同じ枠組みへ', 'Two questions, one framework'],
  properties: ['完全性と健全性は，違う場合を扱う', 'Completeness and soundness concern different cases'],
@@ -23,15 +23,15 @@ const numbers = {witness:1,interaction:2,graphs:3,motives:4,properties:5,models:
       <p class="note">{{ t('この方法では w そのものを渡す．正しさの検査と，秘密を守ることは別の要求．', 'This procedure sends w itself. Checking correctness and protecting a secret are separate requirements.') }}</p>
     </template>
     <template v-else-if="kind === 'interaction'">
-      <div class="shared">{{ t('共通入力 x：命題「x ∈ L」を確かめる', 'Common input x: check the proposition “x ∈ L”') }}</div>
-      <div class="lanes"><div class="lane-role"><b>{{ t('証明者 P（Merlin）', 'Prover P (Merlin)') }}</b><span>{{ t('計算時間に上限を置かない', 'No bound on computation time') }}</span></div><div class="lane-role"><b>{{ t('検証者 V（Arthur）', 'Verifier V (Arthur)') }}</b><span>{{ t('乱択多項式時間で判定する', 'Decides in probabilistic polynomial time') }}</span></div></div>
+      <div class="shared">{{ t('共通入力：グラフ G₀，G₁　／　確かめる命題：G₀ ≅ G₁', 'Common input: graphs G₀, G₁  /  Proposition: G₀ ≅ G₁') }}</div>
+      <div class="lanes"><div class="lane-role"><b>{{ t('証明者 P（Merlin）', 'Prover P (Merlin)') }}</b><span>{{ t('同型写像 π を知っている', 'Knows an isomorphism π') }}</span></div><div class="lane-role"><b>{{ t('検証者 V（Arthur）', 'Verifier V (Arthur)') }}</b><span>{{ t('確率的多項式時間で判定する', 'Decides in probabilistic polynomial time') }}</span></div></div>
       <div class="interaction-flow">
-        <div class="exchange-step"><span class="step-tag">{{ t('1 最初の発言', '1 First message') }}</span><span class="exchange-arrow">m₁ ─────→</span><span class="step-detail">{{ t('受け取る', 'receives') }}</span></div>
-        <div class="exchange-step"><span class="step-detail">{{ t('受け取る', 'receives') }}</span><span class="exchange-arrow">←───── c</span><span class="step-tag">{{ t('2 乱数で質問', '2 Random challenge') }}</span></div>
-        <div class="exchange-step"><span class="step-tag">{{ t('3 質問への応答', '3 Response') }}</span><span class="exchange-arrow">m₂ ─────→</span><span class="step-detail">{{ t('受け取る', 'receives') }}</span></div>
+        <div class="exchange-step"><span class="step-tag">{{ t('1 G₀ の頂点名をランダムに付け替える', '1 Randomly relabel the vertices of G₀') }}</span><span class="exchange-arrow">H = ρ(G₀) ─→</span><span class="step-detail">{{ t('受け取る', 'receives H') }}</span></div>
+        <div class="exchange-step"><span class="step-detail">{{ t('質問を受け取る', 'receives challenge') }}</span><span class="exchange-arrow">←───── b</span><span class="step-tag">{{ t('2 b∈{0,1} をランダムに選び，G_b との対応を質問', '2 Choose random b∈{0,1}; ask for a map to G_b') }}</span></div>
+        <div class="exchange-step"><span class="step-tag">{{ t('3 G_b から H への対応 φ を答える', '3 Return a map φ from G_b to H') }}</span><span class="exchange-arrow">φ ─────→</span><span class="step-detail">{{ t('対応を受け取る', 'receives the map') }}</span></div>
       </div>
-      <div class="result">{{ t('V は入力 x と対話記録を調べ，命題「x ∈ L」の真偽を判定する（受理／拒否）', 'V examines x and the transcript to determine whether the proposition “x ∈ L” is true (accept / reject)') }}</div>
-      <p class="note">{{ t('この図は，V が新しい乱数 c を選び，証明者にも見える質問として送る公開コイン型の例．公開コイン型とは，検証者のチャレンジが証明者にも公開される方式を指す．一般の対話型証明すべてがこの型とは限らず，発言者やラウンド数も方式によって異なる（ただし通常，通信量やラウンド数には上限を設ける）．証明者はウィットネスを知っていても，それを丸ごと送る必要はない．対話があるだけでゼロ知識性が得られるわけではない．', 'This figure shows a public-coin example: V samples a fresh random challenge c and sends it openly to the prover. “Public coin” means the verifier’s challenge is visible to the prover. Not every interactive proof uses this model; speaker order and round count vary (though communication and rounds are ordinarily bounded). A prover may know a witness without sending it in full. Interaction alone does not imply zero-knowledge.') }}</p>
+      <div class="result">{{ t('V は φ が一対一対応で，辺がある組・ない組の両方を保つかを調べ，命題 G₀ ≅ G₁ の真偽を判定する（受理／拒否）', 'V checks that φ is a bijection preserving both edges and non-edges, then decides whether G₀ ≅ G₁ (accept / reject)') }}</div>
+      <p class="note">{{ t('なぜ質問をランダムにするのか：G₀ と G₁ が同型なら，証明者はどちらを選ばれても H との対応を示せる．同型でなければ，H は両方と同型にはなれないため，証明者はランダムな質問にいつも正しく答えることができない．この質問と応答によって命題の真偽を確かめるのが対話証明の考え方である．この例では検証者の質問 b が証明者にも見えるので「公開コイン型」と呼ぶ．グラフ同型性の定義と具体的な手続きは後の節で詳しく見る．', 'Why randomize the question? If G₀ and G₁ are isomorphic, the prover can provide a valid map to H whichever graph is selected. If they are not, H cannot be isomorphic to both, so the prover cannot answer every random challenge correctly. This illustrates how interaction can help determine whether a proposition is true. Here the challenge b is visible to the prover; this is called a public-coin protocol. The later graph-isomorphism section develops the definition and procedure in detail.') }}</p>
     </template>
     <template v-else-if="kind === 'graphs'">
       <GraphIsomorphism :en="en" />

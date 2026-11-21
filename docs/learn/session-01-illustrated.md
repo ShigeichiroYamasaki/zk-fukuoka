@@ -20,7 +20,7 @@ import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月24日<br>
-最終更新日付：2026年11月15日
+最終更新日付：2026年11月21日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第1回](./#session-1)
 

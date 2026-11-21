@@ -17,7 +17,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: November 18, 2026
+Last updated: November 21, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1) · [Language and computation theory prerequisites](./computation-theory) · [Session 1 exercises](../exercises/session-01)
 
