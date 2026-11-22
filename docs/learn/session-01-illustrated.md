@@ -20,7 +20,7 @@ import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月24日<br>
-最終更新日付：2026年11月21日
+最終更新日付：2026年11月22日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第1回](./#session-1)
 
@@ -124,11 +124,13 @@ Merlinが強力だからといって，その答えを信用してよいわけ�
 
 <LectureDiagram kind="interaction" />
 
-### 2.2 IP = PSPACE(結果の提示)
+### 2.2 IP = PSPACE
 
 この問いを考える上で重要なのが，IPとPSPACEの関係である．Lund–Fortnow–Karloff–Nisanの研究を経て，Shamirによって次の結果が示された．ここでは1992年の論文を参照する．
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
+
+<LectureDiagram kind="ipPspace" />
 
 IPは，確率的多項式時間の検証者との対話型証明で判定できる言語のクラスである．PSPACEは，多項式量の作業領域を使って判定できる言語のクラスである．NP $\subseteq$ PSPACEは成り立つが，NPとPSPACEが異なることは証明されていない．この点と，IP = PSPACEという定理が述べていることは分けておこう．
 

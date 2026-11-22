@@ -17,7 +17,7 @@ import LectureDiagram from "../.vitepress/theme/LectureDiagram.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月24日<br>
-最終更新日付：2026年11月21日
+最終更新日付：2026年11月22日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第1回](./#session-1) · [言語と計算理論の前提知識](./computation-theory) · [第1回の演習](../exercises/session-01)
 
@@ -138,11 +138,13 @@ Merlin が預言者だからといって，その答えを信用してよいわ�
 
 <LectureDiagram kind="interaction" />
 
-### 2.2 IP = PSPACE (結果の提示)
+### 2.2 IP = PSPACE
 
 この問いを考える上で重要なのが，IPとPSPACEの以下の関係である．Lund–Fortnow–Karloff–Nisanの研究を経て，Shamirによって次の結果が示された．
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
+
+<LectureDiagram kind="ipPspace" />
 
 この等式は，二つの方向をまとめて述べている．第一に，PSPACEのどの問題にも，確率的多項式時間で動く検証者と証明者の対話を使って判定する手続きがある．検証者は証明者の言葉をそのまま信じるのではなく，ランダムな質問と返答の検査を行う．真の命題なら正直な証明者との対話で高い確率で受理し，偽の命題ならどのような証明者も高い確率で受理させることはできない．第二に，このような対話型証明で判定できる問題はPSPACEの範囲を超えない．
 

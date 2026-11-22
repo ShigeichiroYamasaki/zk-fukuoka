@@ -20,7 +20,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: November 21, 2026
+Last updated: November 22, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1)
 
@@ -121,11 +121,13 @@ Does allowing such exchanges change which statements can be verified? When compa
 
 <LectureDiagram kind="interaction" :en="true" />
 
-### 2.2 IP = PSPACE (presenting the result)
+### 2.2 IP = PSPACE
 
 The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result. We refer here to the 1992 paper.
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
+
+<LectureDiagram kind="ipPspace" :en="true" />
 
 IP is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. PSPACE is the class decidable using polynomial workspace. NP $\subseteq$ PSPACE holds, but NP and PSPACE have not been proved distinct. Keep that open question separate from the theorem IP = PSPACE.
 
