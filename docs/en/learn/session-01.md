@@ -17,7 +17,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: November 22, 2026
+Last updated: November 23, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1) · [Language and computation theory prerequisites](./computation-theory) · [Session 1 exercises](../exercises/session-01)
 
@@ -128,6 +128,19 @@ When comparing Arthur–Merlin models with general IP, specify conditions such a
 
 The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result.
 
+To place the theorem in context, let us define the complexity classes and completeness terms. A reduction below means a **polynomial-time many-one reduction**: a polynomial-time computable map that preserves yes/no answers. We write $A\leq_p B$ when problem $A$ reduces to problem $B$.
+
+| Term | Definition |
+| --- | --- |
+| **P** | Problems decidable by a deterministic algorithm in polynomial time. |
+| **NP** | Problems for which a polynomial-length witness for a “yes” instance can be checked in deterministic polynomial time. Equivalently, problems decidable in nondeterministic polynomial time. |
+| **NP-hard** | A problem $H$ to which every problem $A$ in NP reduces in polynomial time: $A\leq_p H$ for every $A\in\mathrm{NP}$. $H$ need not itself be in NP. |
+| **NP-complete** | A problem in NP that is also NP-hard; it is among the hardest problems in NP under polynomial-time reductions. |
+| **PSPACE** | Problems decidable by a deterministic algorithm using an amount of workspace polynomial in the input length. |
+| **PSPACE-complete** | A problem in PSPACE to which every problem in PSPACE reduces in polynomial time. |
+
+These classes satisfy $\mathrm{P}\subseteq\mathrm{NP}\subseteq\mathrm{PSPACE}$. Whether either inclusion is strict—that is, whether $\mathrm{P}\ne\mathrm{NP}$ or $\mathrm{NP}\ne\mathrm{PSPACE}$—is open. NP-complete problems lie in NP, whereas an NP-hard problem may lie outside NP. A PSPACE-complete problem lies in PSPACE and represents the difficulty of the entire class, which includes NP.
+
 $$\mathrm{IP} = \mathrm{PSPACE}$$
 
 <LectureDiagram kind="ipPspace" :en="true" />
@@ -161,6 +174,8 @@ This question requires considering **the possibility that either the prover or t
 - The prover may be dishonest: they might pretend to know a secret they do not actually know.
 - The verifier may be curious: they might try to extract secret information from the proof process.
 
+<LectureDiagram kind="gmr" :en="true" />
+
 Interactive proofs in complexity theory already required protection against dishonest provers. Cryptography additionally considers whether a verifier might learn extra information from the exchange.
 
 “Being able to check that $x\in L$ is true” and “not needing to disclose a secret to do so” are different properties. “$x\in L$ is true” and “the prover knows a witness $w$ for it” must also be distinguished. Defining these separately, rather than treating them as one notion, is a task for the coming sessions.
@@ -170,6 +185,8 @@ Interactive proofs in complexity theory already required protection against dish
 **Example 1: Password authentication.** What we want to check is that the other party knows a password. Receiving the password may enable that check, but it also gives the secret to the party performing the check. If sending the same cryptographic hash-function output suffices for authentication, someone who obtains that value may be able to reuse it. Can we check knowledge without sending either the secret or a fixed value that substitutes for it? Here we examine the motivation; the requirements for an actual authentication scheme need separate consideration.
 
 **Example 2: Graph isomorphism.** Suppose there are two graphs $G_1, G_2$, and the prover knows an isomorphism $\pi$. Given this mapping, the verifier could inspect the correspondence between vertices and edges to check isomorphism. But if the proposition to be checked is $G_1 \cong G_2$, is handing over the mapping itself necessary? We want to consider ways to establish isomorphism through interaction.
+
+In complexity theory, Graph Isomorphism is **in NP**: an isomorphism $\pi$ is a witness, and a verifier can check in polynomial time that it is a bijection preserving both adjacency and non-adjacency. However, membership in NP is not the same as being NP-complete. **Whether Graph Isomorphism is NP-complete remains open**, as does whether it has a polynomial-time algorithm. Babai gave a quasipolynomial-time algorithm, which is not a polynomial-time algorithm. Keep the [unsettled NP-completeness and running-time status](https://arxiv.org/abs/1512.03547) distinct. In this course, Graph Isomorphism is useful because it has a checkable witness $\pi$, while still raising the question of whether one can convince someone without handing over that mapping.
 
 *(We study the concrete procedure for graph isomorphism next time, together with the definition of zero-knowledge. Today, use it to distinguish giving someone a witness from having them check whether a proposition is true.)*
 
@@ -310,6 +327,8 @@ Next time, we question the remaining Assumption A. How should we define not givi
 [3] Shamir, “[IP = PSPACE](https://weizmann.esploro.exlibrisgroup.com/esploro/outputs/journalArticle/IP--PSPACE/993265992703596),” Journal of the ACM, 1992. — bibliography and abstract at the author’s institution
 
 [4] Goldreich, *[Foundations of Cryptography, Volume 1: Basic Tools](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4 (a textbook introduction to interactive proofs). — author’s book information, contents, and errata
+
+[5] Babai, “Graph Isomorphism in Quasipolynomial Time,” arXiv:1512.03547, 2015. — [arXiv](https://arxiv.org/abs/1512.03547)
 
 ## Suggested classroom questions
 
