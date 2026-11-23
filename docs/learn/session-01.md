@@ -142,7 +142,7 @@ Merlin が預言者だからといって，その答えを信用してよいわ�
 
 この問いを考える上で重要なのが，IPとPSPACEの以下の関係である．Lund–Fortnow–Karloff–Nisanの研究を経て，Shamirによって次の結果が示された．
 
-定理の意味を位置づけるため，ここで計算量クラスと「完全」の用語を整理しておこう．以下でいう還元は，多項式時間で計算できる写像によって，ある問題の「はい／いいえ」を別の問題の「はい／いいえ」に保つ**多項式時間 many-one 還元**である．問題 $A$ が問題 $B$ に還元できることを $A\leq_p B$ と書く．
+定理の意味を位置づけるため，ここで計算量クラスと「完全」の用語を整理しておこう．**一つの入力に変換する多項式時間還元（many-one 還元）**とは，問題 $A$ の入力 $x$ を，問題 $B$ の入力 $f(x)$ へ多項式時間で変換し，答えを保つ方法である．つまり，$x$ が $A$ の「はい」の入力であることと，$f(x)$ が $B$ の「はい」の入力であることが同値になる（$x\in A\iff f(x)\in B$）．変換後の入力は一つだけなので，$B$ を一度判定すれば $A$ の答えも分かる．この関係を $A\leq_p B$ と書く．したがって，$A\leq_p B$ なら，$B$ を効率よく解く方法が見つかれば，変換を介して $A$ も効率よく解ける．問題の解きやすさを比較するための道具である．
 
 | 用語 | 定義 |
 | --- | --- |
@@ -154,6 +154,10 @@ Merlin が預言者だからといって，その答えを信用してよいわ�
 | **PSPACE完全** | PSPACEに属し，かつすべてのPSPACE問題が多項式時間還元できる問題． |
 
 これらの間には $\mathrm{P}\subseteq\mathrm{NP}\subseteq\mathrm{PSPACE}$ が成り立つ．ただし，包含が真に狭いか，すなわち $\mathrm{P}\ne\mathrm{NP}$ や $\mathrm{NP}\ne\mathrm{PSPACE}$ かどうかは，いずれも未解決である．NP完全問題はNPの中にある一方，NP困難問題はNPの外にあることもありうる．PSPACE完全問題はPSPACEに属し，NPを含むPSPACE全体の難しさを代表する．
+
+ここで **NP中間問題** という考え方にも触れておこう．これは，NPに属し，Pには属さず，NP完全でもない問題である．ただし，このような問題が存在すること自体，$\mathrm{P}\ne\mathrm{NP}$ という未解決問題に依存する．Ladnerの定理は，$\mathrm{P}\ne\mathrm{NP}$ なら人工的に構成したNP中間問題が存在すると示す．自然に現れる具体的な問題については，「Pではなく，NP完全でもない」と証明された例は知られていない．グラフ同型問題は候補としてよく議論されるものの，NP中間問題だと確定したわけではない．[Ladnerの原論文](https://doi.org/10.1145/321864.321877)を参照．
+
+この分類は，そのまま暗号学的な安全性や量子計算機への耐性を保証するものではない．暗号学では，攻撃者がある計算問題を現実的な時間で解けない，という仮定を個別に置く．たとえば素因数分解や離散対数問題は，従来型計算機では難しいと考えられ，暗号に使われてきたが，Shorの量子アルゴリズムは十分な規模の量子計算機でこれらを多項式時間に解く（[Shor, 1997](https://doi.org/10.1137/S0097539795293172)）．一方，耐量子暗号では格子に基づく鍵カプセル化・電子署名やハッシュ関数に基づく電子署名などが標準化されている（[NISTの耐量子暗号標準](https://csrc.nist.gov/projects/post-quantum-cryptography)）．その安全性は「NP中間かどうか」ではなく，古典・量子双方の攻撃に対する個別の根拠と評価に依存する．「現在，効率的な攻撃が知られていない」ことは，安全性の証明ではない．
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
 
@@ -355,6 +359,12 @@ SNARK / STARK の A は Argument を表す．
 [4] Goldreich, *[Foundations of Cryptography, Volume 1: Basic Tools](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4(対話型証明の教科書的導入として) — 著者の書籍案内・目次・正誤表
 
 [5] Babai, “Graph Isomorphism in Quasipolynomial Time,” arXiv:1512.03547, 2015. — [arXiv](https://arxiv.org/abs/1512.03547)
+
+[6] Ladner, R. E., “On the Structure of Polynomial Time Reducibility,” *Journal of the ACM*, 22(1), 155–171, 1975. — [ACM Digital Library](https://doi.org/10.1145/321864.321877)
+
+[7] Shor, P. W., “Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer,” *SIAM Journal on Computing*, 26(5), 1484–1509, 1997. — [SIAM](https://doi.org/10.1137/S0097539795293172)
+
+[8] National Institute of Standards and Technology, “Post-Quantum Cryptography,” NIST CSRC. — [NIST](https://csrc.nist.gov/projects/post-quantum-cryptography)
 
 ## 講義中に使える発問例
 

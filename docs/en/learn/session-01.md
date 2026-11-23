@@ -128,7 +128,7 @@ When comparing Arthur–Merlin models with general IP, specify conditions such a
 
 The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result.
 
-To place the theorem in context, let us define the complexity classes and completeness terms. A reduction below means a **polynomial-time many-one reduction**: a polynomial-time computable map that preserves yes/no answers. We write $A\leq_p B$ when problem $A$ reduces to problem $B$.
+To place the theorem in context, let us define the complexity classes and completeness terms. In plain terms, a **polynomial-time reduction using one transformed instance** (a many-one reduction) takes an input $x$ to problem $A$ and, in polynomial time, turns it into one input $f(x)$ to problem $B$. It preserves the answer: $x$ is a yes-instance of $A$ exactly when $f(x)$ is a yes-instance of $B$ ($x\in A\iff f(x)\in B$). So a solver for that one instance of $B$ also tells us the answer to the original question about $x$. We write $A\leq_p B$. If $A\leq_p B$, an efficient way to solve $B$ would also give an efficient way to solve $A$ through this transformation. Reductions let us compare how difficult problems are to solve.
 
 | Term | Definition |
 | --- | --- |
@@ -140,6 +140,10 @@ To place the theorem in context, let us define the complexity classes and comple
 | **PSPACE-complete** | A problem in PSPACE to which every problem in PSPACE reduces in polynomial time. |
 
 These classes satisfy $\mathrm{P}\subseteq\mathrm{NP}\subseteq\mathrm{PSPACE}$. Whether either inclusion is strict—that is, whether $\mathrm{P}\ne\mathrm{NP}$ or $\mathrm{NP}\ne\mathrm{PSPACE}$—is open. NP-complete problems lie in NP, whereas an NP-hard problem may lie outside NP. A PSPACE-complete problem lies in PSPACE and represents the difficulty of the entire class, which includes NP.
+
+This also gives us the idea of an **NP-intermediate problem**: a problem in NP that is outside P and is not NP-complete. The existence of such problems depends on the open question $\mathrm{P}\ne\mathrm{NP}$. Ladner’s theorem constructs an NP-intermediate problem if $\mathrm{P}\ne\mathrm{NP}$. However, no naturally arising concrete problem has been proved to be both outside P and not NP-complete. Graph Isomorphism is often discussed as a candidate, but it has not been established to be NP-intermediate. See [Ladner’s original paper](https://doi.org/10.1145/321864.321877).
+
+This classification does not, by itself, guarantee cryptographic security or resistance to quantum computers. Cryptographic security assumptions separately claim that attackers cannot solve a particular computational problem within realistic resources. Factoring and the discrete logarithm problem, for example, have been considered hard for conventional computers and used in cryptography; Shor’s quantum algorithm solves them in polynomial time on a sufficiently capable quantum computer ([Shor, 1997](https://doi.org/10.1137/S0097539795293172)). Post-quantum standards include lattice-based key-encapsulation and signature schemes, and hash-based signature schemes ([NIST PQC standards](https://csrc.nist.gov/projects/post-quantum-cryptography)). Their security depends on the evidence and analysis for each assumption against both classical and quantum attacks—not on whether a problem is NP-intermediate. The absence of a known efficient attack is not a proof of security.
 
 $$\mathrm{IP} = \mathrm{PSPACE}$$
 
@@ -329,6 +333,12 @@ Next time, we question the remaining Assumption A. How should we define not givi
 [4] Goldreich, *[Foundations of Cryptography, Volume 1: Basic Tools](https://www.wisdom.weizmann.ac.il/~oded/foc-vol1.html)*, Chapter 4 (a textbook introduction to interactive proofs). — author’s book information, contents, and errata
 
 [5] Babai, “Graph Isomorphism in Quasipolynomial Time,” arXiv:1512.03547, 2015. — [arXiv](https://arxiv.org/abs/1512.03547)
+
+[6] Ladner, R. E., “On the Structure of Polynomial Time Reducibility,” *Journal of the ACM*, 22(1), 155–171, 1975. — [ACM Digital Library](https://doi.org/10.1145/321864.321877)
+
+[7] Shor, P. W., “Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer,” *SIAM Journal on Computing*, 26(5), 1484–1509, 1997. — [SIAM](https://doi.org/10.1137/S0097539795293172)
+
+[8] National Institute of Standards and Technology, “Post-Quantum Cryptography,” NIST CSRC. — [NIST](https://csrc.nist.gov/projects/post-quantum-cryptography)
 
 ## Suggested classroom questions
 
