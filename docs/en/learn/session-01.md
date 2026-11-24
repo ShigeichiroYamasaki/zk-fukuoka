@@ -116,7 +116,7 @@ In 1985, Babai proposed interactive games in which the verifier uses randomness.
 
 Merlin's unlimited computation time gives Arthur no reason to trust Merlin's answers. Arthur must check the propositions Merlin asserts within its own computational budget. Randomness and interaction provide tools for doing so.
 
-At this point, one might ask how sending a witness in pieces differs from sending it all at once. The important feature is not merely increasing the number of transmissions. The verifier issues random questions, and the prover responds to them.
+The key feature of interaction is not the number of transmissions. The verifier asks random questions, the prover responds, and the verifier checks those responses.
 
 Does allowing such exchanges change which propositions can be verified?
 
