@@ -85,6 +85,8 @@ Here $x$ is the problem input, $w$ is a witness, and $V(x,w)=1$ means acceptance
 
 Do not read **NP as the class of only “hard problems.”** Problems in P are also in NP: if a problem can be decided in polynomial time, that decision procedure can serve as an NP verifier without needing a witness. The name NP comes from “nondeterministic polynomial time”; it does not mean “not solvable in polynomial time.” For an NP problem, a witness for a Yes instance can be checked efficiently, even though finding such a witness may be difficult. NP-complete problems are the hardest problems in NP. Since whether P equals NP remains open, some hard problems may be in NP, but it is not accurate to call every problem in NP hard.
 
+Cryptography nevertheless builds systems on **specific computational hardness assumptions**. For example, it assumes that factoring or solving the discrete logarithm problem at suitable input sizes is infeasible with realistic resources. In factoring, it is easy to check that candidate factors multiply to the given number, while finding the factors is believed to be hard. This is not a theorem about all of NP; it is an assumption about a particular problem, how its inputs are selected, and the attacker’s computational model. Whether $\mathrm{P}\ne\mathrm{NP}$ remains open, and even if proved, that alone would not establish the average-case hardness of the particular problems cryptography needs. Conversely, if $\mathrm{P}=\mathrm{NP}$, cryptography based on one-wayness—the property that a function is easy to compute but hard to invert—would lose its security foundation. The proved relations among complexity classes and the hardness assumptions made by cryptographic schemes are connected, but distinct.
+
 Read the equivalence in both directions. If the statement “$x\in L$” is true, an accepted witness exists. Taking the contrapositive of the reverse implication, if the statement is false, no witness meeting the length bound is accepted.
 
 Using this definition directly as a proving procedure means giving the witness to the verifier for inspection. Notice the choice this procedure makes about how information is communicated.
@@ -125,7 +127,7 @@ Does allowing such exchanges change which statements can be verified? When compa
 
 ### 2.2 IP = PSPACE
 
-The relationship between IP and PSPACE is important for this question. Following the work of Lund–Fortnow–Karloff–Nisan, Shamir established the following result. We refer here to the 1992 paper.
+The question is how far the verifier paradigm can reach if we replace receiving a witness once with interaction with a prover. Cryptography uses assumptions that particular computational problems are hard; interactive proof theory asks whether a verifier can delegate computation to a powerful party and still check correctness without trusting it. The relationship between IP and PSPACE answers this question in a striking way. Building on work by Lund, Fortnow, Karloff, and Nisan, Shamir established the following result. We refer here to the 1992 paper.
 
 To place the theorem in context, let us define the complexity classes and completeness terms. In plain terms, a **polynomial-time reduction using one transformed instance** (a many-one reduction) takes an input $x$ to problem $A$ and, in polynomial time, turns it into one input $f(x)$ to problem $B$. It preserves the answer: $x$ is a yes-instance of $A$ exactly when $f(x)$ is a yes-instance of $B$ ($x\in A\iff f(x)\in B$). So a solver for that one instance of $B$ also tells us the answer to the original question about $x$. We write $A\leq_p B$. If $A\leq_p B$, an efficient way to solve $B$ would also give an efficient way to solve $A$ through this transformation. Reductions let us compare how difficult problems are to solve.
 
@@ -149,6 +151,8 @@ $$\mathrm{IP} = \mathrm{PSPACE}$$
 <LectureDiagram kind="ipPspace" :en="true" />
 
 IP is the class of languages decidable through interactive proofs with a probabilistic polynomial-time verifier. PSPACE is the class decidable using polynomial workspace. NP $\subseteq$ PSPACE holds, but NP and PSPACE have not been proved distinct. Keep that open question separate from the theorem IP = PSPACE.
+
+The surprising point is that an interactive proof lets a polynomial-time verifier handle the entire class PSPACE. For example, deciding whether a fully quantified Boolean formula is true is PSPACE-complete; checking every assignment in the straightforward way may take exponential time. Yet interaction with a prover of unlimited computational power lets the verifier ask random questions and check the answers so that a false claim is rejected with high probability. The prover may be powerful, but the verifier need not trust it.
 
 **The distinction to notice is between solving a problem yourself and checking correctness with another party's help.** A verifier running in polynomial time can, through interaction, handle all of PSPACE. The point is not to trust the powerful party, but to construct a procedure unlikely to accept even when that party makes a false statement.
 
