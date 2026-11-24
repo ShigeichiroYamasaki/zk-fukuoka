@@ -17,7 +17,7 @@ import LectureDiagram from "../../.vitepress/theme/LectureDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 24, 2026<br>
-Last updated: November 23, 2026
+Last updated: November 24, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 1 in the syllabus](./#session-1) · [Language and computation theory prerequisites](./computation-theory) · [Session 1 exercises](../exercises/session-01)
 
@@ -79,6 +79,8 @@ A language $L\subseteq\Sigma^*$ belongs to $\mathrm{NP}$ if there exist a **dete
 $$x \in L \iff \exists w\in\Sigma^*,\ |w| \le p(|x|),\ V(x, w) = 1$$
 
 Here $x$ is the problem input, $w$ is a witness, and $V(x,w)=1$ means acceptance. The quantities $|x|$ and $|w|$ are lengths of encoded strings, not the numerical values of integers. The running time of $V$ is polynomial in its total input length. With the witness length bounded by $p(|x|)$, verification therefore takes polynomial time in $|x|$.
+
+Do not read **NP as the class of only “hard problems.”** Problems in P are also in NP: if a problem can be decided in polynomial time, that decision procedure can serve as an NP verifier without needing a witness. The name NP comes from “nondeterministic polynomial time”; it does not mean “not solvable in polynomial time.” For an NP problem, a witness for a Yes instance can be checked efficiently, even though finding such a witness may be difficult. NP-complete problems are the hardest problems in NP. Since whether P equals NP remains open, some hard problems may be in NP, but it is not accurate to call every problem in NP hard.
 
 Read the equivalence in both directions. If the proposition “$x\in L$” is true, an accepted witness exists. Taking the contrapositive of the reverse implication, if the proposition is false, no witness meeting the length bound is accepted.
 
