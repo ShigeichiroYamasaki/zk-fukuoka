@@ -4,7 +4,7 @@ outline: [2, 3]
 
 # SageMath Operation Manual
 
-Updated: November 20, 2026
+Updated: November 25, 2026
 
 SageMath is mathematical software for finite fields, polynomials, matrices and more. SageMathCell lets you check small calculations from a browser without installing anything.
 
@@ -17,7 +17,7 @@ F = GF(7)
 F(3)^(-1)
 ```
 
-The result is `5`. In \(\mathbb{F}_7\), \(3\cdot5=15\equiv1\pmod 7\), so 5 is the multiplicative inverse of 3.
+The result is `5`. In $\mathbb{F}_7$, $3\cdot5=15\equiv1\pmod 7$, so 5 is the multiplicative inverse of 3.
 
 ## Calculate with polynomials
 
@@ -31,7 +31,7 @@ f(3)
 f.roots()
 ```
 
-In SageMath input, `^` means exponentiation. The polynomial is \((X+1)^2\), so its root is \(X=6\), with multiplicity 2. Multiple lines can be run together; the result of the last expression is displayed.
+In SageMath input, `^` means exponentiation. The polynomial is $(X+1)^2$, so its root is $X=6$, with multiplicity 2. Multiple lines can be run together; the result of the last expression is displayed.
 
 ## Calculate with matrices
 
@@ -44,7 +44,7 @@ M.det()
 M.inverse()
 ```
 
-The determinant is \(1\cdot4-2\cdot3=-2\equiv5\pmod7\), which is nonzero, so the matrix has an inverse. Note that its entries are finite-field elements, not real numbers.
+The determinant is $1\cdot4-2\cdot3=-2\equiv5\pmod7$, which is nonzero, so the matrix has an inverse. Note that its entries are finite-field elements, not real numbers.
 
 ## Use SageMath locally
 

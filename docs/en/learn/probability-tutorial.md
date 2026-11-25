@@ -2,7 +2,7 @@
 
 Author: Shigeichiro Yamasaki  
 Created: September 29, 2026  
-Last updated: October 28, 2026
+Last updated: November 25, 2026
 
 Understanding a zero-knowledge proof (a way to check a statement without revealing the secret information behind it) requires specifying what is random, what information each party sees, and when each random choice is made. This page begins with events and random variables, then develops probability distributions, conditional probability, independence, the order of random choices in protocols, expectation, and probability inequalities. It explains how a procedure that tries to tell two probability distributions apart (a distinguisher) is evaluated by comparing its output probabilities, both theoretically and through sample experiments. This leads to comparing the verifier’s record of a real interaction with a record generated without the secret information. The final sections apply these ideas to randomized checks and to limiting the chance that a false statement is accepted.
 
@@ -433,7 +433,7 @@ Each pair agrees with probability $1/N$. For example, even after generating $q=2
 
 ## 6. Distinguishing probability distributions
 
-This section applies the random variables and expectations from the previous sections to comparing probability distributions. A sample $z$ is drawn from one of two distributions $P_0,P_1$, and a distinguisher $D$ predicts its source. Output $1$ means “from $P_1,” and output $0$ means “from $P_0.” The prediction may be wrong, and $D$ may use internal randomness.
+This section applies the random variables and expectations from the previous sections to comparing probability distributions. A sample $z$ is drawn from one of two distributions $P_0,P_1$, and a distinguisher $D$ predicts its source. Output $1$ means “from $P_1$,” and output $0$ means “from $P_0$.” The prediction may be wrong, and $D$ may use internal randomness.
 
 ### Standard definition: compare output probabilities in two experiments
 

@@ -18,7 +18,7 @@ Let $L_{\mathrm{comp}}$ be the language of encodings of composite numbers. For i
 
 ### Worked check
 
-The statement `$x\in L_{\mathrm{comp}}$` means that the encoded integer $x$ is composite. One verifier takes a proper divisor $w$ as the witness and checks $1<w<x$ and $x\bmod w=0$. Formally,
+The statement $x\in L_{\mathrm{comp}}$ means that the encoded integer $x$ is composite. One verifier takes a proper divisor $w$ as the witness and checks $1<w<x$ and $x\bmod w=0$. Formally,
 
 $$x\in L_{\mathrm{comp}}\iff \exists w\;(1<w<x\;\land\;x\bmod w=0).$$
 

@@ -16,7 +16,7 @@ import StudyDiagram from "../../.vitepress/theme/StudyDiagram.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: November 17, 2026
+Last updated: November 25, 2026
 
 [Sessions](./sessions) · [Topics](./topics) · [Session 7 in the syllabus](./#session-7) · [Session 7 exercises](../exercises/session-07)
 
@@ -389,7 +389,7 @@ In Session 8, we will study polynomial commitments: committing to a polynomial a
 
 ## Suggested discussion questions
 
-- Present $e([a]P, [b]Q) = e(P,Q)^{ab} and let students explore what it enables before discussing Section 2.3, highlighting the nontrivial new capability.
+- Present $e([a]P, [b]Q) = e(P,Q)^{ab}$ and let students explore what it enables before discussing Section 2.3, highlighting the nontrivial new capability.
 - Ask why some protocols cannot be proved secure using standard assumptions alone, and discuss the motivation for introducing non-standard assumptions.
 - Have students explain the reduction structure in their own words: if an adversary existed, we could use it to solve another problem. Encourage them to notice the resemblance to proof by contradiction.
 
