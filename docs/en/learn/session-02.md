@@ -239,11 +239,19 @@ If $G_0,G_1$ are isomorphic, the prover uses secret $\pi$ to answer either chall
 
 The simulator in Figure 02-1 generates the record without witness $\pi$. When $G_0,G_1$ are isomorphic, its record has the same probability distribution as a real interaction. Thus, this example is perfect zero-knowledge for an honest verifier. A verifier that deviates from the prescribed procedure requires a separate argument.
 
-### 2.4 Checking the intuition
+### 2.4 Checking the definition with the Schnorr identification protocol
 
-The next explanation previews the **Schnorr identification protocol**, developed in Section 4.1. It demonstrates knowledge of a secret exponent corresponding to a public value without handing over that exponent. It has three stages: the prover sends an initial message (commitment), the verifier sends a random challenge, and the prover responds. An honest verifier in this Schnorr-type protocol samples its challenge uniformly from the specified set after receiving the commitment, then checks the response using the prescribed equation.
+Use the **Schnorr identification protocol**, studied in detail in Section 4.1, to compare a real view with a simulator's view. Public information consists of a generator $g$ of a cyclic group $G$ of order $q$ and a public value $y=g^w$. Only the prover knows the secret exponent $w$. The witness is an exponent satisfying the relation $y=g^w$.
+
+Figure 02-2 shows the message order. The prover samples uniform randomness $r\in\mathbb{Z}_q$ and sends the commitment $t=g^r$. The verifier then sends a uniform challenge $c\in\mathbb{Z}_q$. The prover returns $s=r+cw\pmod q$, and the verifier accepts exactly when
+
+$$g^s=t\,y^c.$$
+
+This check is correct because $y=g^w$, so $g^s=g^{r+cw}=g^r(g^w)^c=t\,y^c$. The prover does not send $w$; it sends a response computed using it.
 
 <SchnorrOverview :en="true" />
+
+Table 02-4 summarizes how the generation order of $t,c,s$ differs between a real interaction and a simulation.
 
 <div class="captioned-table" id="table-02-4" role="group" aria-labelledby="table-caption-02-4">
 
@@ -256,11 +264,13 @@ The next explanation previews the **Schnorr identification protocol**, developed
 
 </div>
 
-Generating a record in this different order is not the same as responding to a live verifier. This illustration alone does not prove zero-knowledge against malicious verifiers.
+**Connection to zero-knowledge:** fix public value $y$ and let the verifier's record in a real interaction be the random variable $X=(t,c,s)$. Without using $w$, the simulator first samples uniform $c,s\in\mathbb{Z}_q$ and computes
 
-If a transcript can be generated without the witness, could a dishonest prover do the same? Distinguish an output record from a live interaction with a verifier. For example, a Schnorr-type honest-verifier simulator can first choose a challenge and response, then derive a commitment satisfying the verification equation. A real prover commits before receiving the verifier’s challenge. The order differs. This intuition alone does not establish zero-knowledge against arbitrary malicious verifiers.
+$$t=g^s y^{-c}.$$
 
----
+By construction, this $t$ satisfies $g^s=t\,y^c$. In a real interaction, for each fixed $c$, uniform $r$ makes $s=r+cw$ uniform as well, and then $t=g^r=g^s y^{-c}$. Thus $X$ and the simulator's record $Y=(t,c,s)$ have the same probability distribution. Every distinguisher $D$ therefore has distinguishing advantage $0$. This is why the example is perfect zero-knowledge for an honest verifier.
+
+The simulator is not replacing the prover in a live interaction. It chooses $c$ before computing $t$, while a real prover must send $t$ before receiving the verifier's challenge. Generating a record with the same distribution does not mean that someone without the witness can answer an unknown challenge.
 
 ## 3. Knowledge soundness and extractors
 

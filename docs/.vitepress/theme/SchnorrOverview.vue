@@ -22,7 +22,7 @@ defineProps({ en: Boolean });
     <div class="step verifier emphasized">{{ en ? 'Apply the prescribed verification equation → accept / reject' : '所定の検証式で確認 → 受理 / 拒否' }}</div>
    </div>
   </div>
-  <p class="note">{{ en ? 'Only t, c and s cross the arrows; the secret exponent is not sent. The equations are introduced in Section 4.1. Following the protocol still allows the verifier to record and analyze its view.' : '矢印で送るのは t，c，s であり，秘密の指数そのものは送らない．具体的な式は4.1節で導入する．正直な検証者も，自分が見た情報を記録して分析できる．' }}</p>
+  <p class="note">{{ en ? 'Only t, c and s cross the arrows; the secret exponent is not sent. The equations are derived in Section 4.1. Following the protocol still allows the verifier to record and analyze its view.' : '矢印で送るのは t，c，s であり，秘密の指数そのものは送らない．式の導出と性質は4.1節で詳しく扱う．正直な検証者も，自分が見た情報を記録して分析できる．' }}</p>
  </figure>
 </template>
 
