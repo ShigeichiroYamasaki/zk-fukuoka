@@ -206,17 +206,15 @@ The indistinguishability condition concerns the distributions of the random vari
 
 #### 2.3.2 Checking the definition with graph isomorphism
 
-A **graph isomorphism** is a bijection between the vertices of two graphs that preserves both edges and non-edges. Let the public graphs be $G_0,G_1$, and let the secret isomorphism be $\pi:G_0\to G_1$. The prover chooses a random permutation of vertices $\rho$, forms $H=\rho(G_0)$, and sends $H$ first. The verifier then samples a uniformly random bit $b$ and asks for an isomorphism $G_b\to H$. If $b=0$, the prover can return $\rho$; if $b=1$, it can return $\rho\circ\pi^{-1}$. If both challenges can be answered for the same $H$, composing the two maps yields an isomorphism $G_0\to G_1$.
+A **graph isomorphism** is a bijection between vertices that preserves edges and non-edges. Let $G_0,G_1$ be public, and let the secret witness be an isomorphism $\pi:G_0\to G_1$.
 
-**Follow one round in message order.** (1) The prover randomly relabels the vertices, forms $H$, and sends its edge list. (2) Only after receiving $H$, the verifier flips a fair coin to choose $b=0$ or $b=1$ and asks for a map from $G_b$ to $H$. (3) The prover returns a vertex map $f$. (4) The verifier checks that every vertex is used exactly once and that adjacency is preserved for every vertex pair. It rejects the round if either check fails. The order matters: after sending $H$, the prover does not know which graph the verifier will select, so it cannot prepare its response after seeing the challenge.
+<GraphIsoExample :en="true" />
 
-**The verifier checks whether the returned map is actually an isomorphism.** The verifier sees the public graphs $G_0,G_1$, the committed graph $H$, the challenge $b$, and the prover's response $f:G_b\to H$. First, it checks that $f$ maps every vertex exactly once, so it is a bijection. Then, treating these as undirected simple graphs, it checks every vertex pair $u,v$:
+In the real interaction in Figure 02-1, the prover sends $H=\rho(G_0)$ first, then returns a map from $G_b$ to $H$ for the verifier's challenge $b$. The verifier checks that the map is a bijection and satisfies the following condition for every vertex pair:
 
 $$uv\in E(G_b)\quad\Longleftrightarrow\quad f(u)f(v)\in E(H).$$
 
-This must preserve non-edges as well as edges. In the figure's example, for $b=0$ let $\rho(a)=2,\rho(b)=5,\rho(c)=1,\rho(d)=4,\rho(e)=3$. The prover returns that vertex map. The verifier checks, for example, that edges $a-b$ and $a-c$ in $G_0$ map to edges $2-5$ and $2-1$ in $H$, and that the non-edge $a-d$ maps to the non-edge $2-4$. In this five-vertex example, it checks all ten vertex pairs. The verifier does not need $\pi$ for this one challenge; it only checks the mapping from the graph selected by $b$.
-
-For this example, the verifier checks all ten pairs as follows. “Edge” means both graphs contain the corresponding edge; “non-edge” means neither graph does. If even one pair disagrees, the response is not an isomorphism and the verifier rejects.
+Table 02-3 lists all ten pairs checked in the figure's $b=0$ example. The response is rejected if even one edge or non-edge is not preserved.
 
 <div class="captioned-table" id="table-02-3" role="group" aria-labelledby="table-caption-02-3">
 
@@ -237,13 +235,9 @@ For this example, the verifier checks all ten pairs as follows. “Edge” means
 
 </div>
 
-Passing one round shows only that the selected graph is isomorphic to $H$. The protocol repeats the same procedure with a fresh random $H$ and accepts only if every round passes. If $G_0$ and $G_1$ are not isomorphic, no $H$ can be isomorphic to both. The prover can therefore answer correctly for at most one of the two possible challenges, so its chance of being accepted by mistake in one round is at most $1/2$. With $k$ independent challenges, the probability of passing all rounds is at most $2^{-k}$. If the graphs are isomorphic, the honest prover uses secret $\pi$ to answer either challenge and passes every round.
+If $G_0,G_1$ are isomorphic, the prover uses secret $\pi$ to answer either challenge. If they are not, no single $H$ can be isomorphic to both, so one round accepts with probability at most $1/2$; after $k$ independent rounds, the probability is at most $2^{-k}$.
 
-**A simulator for an honest verifier can generate the record without knowing witness $\pi$.** In the real interaction, the prover samples a uniform random vertex permutation $\rho$ and sends $H=\rho(G_0)$ first. The verifier then independently samples a uniform bit $b$. The simulator reverses the sampling order: it first samples a uniform $b$, then a uniform random relabeling $\varphi_b$, and records $H=\varphi_b(G_b)$ together with the response $\varphi_b$.
-
-This record has the same probability distribution as a real interaction because $G_0$ and $G_1$ are isomorphic. Relabeling either graph uniformly selects from the same set of labeled graphs with the same probabilities. Moreover, for a fixed $H$ and $b$, the response mapping is selected with the same probability as the real prover's mapping. Thus the entire verifier record has exactly the same distribution. This explains simulation for an honest verifier only; zero-knowledge against a verifier that changes the challenge procedure requires a separate argument, such as one involving rewinding. Distinguish generating a record without the witness from responding to an arbitrary verifier in a live interaction.
-
-<GraphIsoExample :en="true" />
+The simulator in Figure 02-1 generates the record without witness $\pi$. When $G_0,G_1$ are isomorphic, its record has the same probability distribution as a real interaction. Thus, this example is perfect zero-knowledge for an honest verifier. A verifier that deviates from the prescribed procedure requires a separate argument.
 
 ### 2.4 Checking the intuition
 
