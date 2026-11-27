@@ -154,26 +154,25 @@ $$\operatorname{Adv}^{\mathrm{ZK}}_D(x,w,z):=\left|\Pr[D(x,z,X_{x,w,z})=1]-\Pr[D
 
 A larger advantage means $D$ can more easily tell the two record sources apart. The zero-knowledge definitions specify which distinguishers are considered and how small this gap must be.
 
+**Total variation distance** measures the gap between two probability distributions. For random variables $X,Y$ over discrete records, define
+
+$$\Delta(X,Y):=\frac12\sum_t\left|\Pr[X=t]-\Pr[Y=t]\right|.$$
+
+Equivalently, it is the largest probability gap over any set of records $A$:
+
+$$\Delta(X,Y)=\max_A\left|\Pr[X\in A]-\Pr[Y\in A]\right|.$$
+
+Each probability distribution has total mass $1$, so any probability mass gained by one must be balanced by an equal total loss elsewhere. Summing absolute differences counts both sides, which is why we multiply by $1/2$. Total variation distance bounds the output-probability gap of every distinguisher, regardless of its decision rule.
+
 #### 2.2.3 Classes of zero-knowledge defined by distinguishers
 
 Below, omit subscripts and write $X,Y$. Compare the family of distributions as input length $n=|x|$ grows, with auxiliary-input length polynomially bounded in $n$. The notation $\mathrm{negl}(n)$ denotes a nonnegative function that eventually becomes smaller than every inverse polynomial.
 
-- **Perfect zero-knowledge:** for every record $t$, $\Pr[X=t]=\Pr[Y=t]$. The two random variables have identical probability distributions, so no distinguisher can tell them apart.
-- **Statistical zero-knowledge:** first define the **total variation distance** between two random variables $X,Y$ over discrete records as the following single number:
-
-$$\Delta(X,Y):=\frac12\sum_t\left|\Pr[X=t]-\Pr[Y=t]\right|.$$
-
-  Total variation distance measures how far apart two probability distributions are; its value lies between $0$ and $1$. For discrete records, it equals the largest probability gap obtainable by choosing any set of records $A$:
-
-$$\Delta(X,Y)=\max_{A}\left|\Pr[X\in A]-\Pr[Y\in A]\right|.$$
-
-  Statistical zero-knowledge does not define the distance itself. It requires the distance between the real view $X_{x,w,z}$ and the simulator's view $Y_{x,z}$ to be negligible as the input length $n=|x|$ grows. That is, there must be a negligible function $\mu$ such that, for every valid input, witness, and admissible auxiliary input,
+- **Perfect zero-knowledge:** the real and simulated views have identical probability distributions; equivalently, $\Delta(X,Y)=0$.
+- **Statistical zero-knowledge:** the total variation distance between the real and simulated views is at most a negligible function $\mu(n)$. Thus, even distinguishers with no computational limit can gain only a negligible difference.
 
 $$\Delta(X_{x,w,z},Y_{x,z})\le\mu(n).$$
 
-  Here, $\Delta$ measures the distance between distributions, while $\mu(n)$ is an upper bound that shrinks faster than every inverse polynomial as the input grows. The definition of total variation distance and the negligible-bound requirement of statistical zero-knowledge are separate statements.
-
-  Total variation distance bounds $|\Pr[X\in A]-\Pr[Y\in A]|$ for every set of records $A$. Therefore, whatever decision rule a distinguisher uses, its output-probability gap between the real and simulated views is at most this distance.
 - **Computational zero-knowledge:** for every probabilistic polynomial-time distinguisher $D$, the difference between its probability of outputting 1 on a real record and on a simulated record is negligible:
 
 $$\operatorname{Adv}^{\mathrm{ZK}}_D(x,w,z)\le\mathrm{negl}(n).$$
