@@ -166,12 +166,12 @@ Each probability distribution has total mass $1$, so any probability mass gained
 
 #### 2.2.3 Classes of zero-knowledge defined by distinguishers
 
-Below, omit subscripts and write $X,Y$. Compare the family of distributions as input length $n=|x|$ grows, with auxiliary-input length polynomially bounded in $n$. The notation $\mathrm{negl}(n)$ denotes a nonnegative function that eventually becomes smaller than every inverse polynomial.
+Below, omit subscripts and write $X,Y$. Compare the family of distributions as input length $n=|x|$ grows, with auxiliary-input length polynomially bounded in $n$. The notation $\mathrm{negl}(n)$ denotes a nonnegative function that eventually becomes smaller than every inverse polynomial; different occurrences may denote different negligible functions.
 
 - **Perfect zero-knowledge:** the real and simulated views have identical probability distributions; equivalently, $\Delta(X,Y)=0$.
-- **Statistical zero-knowledge:** the total variation distance between the real and simulated views is at most a negligible function $\mu(n)$. Thus, even distinguishers with no computational limit can gain only a negligible difference.
+- **Statistical zero-knowledge:** the total variation distance between the real and simulated views is negligible. Thus, even distinguishers with no computational limit can gain only a negligible difference.
 
-$$\Delta(X_{x,w,z},Y_{x,z})\le\mu(n).$$
+$$\Delta(X,Y)\le\mathrm{negl}(n).$$
 
 - **Computational zero-knowledge:** for every probabilistic polynomial-time distinguisher $D$, the difference between its probability of outputting 1 on a real record and on a simulated record is negligible:
 
