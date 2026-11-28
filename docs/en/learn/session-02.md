@@ -274,58 +274,51 @@ The simulator is not replacing the prover in a live interaction. It chooses $c$ 
 
 ## 3. Knowledge soundness and extractors
 
-### 3.1 Why soundness alone is insufficient
+### 3.1 What knowledge soundness means
 
-Soundness bounds **the probability that a verifier accepts a false statement**. In the graph-isomorphism example, a prover claiming that two non-isomorphic graphs are isomorphic should have a low probability of passing verification.
+Ordinary **soundness** bounds the probability that a verifier accepts a false proposition. When the proposition is true, soundness alone does not tell us whether **the prover responding now has a witness satisfying it**. Knowledge soundness addresses this question.
 
-Now suppose the public graphs $G_0,G_1$ really are isomorphic. An isomorphism $\pi:G_0\to G_1$ exists. The question is whether **the prover responding now knows a valid isomorphism**. Ordinary soundness imposes no condition on the prover's knowledge when the statement is true.
+In plain terms, for any prover, if its acceptance probability on public input $x$ is sufficiently above the knowledge error, an algorithm defined by the security proof can extract a valid witness $w'$ with $(x,w')\in R$. The extracted value need not be the exact value originally held by the prover; it must satisfy relation $R$.
 
-| Property | When it applies | What it guarantees |
-| --- | --- | --- |
-| Soundness | The statement is false. | The verifier accepts with low probability. |
-| Knowledge soundness | The prover makes the verifier accept with probability above the knowledge error. | A valid witness can be efficiently extracted by interacting with the prover. |
+Writing the acceptance probability as $p$ and the knowledge error as $\kappa(x)$, the definition relates the gap $p-\kappa(x)$ to the probability and running time of extracting a witness. A single accepting interaction does not, by itself, reveal a witness.
 
-Here, any valid isomorphism from $G_0$ to $G_1$ is a witness. The next section shows how to construct one from two valid responses to the same commitment.
+### 3.2 How an extractor expresses this guarantee
 
-### 3.2 The concept of an extractor
+The algorithm that makes this guarantee concrete is an **extractor $E$**. It is not a third participant in the ordinary protocol; it is a hypothetical algorithm in a security proof. Using the access allowed by the definition, it invokes the prover and outputs a witness satisfying $(x,w')\in R$. It does not read the prover's private memory.
 
-An **extractor $E$** is an algorithm used in a security proof. In the graph-isomorphism example, it rewinds the prover to the state immediately after sending the commitment $H$ and tries different challenges. Constructing a witness from the prover's responses in this way is called **black-box extraction**.
+Depending on the proof system, the extractor may **rewind** the prover to the same state and rerun it with a different challenge. Constructing a witness from the prover's responses this way is sometimes called black-box extraction. The access model, running time, and extraction success probability are all part of the guarantee. Figure 02-3 distinguishes the acceptance probability $p$ in an ordinary interaction from the probability $e$ of obtaining a witness in a separate extraction experiment.
 
-Suppose the prover correctly answers both challenges, $b=0$ and $b=1$, for the same committed graph $H$. Write the two responses as $f_0:G_0\to H$ and $f_1:G_1\to H$. Then we can compute
+<StudyDiagram id="02-3" en />
+
+### 3.3 The graph-isomorphism example
+
+Suppose the public graphs $G_0,G_1$ are isomorphic. The witness is an isomorphism $\pi:G_0\to G_1$. In the protocol, the prover first sends a committed graph $H$, then responds to verifier challenge $b$ with an isomorphism from $G_b$ to $H$.
+
+The extractor saves the prover's state immediately after $H$ is sent and tries both challenges, $b=0$ and $b=1$, from that state. If it obtains two accepting responses $f_0:G_0\to H$ and $f_1:G_1\to H$, it can construct
 
 $$\pi'=f_1^{-1}\circ f_0:G_0\to G_1.$$
 
-This is a valid isomorphism, so the extractor has obtained a witness. It did not look inside the prover's memory; it built a valid witness from the prover's responses.
-
-The composition is an isomorphism because $f_0$ maps $G_0$ to $H$, and $f_1^{-1}$ maps $H$ to $G_1$. Both preserve adjacency, so their composition does too.
-
-Figure 02-4 makes the lesson’s graph-isomorphism example concrete. It draws the vertices and edges of $G_0$, $G_1$, and the prover’s commitment $H$, and lists the vertex maps in responses $f_0,f_1$. Unlike an ordinary verifier, which interacts once, the extractor in a security proof rewinds the prover to the state with the same commitment $H$ and tries another challenge. If it obtains two accepting responses, it computes $f_1^{-1}\circ f_0$ and obtains the same witness mapping $a\mapsto3,b\mapsto1,c\mapsto5,d\mapsto2,e\mapsto4$ shown in the lesson.
+Since $f_0$ is an isomorphism from $G_0$ to $H$, and $f_1^{-1}$ is an isomorphism from $H$ to $G_1$, their composition is a valid witness. The extractor does not look inside the prover; it builds a valid map from the two responses.
 
 <StudyDiagram id="02-4" en />
 
-The extractor is not a third participant in the ordinary interaction, and it cannot read the prover's private memory. Whether rewinding is allowed depends on the proof system and security definition. In this example, **knowledge soundness** requires that if a prover convinces the verifier more often than the “guess at random” baseline, an extractor can obtain a valid witness.
+Conversely, if $G_0,G_1$ are not isomorphic, no fixed $H$ can be isomorphic to both. For a fixed $H$, at most one challenge can be answered correctly, so merely guessing a random one-bit challenge gives acceptance probability at most $1/2$. This is the knowledge-error threshold in this example. Extraction above this threshold is defined in terms that also specify the extractor's running time and success probability.
 
-The key idea is to define “knowing the secret” operationally: can a valid witness be constructed from the prover's responses? The extractor does not have to recover the exact secret originally held inside the prover.
+The distinction from a simulator is useful here. A simulator generates the **verifier's interaction record** without a witness. An extractor uses prescribed access to the prover to produce a **valid witness**. They have different goals and outputs.
 
-Keep this separate from the simulator in Section 2. A simulator produces the **verifier's record** without a witness. An extractor invokes the prover and constructs a **valid witness** from its responses. They have different goals and outputs.
+### 3.4 The guarantee needed for Schnorr authentication
 
-**The guarantee authentication needs**
+Consider authenticating a user with a registered public value $x=g^w$. At registration, the server associates the account with $x$. At login, it uses the Schnorr identification protocol from Section 2.4: after receiving commitment $t$, the server chooses a fresh challenge $c$ and accepts a response $s$ when $g^s=t\,x^c$.
 
-Consider authenticating a user with a registered public value $x=g^w$. The user samples the secret exponent $w$ uniformly from $\mathbb{Z}_q\setminus\{0\}$, and the server associates $x$ with the account at registration. At login, the server uses the Schnorr identification protocol from Section 2.4. After receiving the commitment $t$, it samples a fresh, uniform challenge $c$. It accepts if the response $s$ satisfies $g^s=t\,x^c$.
+Authentication must limit the probability that someone who knows only the public value can impersonate the holder of secret exponent $w$. For example, replaying an old record $(t,c,s)$ succeeds only if the fresh challenge matches the old one, which has probability $1/q$. More generally, if an attacker can cause acceptance with probability exceeding the knowledge error $1/q$ by a non-negligible amount, an extractor can efficiently obtain $w$. If the discrete logarithm problem is hard, an efficient attacker given only $x$ should not have that ability. Extraction occurs in the security proof; during an actual login, the server checks the verification equation.
 
-Every $x\in G$ has a corresponding exponent $w$. The authentication requirement is to **keep the probability low that someone who knows only the public value can log in as the holder of the registered secret exponent**. For example, if someone replays the commitment and response from a previous transcript $(t,c,s)$, the probability that the fresh challenge matches the previous one is $1/q$.
-
-Knowledge soundness covers any way of choosing commitments and responses. If an impersonator can make the verifier accept with probability exceeding the knowledge error $1/q$ by a non-negligible amount, an extractor can use that ability to recover $w$ efficiently. If computing the discrete logarithm $w$ from $x$ is hard, no efficient impersonator given only $x$ can achieve that success rate. Extraction takes place in the security proof. At login, the server checks the verification equation.
-
-The formal treatment using random variables and knowledge error is available in the expandable note below.
+The formal note below separates acceptance and extraction as probability experiments, explains knowledge error, and works through the Schnorr rewinding calculation.
 
 ::: details Formal note: random variables, knowledge error, and the Schnorr example
 
-### 3.3 Two experiments and their random variables
+### 3.5 Two experiments and their random variables
 
 **Fix public input $x$, the prover algorithm $P^*$, and its private auxiliary information.** The extractor need not receive that information; regard it as incorporated into $P^*$. Execution randomness still changes the outcome. Describe real interaction and extraction as separate experiments.
-
-<StudyDiagram id="02-3" en />
 
 **Experiment 1: real interaction between prover and verifier.** Independently sample their random tapes $\rho_P,\rho_V$ and run the interaction. Define the decision random variable
 
@@ -381,7 +374,7 @@ Knowledge soundness: when acceptance p exceeds knowledge error κ,<br>relate p �
 
 E is an algorithm in the security proof, not a third participant in normal interaction. Rewound responses share randomness and need not be independent. Section 2’s S outputs a record; E outputs a witness.
 
-### 3.4 Knowledge error and extraction time
+### 3.6 Knowledge error and extraction time
 
 Should one lucky acceptance already count as knowledge? A **knowledge error $\kappa(x)$** supplies a threshold. When $p_{P^*}(x)>\kappa(x)$, relate the gap
 
@@ -405,7 +398,7 @@ $$\frac{k(k-1)}{q^2}.$$
 
 It is zero for $k=1$, whereas $k\ge2$ allows an extractable pair. This calculation concerns one fixed state. A guarantee for general randomized provers also requires analyzing runtime and resampling initial states. This is why acceptance and extraction are treated with different random variables.
 
-### 3.5 How this differs from simulation
+### 3.7 How this differs from simulation
 
 Section 2's simulator $S$ generates a **verifier's record** without a witness. The extractor $E$ uses prescribed access to a prover capable of causing acceptance to generate a **valid witness**. Their outputs and available access differ.
 

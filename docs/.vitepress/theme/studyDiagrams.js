@@ -45,7 +45,7 @@ export const diagrams = {
     ]
   },
   "02-3": {
-    "section": "3.3",
+    "section": "3.2",
     "type": "compare",
     "title": [
       "受理と抽出：異なる実験・異なる確率変数",
@@ -89,7 +89,7 @@ export const diagrams = {
     ]
   },
   "02-4": {
-    "section": "3.2",
+    "section": "3.3",
     "type": "extractor",
     "title": [
       "抽出器は，同じコミットから二つの返答を得てウィットネスを作る",
