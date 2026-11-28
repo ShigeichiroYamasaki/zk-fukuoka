@@ -19,7 +19,7 @@ import GraphIsoExample from "../.vitepress/theme/GraphIsoExample.vue";
 
 **著者名：山崎重一郎**<br>
 作成日付：2026年9月26日<br>
-最終更新日付：2026年11月27日
+最終更新日付：2026年11月28日
 
 [各回の授業](./sessions) · [トピック別](./topics) · [シラバスの第2回](./#session-2) · [第2回の演習](../exercises/session-02)
 
