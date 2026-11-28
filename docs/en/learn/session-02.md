@@ -278,15 +278,17 @@ The simulator is not replacing the prover in a live interaction. It chooses $c$ 
 
 Ordinary **soundness** bounds the probability that a verifier accepts a false proposition. When the proposition is true, soundness alone does not tell us whether **the prover responding now has a witness satisfying it**. Knowledge soundness addresses this question.
 
-In plain terms, for any prover, if its acceptance probability on public input $x$ is sufficiently above the knowledge error, an algorithm defined by the security proof can extract a valid witness $w'$ with $(x,w')\in R$. The extracted value need not be the exact value originally held by the prover; it must satisfy relation $R$.
+In plain terms, if a prover can convince the verifier more often than it could by “mere luck,” its interaction should let us construct a witness that makes the proposition true. The extracted witness need not be the exact value the prover started with. What matters is that the public input $x$ and witness $w'$ satisfy the relation $R$, that is, $(x,w')\in R$.
 
-Writing the acceptance probability as $p$ and the knowledge error as $\kappa(x)$, the definition relates the gap $p-\kappa(x)$ to the probability and running time of extracting a witness. A single accepting interaction does not, by itself, reveal a witness.
+The protocol-specific baseline for “mere luck” is called the **knowledge error**, written $\kappa(x)$. In the graph-isomorphism example it is $1/2$, the chance of guessing a random one-bit challenge; in Schnorr it is $1/q$, the chance of guessing the challenge. If the acceptance probability is $p$, knowledge soundness relates the excess $p-\kappa(x)$ to the extractor's success probability and running time. One accepting transcript does not, by itself, reveal a witness.
 
 ### 3.2 How an extractor expresses this guarantee
 
 The algorithm that makes this guarantee concrete is an **extractor $E$**. It is not a third participant in the ordinary protocol; it is a hypothetical algorithm in a security proof. Using the access allowed by the definition, it invokes the prover and outputs a witness satisfying $(x,w')\in R$. It does not read the prover's private memory.
 
 Depending on the proof system, the extractor may **rewind** the prover to the same state and rerun it with a different challenge. Constructing a witness from the prover's responses this way is sometimes called black-box extraction. The access model, running time, and extraction success probability are all part of the guarantee. Figure 02-3 distinguishes the acceptance probability $p$ in an ordinary interaction from the probability $e$ of obtaining a witness in a separate extraction experiment.
+
+**Why does extraction imply security?** In Schnorr, the witness for public value $x=g^w$ is the secret exponent $w$. If an attacker without $w$ could convince the verifier beyond the guessing baseline, the extractor in the security proof could use that attacker to obtain $w$. That would give an efficient way to solve the discrete logarithm problem from $x$, contradicting the assumption that this problem is hard. The extractor therefore lets the proof connect the ability to convince the verifier with having a valid witness, rather than trusting the prover's claim. It does not run during an actual login.
 
 <StudyDiagram id="02-3" en />
 
