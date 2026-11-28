@@ -19,7 +19,7 @@ import GraphIsoExample from "../../.vitepress/theme/GraphIsoExample.vue";
 
 **Author: Shigeichiro Yamasaki (山崎重一郎)**<br>
 Created: September 26, 2026<br>
-Last updated: November 27, 2026
+Last updated: November 28, 2026
 
 [Session index](./sessions) · [Topic index](./topics) · [Session 2 in the syllabus](./#session-2) · [Session 2 exercises](../exercises/session-02)
 
