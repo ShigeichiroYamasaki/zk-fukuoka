@@ -495,15 +495,25 @@ Instead, we translate the program into a collection of constraints that can be c
 
 The key change is that a general computation does not automatically come with Schnorr's convenient verification equation. We must translate the computation into another representation.
 
-### 4.3 Large computations also make verification cost matter {#succinctness-motivation}
+### 4.3 Large computations: verification cost and succinctness {#succinctness-motivation}
 
 If the verifier must check every step from scratch after the prover performs the computation, outsourcing saves little. Two representative names for proof systems in this area are **zk-SNARK** and **zk-STARK**. SNARK abbreviates “Succinct Non-interactive Arguments of Knowledge,” and STARK abbreviates “Scalable Transparent Arguments of Knowledge”; the prefix zk means zero-knowledge. Both target general computations and aim for efficient proofs or verification. Transparency is also a defining design goal of STARKs: they do not require a secret trusted setup. Sessions 11–13 study their constructions. These systems therefore also aim for **succinctness**: short proofs and low verification costs relative to the original computation.
+
+Distinguish the complexity-theoretic view of interactive proofs from succinctness. In an interactive proof, the verifier is limited to probabilistic polynomial time in the input length, while the prover has no computational bound. IP = PSPACE, introduced in Session 1, shows that such a verifier can use interaction with a prover to verify PSPACE problems. This does not, by itself, guarantee that a proof for a particular large computation is short relative to that computation. The number of rounds, total communication, and the verifier's own computation are separate costs to measure.
+
+**Succinctness** asks how the proof length and verification work compare with the size $N$ of the computation being proved. The goal is to keep both much smaller than redoing the entire computation, even as $N$ grows. For a particular system, check proof size and verifier time separately; one being small does not automatically make the other small.
 
 Zero-knowledge and succinctness are separate properties. A system may hide the witness yet have a large proof or verification cost; a short proof does not by itself hide the witness. Consider separately what can be represented and the cost of proving and verifying it.
 
 ### 4.4 Extraction must also be designed for each proof system {#general-knowledge-extraction}
 
-Schnorr extracts an exponent from two accepted responses to the same commitment. For a general computation, the target is an input or execution record satisfying the constraints, and the useful interaction depends on the proof system. It is therefore unsafe to assume that two responses always suffice. As Section 3 explained, knowledge soundness includes what access the extractor is allowed and how efficiently it can obtain a valid witness.
+For a general program, what counts as a witness depends on which inputs and outputs are public and how the relation $R$ is defined. For example, suppose a program takes public input $u$ and secret input $v$, then computes $y=u^2+v$. If $u,y$ are public, a witness can be the pair consisting of the secret input $v$ and intermediate value $z=u^2$. The relation $R$ checks whether
+
+$$z=u^2\quad\text{and}\quad y=z+v.$$
+
+If the extractor outputs a pair $(v,z)$ satisfying these checks, it has obtained a witness that accounts for the program's computation. The output need not match the exact values the prover used internally; it must satisfy relation $R$ together with the public values.
+
+In an actual proof system, the witness is represented in a form suited to its computation model. In R1CS, this may be the assignment to private inputs and intermediate circuit wires; in AIR, it may be an execution trace listing the state at each computation step. Which values belong in the witness depends on the arithmetization and the statement being proved. Schnorr extracts an exponent from two accepted responses to the same commitment, but that method does not automatically apply to a general computation. As Section 3 explained, knowledge soundness includes what access the extractor is allowed and how efficiently it can obtain a valid witness.
 
 The next section organizes these questions along two axes: expressiveness and efficiency.
 
