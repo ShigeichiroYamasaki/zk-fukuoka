@@ -241,13 +241,13 @@ The simulator in Figure 02-1 generates the record without witness $\pi$. When $G
 
 ### 2.4 Checking the definition with the Schnorr identification protocol
 
-Use the **Schnorr identification protocol**, studied in detail in Section 4.1, to compare a real view with a simulator's view. Public information consists of a generator $g$ of a cyclic group $G$ of order $q$ and a public value $y=g^w$. Only the prover knows the secret exponent $w$. The witness is an exponent satisfying the relation $y=g^w$.
+Use the **Schnorr identification protocol**, studied in detail in Section 4.1, to compare a real view with a simulator's view. Public information consists of a generator $g$ of a cyclic group $G$ of order $q$ and a public value $x=g^w$. Only the prover knows the secret exponent $w$. The witness is an exponent satisfying the relation $x=g^w$.
 
 Figure 02-2 shows the message order. The prover samples uniform randomness $r\in\mathbb{Z}_q$ and sends the commitment $t=g^r$. The verifier then sends a uniform challenge $c\in\mathbb{Z}_q$. The prover returns $s=r+cw\pmod q$, and the verifier accepts exactly when
 
-$$g^s=t\,y^c.$$
+$$g^s=t\,x^c.$$
 
-This check is correct because $y=g^w$, so $g^s=g^{r+cw}=g^r(g^w)^c=t\,y^c$. The prover does not send $w$; it sends a response computed using it.
+This check is correct because $x=g^w$, so $g^s=g^{r+cw}=g^r(g^w)^c=t\,x^c$. The prover does not send $w$; it sends a response computed using it.
 
 <SchnorrOverview :en="true" />
 
@@ -264,11 +264,11 @@ Table 02-4 summarizes how the generation order of $t,c,s$ differs between a real
 
 </div>
 
-**Connection to zero-knowledge:** fix public value $y$ and let the verifier's record in a real interaction be the random variable $X=(t,c,s)$. Without using $w$, the simulator first samples uniform $c,s\in\mathbb{Z}_q$ and computes
+**Connection to zero-knowledge:** fix public value $x$ and let the verifier's record in a real interaction be the random variable $X=(t,c,s)$. Without using $w$, the simulator first samples uniform $c,s\in\mathbb{Z}_q$ and computes
 
-$$t=g^s y^{-c}.$$
+$$t=g^s x^{-c}.$$
 
-By construction, this $t$ satisfies $g^s=t\,y^c$. In a real interaction, for each fixed $c$, uniform $r$ makes $s=r+cw$ uniform as well, and then $t=g^r=g^s y^{-c}$. Thus $X$ and the simulator's record $Y=(t,c,s)$ have the same probability distribution. Every distinguisher $D$ therefore has distinguishing advantage $0$. This is why the example is perfect zero-knowledge for an honest verifier.
+By construction, this $t$ satisfies $g^s=t\,x^c$. In a real interaction, for each fixed $c$, uniform $r$ makes $s=r+cw$ uniform as well, and then $t=g^r=g^s x^{-c}$. Thus $X$ and the simulator's record $Y=(t,c,s)$ have the same probability distribution. Every distinguisher $D$ therefore has distinguishing advantage $0$. This is why the example is perfect zero-knowledge for an honest verifier.
 
 The simulator is not replacing the prover in a live interaction. It chooses $c$ before computing $t$, while a real prover must send $t$ before receiving the verifier's challenge. Generating a record with the same distribution does not mean that someone without the witness can answer an unknown challenge.
 
@@ -276,23 +276,28 @@ The simulator is not replacing the prover in a live interaction. It chooses $c$ 
 
 ### 3.1 Why soundness alone is insufficient
 
-**Soundness** asks whether a prover can make a false proposition be accepted. Authentication asks an additional question: is the prover responding now the one who knows the secret? It is not enough that the proposition is true or that someone, somewhere, knows a secret. **Knowledge soundness** addresses this distinction.
+Soundness bounds **the probability that a verifier accepts a false statement**. In the graph-isomorphism example, a prover claiming that two non-isomorphic graphs are isomorphic should have a low probability of passing verification.
 
-<StudyDiagram id="02-3" en />
+Now suppose the public graphs $G_0,G_1$ really are isomorphic. An isomorphism $\pi:G_0\to G_1$ exists. The question is whether **the prover responding now knows a valid isomorphism**. Ordinary soundness imposes no condition on the prover's knowledge when the statement is true.
 
-Consider the graph-isomorphism example. The witness for the public statement that $G_0$ and $G_1$ are isomorphic is an isomorphism $\pi:G_0\to G_1$. Suppose the prover correctly answers both challenges, $b=0$ and $b=1$, for the same committed graph $H$. Write the two responses as $f_0:G_0\to H$ and $f_1:G_1\to H$. Then we can compute
+| Property | When it applies | What it guarantees |
+| --- | --- | --- |
+| Soundness | The statement is false. | The verifier accepts with low probability. |
+| Knowledge soundness | The prover makes the verifier accept with probability above the knowledge error. | A valid witness can be efficiently extracted by interacting with the prover. |
+
+Here, any valid isomorphism from $G_0$ to $G_1$ is a witness. The next section shows how to construct one from two valid responses to the same commitment.
+
+### 3.2 The concept of an extractor
+
+An **extractor $E$** is an algorithm used in a security proof. In the graph-isomorphism example, it rewinds the prover to the state immediately after sending the commitment $H$ and tries different challenges. Constructing a witness from the prover's responses in this way is called **black-box extraction**.
+
+Suppose the prover correctly answers both challenges, $b=0$ and $b=1$, for the same committed graph $H$. Write the two responses as $f_0:G_0\to H$ and $f_1:G_1\to H$. Then we can compute
 
 $$\pi'=f_1^{-1}\circ f_0:G_0\to G_1.$$
 
 This is a valid isomorphism, so the extractor has obtained a witness. It did not look inside the prover's memory; it built a valid witness from the prover's responses.
 
 The composition is an isomorphism because $f_0$ maps $G_0$ to $H$, and $f_1^{-1}$ maps $H$ to $G_1$. Both preserve adjacency, so their composition does too.
-
-Conversely, if $G_0$ and $G_1$ are not isomorphic, no single $H$ can be isomorphic to both. For a fixed $H$, the prover can answer at most one of the two challenges. With one random-bit challenge, the chance of accidental acceptance is at most $1/2$. This is the soundness idea from the previous section.
-
-### 3.2 The concept of an extractor
-
-An **extractor $E$** is a hypothetical algorithm used in a security proof. In this graph example, it rewinds the prover to the point where it sent the same commitment $H$, issues the other challenge, and obtains both responses. It then constructs a witness using the equation above. This method of invoking a prover and examining its responses is called **black-box extraction**.
 
 Figure 02-4 makes the lesson’s graph-isomorphism example concrete. It draws the vertices and edges of $G_0$, $G_1$, and the prover’s commitment $H$, and lists the vertex maps in responses $f_0,f_1$. Unlike an ordinary verifier, which interacts once, the extractor in a security proof rewinds the prover to the state with the same commitment $H$ and tries another challenge. If it obtains two accepting responses, it computes $f_1^{-1}\circ f_0$ and obtains the same witness mapping $a\mapsto3,b\mapsto1,c\mapsto5,d\mapsto2,e\mapsto4$ shown in the lesson.
 
@@ -304,6 +309,14 @@ The key idea is to define “knowing the secret” operationally: can a valid wi
 
 Keep this separate from the simulator in Section 2. A simulator produces the **verifier's record** without a witness. An extractor invokes the prover and constructs a **valid witness** from its responses. They have different goals and outputs.
 
+**The guarantee authentication needs**
+
+Consider authenticating a user with a registered public value $x=g^w$. The user samples the secret exponent $w$ uniformly from $\mathbb{Z}_q\setminus\{0\}$, and the server associates $x$ with the account at registration. At login, the server uses the Schnorr identification protocol from Section 2.4. After receiving the commitment $t$, it samples a fresh, uniform challenge $c$. It accepts if the response $s$ satisfies $g^s=t\,x^c$.
+
+Every $x\in G$ has a corresponding exponent $w$. The authentication requirement is to **keep the probability low that someone who knows only the public value can log in as the holder of the registered secret exponent**. For example, if someone replays the commitment and response from a previous transcript $(t,c,s)$, the probability that the fresh challenge matches the previous one is $1/q$.
+
+Knowledge soundness covers any way of choosing commitments and responses. If an impersonator can make the verifier accept with probability exceeding the knowledge error $1/q$ by a non-negligible amount, an extractor can use that ability to recover $w$ efficiently. If computing the discrete logarithm $w$ from $x$ is hard, no efficient impersonator given only $x$ can achieve that success rate. Extraction takes place in the security proof. At login, the server checks the verification equation.
+
 The formal treatment using random variables and knowledge error is available in the expandable note below.
 
 ::: details Formal note: random variables, knowledge error, and the Schnorr example
@@ -311,6 +324,8 @@ The formal treatment using random variables and knowledge error is available in 
 ### 3.3 Two experiments and their random variables
 
 **Fix public input $x$, the prover algorithm $P^*$, and its private auxiliary information.** The extractor need not receive that information; regard it as incorporated into $P^*$. Execution randomness still changes the outcome. Describe real interaction and extraction as separate experiments.
+
+<StudyDiagram id="02-3" en />
 
 **Experiment 1: real interaction between prover and verifier.** Independently sample their random tapes $\rho_P,\rho_V$ and run the interaction. Define the decision random variable
 
